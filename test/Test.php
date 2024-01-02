@@ -4,6 +4,7 @@ namespace CedricZiel\MattermostPhp\Test;
 
 use CedricZiel\MattermostPhp\Manifest;
 use CedricZiel\MattermostPhp\Request;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -12,6 +13,8 @@ use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
+#[CoversClass(Manifest::class)]
+#[CoversClass(Request::class)]
 class Test extends TestCase
 {
     private Serializer $serializer;
