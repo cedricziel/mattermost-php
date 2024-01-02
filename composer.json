@@ -25,5 +25,8 @@
             "name": "Cedric Ziel",
             "email": "cedric@cedric-ziel.com"
         }
-    ]
+    ],
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
 }
