@@ -1,0 +1,29 @@
+{
+    "name": "cedricziel/mattermost-php",
+    "description": "PHP Bindings for Mattermost",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "symfony/serializer": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CedricZiel\\MattermostPhp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CedricZiel\\MattermostPhp\\Test\\": "test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Cedric Ziel",
+            "email": "cedric@cedric-ziel.com"
+        }
+    ]
+}
