@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/cedricziel/mattermost-php/compare/v1.0.1...v1.0.2) (2024-01-02)
+
+
+### Miscellaneous Chores
+
+* Add minimal README.md ([#4](https://github.com/cedricziel/mattermost-php/issues/4)) ([98800d3](https://github.com/cedricziel/mattermost-php/commit/98800d3f301fec03adbb0ae7f40d63108e7f5704))
+* allow symfony 6 ([#6](https://github.com/cedricziel/mattermost-php/issues/6)) ([1d15321](https://github.com/cedricziel/mattermost-php/commit/1d153214c400083228f6090b69872d521619bb91))
+
 ## [1.0.1](https://github.com/cedricziel/mattermost-php/compare/v1.0.0...v1.0.1) (2024-01-02)
 
 
