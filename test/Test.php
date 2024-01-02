@@ -2,9 +2,13 @@
 
 namespace CedricZiel\MattermostPhp\Test;
 
+use CedricZiel\MattermostPhp\Manifest;
+use CedricZiel\MattermostPhp\Request;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -16,10 +20,12 @@ class Test extends TestCase
     {
         parent::setUp();
 
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
+        $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
+
         $this->serializer = new Serializer(
             [
-                new ArrayDenormalizer(),
-                new ObjectNormalizer(),
+                new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter),
             ],
             [
                 new JsonEncoder(),
@@ -52,12 +58,12 @@ class Test extends TestCase
 }
 EOF;
 
+        /** @var Manifest $manifest */
         $manifest = $this->serializer->deserialize($json, Manifest::class, 'json');
 
-        $this->assertEquals('hello-world', $manifest->getAppId());
+        $this->assertEquals('hello-world', $manifest->getId());
         $this->assertEquals('v0.8.0', $manifest->getVersion());
         $this->assertEquals('Hello, world!', $manifest->getDisplayName());
-        $this->assertEquals('icon.png', $manifest->getIcon());
     }
 
     public function testPost()

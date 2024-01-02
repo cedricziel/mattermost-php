@@ -14,23 +14,83 @@ class Manifest
         #[SerializedName('homepage_url')]
         public readonly string $homepageUrl,
         #[SerializedName('description')]
-        public readonly ?string $description = null,
+        protected readonly ?string $description = null,
         #[SerializedName('version')]
-        public readonly ?string $version = null,
+        protected readonly ?string $version = null,
         #[SerializedName('bindings')]
-        public readonly ?Call   $bindings = null,
+        protected readonly ?Call   $bindings = null,
         #[SerializedName('on_install')]
-        public readonly ?Call   $onInstall = null,
+        protected readonly ?Call   $onInstall = null,
         #[SerializedName('on_uninstall')]
-        public readonly ?Call   $onUnInstall = null,
+        protected readonly ?Call   $onUnInstall = null,
         #[SerializedName('on_version_changed')]
-        public readonly ?Call   $onVersionChanged = null,
+        protected readonly ?Call   $onVersionChanged = null,
         #[SerializedName('requested_locations')]
-        public readonly ?array  $requestedLocations = null,
+        protected readonly ?array  $requestedLocations = null,
         #[SerializedName('requested_permissions')]
-        public readonly ?array  $requestedPermissions = null,
+        protected readonly ?array  $requestedPermissions = null,
         #[SerializedName('http')]
-        public readonly ?HttpDeploymentDescriptor $http = null,
+        protected readonly ?HttpDeploymentDescriptor $http = null,
     ) {
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function getHomepageUrl(): ?string
+    {
+        return $this->homepageUrl;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
+    public function getBindings(): ?Call
+    {
+        return $this->bindings;
+    }
+
+    public function getOnInstall(): ?Call
+    {
+        return $this->onInstall;
+    }
+
+    public function getOnUnInstall(): ?Call
+    {
+        return $this->onUnInstall;
+    }
+
+    public function getOnVersionChanged(): ?Call
+    {
+        return $this->onVersionChanged;
+    }
+
+    public function getRequestedLocations(): ?array
+    {
+        return $this->requestedLocations;
+    }
+
+    public function getRequestedPermissions(): ?array
+    {
+        return $this->requestedPermissions;
+    }
+
+    public function getHttp(): ?HttpDeploymentDescriptor
+    {
+        return $this->http;
     }
 }
