@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflows: [build]
+    workflows: ["PHP Composer"]
     branches: [main]
     types:
       - completed
