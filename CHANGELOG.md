@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/cedricziel/mattermost-php/compare/v1.0.0...v1.0.1) (2024-01-02)
+
+
+### Miscellaneous Chores
+
+* Add license ([#2](https://github.com/cedricziel/mattermost-php/issues/2)) ([f624f71](https://github.com/cedricziel/mattermost-php/commit/f624f7138ad3247035275238bfcf93940deeff30))
+
 ## 1.0.0 (2024-01-02)
 
 
