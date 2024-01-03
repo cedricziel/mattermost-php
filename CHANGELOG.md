@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/cedricziel/mattermost-php/compare/v1.0.2...v1.0.3) (2024-01-03)
+
+
+### Miscellaneous Chores
+
+* Prepare generated client ([#7](https://github.com/cedricziel/mattermost-php/issues/7)) ([890bf29](https://github.com/cedricziel/mattermost-php/commit/890bf2929e9cc1103ddeb3753b13fca5edff455c))
+
 ## [1.0.2](https://github.com/cedricziel/mattermost-php/compare/v1.0.1...v1.0.2) (2024-01-02)
 
 
