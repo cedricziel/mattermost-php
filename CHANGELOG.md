@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/cedricziel/mattermost-php/compare/v1.0.6...v1.0.7) (2024-01-04)
+
+
+### Bug Fixes
+
+* Allow correct deserialization for Response ([#15](https://github.com/cedricziel/mattermost-php/issues/15)) ([958f609](https://github.com/cedricziel/mattermost-php/commit/958f6096cdb53328d194774c7f7e0d7e7d578c8b))
+
 ## [1.0.6](https://github.com/cedricziel/mattermost-php/compare/v1.0.5...v1.0.6) (2024-01-04)
 
 
