@@ -11,6 +11,10 @@ final readonly class Channel
         protected string  $id,
         #[SerializedName('team_id')]
         protected ?string $team_id = null,
+        #[SerializedName('display_name')]
+        protected ?string $display_name = null,
+        #[SerializedName('name')]
+        protected ?string $name = null,
     ) {
     }
 
@@ -22,5 +26,15 @@ final readonly class Channel
     public function getTeamId(): ?string
     {
         return $this->team_id;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->display_name;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 }
