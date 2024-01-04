@@ -4,35 +4,100 @@ namespace CedricZiel\MattermostPhp;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-class Expand
+final readonly class Expand
 {
     public function __construct(
         #[SerializedName('app')]
-        public readonly ExpandLevel $app,
+        protected ?ExpandLevel $app = null,
         #[SerializedName('acting_user')]
-        public readonly ExpandLevel $actingUser,
+        protected ?ExpandLevel $actingUser = null,
         #[SerializedName('acting_user_access_token')]
-        public readonly ExpandLevel $acting_user_access_token,
+        protected ?ExpandLevel $acting_user_access_token = null,
         #[SerializedName('locale')]
-        public readonly ExpandLevel $locale,
+        protected ?ExpandLevel $locale = null,
         #[SerializedName('channel')]
-        public readonly ExpandLevel $channel,
+        protected ?ExpandLevel $channel = null,
         #[SerializedName('channel_member')]
-        public readonly ExpandLevel $channel_member,
+        protected ?ExpandLevel $channel_member = null,
         #[SerializedName('team')]
-        public readonly ExpandLevel $team,
+        protected ?ExpandLevel $team = null,
         #[SerializedName('team_member')]
-        public readonly ExpandLevel $team_member,
+        protected ?ExpandLevel $team_member = null,
         #[SerializedName('post')]
-        public readonly ExpandLevel $post,
+        protected ?ExpandLevel $post = null,
         #[SerializedName('root_post')]
-        public readonly ExpandLevel $root_post,
+        protected ?ExpandLevel $root_post = null,
         #[SerializedName('user')]
-        public readonly ExpandLevel $user,
+        protected ?ExpandLevel $user = null,
         #[SerializedName('oauth2_app')]
-        public readonly ExpandLevel $oauth2_app,
+        protected ?ExpandLevel $oauth2_app = null,
         #[SerializedName('oauth2_user')]
-        public readonly ExpandLevel $oauth2_user,
+        protected ?ExpandLevel $oauth2_user = null,
     ) {
+    }
+
+    public function getApp(): ?ExpandLevel
+    {
+        return $this->app;
+    }
+
+    public function getActingUser(): ?ExpandLevel
+    {
+        return $this->actingUser;
+    }
+
+    public function getActingUserAccessToken(): ?ExpandLevel
+    {
+        return $this->acting_user_access_token;
+    }
+
+    public function getLocale(): ?ExpandLevel
+    {
+        return $this->locale;
+    }
+
+    public function getChannel(): ?ExpandLevel
+    {
+        return $this->channel;
+    }
+
+    public function getChannelMember(): ?ExpandLevel
+    {
+        return $this->channel_member;
+    }
+
+    public function getTeam(): ?ExpandLevel
+    {
+        return $this->team;
+    }
+
+    public function getTeamMember(): ?ExpandLevel
+    {
+        return $this->team_member;
+    }
+
+    public function getPost(): ?ExpandLevel
+    {
+        return $this->post;
+    }
+
+    public function getRootPost(): ?ExpandLevel
+    {
+        return $this->root_post;
+    }
+
+    public function getUser(): ?ExpandLevel
+    {
+        return $this->user;
+    }
+
+    public function getOauth2App(): ?ExpandLevel
+    {
+        return $this->oauth2_app;
+    }
+
+    public function getOauth2User(): ?ExpandLevel
+    {
+        return $this->oauth2_user;
     }
 }

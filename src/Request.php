@@ -9,20 +9,20 @@ class Request
     public function __construct(
         #[SerializedName('path')]
         protected readonly string $path,
-        #[SerializedName('expand')]
-        protected readonly ?Expand $expand,
-        #[SerializedName('state')]
-        protected readonly ?array $state,
-        #[SerializedName('values')]
-        protected readonly ?array $values,
         #[SerializedName('context')]
         protected readonly Context $context,
+        #[SerializedName('expand')]
+        protected readonly ?Expand $expand = null,
+        #[SerializedName('state')]
+        protected readonly ?array $state = null,
+        #[SerializedName('values')]
+        protected readonly ?array $values = null,
         #[SerializedName('raw_command')]
-        protected readonly ?string $raw_command,
+        protected readonly ?string $raw_command = null,
         #[SerializedName('selected_field')]
-        protected readonly ?string $selected_field,
+        protected readonly ?string $selected_field = null,
         #[SerializedName('query')]
-        protected readonly ?string $query,
+        protected readonly ?string $query = null,
     ) {}
 
     public function getPath(): string
