@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/cedricziel/mattermost-php/compare/v1.0.5...v1.0.6) (2024-01-04)
+
+
+### Bug Fixes
+
+* Namespace for Form ([#13](https://github.com/cedricziel/mattermost-php/issues/13)) ([54cbab8](https://github.com/cedricziel/mattermost-php/commit/54cbab8c284a96f75c2a05ba40186658d3c0f6db))
+
 ## [1.0.5](https://github.com/cedricziel/mattermost-php/compare/v1.0.4...v1.0.5) (2024-01-04)
 
 
