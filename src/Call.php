@@ -8,11 +8,26 @@ class Call
 {
     public function __construct(
         #[SerializedName('path')]
-        public readonly string $path,
+        protected readonly string $path,
         #[SerializedName('state')]
-        public readonly ?array $state = null,
+        protected readonly ?array $state = null,
         #[SerializedName('expand')]
-        public readonly ?Expand $expand = null,
+        protected readonly ?Expand $expand = null,
     ) {
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    public function getState(): ?array
+    {
+        return $this->state;
+    }
+
+    public function getExpand(): ?Expand
+    {
+        return $this->expand;
     }
 }

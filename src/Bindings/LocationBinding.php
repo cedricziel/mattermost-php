@@ -2,26 +2,75 @@
 
 namespace CedricZiel\MattermostPhp\Bindings;
 
-use App\Mattermost\Form\Form;
 use CedricZiel\MattermostPhp\Call;
-use CedricZiel\MattermostPhp\Location;
+use CedricZiel\MattermostPhp\Form\Form;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 final class LocationBinding
 {
     public function __construct(
-        #[SerializedName('location')]
-        protected readonly Location $location,
-        protected readonly string $icon,
-        protected readonly string $label,
-        protected readonly string $hint,
-        protected readonly string $description,
-        protected readonly Call $submit,
-        protected readonly Form $form,
         /**
-         * @var array<\App\Mattermost\Bindings\Binding>
+         * Location allows the App to identify where in the UX the Call request
+         * comes from. It is optional. For /command bindings, Location is
+         * defaulted to Label.
          */
-        protected readonly array $bindings,
+        #[SerializedName('location')]
+        protected readonly string $location,
+        protected readonly string $icon = '',
+        protected readonly string $hint = '',
+        protected readonly string $description = '',
+        /**
+         * @var LocationBinding[]|null
+         */
+        #[SerializedName('bindings')]
+        protected readonly ?array $bindings = null,
+        #[SerializedName('form')]
+        protected readonly ?Form $form = null,
+        protected readonly ?string $label = null,
+        protected readonly ?Call $submit = null,
     ) {
+    }
+
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    public function getIcon(): string
+    {
+        return $this->icon;
+    }
+
+    public function getHint(): string
+    {
+        return $this->hint;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return LocationBinding[]|null
+     */
+    public function getBindings(): ?array
+    {
+        return $this->bindings;
+    }
+
+    public function getForm(): ?Form
+    {
+        return $this->form;
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    public function getSubmit(): ?Call
+    {
+        return $this->submit;
     }
 }

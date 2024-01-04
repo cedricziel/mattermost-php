@@ -11,10 +11,23 @@ final class TopLevelBinding
         #[SerializedName('location')]
         protected readonly Location $location,
         /**
-         * @var array<LocationBinding>
+         * @var LocationBinding[]
          */
         #[SerializedName('bindings')]
         protected readonly array $bindings,
     ) {
+    }
+
+    public function getLocation(): Location
+    {
+        return $this->location;
+    }
+
+    /**
+     * @return LocationBinding[]
+     */
+    public function getBindings(): array
+    {
+        return $this->bindings;
     }
 }

@@ -5,36 +5,11 @@ namespace CedricZiel\MattermostPhp\Test;
 use CedricZiel\MattermostPhp\Manifest;
 use CedricZiel\MattermostPhp\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
-use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 #[CoversClass(Manifest::class)]
 #[CoversClass(Request::class)]
-class Test extends TestCase
+class ManifestTest extends MattermostTestCase
 {
-    private Serializer $serializer;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
-        $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
-
-        $this->serializer = new Serializer(
-            [
-                new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter),
-            ],
-            [
-                new JsonEncoder(),
-            ],
-        );
-    }
 
     public function testCanDeserializeManiest()
     {
