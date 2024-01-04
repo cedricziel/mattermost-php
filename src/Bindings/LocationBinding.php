@@ -4,7 +4,6 @@ namespace CedricZiel\MattermostPhp\Bindings;
 
 use CedricZiel\MattermostPhp\Call;
 use CedricZiel\MattermostPhp\Form\Form;
-use CedricZiel\MattermostPhp\Location;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 final class LocationBinding
@@ -17,11 +16,11 @@ final class LocationBinding
          */
         #[SerializedName('location')]
         protected readonly string $location,
-        protected readonly string $icon,
+        protected readonly string $icon = '',
         protected readonly string $hint = '',
         protected readonly string $description = '',
         /**
-         * @var array<LocationBinding>
+         * @var LocationBinding[]|null
          */
         #[SerializedName('bindings')]
         protected readonly ?array $bindings = null,
@@ -30,5 +29,48 @@ final class LocationBinding
         protected readonly ?string $label = null,
         protected readonly ?Call $submit = null,
     ) {
+    }
+
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    public function getIcon(): string
+    {
+        return $this->icon;
+    }
+
+    public function getHint(): string
+    {
+        return $this->hint;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return LocationBinding[]|null
+     */
+    public function getBindings(): ?array
+    {
+        return $this->bindings;
+    }
+
+    public function getForm(): ?Form
+    {
+        return $this->form;
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    public function getSubmit(): ?Call
+    {
+        return $this->submit;
     }
 }
