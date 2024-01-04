@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/cedricziel/mattermost-php/compare/v1.0.7...v1.0.8) (2024-01-04)
+
+
+### Miscellaneous Chores
+
+* Add fields for summary to user and channel ([#17](https://github.com/cedricziel/mattermost-php/issues/17)) ([b28f788](https://github.com/cedricziel/mattermost-php/commit/b28f7888b2836735df892e30f1f0d63fc987b64e))
+
 ## [1.0.7](https://github.com/cedricziel/mattermost-php/compare/v1.0.6...v1.0.7) (2024-01-04)
 
 
