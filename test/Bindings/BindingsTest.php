@@ -4,11 +4,11 @@ namespace CedricZiel\MattermostPhp\Test\Bindings;
 
 use CedricZiel\MattermostPhp\Bindings\TopLevelBinding;
 use CedricZiel\MattermostPhp\Location;
-use CedricZiel\MattermostPhp\Test\AbstractTest;
+use CedricZiel\MattermostPhp\Test\MattermostTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TopLevelBinding::class)]
-class BindingsTest extends AbstractTest
+class BindingsTest extends MattermostTestCase
 {
     public function testCanDeserializeBindings()
     {

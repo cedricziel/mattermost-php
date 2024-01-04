@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-abstract class AbstractTest extends TestCase
+abstract class MattermostTestCase extends TestCase
 {
     protected Serializer $serializer;
 

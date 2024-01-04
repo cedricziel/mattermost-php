@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Manifest::class)]
 #[CoversClass(Request::class)]
-class Test extends AbstractTest
+class ManifestTest extends MattermostTestCase
 {
 
     public function testCanDeserializeManiest()
