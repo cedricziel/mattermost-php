@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mattermost\Bindings;
+namespace CedricZiel\MattermostPhp\Bindings;
 
 use App\Mattermost\Form\Form;
 use CedricZiel\MattermostPhp\Call;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Response;
+namespace CedricZiel\MattermostPhp\Response;
 
 class ErrorResponse extends CallResponse
 {

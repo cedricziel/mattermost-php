@@ -1,6 +1,6 @@
 <?php
 
-namespace Response;
+namespace CedricZiel\MattermostPhp\Response;
 
 use App\Mattermost\Form\Form;
 
