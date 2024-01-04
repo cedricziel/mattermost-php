@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Response;
 
-use App\Mattermost\Form\Form;
+use CedricZiel\MattermostPhp\Form\Form;
 
 class FormResponse extends CallResponse
 {
