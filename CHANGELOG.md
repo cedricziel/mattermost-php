@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/cedricziel/mattermost-php/compare/v1.0.3...v1.0.4) (2024-01-04)
+
+
+### Bug Fixes
+
+* Fix namespaces ([#9](https://github.com/cedricziel/mattermost-php/issues/9)) ([91c4003](https://github.com/cedricziel/mattermost-php/commit/91c4003e068e8f57c618cba0cafb1da4f7978b4e))
+
 ## [1.0.3](https://github.com/cedricziel/mattermost-php/compare/v1.0.2...v1.0.3) (2024-01-03)
 
 
