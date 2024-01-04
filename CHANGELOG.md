@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/cedricziel/mattermost-php/compare/v1.0.4...v1.0.5) (2024-01-04)
+
+
+### Bug Fixes
+
+* Location bindings ([#11](https://github.com/cedricziel/mattermost-php/issues/11)) ([f76bab5](https://github.com/cedricziel/mattermost-php/commit/f76bab5a1cb8905a0765be6721909465bfeed355))
+
 ## [1.0.4](https://github.com/cedricziel/mattermost-php/compare/v1.0.3...v1.0.4) (2024-01-04)
 
 
