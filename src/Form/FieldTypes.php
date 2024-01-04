@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mattermost\Form;
+namespace CedricZiel\MattermostPhp\Form;
 
 /**
  * @see https://developers.mattermost.com/integrate/apps/structure/forms/#field-types

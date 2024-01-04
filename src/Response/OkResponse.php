@@ -1,6 +1,6 @@
 <?php
 
-namespace Response;
+namespace CedricZiel\MattermostPhp\Response;
 
 final class OkResponse extends CallResponse
 {

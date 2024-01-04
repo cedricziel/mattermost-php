@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mattermost\Form;
+namespace CedricZiel\MattermostPhp\Form;
 
 use CedricZiel\MattermostPhp\Call;
 use Symfony\Component\Serializer\Attribute\SerializedName;

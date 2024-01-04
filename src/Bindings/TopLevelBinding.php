@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mattermost\Bindings;
+namespace CedricZiel\MattermostPhp\Bindings;
 
 use CedricZiel\MattermostPhp\Location;
 use Symfony\Component\Serializer\Attribute\SerializedName;

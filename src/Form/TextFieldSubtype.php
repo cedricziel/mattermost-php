@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mattermost\Form;
+namespace CedricZiel\MattermostPhp\Form;
 
 /**
  * The text field subtypes, except textarea, map to the types of the HTML input form element.
