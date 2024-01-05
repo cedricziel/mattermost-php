@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cedricziel/mattermost-php/compare/v1.1.0...v1.1.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* set Authorization header ([#21](https://github.com/cedricziel/mattermost-php/issues/21)) ([5670340](https://github.com/cedricziel/mattermost-php/commit/567034022e8ad2b00ddd271cff127672ebd6f98c))
+
 ## [1.1.0](https://github.com/cedricziel/mattermost-php/compare/v1.0.8...v1.1.0) (2024-01-05)
 
 
