@@ -72,17 +72,22 @@ class AppClient
         return $this->mattermostSiteUrl;
     }
 
-    public function KVSet(string $prefix, string $id, mixed $in): bool
+    public function kvSet(string $prefix, string $id, mixed $in): bool
     {
         throw new \Exception('Not implemented yet');
     }
 
-    public function KVGet(string $prefix, string $id): mixed
+    public function kvGet(string $prefix, string $id): mixed
     {
         throw new \Exception('Not implemented yet');
     }
 
-    public function KVDelete(string $prefix, string $id): bool
+    public function kvDelete(string $prefix, string $id): bool
+    {
+        throw new \Exception('Not implemented yet');
+    }
+
+    public function createTimer(Timer $timer): Timer
     {
         throw new \Exception('Not implemented yet');
     }
