@@ -50,7 +50,7 @@ class Post
     protected string $type;
 
     #[SerializedName('props')]
-    protected array $props = [];
+    protected ?\stdClass $props = null;
 
     #[SerializedName('hashtags')]
     protected string $hashtags;
@@ -204,12 +204,12 @@ class Post
         return $this;
     }
 
-    public function getProps(): array
+    public function getProps(): \stdClass
     {
         return $this->props;
     }
 
-    public function setProps(array $props): Post
+    public function setProps(?\stdClass $props): Post
     {
         $this->props = $props;
         return $this;
