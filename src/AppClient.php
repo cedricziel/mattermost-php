@@ -119,6 +119,7 @@ class AppClient
             'POST',
             $this->mattermostSiteUrl . '/api/v4/posts'
             )
+            ->withHeader('Authorization', 'Bearer ' . $this->token)
             ->withHeader('Content-Type', 'application/json')
             ->withBody(
                 $this->streamFactory->createStream(
