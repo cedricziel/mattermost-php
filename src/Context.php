@@ -7,62 +7,62 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 class Context
 {
     public function __construct(
-        #[SerializedName('subject')]
-        protected readonly ?string $subject,
-        #[SerializedName('channel_id')]
-        protected readonly ?string $channel_id,
-        #[SerializedName('team_id')]
-        protected readonly ?string $team_id,
-        #[SerializedName('post_id')]
-        protected readonly ?string $post_id,
-        #[SerializedName('root_post_id')]
-        protected readonly ?string $root_post_id,
-        #[SerializedName('app_id')]
-        protected readonly string $app_id,
-        #[SerializedName('location')]
-        protected readonly ?string $location,
-        #[SerializedName('user_agent')]
-        protected readonly ?string $user_agent,
-        #[SerializedName('track_as_submit')]
-        protected readonly ?bool $track_as_submit,
         #[SerializedName('mattermost_site_url')]
         protected readonly string $mattermost_site_url,
-        #[SerializedName('developer_mode')]
-        protected readonly ?bool $developer_mode,
-        #[SerializedName('app_path')]
-        protected readonly string $app_path,
         #[SerializedName('bot_user_id')]
-        protected readonly string $bot_user_id,
+        protected readonly ?string $bot_user_id,
         #[SerializedName('bot_access_token')]
         protected readonly ?string $bot_access_token,
+        #[SerializedName('subject')]
+        protected readonly ?string $subject = null,
+        #[SerializedName('channel_id')]
+        protected readonly ?string $channel_id = null,
+        #[SerializedName('team_id')]
+        protected readonly ?string $team_id = null,
+        #[SerializedName('post_id')]
+        protected readonly ?string $post_id = null,
+        #[SerializedName('root_post_id')]
+        protected readonly ?string $root_post_id = null,
+        #[SerializedName('app_id')]
+        protected readonly ?string $app_id = null,
+        #[SerializedName('location')]
+        protected readonly ?string $location = null,
+        #[SerializedName('user_agent')]
+        protected readonly ?string        $user_agent = null,
+        #[SerializedName('track_as_submit')]
+        protected readonly ?bool          $track_as_submit = null,
+        #[SerializedName('developer_mode')]
+        protected readonly ?bool          $developer_mode  = false,
+        #[SerializedName('app_path')]
+        protected readonly ?string        $app_path = null,
         #[SerializedName('app')]
-        protected readonly ?App $app,
+        protected readonly ?App           $app = null,
         #[SerializedName('acting_user')]
-        protected readonly ?User $actingUser,
+        protected readonly ?User          $acting_user = null,
         #[SerializedName('acting_user_access_token')]
-        protected readonly ?string $acting_user_access_token,
+        protected readonly ?string        $acting_user_access_token = null,
         #[SerializedName('locale')]
-        protected readonly ?string $locale,
+        protected readonly ?string        $locale = null,
         #[SerializedName('channel')]
-        protected readonly ?Channel $channel,
+        protected readonly ?Channel       $channel = null,
         #[SerializedName('channel_member')]
-        protected readonly ?ChannelMember $channel_member,
+        protected readonly ?ChannelMember $channel_member = null,
         #[SerializedName('team')]
-        protected readonly ?Team $team,
+        protected readonly ?Team          $team = null,
         #[SerializedName('team_member')]
-        protected readonly ?TeamMember $team_member,
+        protected readonly ?TeamMember $team_member = null,
         #[SerializedName('post')]
-        protected readonly ?Post $post,
+        protected readonly ?Post $post = null,
         #[SerializedName('post')]
-        protected readonly ?Post $root_post,
+        protected readonly ?Post $root_post = null,
         #[SerializedName('user')]
-        protected readonly ?User $user,
+        protected readonly ?User $user = null,
         /**
          * @var User[]
          */
-        protected readonly ?array $mentioned,
+        protected readonly ?array $mentioned = null,
         #[SerializedName('oauth2')]
-        protected readonly OAuth2Context $oauth2,
+        protected readonly OAuth2Context $oauth2 = new OAuth2Context(),
     ){
     }
 
@@ -143,7 +143,7 @@ class Context
 
     public function getActingUser(): ?User
     {
-        return $this->actingUser;
+        return $this->acting_user;
     }
 
     public function getActingUserAccessToken(): ?string

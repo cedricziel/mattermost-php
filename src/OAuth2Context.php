@@ -4,12 +4,12 @@ namespace CedricZiel\MattermostPhp;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-class OAuth2Context
+readonly class OAuth2Context
 {
     public function __construct(
         #[SerializedName('connect_url')]
-        protected readonly ?string $connect_url,
+        protected ?string $connect_url = null,
         #[SerializedName('complete_url')]
-        protected readonly ?string $complete_url,
+        protected ?string $complete_url = null,
     ) {}
 }
