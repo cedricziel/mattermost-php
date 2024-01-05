@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/cedricziel/mattermost-php/compare/v1.0.8...v1.1.0) (2024-01-05)
+
+
+### Features
+
+* Add AppClient ([#19](https://github.com/cedricziel/mattermost-php/issues/19)) ([7e20fe2](https://github.com/cedricziel/mattermost-php/commit/7e20fe2cabe876af31a9a0723bc574a5233cdd4f))
+
 ## [1.0.8](https://github.com/cedricziel/mattermost-php/compare/v1.0.7...v1.0.8) (2024-01-04)
 
 
