@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/cedricziel/mattermost-php/compare/v1.1.1...v1.1.2) (2024-01-05)
+
+
+### Bug Fixes
+
+* make props an object ([#23](https://github.com/cedricziel/mattermost-php/issues/23)) ([8b4999e](https://github.com/cedricziel/mattermost-php/commit/8b4999e6830e00e7c646c1f10c0da5137a57a514))
+
 ## [1.1.1](https://github.com/cedricziel/mattermost-php/compare/v1.1.0...v1.1.1) (2024-01-05)
 
 
