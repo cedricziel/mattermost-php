@@ -1,6 +1,6 @@
 <?php
 
-namespace CedricZiel\MattermostPhp\SlashCommands;
+namespace CedricZiel\MattermostPhp\Attachments\Actions;
 
 class ActionIntegration implements \JsonSerializable
 {
@@ -8,6 +8,22 @@ class ActionIntegration implements \JsonSerializable
         protected string $url,
         protected ?\stdClass $context = null,
     ) {
+    }
+
+    public static function create(string $url): self
+    {
+        return new self($url, null);
+    }
+
+    public function withContext(string $option, string $value): self
+    {
+        if ($this->context === null) {
+            $this->context = new \stdClass();
+        }
+
+        $this->context->{$option} = $value;
+
+        return $this;
     }
 
     public function jsonSerialize(): \stdClass

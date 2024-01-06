@@ -1,6 +1,8 @@
 <?php
 
-namespace CedricZiel\MattermostPhp\SlashCommands;
+namespace CedricZiel\MattermostPhp\Attachments;
+
+use CedricZiel\MattermostPhp\Attachments\Actions\ActionIntegration;
 
 class Action implements \JsonSerializable
 {
@@ -9,6 +11,11 @@ class Action implements \JsonSerializable
         protected string $name,
         protected ActionIntegration $integration,
     ) {
+    }
+
+    public static function create(string $id, string $name, ActionIntegration $integration): static
+    {
+        return new static($id, $name, $integration);
     }
 
     public function jsonSerialize(): \stdClass

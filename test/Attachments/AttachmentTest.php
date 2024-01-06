@@ -1,12 +1,13 @@
 <?php
 
-namespace Attachments;
+namespace CedricZiel\MattermostPhp\Test\Attachments;
 
+use CedricZiel\MattermostPhp\Attachments\Action;
+use CedricZiel\MattermostPhp\Attachments\Actions\ActionIntegration;
+use CedricZiel\MattermostPhp\Attachments\Actions\ChannelSelectAction;
+use CedricZiel\MattermostPhp\Attachments\Actions\SelectAction;
 use CedricZiel\MattermostPhp\Attachments\Attachment;
 use CedricZiel\MattermostPhp\Attachments\Field;
-use CedricZiel\MattermostPhp\SlashCommands\Action;
-use CedricZiel\MattermostPhp\SlashCommands\ActionIntegration;
-use CedricZiel\MattermostPhp\SlashCommands\SelectAction;
 use CedricZiel\MattermostPhp\SlashCommands\SlashCommandOutput;
 use CedricZiel\MattermostPhp\Test\MattermostTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,37 +19,7 @@ class AttachmentTest extends MattermostTestCase
     #[Test]
     public function canSerialize()
     {
-        $tooActionContext = new \stdClass();
-        $tooActionContext->foo = 'bar';
-
-        $attachment = new Attachment(
-            fallback: 'Fallback',
-            text: 'Text',
-            actions: [
-                new Action(
-                    id: 'tooot',
-                    name: 'Tooot',
-                    integration: new ActionIntegration(
-                        url: 'https://example.com',
-                        context: $tooActionContext,
-                    ),
-                ),
-            ],
-            color: '#ff0000',
-            pretext: 'Pretext',
-            fields: [
-                new Field(
-                    title: 'Title',
-                    value: 'Value',
-                    short: true,
-                ),
-            ],
-        );
-
-        $json = json_encode($attachment);
-        self::assertJson($json);
-        self::assertJsonStringEqualsJsonString(
-            <<<JSON
+        $attachmentJson = <<<JSON
 {
   "actions": [
     {
@@ -70,13 +41,32 @@ class AttachmentTest extends MattermostTestCase
     {"title":"Title","value":"Value","short":true}
   ]
  }
-JSON,
-            $json,
-        );
+JSON;
+
+        $attachment = Attachment::create('Fallback')
+            ->withText('Text')
+            ->addAction(
+                Action::create(
+                    'tooot',
+                    'Tooot',
+                    ActionIntegration::create('https://example.com')
+                        ->withContext('foo', 'bar'),
+                )
+            )
+            ->withColor('#ff0000')
+            ->withPretext('Pretext')
+            ->addField(
+                Field::create('Title', 'Value', true)
+            );
+
+        $json = json_encode($attachment);
+        self::assertJson($json);
+        self::assertJsonStringEqualsJsonString($attachmentJson, $json);
     }
 
     #[Test]
-    public function canSerializeSelectAction() {
+    public function canSerializeSelectAction()
+    {
         $json = <<<JSON
 {
   "attachments": [
@@ -117,45 +107,79 @@ JSON,
 }
 JSON;
 
-        $o = new SlashCommandOutput(
-            attachments: [
-                new Attachment(
-                    fallback: 'Foo',
-                    text: 'This is the attachment text.',
-                    actions: [
-                        new SelectAction(
-                            id: 'actionoptions',
-                            name: 'Select an option...',
-                            integration: new ActionIntegration(
-                                url: 'http://127.0.0.1:7357/actionoptions',
-                                context: (object) [
-                                    'action' => 'do_something',
-                                ],
-                            ),
-                            options: [
-                                (object) [
-                                    'text' => 'Option1',
-                                    'value' => 'opt1',
-                                ],
-                                (object) [
-                                    'text' => 'Option2',
-                                    'value' => 'opt2',
-                                ],
-                                (object) [
-                                    'text' => 'Option3',
-                                    'value' => 'opt3',
-                                ],
-                            ],
-                        ),
-                    ],
-                    pretext: 'This is the attachment pretext.',
-                ),
-            ],
-        );
+        $o = SlashCommandOutput::create()
+            ->addAttachment(
+                Attachment::create('Foo')
+                    ->withPretext('This is the attachment pretext.')
+                    ->withText('This is the attachment text.')
+                    ->addAction(
+                        SelectAction::create(
+                            'actionoptions',
+                            'Select an option...',
+                            ActionIntegration::create('http://127.0.0.1:7357/actionoptions')
+                                ->withContext('action', 'do_something'),
+                        )
+                        ->addOption('Option1', 'opt1')
+                        ->addOption('Option2', 'opt2')
+                        ->addOption('Option3', 'opt3')
+                    )
+            );
 
         $serialized = json_encode($o);
 
         self::assertJson($serialized);
         self::assertJsonStringEqualsJsonString($json, $serialized);
+    }
+
+    #[Test]
+    public function canCreateChannelSelect()
+    {
+        $json = <<<JSON
+{
+  "attachments": [
+    {
+      "fallback": "Fallback",
+      "pretext": "This is the attachment pretext.",
+      "text": "This is the attachment text.",
+      "actions": [
+        {
+          "id": "actionoptions",
+          "name": "Select an option...",
+          "integration": {
+            "url": "http://127.0.0.1:7357/actionoptions",
+            "context": {
+              "action": "do_something"
+            }
+          },
+          "type": "select",
+          "data_source": "channels"
+        }
+      ]
+    }
+  ],
+  "response_type": "ephemeral"
+}
+JSON;
+
+        $o = SlashCommandOutput::create()
+            ->addAttachment(
+                Attachment::create('Fallback')
+                    ->withPretext('This is the attachment pretext.')
+                    ->withText('This is the attachment text.')
+                    ->addAction(
+                        ChannelSelectAction::create(
+                            'actionoptions',
+                            'Select an option...',
+                            ActionIntegration::create('http://127.0.0.1:7357/actionoptions')
+                                ->withContext('action', 'do_something')
+                        )
+                    )
+            );
+
+        $outputJson = json_encode($o);
+
+        self::assertJson($outputJson);
+        self::assertJson($json);
+        self::assertJsonStringEqualsJsonString($json, $outputJson);
     }
 }

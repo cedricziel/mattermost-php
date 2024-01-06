@@ -84,4 +84,16 @@ class SlashCommandOutput implements \JsonSerializable
 
         return $o;
     }
+
+    public static function create(): self
+    {
+        return new self();
+    }
+
+    public function addAttachment(Attachment $attachment): static
+    {
+        $this->attachments[] = $attachment;
+
+        return $this;
+    }
 }

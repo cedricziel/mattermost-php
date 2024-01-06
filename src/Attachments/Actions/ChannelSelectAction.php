@@ -1,15 +1,18 @@
 <?php
 
-namespace CedricZiel\MattermostPhp\SlashCommands;
+namespace CedricZiel\MattermostPhp\Attachments\Actions;
 
-class SelectAction extends Action
+use CedricZiel\MattermostPhp\Attachments\Action;
+
+class ChannelSelectAction extends Action
 {
+    protected string $dataSource = 'channels';
     protected string $type = 'select';
+
     public function __construct(
         string $id,
         string $name,
         ActionIntegration $integration,
-        protected array $options = []
     ) {
         parent::__construct($id, $name, $integration);
     }
@@ -18,10 +21,8 @@ class SelectAction extends Action
     {
         $o = parent::jsonSerialize();
 
+        $o->data_source = $this->dataSource;
         $o->type = $this->type;
-        if ($this->options !== null) {
-            $o->options = $this->options;
-        }
 
         return $o;
     }

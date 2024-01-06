@@ -2,8 +2,6 @@
 
 namespace CedricZiel\MattermostPhp\Attachments;
 
-use CedricZiel\MattermostPhp\SlashCommands\Action;
-
 /**
  * @see https://api.slack.com/docs/message-attachments
  * @see https://developers.mattermost.com/integrate/reference/message-attachments/
@@ -12,7 +10,7 @@ class Attachment implements \JsonSerializable
 {
     public function __construct(
         protected string $fallback,
-        protected string $text,
+        protected ?string $text = null,
         protected ?array $actions = null,
         protected ?string $color = null,
         protected ?string $pretext = null,
@@ -27,6 +25,11 @@ class Attachment implements \JsonSerializable
         protected ?string $footer = null,
         protected ?string $footerIcon = null,
     ) {
+    }
+
+    public static function create(string $fallback): static
+    {
+        return new static($fallback);
     }
 
     public function jsonSerialize(): mixed
@@ -84,5 +87,40 @@ class Attachment implements \JsonSerializable
         }
 
         return $o;
+    }
+
+    public function withPretext(string $pretext): static
+    {
+        $this->pretext = $pretext;
+
+        return $this;
+    }
+
+    public function withText(string $string) : static
+    {
+        $this->text = $string;
+
+        return $this;
+    }
+
+    public function addAction(Action $action) : static
+    {
+        $this->actions[] = $action;
+
+        return $this;
+    }
+
+    public function withColor(string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function addField(Field $create): static
+    {
+        $this->fields[] = $create;
+
+        return $this;
     }
 }
