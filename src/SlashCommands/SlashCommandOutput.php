@@ -25,6 +25,9 @@ class SlashCommandOutput implements \JsonSerializable
         protected ?array                   $extraResponses = null,
         protected ?bool                    $skip_slack_parsing = null,
         protected ?\stdClass               $props = null,
+
+        // only for updates
+        protected ?string                  $message = null,
     ) {
     }
 
@@ -86,6 +89,10 @@ class SlashCommandOutput implements \JsonSerializable
 
         if ($this->update !== null) {
             $o->update = $this->update->jsonSerialize();
+        }
+
+        if ($this->message !== null) {
+            $o->message = $this->message;
         }
 
         return $o;
@@ -181,9 +188,16 @@ class SlashCommandOutput implements \JsonSerializable
         return $this;
     }
 
-    public function withUpdate(SlashCommandOutput $withText): static
+    public function withUpdate(SlashCommandOutput $update): static
     {
-        $this->update = $withText;
+        $this->update = $update;
+
+        return $this;
+    }
+
+    public function withMessage(string $message): static
+    {
+        $this->message = $message;
 
         return $this;
     }
