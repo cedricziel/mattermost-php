@@ -18,7 +18,7 @@ class SlashCommandTest extends TestCase
     #[Test]
     public function canHandleSimpleSlashCommand()
     {
-        $slashCommand = new class extends AbstractSlashCommand {
+        $slashCommand = new class('hello-world') extends AbstractSlashCommand {
             public function execute(SlashCommandInput $input): SlashCommandOutput
             {
                 return new SlashCommandOutput('Hello World!');
@@ -39,7 +39,7 @@ class SlashCommandTest extends TestCase
     #[Test]
     public function canHandleSlashCommandWithAttachments()
     {
-        $slashCommand = new class extends AbstractSlashCommand {
+        $slashCommand = new class('hello-world') extends AbstractSlashCommand {
             public function execute(SlashCommandInput $input): SlashCommandOutput
             {
                 return new SlashCommandOutput(

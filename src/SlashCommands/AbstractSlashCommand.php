@@ -7,11 +7,15 @@ use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractSlashCommand implements SlashCommand
 {
+    public function __construct(
+        protected string $command,
+    ) {
+    }
     abstract public function execute(SlashCommandInput $input): SlashCommandOutput;
 
     final public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $output = $this->execute(SlashCommandInput::fromRequest($request));
+        $output = $this->execute(SlashCommandInput::fromRequest('pling', $request));
 
         return $output->toResponse();
     }
