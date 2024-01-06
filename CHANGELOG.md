@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.6](https://github.com/cedricziel/mattermost-php/compare/v1.2.5...v1.2.6) (2024-01-06)
+
+
+### Bug Fixes
+
+* Extract parameters from request ([#37](https://github.com/cedricziel/mattermost-php/issues/37)) ([d9c5583](https://github.com/cedricziel/mattermost-php/commit/d9c5583c2675b90f369ed32d5da9feaabcb3076b))
+
 ## [1.2.5](https://github.com/cedricziel/mattermost-php/compare/v1.2.4...v1.2.5) (2024-01-06)
 
 
