@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/cedricziel/mattermost-php/compare/v1.2.4...v1.2.5) (2024-01-06)
+
+
+### Bug Fixes
+
+* Always add props ([#35](https://github.com/cedricziel/mattermost-php/issues/35)) ([be5536a](https://github.com/cedricziel/mattermost-php/commit/be5536a943b455f683a20039528848e463ba4d39))
+
 ## [1.2.4](https://github.com/cedricziel/mattermost-php/compare/v1.2.3...v1.2.4) (2024-01-06)
 
 
