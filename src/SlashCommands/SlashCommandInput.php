@@ -43,10 +43,9 @@ class SlashCommandInput
         $body = $request->getParsedBody();
 
         if (is_array($body)) {
-            $body = null;
 
             // fix for parsers that dont parse the context as object
-            if (is_array($body['context'])) {
+            if (array_key_exists('context', $body) && is_array($body['context'])) {
                 $body['context'] = (object) $body['context'];
             }
 
