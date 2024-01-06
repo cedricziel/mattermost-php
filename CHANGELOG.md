@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.8](https://github.com/cedricziel/mattermost-php/compare/v1.2.7...v1.2.8) (2024-01-06)
+
+
+### Bug Fixes
+
+* allow images in attachments ([#43](https://github.com/cedricziel/mattermost-php/issues/43)) ([bdad3cc](https://github.com/cedricziel/mattermost-php/commit/bdad3cc22f2e3f12739a1cb22939191796f5c448))
+
 ## [1.2.7](https://github.com/cedricziel/mattermost-php/compare/v1.2.6...v1.2.7) (2024-01-06)
 
 
