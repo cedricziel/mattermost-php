@@ -123,4 +123,32 @@ class Attachment implements \JsonSerializable
 
         return $this;
     }
+
+    public function withImageUrl(string $imageUrl): static
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    public function withThumbUrl(string $thumbUrl): static
+    {
+        $this->thumbUrl = $thumbUrl;
+
+        return $this;
+    }
+
+    public function withFooter(string $footer): static
+    {
+        $this->footer = $footer;
+
+        return $this;
+    }
+
+    public function withFooterIcon(string $footerIcon): static
+    {
+        $this->footerIcon = $footerIcon;
+
+        return $this;
+    }
 }
