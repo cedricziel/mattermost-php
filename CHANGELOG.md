@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/cedricziel/mattermost-php/compare/v1.1.2...v1.2.0) (2024-01-06)
+
+
+### Features
+
+* Create Slash Commands ([#25](https://github.com/cedricziel/mattermost-php/issues/25)) ([b4d1d8d](https://github.com/cedricziel/mattermost-php/commit/b4d1d8de6bd18215ff8c3fc3d0bad3ce22d9dde6))
+
 ## [1.1.2](https://github.com/cedricziel/mattermost-php/compare/v1.1.1...v1.1.2) (2024-01-05)
 
 
