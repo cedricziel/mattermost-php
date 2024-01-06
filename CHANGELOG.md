@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/cedricziel/mattermost-php/compare/v1.2.1...v1.2.2) (2024-01-06)
+
+
+### Miscellaneous Chores
+
+* Parse request for slash commands ([#29](https://github.com/cedricziel/mattermost-php/issues/29)) ([09c117a](https://github.com/cedricziel/mattermost-php/commit/09c117a93c5109589badc7b5eee89ada43782b1d))
+
 ## [1.2.1](https://github.com/cedricziel/mattermost-php/compare/v1.2.0...v1.2.1) (2024-01-06)
 
 
