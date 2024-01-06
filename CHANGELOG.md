@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/cedricziel/mattermost-php/compare/v1.2.0...v1.2.1) (2024-01-06)
+
+
+### Miscellaneous Chores
+
+* Add more building ([#27](https://github.com/cedricziel/mattermost-php/issues/27)) ([ddff25b](https://github.com/cedricziel/mattermost-php/commit/ddff25b1d210adf982b031b13e20b1d9d8136c57))
+
 ## [1.2.0](https://github.com/cedricziel/mattermost-php/compare/v1.1.2...v1.2.0) (2024-01-06)
 
 
