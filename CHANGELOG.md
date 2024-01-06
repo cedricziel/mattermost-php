@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.7](https://github.com/cedricziel/mattermost-php/compare/v1.2.6...v1.2.7) (2024-01-06)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump actions/checkout from 3 to 4 ([#40](https://github.com/cedricziel/mattermost-php/issues/40)) ([d6a74a6](https://github.com/cedricziel/mattermost-php/commit/d6a74a6a9cfd02bc5d69ba532402453ffad1ea49))
+
 ## [1.2.6](https://github.com/cedricziel/mattermost-php/compare/v1.2.5...v1.2.6) (2024-01-06)
 
 
