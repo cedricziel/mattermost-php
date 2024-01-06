@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/cedricziel/mattermost-php/compare/v1.2.2...v1.2.3) (2024-01-06)
+
+
+### Bug Fixes
+
+* Always parse context as object ([#31](https://github.com/cedricziel/mattermost-php/issues/31)) ([4d1eaaf](https://github.com/cedricziel/mattermost-php/commit/4d1eaaf3ae59f99d633453ee431146e016d750e0))
+
 ## [1.2.2](https://github.com/cedricziel/mattermost-php/compare/v1.2.1...v1.2.2) (2024-01-06)
 
 
