@@ -96,4 +96,82 @@ class SlashCommandOutput implements \JsonSerializable
 
         return $this;
     }
+
+    public function withText(string $text): static
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    public function setResponseType(SlashCommandResponseType $responseType): static
+    {
+        $this->responseType = $responseType;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function setChannelId(string $channelId): static
+    {
+        $this->channelId = $channelId;
+
+        return $this;
+    }
+
+    public function setIconUrl(string $iconUrl): static
+    {
+        $this->iconUrl = $iconUrl;
+
+        return $this;
+    }
+
+    public function setGotoLocation(string $gotoLocation): static
+    {
+        $this->gotoLocation = $gotoLocation;
+
+        return $this;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function addExtraResponse(SlashCommandOutput $o): static
+    {
+        if ($this->extraResponses === null) {
+            $this->extraResponses = [];
+        }
+
+        $this->extraResponses[] = $o;
+
+        return $this;
+    }
+
+    public function skipSlackParsing(): static
+    {
+        $this->skip_slack_parsing = true;
+
+        return $this;
+    }
+
+    public function addProp(string $key, $value): static
+    {
+        if ($this->props === null) {
+            $this->props = new \stdClass();
+        }
+
+        $this->props->{$key} = $value;
+
+        return $this;
+    }
 }
