@@ -43,6 +43,12 @@ class SlashCommandInput
         $body = $request->getParsedBody();
 
         if (is_array($body)) {
+
+            // fix for parsers that dont parse the context as object
+            if (array_key_exists('context', $body) && is_array($body['context'])) {
+                $body['context'] = (object) $body['context'];
+            }
+
             return new self(
                 channelId: $body['channel_id'] ?? '',
                 channelName: $body['channel_name'] ?? '',
