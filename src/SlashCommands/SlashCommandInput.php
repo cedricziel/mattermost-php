@@ -22,23 +22,24 @@ use Psr\Http\Message\ServerRequestInterface;
 class SlashCommandInput
 {
     public function __construct(
-        protected string $channelId,
-        protected string $channelName,
-        protected string $command,
-        protected string $responseUrl,
-        protected string $teamDomain,
-        protected string $teamId,
-        protected string $text,
-        protected string $token,
-        protected string $triggerId,
-        protected string $userId,
-        protected string $userName,
+        protected string                  $channelId,
+        protected string                  $channelName,
+        protected string                  $command,
+        protected string                  $parameters,
+        protected string                  $responseUrl,
+        protected string                  $teamDomain,
+        protected string                  $teamId,
+        protected string                  $text,
+        protected string                  $token,
+        protected string                  $triggerId,
+        protected string                  $userId,
+        protected string                  $userName,
         protected ?ServerRequestInterface $request,
-        protected ?\stdClass $context = null,
+        protected ?\stdClass              $context = null,
     ) {
     }
 
-    public static function fromRequest(ServerRequestInterface $request): SlashCommandInput
+    public static function fromRequest(string $command, ServerRequestInterface $request): SlashCommandInput
     {
         $body = $request->getParsedBody();
 
@@ -53,6 +54,7 @@ class SlashCommandInput
                 channelId: $body['channel_id'] ?? '',
                 channelName: $body['channel_name'] ?? '',
                 command: $body['command'] ?? '',
+                parameters: self::extractParameters($command, $body['command'] ?? ''),
                 responseUrl: $body['response_url'] ?? '',
                 teamDomain: $body['team_domain'] ?? '',
                 teamId: $body['team_id'] ?? '',
@@ -69,6 +71,7 @@ class SlashCommandInput
                 channelId: $body->channel_id ?? '',
                 channelName: $body->channel_name ?? '',
                 command: $body->command ?? '',
+                parameters: self::extractParameters($command, $body->command ?? ''),
                 responseUrl: $body->response_url ?? '',
                 teamDomain: $body->team_domain ?? '',
                 teamId: $body->team_id ?? '',
@@ -85,6 +88,7 @@ class SlashCommandInput
                 channelId: '',
                 channelName: '',
                 command: '',
+                parameters: '',
                 responseUrl: '',
                 teamDomain: '',
                 teamId: '',
@@ -97,6 +101,15 @@ class SlashCommandInput
                 context: null,
             );
         }
+    }
+
+    private static function extractParameters(string $command, string $incomingCommand): string
+    {
+        if (str_starts_with($incomingCommand, '/'. $command)) {
+            return trim(str_replace('/'. $command, '', $incomingCommand));
+        }
+
+        return $incomingCommand;
     }
 
     public function getChannelId(): string
@@ -162,5 +175,10 @@ class SlashCommandInput
     public function getRequest(): ?ServerRequestInterface
     {
         return $this->request;
+    }
+
+    public function getParameters(): string
+    {
+        return $this->parameters;
     }
 }
