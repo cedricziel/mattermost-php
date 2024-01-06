@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/cedricziel/mattermost-php/compare/v1.2.3...v1.2.4) (2024-01-06)
+
+
+### Miscellaneous Chores
+
+* Allow return with message ([#33](https://github.com/cedricziel/mattermost-php/issues/33)) ([b1169e5](https://github.com/cedricziel/mattermost-php/commit/b1169e57c9eda1e1865369d33167da17cc7feeef))
+
 ## [1.2.3](https://github.com/cedricziel/mattermost-php/compare/v1.2.2...v1.2.3) (2024-01-06)
 
 
