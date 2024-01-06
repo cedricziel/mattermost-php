@@ -8,7 +8,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 interface SlashCommand extends RequestHandlerInterface
 {
-    public function setValidationToken(string $validationToken): void;
-    public function validate(ServerRequestInterface $request): bool;
     public function handle(ServerRequestInterface $request): ResponseInterface;
+    public function execute(SlashCommandInput $input): SlashCommandOutput;
 }

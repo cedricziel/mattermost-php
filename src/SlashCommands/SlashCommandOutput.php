@@ -11,6 +11,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class SlashCommandOutput implements \JsonSerializable
 {
+    private ?SlashCommandOutput $update = null;
+
     public function __construct(
         protected ?string                  $text = null,
         protected ?array                   $attachments = null,
@@ -80,6 +82,10 @@ class SlashCommandOutput implements \JsonSerializable
         }
         if ($this->props !== null) {
             $o->props = $this->props;
+        }
+
+        if ($this->update !== null) {
+            $o->update = $this->update->jsonSerialize();
         }
 
         return $o;
@@ -171,6 +177,13 @@ class SlashCommandOutput implements \JsonSerializable
         }
 
         $this->props->{$key} = $value;
+
+        return $this;
+    }
+
+    public function withUpdate(SlashCommandOutput $withText): static
+    {
+        $this->update = $withText;
 
         return $this;
     }

@@ -33,6 +33,8 @@ class SlashCommandInput
         protected string $triggerId,
         protected string $userId,
         protected string $userName,
+        protected ?ServerRequestInterface $request,
+        protected ?\stdClass $context = null,
     ) {
     }
 
@@ -40,19 +42,55 @@ class SlashCommandInput
     {
         $body = $request->getParsedBody();
 
-        return new self(
-            channelId: $body['channel_id'] ?? '',
-            channelName: $body['channel_name'] ?? '',
-            command: $body['command'] ?? '',
-            responseUrl: $body['response_url'] ?? '',
-            teamDomain: $body['team_domain'] ?? '',
-            teamId: $body['team_id'] ?? '',
-            text: $body['text'] ?? '',
-            token: $body['token'] ?? '',
-            triggerId: $body['trigger_id'] ?? '',
-            userId: $body['user_id'] ?? '',
-            userName: $body['user_name'] ?? '',
-        );
+        if (is_array($body)) {
+            return new self(
+                channelId: $body['channel_id'] ?? '',
+                channelName: $body['channel_name'] ?? '',
+                command: $body['command'] ?? '',
+                responseUrl: $body['response_url'] ?? '',
+                teamDomain: $body['team_domain'] ?? '',
+                teamId: $body['team_id'] ?? '',
+                text: $body['text'] ?? '',
+                token: $body['token'] ?? '',
+                triggerId: $body['trigger_id'] ?? '',
+                userId: $body['user_id'] ?? '',
+                userName: $body['user_name'] ?? '',
+                request: $request,
+                context: $body['context'] ?? null,
+            );
+        } elseif (is_object($body)) {
+            return new self(
+                channelId: $body->channel_id ?? '',
+                channelName: $body->channel_name ?? '',
+                command: $body->command ?? '',
+                responseUrl: $body->response_url ?? '',
+                teamDomain: $body->team_domain ?? '',
+                teamId: $body->team_id ?? '',
+                text: $body->text ?? '',
+                token: $body->token ?? '',
+                triggerId: $body->trigger_id ?? '',
+                userId: $body->user_id ?? '',
+                userName: $body->user_name ?? '',
+                request: $request,
+                context: $body->context ?? null,
+            );
+        } else {
+            return new self(
+                channelId: '',
+                channelName: '',
+                command: '',
+                responseUrl: '',
+                teamDomain: '',
+                teamId: '',
+                text: '',
+                token: '',
+                triggerId: '',
+                userId: '',
+                userName: '',
+                request: $request,
+                context: null,
+            );
+        }
     }
 
     public function getChannelId(): string
@@ -108,5 +146,15 @@ class SlashCommandInput
     public function getUserName(): string
     {
         return $this->userName;
+    }
+
+    public function getContext(): ?\stdClass
+    {
+        return $this->context;
+    }
+
+    public function getRequest(): ?ServerRequestInterface
+    {
+        return $this->request;
     }
 }
