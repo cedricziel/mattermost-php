@@ -103,7 +103,8 @@ JSON;
       ]
     }
   ],
-  "response_type": "ephemeral"
+  "response_type": "ephemeral",
+   "props": {}
 }
 JSON;
 
@@ -157,7 +158,8 @@ JSON;
       ]
     }
   ],
-  "response_type": "ephemeral"
+  "response_type": "ephemeral",
+  "props": {}
 }
 JSON;
 
