@@ -31,7 +31,7 @@ class SlashCommandTest extends TestCase
         $jsonResponse = $response->getBody()->getContents();
         self::assertJson($jsonResponse);
         self::assertJsonStringEqualsJsonString(
-            '{"response_type":"ephemeral","text":"Hello World!"}',
+            '{"props": {},"response_type":"ephemeral","text":"Hello World!"}',
             $jsonResponse,
         );
     }
@@ -71,6 +71,7 @@ class SlashCommandTest extends TestCase
         self::assertJsonStringEqualsJsonString(
             <<<JSON
 {
+  "props": {},
   "response_type":"ephemeral",
   "text":"Hello World!",
   "attachments":[

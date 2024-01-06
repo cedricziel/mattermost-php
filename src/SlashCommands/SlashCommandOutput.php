@@ -24,7 +24,7 @@ class SlashCommandOutput implements \JsonSerializable
         protected ?string                  $type = null,
         protected ?array                   $extraResponses = null,
         protected ?bool                    $skip_slack_parsing = null,
-        protected ?\stdClass               $props = null,
+        protected ?\stdClass               $props = new \stdClass(),
 
         // only for updates
         protected ?string                  $message = null,
