@@ -15,7 +15,7 @@ abstract class AbstractSlashCommand implements SlashCommand
 
     final public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $output = $this->execute(SlashCommandInput::fromRequest('pling', $request));
+        $output = $this->execute(SlashCommandInput::fromRequest($this->command, $request));
 
         return $output->toResponse();
     }
