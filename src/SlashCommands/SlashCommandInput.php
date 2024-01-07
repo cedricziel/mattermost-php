@@ -163,9 +163,4 @@ class SlashCommandInput
     {
         return $this->request;
     }
-
-    public function getParameters(): string
-    {
-        return $this->parameters;
-    }
 }
