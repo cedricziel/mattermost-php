@@ -25,7 +25,6 @@ class SlashCommandInput
         protected string                  $channelId,
         protected string                  $channelName,
         protected string                  $command,
-        protected string                  $parameters,
         protected string                  $responseUrl,
         protected string                  $teamDomain,
         protected string                  $teamId,
@@ -54,7 +53,6 @@ class SlashCommandInput
                 channelId: $body['channel_id'] ?? '',
                 channelName: $body['channel_name'] ?? '',
                 command: $body['command'] ?? '',
-                parameters: self::extractParameters($command, $body['command'] ?? ''),
                 responseUrl: $body['response_url'] ?? '',
                 teamDomain: $body['team_domain'] ?? '',
                 teamId: $body['team_id'] ?? '',
@@ -71,7 +69,6 @@ class SlashCommandInput
                 channelId: $body->channel_id ?? '',
                 channelName: $body->channel_name ?? '',
                 command: $body->command ?? '',
-                parameters: self::extractParameters($command, $body->command ?? ''),
                 responseUrl: $body->response_url ?? '',
                 teamDomain: $body->team_domain ?? '',
                 teamId: $body->team_id ?? '',
@@ -88,7 +85,6 @@ class SlashCommandInput
                 channelId: '',
                 channelName: '',
                 command: '',
-                parameters: '',
                 responseUrl: '',
                 teamDomain: '',
                 teamId: '',
@@ -101,15 +97,6 @@ class SlashCommandInput
                 context: null,
             );
         }
-    }
-
-    private static function extractParameters(string $command, string $incomingCommand): string
-    {
-        if (str_starts_with($incomingCommand, '/'. $command)) {
-            return trim(str_replace('/'. $command, '', $incomingCommand));
-        }
-
-        return $incomingCommand;
     }
 
     public function getChannelId(): string
