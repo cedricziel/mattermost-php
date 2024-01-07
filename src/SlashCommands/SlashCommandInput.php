@@ -38,7 +38,7 @@ class SlashCommandInput
     ) {
     }
 
-    public static function fromRequest(string $command, ServerRequestInterface $request): SlashCommandInput
+    public static function fromRequest(ServerRequestInterface $request): SlashCommandInput
     {
         $body = $request->getParsedBody();
 
