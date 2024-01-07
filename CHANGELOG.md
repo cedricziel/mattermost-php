@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.10](https://github.com/cedricziel/mattermost-php/compare/v1.2.9...v1.2.10) (2024-01-07)
+
+
+### Miscellaneous Chores
+
+* remove need to identify command ([#49](https://github.com/cedricziel/mattermost-php/issues/49)) ([84348b8](https://github.com/cedricziel/mattermost-php/commit/84348b8e45ea0e3064cf4b810e88b8b15fea9428))
+* remove parameters ([#47](https://github.com/cedricziel/mattermost-php/issues/47)) ([d6e1e11](https://github.com/cedricziel/mattermost-php/commit/d6e1e11ec8677e73e2f15e386c421e741b6ec854))
+
 ## [1.2.9](https://github.com/cedricziel/mattermost-php/compare/v1.2.8...v1.2.9) (2024-01-07)
 
 
