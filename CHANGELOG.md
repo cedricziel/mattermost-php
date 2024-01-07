@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.9](https://github.com/cedricziel/mattermost-php/compare/v1.2.8...v1.2.9) (2024-01-07)
+
+
+### Bug Fixes
+
+* retrieve correct command ([#45](https://github.com/cedricziel/mattermost-php/issues/45)) ([61fa68a](https://github.com/cedricziel/mattermost-php/commit/61fa68aaf911f24580b08e98c93d66b74204f40f))
+
 ## [1.2.8](https://github.com/cedricziel/mattermost-php/compare/v1.2.7...v1.2.8) (2024-01-06)
 
 
