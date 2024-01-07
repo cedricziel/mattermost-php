@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.11](https://github.com/cedricziel/mattermost-php/compare/v1.2.10...v1.2.11) (2024-01-07)
+
+
+### Miscellaneous Chores
+
+* remove getParameters ([#50](https://github.com/cedricziel/mattermost-php/issues/50)) ([daffb11](https://github.com/cedricziel/mattermost-php/commit/daffb118e64fb44140ed4a295a0a9fec47402a0f))
+
 ## [1.2.10](https://github.com/cedricziel/mattermost-php/compare/v1.2.9...v1.2.10) (2024-01-07)
 
 
