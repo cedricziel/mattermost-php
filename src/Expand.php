@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp;
 use CedricZiel\MattermostPhp\Apps\ExpandLevel;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-final readonly class Expand implements \JsonSerializable
+final class Expand implements \JsonSerializable
 {
     public function __construct(
         #[SerializedName('app')]
@@ -35,6 +35,11 @@ final readonly class Expand implements \JsonSerializable
         #[SerializedName('oauth2_user')]
         protected ?ExpandLevel $oauth2_user = null,
     ) {
+    }
+
+    public static function create(): self
+    {
+        return new self();
     }
 
     public function getApp(): ?ExpandLevel
@@ -159,5 +164,40 @@ final readonly class Expand implements \JsonSerializable
         }
 
         return $o;
+    }
+
+    public function withApp(ExpandLevel $expandLevel): Expand
+    {
+        $this->app = $expandLevel;
+
+        return $this;
+    }
+
+    public function withActingUser(ExpandLevel $expandLevel): Expand
+    {
+        $this->actingUser = $expandLevel;
+
+        return $this;
+    }
+
+    public function withTeam(ExpandLevel $expandLevel): Expand
+    {
+        $this->team = $expandLevel;
+
+        return $this;
+    }
+
+    public function withChannel(ExpandLevel $expandLevel): Expand
+    {
+        $this->channel = $expandLevel;
+
+        return $this;
+    }
+
+    public function withUser(ExpandLevel $expandLevel): Expand
+    {
+        $this->user = $expandLevel;
+
+        return $this;
     }
 }

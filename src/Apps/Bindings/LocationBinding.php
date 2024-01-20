@@ -23,13 +23,20 @@ final class LocationBinding implements \JsonSerializable
         protected readonly ?array $bindings = null,
         protected readonly ?Form $form = null,
         protected readonly ?string $label = null,
-        protected readonly ?Call $submit = null,
+        protected ?Call $submit = null,
     ) {
     }
 
     public static function create(string $location, string $icon = '', string $hint = '', $description = ''): self
     {
         return new self($location, $icon, $hint, $description);
+    }
+
+    public function withSubmit(Call $submit): self
+    {
+        $this->submit = $submit;
+
+        return $this;
     }
 
     public function getLocation(): string

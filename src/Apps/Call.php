@@ -11,10 +11,15 @@ class Call implements \JsonSerializable
         #[SerializedName('path')]
         protected readonly string $path,
         #[SerializedName('state')]
-        protected readonly ?array $state = null,
+        protected ?array $state = null,
         #[SerializedName('expand')]
-        protected readonly ?Expand $expand = null,
+        protected ?Expand $expand = null,
     ) {
+    }
+
+    public static function create(string $path) : self
+    {
+        return new self($path);
     }
 
     public function getPath(): string
@@ -47,5 +52,19 @@ class Call implements \JsonSerializable
         }
 
         return $o;
+    }
+
+    public function withState(array $array): static
+    {
+        $this->state = $array;
+
+        return $this;
+    }
+
+    public function withExpand(Expand $expand): static
+    {
+        $this->expand = $expand;
+
+        return $this;
     }
 }
