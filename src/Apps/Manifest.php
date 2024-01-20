@@ -126,7 +126,9 @@ class Manifest implements \JsonSerializable
             $o->on_version_changed = $this->onVersionChanged->jsonSerialize();
         }
         if ($this->requestedLocations !== null) {
-            $o->requested_locations = $this->requestedLocations;
+            $o->requested_locations = array_map(function(Location $location) {
+                return $location->value;
+            }, $this->requestedLocations);
         }
         if ($this->requestedPermissions !== null) {
             $o->requested_permissions = $this->requestedPermissions;

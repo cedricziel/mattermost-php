@@ -95,7 +95,7 @@ class MattermostApp implements RequestHandlerInterface
             $this->requestedLocations = [];
         }
 
-        if (!in_array($location->value, $this->requestedLocations, true)) {
+        if (!in_array($location, $this->requestedLocations, true)) {
             $this->requestedLocations[] = $location;
         }
 

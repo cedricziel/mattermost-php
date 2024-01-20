@@ -98,7 +98,7 @@ final class LocationBinding implements \JsonSerializable
         $o->hint = $this->hint;
         $o->description = $this->description;
 
-        if ($this->bindings !== null) {
+        if ($this->bindings !== null && count($this->bindings) > 0) {
             $o->bindings = array_map(fn(LocationBinding $binding) => $binding->jsonSerialize(), $this->bindings);
         }
 
