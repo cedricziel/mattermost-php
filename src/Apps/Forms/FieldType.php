@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Apps\Forms;
 /**
  * @see https://developers.mattermost.com/integrate/apps/structure/forms/#field-types
  */
-enum FieldTypes: string
+enum FieldType: string
 {
     /**
      * A plain text field.

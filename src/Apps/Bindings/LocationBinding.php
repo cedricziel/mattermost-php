@@ -21,7 +21,7 @@ final class LocationBinding implements \JsonSerializable
          * @var LocationBinding[]|null
          */
         protected readonly ?array $bindings = null,
-        protected readonly ?Form $form = null,
+        protected ?Form $form = null,
         protected readonly ?string $label = null,
         protected ?Call $submit = null,
     ) {
@@ -35,6 +35,13 @@ final class LocationBinding implements \JsonSerializable
     public function withSubmit(Call $submit): self
     {
         $this->submit = $submit;
+
+        return $this;
+    }
+
+    public function withForm(Form $form): self
+    {
+        $this->form = $form;
 
         return $this;
     }
@@ -82,7 +89,7 @@ final class LocationBinding implements \JsonSerializable
         return $this->submit;
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): \stdClass
     {
         $o = new \stdClass();
 
