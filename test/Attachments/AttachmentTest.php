@@ -2,12 +2,12 @@
 
 namespace CedricZiel\MattermostPhp\Test\Attachments;
 
-use CedricZiel\MattermostPhp\Attachments\Action;
-use CedricZiel\MattermostPhp\Attachments\Actions\ActionIntegration;
-use CedricZiel\MattermostPhp\Attachments\Actions\ChannelSelectAction;
-use CedricZiel\MattermostPhp\Attachments\Actions\SelectAction;
-use CedricZiel\MattermostPhp\Attachments\Attachment;
-use CedricZiel\MattermostPhp\Attachments\Field;
+use CedricZiel\MattermostPhp\Common\Attachments\Action;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\ActionIntegration;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\ChannelSelectAction;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\SelectAction;
+use CedricZiel\MattermostPhp\Common\Attachments\Attachment;
+use CedricZiel\MattermostPhp\Common\Attachments\Field;
 use CedricZiel\MattermostPhp\SlashCommands\SlashCommandOutput;
 use CedricZiel\MattermostPhp\Test\MattermostTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;

@@ -2,6 +2,7 @@
 
 namespace CedricZiel\MattermostPhp;
 
+use CedricZiel\MattermostPhp\Apps\Call;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 class Timer

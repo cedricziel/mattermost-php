@@ -2,8 +2,8 @@
 
 namespace CedricZiel\MattermostPhp\Test\Attachments\Actions;
 
-use CedricZiel\MattermostPhp\Attachments\Actions\ActionIntegration;
-use CedricZiel\MattermostPhp\Attachments\Actions\ChannelSelectAction;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\ActionIntegration;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\ChannelSelectAction;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

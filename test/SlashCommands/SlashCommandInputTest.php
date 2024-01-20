@@ -2,9 +2,9 @@
 
 namespace CedricZiel\MattermostPhp\Test\SlashCommands;
 
-use CedricZiel\MattermostPhp\Attachments\Action;
-use CedricZiel\MattermostPhp\Attachments\Actions\ActionIntegration;
-use CedricZiel\MattermostPhp\Attachments\Attachment;
+use CedricZiel\MattermostPhp\Common\Attachments\Action;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\ActionIntegration;
+use CedricZiel\MattermostPhp\Common\Attachments\Attachment;
 use CedricZiel\MattermostPhp\SlashCommands\AbstractSlashCommand;
 use CedricZiel\MattermostPhp\SlashCommands\Middleware\ParsingMiddleware;
 use CedricZiel\MattermostPhp\SlashCommands\SlashCommandInput;
