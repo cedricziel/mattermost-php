@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.12](https://github.com/cedricziel/mattermost-php/compare/v1.2.11...v1.2.12) (2024-01-20)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpunit/phpunit from 10.5.5 to 10.5.8 ([#54](https://github.com/cedricziel/mattermost-php/issues/54)) ([72bd7c3](https://github.com/cedricziel/mattermost-php/commit/72bd7c3d9f124d5c9b3952fe4be7a5b431fe56c0))
+* **deps:** bump actions/cache from 3 to 4 ([#53](https://github.com/cedricziel/mattermost-php/issues/53)) ([8e3b5a3](https://github.com/cedricziel/mattermost-php/commit/8e3b5a3328d48e4d8f333491f00dcf0dc66bc1a2))
+
 ## [1.2.11](https://github.com/cedricziel/mattermost-php/compare/v1.2.10...v1.2.11) (2024-01-07)
 
 
