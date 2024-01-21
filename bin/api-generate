@@ -4,6 +4,7 @@
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
     throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
@@ -32,12 +33,12 @@ $openApi = json_decode($ymlSrc, true);
 
 $printer = new Nette\PhpGenerator\PsrPrinter;
 
-$namespaceName = 'CedricZiel\MattermostPhp\Client';
+$endpointNamespaceName = 'CedricZiel\MattermostPhp\Client\Endpoint';
 $modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
-$namespace = new PhpNamespace($namespaceName);
+$endpointNamespace = new PhpNamespace($endpointNamespaceName);
 $modelNamespace = new PhpNamespace($modelNamespaceName);
 
-@mkdir(__DIR__ . '/../src/Client');
+@mkdir(__DIR__ . '/../src/Client/Endpoint');
 @mkdir(__DIR__ . '/../src/Client/Model');
 
 foreach ($openApi['x-tagGroups'] as $tagGroup) {
@@ -46,10 +47,18 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
     }
 
     foreach ($tagGroup['tags'] as $tag) {
-        $class = $namespace->addClass(prepareEndpointName($tag));
+        $class = $endpointNamespace->addClass(prepareEndpointName($tag));
+        $class->addTrait(\CedricZiel\MattermostPhp\Client\HttpClientTrait::class);
         $constructor = $class->addMethod('__construct');
         $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
-        $constructor->addPromotedParameter('httpClient')->setType(ClientInterface::class)->setProtected();
+        $constructor->addParameter('httpClient')
+            ->setType(ClientInterface::class)
+            ->setNullable()
+            ->setDefaultValue(null);
+        $constructor->addParameter('requestFactory')
+            ->setType(RequestFactoryInterface::class)
+            ->setNullable()
+            ->setDefaultValue(null);
 
         $baseUrlSetter = $class->addMethod('setBaseUrl');
         $baseUrlSetter->setReturnType('static');
@@ -67,6 +76,10 @@ function mapParameterType(mixed $type)
 
     if ($type === 'boolean') {
         return 'bool';
+    }
+
+    if ($type === 'array') {
+        return 'array';
     }
 
     if ($type === 'object') {
@@ -92,11 +105,36 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
     }
 }
 
-foreach ($openApi['paths'] as $path => $pathSpec) {
-    foreach ($pathSpec as $method => $methodSpec) {
-        echo "$method - $path (" . $methodSpec['operationId'] . ")\n";
+function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, string $operationId, array $schema): ClassType
+{
+    $class = $modelNamespace->addClass($operationId . 'Request');
+    $constructor = $class->addMethod('__construct');
 
-        $class = findClass($namespace, $methodSpec['tags'][0]);
+    if (!isset($schema['properties'])) {
+        return $class;
+    }
+
+    foreach ($schema['properties'] as $propertyName => $property) {
+        $required = isset($property['required']) && $property['required'] !== false;
+
+        $cp = $constructor->addPromotedParameter($propertyName)->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+        if (!$required) {
+            $cp
+                ->setNullable()
+                ->setDefaultValue(null);
+        }
+
+        $cp->setComment($property['description'] ?? null);
+    }
+
+    return $class;
+}
+
+foreach ($openApi['paths'] as $path => $pathSpec) {
+    foreach ($pathSpec as $httpMethod => $methodSpec) {
+        echo "$httpMethod - $path (" . $methodSpec['operationId'] . ")\n";
+
+        $class = findClass($endpointNamespace, $methodSpec['tags'][0]);
         if (!$class) {
             continue;
         }
@@ -104,9 +142,13 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $method = $class->addMethod(lcfirst($methodSpec['operationId']))
             ->setReturnType('array')
             ->setComment($methodSpec['summary'] ?? null)
+            ->addComment($methodSpec['description'] ?? null)
+            ->addComment('@throws \Psr\Http\Client\ClientExceptionInterface')
             ->addBody(sprintf('$path = \'%s\';', $path))
+            ->addBody(sprintf('$method = \'%s\';', $httpMethod))
             ->addBody('$pathParameters = [];')
             ->addBody('$queryParameters = [];')
+            ->addBody('')
         ;
 
         $pathParameters = [];
@@ -132,41 +174,68 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             }
         }
 
-        $method->addBody('return [];');
+        if (isset($methodSpec['requestBody'])) {
+            $requestBody = $methodSpec['requestBody'];
+            $requestBodyContent = $requestBody['content'];
+
+            if (isset($requestBodyContent['application/json'])) {
+                $requestBodyContentJson = $requestBodyContent['application/json'];
+
+                $requestBodyClass = createRequestBodyModelClassFromSchema(
+                    $modelNamespace,
+                    ucfirst($methodSpec['operationId']),
+                    $requestBodyContentJson['schema'] ?? [],
+                );
+
+                $method->addParameter('requestBody')->setType($requestBodyClass->getName());
+            }
+        }
+
+        $method
+            ->addBody('')
+            ->addBody('// build URI through path and query parameters')
+            ->addBody('$path = str_replace(array_map(function ($key) { return sprintf(\'{%s}\', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);')
+            ->addBody('$path = sprintf(\'%s?%s\', $path, http_build_query($queryParameters));')
+            ->addBody('')
+            ->addBody('$request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);')
+            ->addBody('')
+            ->addBody('$response = $this->httpClient->sendRequest($request);')
+            ->addBody('');
+
+        $method
+            ->addBody('return [];');
     }
 }
 
 foreach ($modelNamespace->getClasses() as $genClass) {
     $file = new Nette\PhpGenerator\PhpFile;
     $file->addComment('This file is auto-generated.');
-    $file->setStrictTypes(); // adds declare(strict_types=1)
+    $file->setStrictTypes();
 
-    $class = $file->addClass($namespaceName . '\\' . $genClass->getName());
+    $class = $file->addClass($endpointNamespaceName . '\\' . $genClass->getName());
 
     file_put_contents(__DIR__ . '/../src/Client/Model/' . $genClass->getName() . '.php', <<<PHP
 <?php
 
 namespace {$genClass->getNamespace()->getName()};
 
-{$printer->printClass($genClass, $genClass->getNamespace())};
+{$printer->printClass($genClass, $genClass->getNamespace())}
 PHP);
 }
 
-foreach ($namespace->getClasses() as $genClass) {
-    @mkdir(__DIR__ . '/../src/Client');
-
+foreach ($endpointNamespace->getClasses() as $genClass) {
     $file = new Nette\PhpGenerator\PhpFile;
     $file->addComment('This file is auto-generated.');
     $file->setStrictTypes(); // adds declare(strict_types=1)
 
-    $class = $file->addClass($namespaceName . '\\' . $genClass->getName());
+    $class = $file->addClass($endpointNamespaceName . '\\' . $genClass->getName());
 
-    file_put_contents(__DIR__ . '/../src/Client/' . $genClass->getName() . '.php', <<<PHP
+    file_put_contents(__DIR__ . '/../src/Client/Endpoint/' . $genClass->getName() . '.php', <<<PHP
 <?php
 
 namespace {$genClass->getNamespace()->getName()};
 
-{$printer->printClass($genClass, $genClass->getNamespace())};
+{$printer->printClass($genClass, $genClass->getNamespace())}
 PHP);
 }
 
