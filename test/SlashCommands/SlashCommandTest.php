@@ -2,8 +2,8 @@
 
 namespace CedricZiel\MattermostPhp\Test\SlashCommands;
 
-use CedricZiel\MattermostPhp\Attachments\Attachment;
-use CedricZiel\MattermostPhp\Attachments\Field;
+use CedricZiel\MattermostPhp\Common\Attachments\Attachment;
+use CedricZiel\MattermostPhp\Common\Attachments\Field;
 use CedricZiel\MattermostPhp\SlashCommands\AbstractSlashCommand;
 use CedricZiel\MattermostPhp\SlashCommands\SlashCommandInput;
 use CedricZiel\MattermostPhp\SlashCommands\SlashCommandOutput;

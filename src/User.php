@@ -4,7 +4,7 @@ namespace CedricZiel\MattermostPhp;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-final readonly class User
+class User
 {
     public function __construct(
         #[SerializedName('id')]

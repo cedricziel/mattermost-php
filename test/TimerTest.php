@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Test;
 
-use CedricZiel\MattermostPhp\Call;
+use CedricZiel\MattermostPhp\Apps\Call;
 use CedricZiel\MattermostPhp\Timer;
 use PHPUnit\Framework\Attributes\CoversClass;
 

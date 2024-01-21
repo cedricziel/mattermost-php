@@ -2,8 +2,8 @@
 
 namespace CedricZiel\MattermostPhp\Test\Bindings;
 
-use CedricZiel\MattermostPhp\Bindings\TopLevelBinding;
-use CedricZiel\MattermostPhp\Location;
+use CedricZiel\MattermostPhp\Apps\Bindings\TopLevelBinding;
+use CedricZiel\MattermostPhp\Apps\Location;
 use CedricZiel\MattermostPhp\Test\MattermostTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

@@ -14,7 +14,8 @@
         "php-http/discovery": "^1.19",
         "psr/http-server-handler": "^1.0",
         "guzzlehttp/psr7": "^2.6",
-        "psr/http-server-middleware": "^1.0"
+        "psr/http-server-middleware": "^1.0",
+        "psr/event-dispatcher": "^1.0"
     },
     "require-dev": {
         "gnello/php-mattermost-driver": "^v2.18.0",

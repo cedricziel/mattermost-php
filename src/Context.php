@@ -2,6 +2,9 @@
 
 namespace CedricZiel\MattermostPhp;
 
+use CedricZiel\MattermostPhp\Apps\ChannelMember;
+use CedricZiel\MattermostPhp\Apps\Team;
+use CedricZiel\MattermostPhp\Apps\TeamMember;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 class Context

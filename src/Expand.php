@@ -2,9 +2,10 @@
 
 namespace CedricZiel\MattermostPhp;
 
+use CedricZiel\MattermostPhp\Apps\ExpandLevel;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-final readonly class Expand
+final class Expand implements \JsonSerializable
 {
     public function __construct(
         #[SerializedName('app')]
@@ -34,6 +35,11 @@ final readonly class Expand
         #[SerializedName('oauth2_user')]
         protected ?ExpandLevel $oauth2_user = null,
     ) {
+    }
+
+    public static function create(): self
+    {
+        return new self();
     }
 
     public function getApp(): ?ExpandLevel
@@ -99,5 +105,99 @@ final readonly class Expand
     public function getOauth2User(): ?ExpandLevel
     {
         return $this->oauth2_user;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        $o = new \stdClass();
+
+        if ($this->app !== null) {
+            $o->app = $this->app;
+        }
+
+        if ($this->actingUser !== null) {
+            $o->acting_user = $this->actingUser;
+        }
+
+        if ($this->acting_user_access_token !== null) {
+            $o->acting_user_access_token = $this->acting_user_access_token;
+        }
+
+        if ($this->locale !== null) {
+            $o->locale = $this->locale;
+        }
+
+        if ($this->channel !== null) {
+            $o->channel = $this->channel;
+        }
+
+        if ($this->channel_member !== null) {
+            $o->channel_member = $this->channel_member;
+        }
+
+        if ($this->team !== null) {
+            $o->team = $this->team;
+        }
+
+        if ($this->team_member !== null) {
+            $o->team_member = $this->team_member;
+        }
+
+        if ($this->post !== null) {
+            $o->post = $this->post;
+        }
+
+        if ($this->root_post !== null) {
+            $o->root_post = $this->root_post;
+        }
+
+        if ($this->user !== null) {
+            $o->user = $this->user;
+        }
+
+        if ($this->oauth2_app !== null) {
+            $o->oauth2_app = $this->oauth2_app;
+        }
+
+        if ($this->oauth2_user !== null) {
+            $o->oauth2_user = $this->oauth2_user;
+        }
+
+        return $o;
+    }
+
+    public function withApp(ExpandLevel $expandLevel): Expand
+    {
+        $this->app = $expandLevel;
+
+        return $this;
+    }
+
+    public function withActingUser(ExpandLevel $expandLevel): Expand
+    {
+        $this->actingUser = $expandLevel;
+
+        return $this;
+    }
+
+    public function withTeam(ExpandLevel $expandLevel): Expand
+    {
+        $this->team = $expandLevel;
+
+        return $this;
+    }
+
+    public function withChannel(ExpandLevel $expandLevel): Expand
+    {
+        $this->channel = $expandLevel;
+
+        return $this;
+    }
+
+    public function withUser(ExpandLevel $expandLevel): Expand
+    {
+        $this->user = $expandLevel;
+
+        return $this;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Attachments\Actions;
 
-use CedricZiel\MattermostPhp\Attachments\Actions\ActionIntegration;
-use CedricZiel\MattermostPhp\Attachments\Actions\SelectAction;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\ActionIntegration;
+use CedricZiel\MattermostPhp\Common\Attachments\Actions\SelectAction;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

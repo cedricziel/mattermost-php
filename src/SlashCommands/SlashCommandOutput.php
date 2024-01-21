@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\SlashCommands;
 
-use CedricZiel\MattermostPhp\Attachments\Attachment;
+use CedricZiel\MattermostPhp\Common\Attachments\Attachment;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 

@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Test;
 
-use CedricZiel\MattermostPhp\Manifest;
+use CedricZiel\MattermostPhp\Apps\Manifest;
 use CedricZiel\MattermostPhp\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
 

@@ -3,7 +3,7 @@
 namespace CedricZiel\MattermostPhp\Test;
 
 use CedricZiel\MattermostPhp\AppClient;
-use CedricZiel\MattermostPhp\Call;
+use CedricZiel\MattermostPhp\Apps\Call;
 use CedricZiel\MattermostPhp\Context;
 use CedricZiel\MattermostPhp\Post;
 use CedricZiel\MattermostPhp\Timer;
@@ -13,7 +13,6 @@ use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Component\HttpClient\Response\JsonMockResponse;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 #[CoversClass(AppClient::class)]
 class AppClientTest extends MattermostTestCase
