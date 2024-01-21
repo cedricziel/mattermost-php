@@ -1,0 +1,173 @@
+#!/usr/bin/env php
+<?php
+
+use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\PhpNamespace;
+use Psr\Http\Client\ClientInterface;
+
+if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
+    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
+}
+
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+function prepareEndpointName(string $tag): string
+{
+    return str_replace(' ', '', ucwords(str_replace('-', ' ', $tag))) . 'Endpoint';
+}
+
+function findClass(PhpNamespace $namespace, string $tag): ?ClassType
+{
+    foreach ($namespace->getClasses() as $class) {
+        if ($class->getName() === prepareEndpointName($tag)) {
+            return $class;
+        }
+    }
+
+    return null;
+}
+
+$ymlSrc = file_get_contents(__DIR__ . '/../resources/openapi.json');
+$openApi = json_decode($ymlSrc, true);
+
+$printer = new Nette\PhpGenerator\PsrPrinter;
+
+$namespaceName = 'CedricZiel\MattermostPhp\Client';
+$modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
+$namespace = new PhpNamespace($namespaceName);
+$modelNamespace = new PhpNamespace($namespaceName);
+
+@mkdir(__DIR__ . '/../src/Client');
+@mkdir(__DIR__ . '/../src/Client/Model');
+
+foreach ($openApi['x-tagGroups'] as $tagGroup) {
+    if ($tagGroup['name'] !== 'Endpoints') {
+        continue;
+    }
+
+    foreach ($tagGroup['tags'] as $tag) {
+        $class = $namespace->addClass(prepareEndpointName($tag));
+        $constructor = $class->addMethod('__construct');
+        $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
+        $constructor->addPromotedParameter('httpClient')->setType(ClientInterface::class)->setProtected();
+
+        $baseUrlSetter = $class->addMethod('setBaseUrl');
+        $baseUrlSetter->setReturnType('static');
+        $baseUrlSetter->addParameter('baseUrl')->setType('string');
+        $baseUrlSetter->addBody('$this->baseUrl = $baseUrl;');
+        $baseUrlSetter->addBody('return $this;');
+    }
+}
+
+function mapParameterType(mixed $type)
+{
+    if ($type === 'integer') {
+        return 'int';
+    }
+
+    if ($type === 'boolean') {
+        return 'bool';
+    }
+
+    if ($type === 'object') {
+        return stdClass::class;
+    }
+
+    return $type;
+}
+
+foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
+    $class = $modelNamespace->addClass($schemaName);
+
+    if (isset($schema['description'])) {
+        $class->setComment($schema['description']);
+    }
+
+    if (!isset($schema['properties'])) continue;
+    foreach ($schema['properties'] as $propertyName => $property) {
+        $p = $class->addProperty($propertyName);
+        $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+        $p->setComment($property['description'] ?? null)
+            ->setNullable(!isset($property['required']) || $property['required'] === false);
+    }
+}
+
+foreach ($openApi['paths'] as $path => $pathSpec) {
+    foreach ($pathSpec as $method => $methodSpec) {
+        echo "$method - $path (" . $methodSpec['operationId'] . ")\n";
+
+        $class = findClass($namespace, $methodSpec['tags'][0]);
+        if (!$class) {
+            continue;
+        }
+
+        $method = $class->addMethod(lcfirst($methodSpec['operationId']))
+            ->setReturnType('array')
+            ->setComment($methodSpec['summary'] ?? null)
+            ->addBody(sprintf('$path = \'%s\';', $path))
+            ->addBody('$pathParameters = [];')
+            ->addBody('$queryParameters = [];')
+        ;
+
+        $pathParameters = [];
+        $queryParameters = [];
+
+        if (isset($methodSpec['parameters'])) {
+            foreach ($methodSpec['parameters'] as $parameter) {
+                $p = $method->addParameter($parameter['name'])->setType(mapParameterType($parameter['schema']['type']));
+                $p->setComment($parameter['description'])
+                    ->setNullable(!isset($parameter['required']) || $parameter['required'] === false);
+
+                if (isset($parameter['schema']['default'])) {
+                    $p->setDefaultValue($parameter['schema']['default']);
+                }
+
+                if ($parameter['in'] === 'path') {
+                    $pathParameters[] = $parameter['name'];
+                    $method->addBody(sprintf('$pathParameters[\'%s\'] = $%s;', $parameter['name'], $parameter['name']));
+                } elseif ($parameter['in'] === 'query') {
+                    $queryParameters[] = $parameter['name'];
+                    $method->addBody(sprintf('$queryParameters[\'%s\'] = $%s;', $parameter['name'], $parameter['name']));
+                }
+            }
+        }
+
+        $method->addBody('return [];');
+    }
+}
+
+foreach ($modelNamespace->getClasses() as $genClass) {
+    $file = new Nette\PhpGenerator\PhpFile;
+    $file->addComment('This file is auto-generated.');
+    $file->setStrictTypes(); // adds declare(strict_types=1)
+
+    $class = $file->addClass($namespaceName . '\\' . $genClass->getName());
+
+    file_put_contents(__DIR__ . '/../src/Client/Model/' . $genClass->getName() . '.php', <<<PHP
+<?php
+
+namespace {$genClass->getNamespace()->getName()};
+
+{$printer->printClass($genClass, $genClass->getNamespace())};
+PHP);
+}
+
+foreach ($namespace->getClasses() as $genClass) {
+    @mkdir(__DIR__ . '/../src/Client');
+
+    $file = new Nette\PhpGenerator\PhpFile;
+    $file->addComment('This file is auto-generated.');
+    $file->setStrictTypes(); // adds declare(strict_types=1)
+
+    $class = $file->addClass($namespaceName . '\\' . $genClass->getName());
+
+    file_put_contents(__DIR__ . '/../src/Client/' . $genClass->getName() . '.php', <<<PHP
+<?php
+
+namespace {$genClass->getNamespace()->getName()};
+
+{$printer->printClass($genClass, $genClass->getNamespace())};
+PHP);
+}
+
+exit(0);
