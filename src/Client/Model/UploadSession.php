@@ -1,6 +1,6 @@
 <?php
 
-namespace CedricZiel\MattermostPhp\Client;
+namespace CedricZiel\MattermostPhp\Client\Model;
 
 /**
  * an object containing information used to keep track of a file upload.

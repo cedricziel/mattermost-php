@@ -1,6 +1,6 @@
 <?php
 
-namespace CedricZiel\MattermostPhp\Client;
+namespace CedricZiel\MattermostPhp\Client\Model;
 
 /**
  * a thread that user is following

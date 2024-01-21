@@ -35,7 +35,7 @@ $printer = new Nette\PhpGenerator\PsrPrinter;
 $namespaceName = 'CedricZiel\MattermostPhp\Client';
 $modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
 $namespace = new PhpNamespace($namespaceName);
-$modelNamespace = new PhpNamespace($namespaceName);
+$modelNamespace = new PhpNamespace($modelNamespaceName);
 
 @mkdir(__DIR__ . '/../src/Client');
 @mkdir(__DIR__ . '/../src/Client/Model');
