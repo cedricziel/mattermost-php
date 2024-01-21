@@ -40,14 +40,18 @@ class StatusEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetUserStatusResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -61,7 +65,7 @@ class StatusEndpoint
     public function updateUserStatus(
         /** User ID */
         string $user_id,
-        \UpdateUserStatusRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusRequest $requestBody,
     ): array
     {
         $path = '/api/v4/users/{user_id}/status';
@@ -72,14 +76,18 @@ class StatusEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -90,7 +98,9 @@ class StatusEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getUsersStatusesByIds(\GetUsersStatusesByIdsRequest $requestBody): array
+    public function getUsersStatusesByIds(
+        \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsRequest $requestBody,
+    ): array
     {
         $path = '/api/v4/users/status/ids';
         $method = 'post';
@@ -99,14 +109,18 @@ class StatusEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -120,7 +134,7 @@ class StatusEndpoint
     public function updateUserCustomStatus(
         /** User ID */
         string $user_id,
-        \UpdateUserCustomStatusRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest $requestBody,
     ): array
     {
         $path = '/api/v4/users/{user_id}/status/custom';
@@ -131,14 +145,18 @@ class StatusEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -162,14 +180,18 @@ class StatusEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UnsetUserCustomStatusResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -183,7 +205,7 @@ class StatusEndpoint
     public function removeRecentCustomStatus(
         /** User ID */
         string $user_id,
-        \RemoveRecentCustomStatusRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest $requestBody,
     ): array
     {
         $path = '/api/v4/users/{user_id}/status/custom/recent';
@@ -194,14 +216,18 @@ class StatusEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -215,7 +241,7 @@ class StatusEndpoint
     public function postUserRecentCustomStatusDelete(
         /** User ID */
         string $user_id,
-        \PostUserRecentCustomStatusDeleteRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest $requestBody,
     ): array
     {
         $path = '/api/v4/users/{user_id}/status/custom/recent/delete';
@@ -226,13 +252,17 @@ class StatusEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 }

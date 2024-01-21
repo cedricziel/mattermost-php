@@ -27,7 +27,7 @@ class CommandsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createCommand(\CreateCommandRequest $requestBody): array
+    public function createCommand(\CedricZiel\MattermostPhp\Client\Model\CreateCommandRequest $requestBody): array
     {
         $path = '/api/v4/commands';
         $method = 'post';
@@ -36,14 +36,20 @@ class CommandsEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateCommandResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -73,14 +79,20 @@ class CommandsEndpoint
         $queryParameters['custom_only'] = $custom_only;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ListCommandsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -104,14 +116,19 @@ class CommandsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ListAutocompleteCommandsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -139,14 +156,19 @@ class CommandsEndpoint
         $queryParameters['user_input'] = $user_input;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ListCommandAutocompleteSuggestionsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -172,14 +194,19 @@ class CommandsEndpoint
         $pathParameters['command_id'] = $command_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetCommandByIdResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -193,7 +220,7 @@ class CommandsEndpoint
     public function updateCommand(
         /** ID of the command to update */
         string $command_id,
-        \UpdateCommandRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateCommandRequest $requestBody,
     ): array
     {
         $path = '/api/v4/commands/{command_id}';
@@ -204,14 +231,19 @@ class CommandsEndpoint
         $pathParameters['command_id'] = $command_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateCommandResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -235,14 +267,20 @@ class CommandsEndpoint
         $pathParameters['command_id'] = $command_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteCommandResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -258,7 +296,7 @@ class CommandsEndpoint
     public function moveCommand(
         /** ID of the command to move */
         string $command_id,
-        \MoveCommandRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\MoveCommandRequest $requestBody,
     ): array
     {
         $path = '/api/v4/commands/{command_id}/move';
@@ -269,14 +307,20 @@ class CommandsEndpoint
         $pathParameters['command_id'] = $command_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\MoveCommandResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -300,14 +344,19 @@ class CommandsEndpoint
         $pathParameters['command_id'] = $command_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RegenCommandTokenResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -318,7 +367,7 @@ class CommandsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function executeCommand(\ExecuteCommandRequest $requestBody): array
+    public function executeCommand(\CedricZiel\MattermostPhp\Client\Model\ExecuteCommandRequest $requestBody): array
     {
         $path = '/api/v4/commands/execute';
         $method = 'post';
@@ -327,13 +376,19 @@ class CommandsEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ExecuteCommandResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 }

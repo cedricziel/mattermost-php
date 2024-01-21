@@ -105,6 +105,22 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
     }
 }
 
+foreach ($openApi['components']['responses'] as $schemaName => $schema) {
+    $class = $modelNamespace->addClass('Default' . $schemaName . 'Response');
+
+    if (isset($schema['description'])) {
+        $class->setComment($schema['description']);
+    }
+
+    if (!isset($schema['properties'])) continue;
+    foreach ($schema['properties'] as $propertyName => $property) {
+        $p = $class->addProperty($propertyName);
+        $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+        $p->setComment($property['description'] ?? null)
+            ->setNullable(!isset($property['required']) || $property['required'] === false);
+    }
+}
+
 function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, string $operationId, array $schema): ClassType
 {
     $class = $modelNamespace->addClass($operationId . 'Request');
@@ -187,23 +203,41 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $requestBodyContentJson['schema'] ?? [],
                 );
 
-                $method->addParameter('requestBody')->setType($requestBodyClass->getName());
+                $method->addParameter('requestBody')->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
             }
         }
 
         $method
             ->addBody('')
             ->addBody('// build URI through path and query parameters')
-            ->addBody('$path = str_replace(array_map(function ($key) { return sprintf(\'{%s}\', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);')
-            ->addBody('$path = sprintf(\'%s?%s\', $path, http_build_query($queryParameters));')
+            ->addBody('$uri = $this->buildUri($path, $pathParameters, $queryParameters);')
             ->addBody('')
-            ->addBody('$request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);')
+            ->addBody('$request = $this->requestFactory->createRequest($method, $uri);')
             ->addBody('')
             ->addBody('$response = $this->httpClient->sendRequest($request);')
-            ->addBody('');
+            ->addBody('')
+            ->addBody('$map = [];')
+        ;
+
+        foreach ($methodSpec['responses'] as $responseCode => $responseSpec) {
+            if (isset($responseSpec['$ref'])) {
+                $responseClass = '';
+                if (str_starts_with($responseSpec['$ref'], '#/components/responses/')) {
+                    $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/responses/', 'Default', $responseSpec['$ref']) . 'Response';
+                } else {
+                    $responseClass = $modelNamespaceName . '\\' . $responseSpec['$ref'];
+                }
+
+                $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+            } else {
+                $responseClass = $modelNamespaceName . '\\' . $methodSpec['operationId'] . 'Response';
+                $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+            }
+        }
 
         $method
-            ->addBody('return [];');
+            ->addBody('')
+            ->addBody('return $this->mapResponse($response, $map);');
     }
 }
 

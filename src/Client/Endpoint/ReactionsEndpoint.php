@@ -27,7 +27,7 @@ class ReactionsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function saveReaction(\SaveReactionRequest $requestBody): array
+    public function saveReaction(\CedricZiel\MattermostPhp\Client\Model\SaveReactionRequest $requestBody): array
     {
         $path = '/api/v4/reactions';
         $method = 'post';
@@ -36,14 +36,18 @@ class ReactionsEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\SaveReactionResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -67,14 +71,19 @@ class ReactionsEndpoint
         $pathParameters['post_id'] = $post_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetReactionsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -104,14 +113,19 @@ class ReactionsEndpoint
         $pathParameters['emoji_name'] = $emoji_name;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteReactionResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -124,7 +138,9 @@ class ReactionsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getBulkReactions(\GetBulkReactionsRequest $requestBody): array
+    public function getBulkReactions(
+        \CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsRequest $requestBody,
+    ): array
     {
         $path = '/api/v4/posts/ids/reactions';
         $method = 'post';
@@ -133,13 +149,18 @@ class ReactionsEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 }

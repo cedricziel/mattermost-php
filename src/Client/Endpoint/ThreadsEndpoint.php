@@ -67,14 +67,19 @@ class ThreadsEndpoint
         $queryParameters['threadsOnly'] = $threadsOnly;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetUserThreadsResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -104,14 +109,19 @@ class ThreadsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetThreadMentionCountsByChannelResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -141,14 +151,19 @@ class ThreadsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateThreadsReadForUserResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -184,14 +199,19 @@ class ThreadsEndpoint
         $pathParameters['timestamp'] = $timestamp;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateThreadReadForUserResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -229,14 +249,19 @@ class ThreadsEndpoint
         $pathParameters['post_id'] = $post_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SetThreadUnreadByPostIdResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -269,14 +294,19 @@ class ThreadsEndpoint
         $pathParameters['thread_id'] = $thread_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StartFollowingThreadResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -309,14 +339,19 @@ class ThreadsEndpoint
         $pathParameters['thread_id'] = $thread_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StopFollowingThreadResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -349,13 +384,18 @@ class ThreadsEndpoint
         $pathParameters['thread_id'] = $thread_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetUserThreadResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 }

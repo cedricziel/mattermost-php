@@ -52,14 +52,20 @@ class DataRetentionEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamPoliciesForUserResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -95,14 +101,20 @@ class DataRetentionEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelPoliciesForUserResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -130,14 +142,20 @@ class DataRetentionEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -164,14 +182,20 @@ class DataRetentionEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -205,14 +229,20 @@ class DataRetentionEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -230,7 +260,9 @@ class DataRetentionEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createDataRetentionPolicy(\CreateDataRetentionPolicyRequest $requestBody): array
+    public function createDataRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\CreateDataRetentionPolicyRequest $requestBody,
+    ): array
     {
         $path = '/api/v4/data_retention/policies';
         $method = 'post';
@@ -239,14 +271,20 @@ class DataRetentionEndpoint
 
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateDataRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -276,14 +314,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPolicyByIDResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -304,7 +348,7 @@ class DataRetentionEndpoint
     public function patchDataRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \PatchDataRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\PatchDataRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}';
@@ -315,14 +359,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchDataRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -352,14 +402,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteDataRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -395,14 +451,20 @@ class DataRetentionEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamsForRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -422,7 +484,7 @@ class DataRetentionEndpoint
     public function addTeamsToRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \AddTeamsToRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
@@ -433,14 +495,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -460,7 +528,7 @@ class DataRetentionEndpoint
     public function removeTeamsFromRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \RemoveTeamsFromRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
@@ -471,14 +539,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -498,7 +572,7 @@ class DataRetentionEndpoint
     public function searchTeamsForRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \SearchTeamsForRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams/search';
@@ -509,14 +583,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -552,14 +632,20 @@ class DataRetentionEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelsForRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -579,7 +665,7 @@ class DataRetentionEndpoint
     public function addChannelsToRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \AddChannelsToRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
@@ -590,14 +676,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -617,7 +709,7 @@ class DataRetentionEndpoint
     public function removeChannelsFromRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \RemoveChannelsFromRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
@@ -628,14 +720,20 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 
     /**
@@ -655,7 +753,7 @@ class DataRetentionEndpoint
     public function searchChannelsForRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \SearchChannelsForRetentionPolicyRequest $requestBody,
+        \CedricZiel\MattermostPhp\Client\Model\SearchChannelsForRetentionPolicyRequest $requestBody,
     ): array
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels/search';
@@ -666,13 +764,19 @@ class DataRetentionEndpoint
         $pathParameters['policy_id'] = $policy_id;
 
         // build URI through path and query parameters
-        $path = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $path);
-        $path = sprintf('%s?%s', $path, http_build_query($queryParameters));
+        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $path);
+        $request = $this->requestFactory->createRequest($method, $uri);
 
         $response = $this->httpClient->sendRequest($request);
 
-        return [];
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SearchChannelsForRetentionPolicyResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
     }
 }
