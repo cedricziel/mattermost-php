@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/cedricziel/mattermost-php/compare/v1.2.12...v1.3.0) (2024-01-21)
+
+
+### Features
+
+* Add Apps builder ([#56](https://github.com/cedricziel/mattermost-php/issues/56)) ([511ac3b](https://github.com/cedricziel/mattermost-php/commit/511ac3bc3e30860529a6f27a67727fac91fe7c7f))
+
 ## [1.2.12](https://github.com/cedricziel/mattermost-php/compare/v1.2.11...v1.2.12) (2024-01-20)
 
 
