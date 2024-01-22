@@ -7,4 +7,5 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class Default404Response
 {
+    use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 }

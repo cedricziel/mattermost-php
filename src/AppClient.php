@@ -132,4 +132,13 @@ class AppClient
 
         return $this->serializer->deserialize($contents, Post::class, 'json');
     }
+
+    public function DM(string $userId, string $message)
+    {
+        return $this->createDMPost($userId, new Post(message: $message));
+    }
+
+    public function createDMPost(string $userId, Post $post)
+    {
+    }
 }

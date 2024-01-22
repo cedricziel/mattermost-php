@@ -104,4 +104,15 @@ JSON),
 
         self::assertEquals('foo', $post->getMessage());
     }
+
+    public function testCanCreateDM()
+    {
+        $client = AppClient::asBot($this->createBotContext(), $this->serializer);
+
+        $this->assertInstanceOf(AppClient::class, $client);
+        self::assertEquals('bot_access_token', $client->getToken());
+        self::assertEquals('https://example.com', $client->getMattermostSiteUrl());
+
+        $client->DM('user_id', 'message');
+    }
 }

@@ -4,7 +4,7 @@ namespace CedricZiel\MattermostPhp;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-class Post
+class Post implements \JsonSerializable
 {
     #[SerializedName('id')]
     protected string $id;
@@ -27,17 +27,11 @@ class Post
     #[SerializedName('user_id')]
     protected string $userId;
 
-    #[SerializedName('channel_id')]
-    protected string $channelId;
-
     #[SerializedName('root_id')]
     protected string $rootId;
 
     #[SerializedName('original_id')]
     protected string $originalId;
-
-    #[SerializedName('message')]
-    protected string $message;
     /**
      * MessageSource will contain the message as submitted by the user if Message has been modified
      * by Mattermost for presentation (e.g if an image proxy is being used). It should be used to
@@ -60,6 +54,17 @@ class Post
 
     #[SerializedName('metadata')]
     protected ?PostMetadata $metadata = null;
+
+    public function __construct(
+        protected ?string $message = null,
+        protected ?string $channelId = null,
+    ) {
+    }
+
+    public static function create(string $message, string $channelId): Post
+    {
+        return new self($message, $channelId);
+    }
 
     public function getId(): string
     {
@@ -235,5 +240,15 @@ class Post
     {
         $this->fileIds = $fileIds;
         return $this;
+    }
+
+    public function jsonSerialize(): \stdClass
+    {
+        $o = new \stdClass();
+
+        $o->message = $this->message;
+        $o->channel_id = $this->channelId;
+
+        return $o;
     }
 }

@@ -107,9 +107,13 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
 
 foreach ($openApi['components']['responses'] as $schemaName => $schema) {
     $class = $modelNamespace->addClass('Default' . $schemaName . 'Response');
+    $class->addTrait(\CedricZiel\MattermostPhp\Client\ResponseTrait::class);
 
     if (isset($schema['description'])) {
-        $class->setComment($schema['description']);
+        $class->addComment($schema['description']);
+    }
+    if (isset($schema['summary'])) {
+        $class->addComment($schema['summary']);
     }
 
     if (!isset($schema['properties'])) continue;
@@ -224,6 +228,8 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 $responseClass = '';
                 if (str_starts_with($responseSpec['$ref'], '#/components/responses/')) {
                     $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/responses/', 'Default', $responseSpec['$ref']) . 'Response';
+                } elseif (str_starts_with($responseSpec['$ref'], '#/components/schemas/')) {
+                    $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['$ref']);
                 } else {
                     $responseClass = $modelNamespaceName . '\\' . $responseSpec['$ref'];
                 }

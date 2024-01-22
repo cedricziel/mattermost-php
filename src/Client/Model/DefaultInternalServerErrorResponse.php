@@ -7,4 +7,5 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class DefaultInternalServerErrorResponse
 {
+    use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 }
