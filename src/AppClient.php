@@ -146,7 +146,7 @@ class AppClient
         return $this->createDMPost($userId, new Post(message: $message));
     }
 
-    public function createDMPost(string $userId, Post $post): Post
+    public function createDMPost(string $userId, Post $post): Client\Model\DefaultBadRequestResponse|Client\Model\DefaultForbiddenResponse|Client\Model\DefaultUnauthorizedResponse|Client\Model\Post
     {
         $channelEndpoint = new ChannelsEndpoint(
             $this->client,

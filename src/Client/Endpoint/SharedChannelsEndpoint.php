@@ -78,7 +78,7 @@ class SharedChannelsEndpoint
     public function getRemoteClusterInfo(
         /** Remote Cluster GUID */
         string $remote_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetRemoteClusterInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoteClusterInfo|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/sharedchannels/remote_info/{remote_id}';
         $method = 'get';
@@ -95,7 +95,7 @@ class SharedChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetRemoteClusterInfoResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoteClusterInfo::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

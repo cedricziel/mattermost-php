@@ -67,7 +67,7 @@ class PreferencesEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/preferences';
         $method = 'put';
@@ -84,7 +84,7 @@ class PreferencesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -105,7 +105,7 @@ class PreferencesEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/preferences/delete';
         $method = 'post';
@@ -122,7 +122,7 @@ class PreferencesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -184,7 +184,7 @@ class PreferencesEndpoint
         string $category,
         /** The name of the preference */
         string $preference_name,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetPreferencesByCategoryByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Preference|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/preferences/{category}/name/{preference_name}';
         $method = 'get';
@@ -203,7 +203,7 @@ class PreferencesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetPreferencesByCategoryByNameResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Preference::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 

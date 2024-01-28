@@ -28,7 +28,7 @@ class Integration_actionsEndpoint
      */
     public function openInteractiveDialog(
         \CedricZiel\MattermostPhp\Client\Model\OpenInteractiveDialogRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\OpenInteractiveDialogResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/actions/dialogs/open';
         $method = 'post';
@@ -44,7 +44,7 @@ class Integration_actionsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\OpenInteractiveDialogResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -59,7 +59,7 @@ class Integration_actionsEndpoint
      */
     public function submitInteractiveDialog(
         \CedricZiel\MattermostPhp\Client\Model\SubmitInteractiveDialogRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\SubmitInteractiveDialogResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/actions/dialogs/submit';
         $method = 'post';
@@ -75,7 +75,7 @@ class Integration_actionsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SubmitInteractiveDialogResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

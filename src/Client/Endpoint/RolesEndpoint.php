@@ -68,7 +68,7 @@ class RolesEndpoint
     public function getRole(
         /** Role GUID */
         string $role_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetRoleResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/{role_id}';
         $method = 'get';
@@ -85,7 +85,7 @@ class RolesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetRoleResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Role::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
@@ -106,7 +106,7 @@ class RolesEndpoint
     public function getRoleByName(
         /** Role Name */
         string $role_name,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetRoleByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/name/{role_name}';
         $method = 'get';
@@ -123,7 +123,7 @@ class RolesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetRoleByNameResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Role::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
@@ -145,7 +145,7 @@ class RolesEndpoint
         /** Role GUID */
         string $role_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchRoleRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchRoleResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/{role_id}/patch';
         $method = 'put';
@@ -162,7 +162,7 @@ class RolesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchRoleResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Role::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

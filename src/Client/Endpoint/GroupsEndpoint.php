@@ -30,7 +30,7 @@ class GroupsEndpoint
     public function unlinkLdapGroup(
         /** Group GUID */
         string $remote_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\UnlinkLdapGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/ldap/groups/{remote_id}/link';
         $method = 'delete';
@@ -47,7 +47,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UnlinkLdapGroupResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -135,7 +135,7 @@ class GroupsEndpoint
      */
     public function createGroup(
         \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\CreateGroupResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/groups';
         $method = 'post';
@@ -151,10 +151,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateGroupResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-        $map[501] = \CedricZiel\MattermostPhp\Client\Model\CreateGroupResponse::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -173,7 +171,7 @@ class GroupsEndpoint
     public function getGroup(
         /** Group GUID */
         string $group_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Group|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}';
         $method = 'get';
@@ -190,7 +188,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetGroupResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Group::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -213,7 +211,7 @@ class GroupsEndpoint
     public function deleteGroup(
         /** The ID of the group. */
         string $group_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/groups/{group_id}';
         $method = 'delete';
@@ -230,10 +228,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse::class;
-        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -253,7 +249,7 @@ class GroupsEndpoint
         /** Group GUID */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Group|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/patch';
         $method = 'put';
@@ -270,7 +266,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchGroupResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Group::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -291,7 +287,7 @@ class GroupsEndpoint
     public function restoreGroup(
         /** Group GUID */
         string $group_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\RestoreGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/restore';
         $method = 'post';
@@ -308,7 +304,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RestoreGroupResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -332,7 +328,7 @@ class GroupsEndpoint
         string $group_id,
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\LinkGroupSyncableForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/link';
         $method = 'post';
@@ -350,7 +346,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\LinkGroupSyncableForTeamResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -374,7 +370,7 @@ class GroupsEndpoint
         string $group_id,
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\UnlinkGroupSyncableForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/link';
         $method = 'delete';
@@ -392,7 +388,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UnlinkGroupSyncableForTeamResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -417,7 +413,7 @@ class GroupsEndpoint
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\LinkGroupSyncableForChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/link';
         $method = 'post';
@@ -435,7 +431,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\LinkGroupSyncableForChannelResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -460,7 +456,7 @@ class GroupsEndpoint
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\UnlinkGroupSyncableForChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/link';
         $method = 'delete';
@@ -478,7 +474,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UnlinkGroupSyncableForChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -502,7 +498,7 @@ class GroupsEndpoint
         string $group_id,
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncableForTeamIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}';
         $method = 'get';
@@ -520,7 +516,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncableForTeamIdResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -545,7 +541,7 @@ class GroupsEndpoint
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncableForChannelIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}';
         $method = 'get';
@@ -563,7 +559,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncableForChannelIdResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -670,7 +666,7 @@ class GroupsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/patch';
         $method = 'put';
@@ -688,7 +684,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -714,7 +710,7 @@ class GroupsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/patch';
         $method = 'put';
@@ -732,7 +728,7 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -803,7 +799,7 @@ class GroupsEndpoint
         /** The ID of the group to delete. */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/groups/{group_id}/members';
         $method = 'delete';
@@ -820,10 +816,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse::class;
-        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -843,7 +837,7 @@ class GroupsEndpoint
         /** The ID of the group. */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/groups/{group_id}/members';
         $method = 'post';
@@ -860,10 +854,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-        $map[404] = \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse::class;
-        $map[501] = \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse::class;
 
         return $this->mapResponse($response, $map);
     }

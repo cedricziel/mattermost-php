@@ -77,7 +77,7 @@ class SchemesEndpoint
      */
     public function createScheme(
         \CedricZiel\MattermostPhp\Client\Model\CreateSchemeRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Scheme|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes';
         $method = 'post';
@@ -93,7 +93,7 @@ class SchemesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateSchemeResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\Scheme::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -116,7 +116,7 @@ class SchemesEndpoint
     public function getScheme(
         /** Scheme GUID */
         string $scheme_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Scheme|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}';
         $method = 'get';
@@ -133,7 +133,7 @@ class SchemesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetSchemeResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Scheme::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
@@ -155,7 +155,7 @@ class SchemesEndpoint
     public function deleteScheme(
         /** ID of the scheme to delete */
         string $scheme_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DeleteSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}';
         $method = 'delete';
@@ -172,7 +172,7 @@ class SchemesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteSchemeResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -196,7 +196,7 @@ class SchemesEndpoint
         /** Scheme GUID */
         string $scheme_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchSchemeRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Scheme|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}/patch';
         $method = 'put';
@@ -213,7 +213,7 @@ class SchemesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchSchemeResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Scheme::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

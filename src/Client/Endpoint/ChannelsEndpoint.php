@@ -44,7 +44,7 @@ class ChannelsEndpoint
          * __Minimum server version__: 5.35
          */
         ?bool $exclude_policy_constrained = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetAllChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels';
         $method = 'get';
@@ -67,7 +67,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetAllChannelsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
@@ -85,7 +85,7 @@ class ChannelsEndpoint
      */
     public function createChannel(
         \CedricZiel\MattermostPhp\Client\Model\CreateChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels';
         $method = 'post';
@@ -101,7 +101,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateChannelResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -119,7 +119,7 @@ class ChannelsEndpoint
      */
     public function createDirectChannel(
         \CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/direct';
         $method = 'post';
@@ -135,7 +135,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -153,7 +153,7 @@ class ChannelsEndpoint
      */
     public function createGroupChannel(
         \CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/group';
         $method = 'post';
@@ -169,7 +169,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -340,7 +340,7 @@ class ChannelsEndpoint
     public function getChannel(
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}';
         $method = 'get';
@@ -357,7 +357,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
@@ -377,7 +377,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}';
         $method = 'put';
@@ -394,7 +394,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -419,7 +419,7 @@ class ChannelsEndpoint
     public function deleteChannel(
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DeleteChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}';
         $method = 'delete';
@@ -436,7 +436,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DeleteChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -456,7 +456,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/patch';
         $method = 'put';
@@ -473,7 +473,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -497,7 +497,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/privacy';
         $method = 'put';
@@ -514,7 +514,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -537,7 +537,7 @@ class ChannelsEndpoint
     public function restoreChannel(
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\RestoreChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/restore';
         $method = 'post';
@@ -554,7 +554,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RestoreChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
@@ -578,7 +578,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\MoveChannelRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\MoveChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/move';
         $method = 'post';
@@ -595,7 +595,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\MoveChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -615,7 +615,7 @@ class ChannelsEndpoint
     public function getChannelStats(
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelStatsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\ChannelStats|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/stats';
         $method = 'get';
@@ -632,7 +632,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelStatsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ChannelStats::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -648,7 +648,7 @@ class ChannelsEndpoint
     public function getPinnedPosts(
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetPinnedPostsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\PostList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/pinned';
         $method = 'get';
@@ -665,7 +665,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetPinnedPostsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PostList::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -990,7 +990,7 @@ class ChannelsEndpoint
         string $channel_name,
         /** Defines if deleted channels should be returned or not (Mattermost Server 5.26.0+) */
         ?bool $include_deleted = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/name/{channel_name}';
         $method = 'get';
@@ -1009,7 +1009,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelByNameResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
@@ -1032,7 +1032,7 @@ class ChannelsEndpoint
         string $channel_name,
         /** Defines if deleted channels should be returned or not (Mattermost Server 5.26.0+) */
         ?bool $include_deleted = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelByNameForTeamNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/name/{team_name}/channels/name/{channel_name}';
         $method = 'get';
@@ -1051,7 +1051,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelByNameForTeamNameResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Channel::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
@@ -1110,7 +1110,7 @@ class ChannelsEndpoint
         /** The channel ID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\ChannelMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members';
         $method = 'post';
@@ -1127,7 +1127,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\ChannelMember::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1186,7 +1186,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** User GUID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\ChannelMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}';
         $method = 'get';
@@ -1204,7 +1204,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelMemberResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ChannelMember::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1228,7 +1228,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** User GUID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\RemoveUserFromChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}';
         $method = 'delete';
@@ -1246,7 +1246,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoveUserFromChannelResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1268,7 +1268,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/roles';
         $method = 'put';
@@ -1286,7 +1286,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1309,7 +1309,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/schemeRoles';
         $method = 'put';
@@ -1327,7 +1327,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1350,7 +1350,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/notify_props';
         $method = 'put';
@@ -1368,7 +1368,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1561,7 +1561,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Channel GUID */
         string $channel_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelUnreadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\ChannelUnread|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/channels/{channel_id}/unread';
         $method = 'get';
@@ -1579,7 +1579,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelUnreadResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ChannelUnread::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1603,7 +1603,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/channels/{channel_id}/scheme';
         $method = 'put';
@@ -1620,7 +1620,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1651,7 +1651,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 0,
-    ): \CedricZiel\MattermostPhp\Client\Model\ChannelMembersMinusGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members_minus_group_members';
         $method = 'get';
@@ -1671,7 +1671,6 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ChannelMembersMinusGroupMembersResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1693,7 +1692,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** Defines if member timezone counts should be returned or not */
         ?bool $include_timezones = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMemberCountsByGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/member_counts_by_group';
         $method = 'get';
@@ -1711,7 +1710,6 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetChannelMemberCountsByGroupResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1850,7 +1848,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
         $method = 'post';
@@ -1868,7 +1866,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SidebarCategory::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1892,7 +1890,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
         $method = 'put';
@@ -1910,7 +1908,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SidebarCategory::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -2018,7 +2016,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Category GUID */
         string $category_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
         $method = 'get';
@@ -2037,7 +2035,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoryForTeamForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SidebarCategory::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -2063,7 +2061,7 @@ class ChannelsEndpoint
         /** Category GUID */
         string $category_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
         $method = 'put';
@@ -2082,7 +2080,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SidebarCategory::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -2107,7 +2105,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Category GUID */
         string $category_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\RemoveSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
         $method = 'delete';
@@ -2126,7 +2124,7 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoveSidebarCategoryForTeamForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SidebarCategory::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

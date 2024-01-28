@@ -29,7 +29,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getCloudLimits(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetCloudLimitsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\ProductLimits|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/limits';
         $method = 'get';
@@ -45,7 +45,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetCloudLimitsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ProductLimits::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
@@ -102,7 +102,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createCustomerPayment(
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateCustomerPaymentResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\PaymentSetupIntent|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/payment';
         $method = 'post';
@@ -118,7 +118,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\CreateCustomerPaymentResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\PaymentSetupIntent::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -137,7 +137,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function confirmCustomerPayment(
-    ): \CedricZiel\MattermostPhp\Client\Model\ConfirmCustomerPaymentResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/payment/confirm';
         $method = 'post';
@@ -153,7 +153,6 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ConfirmCustomerPaymentResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -172,7 +171,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getCloudCustomer(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetCloudCustomerResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\CloudCustomer|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/customer';
         $method = 'get';
@@ -188,7 +187,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetCloudCustomerResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\CloudCustomer::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -208,7 +207,7 @@ class CloudEndpoint
      */
     public function updateCloudCustomer(
         \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\CloudCustomer|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/customer';
         $method = 'put';
@@ -224,7 +223,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\CloudCustomer::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -244,7 +243,7 @@ class CloudEndpoint
      */
     public function updateCloudCustomerAddress(
         \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerAddressRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerAddressResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\CloudCustomer|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/customer/address';
         $method = 'put';
@@ -260,7 +259,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerAddressResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\CloudCustomer::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -279,7 +278,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getSubscription(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetSubscriptionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Subscription|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/subscription';
         $method = 'get';
@@ -295,7 +294,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetSubscriptionResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Subscription::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -314,7 +313,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getEndpointForInstallationInformation(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetEndpointForInstallationInformationResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Installation|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/installation';
         $method = 'get';
@@ -330,7 +329,7 @@ class CloudEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetEndpointForInstallationInformationResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Installation::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

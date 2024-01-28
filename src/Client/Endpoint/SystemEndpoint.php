@@ -69,7 +69,7 @@ class SystemEndpoint
         ?bool $get_server_status,
         /** Check whether this device id can receive push notifications */
         ?string $device_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetPingResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/system/ping';
         $method = 'get';
@@ -87,7 +87,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetPingResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -148,7 +148,7 @@ class SystemEndpoint
      */
     public function markNoticesViewed(
         \CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/system/notices/view';
         $method = 'put';
@@ -164,7 +164,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -179,7 +179,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function databaseRecycle(
-    ): \CedricZiel\MattermostPhp\Client\Model\DatabaseRecycleResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/database/recycle';
         $method = 'post';
@@ -195,7 +195,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\DatabaseRecycleResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -211,7 +211,7 @@ class SystemEndpoint
      */
     public function testEmail(
         \CedricZiel\MattermostPhp\Client\Model\TestEmailRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\TestEmailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/email/test';
         $method = 'post';
@@ -227,7 +227,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TestEmailResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
@@ -247,7 +247,7 @@ class SystemEndpoint
      */
     public function testSiteURL(
         \CedricZiel\MattermostPhp\Client\Model\TestSiteURLRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\TestSiteURLResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/site_url/test';
         $method = 'post';
@@ -263,7 +263,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TestSiteURLResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
@@ -282,7 +282,7 @@ class SystemEndpoint
      */
     public function testS3Connection(
         \CedricZiel\MattermostPhp\Client\Model\TestS3ConnectionRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\TestS3ConnectionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/file/s3_test';
         $method = 'post';
@@ -298,7 +298,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TestS3ConnectionResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
@@ -314,7 +314,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getConfig(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetConfigResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Config|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/config';
         $method = 'get';
@@ -330,7 +330,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetConfigResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Config::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
@@ -348,7 +348,7 @@ class SystemEndpoint
      */
     public function updateConfig(
         \CedricZiel\MattermostPhp\Client\Model\UpdateConfigRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateConfigResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Config|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/config';
         $method = 'put';
@@ -364,7 +364,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateConfigResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Config::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
@@ -380,7 +380,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function reloadConfig(
-    ): \CedricZiel\MattermostPhp\Client\Model\ReloadConfigResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/config/reload';
         $method = 'post';
@@ -396,7 +396,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ReloadConfigResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
@@ -414,7 +414,7 @@ class SystemEndpoint
     public function getClientConfig(
         /** Must be `old`, other formats not implemented yet */
         string $format,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetClientConfigResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/config/client';
         $method = 'get';
@@ -431,7 +431,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetClientConfigResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
@@ -452,7 +451,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getEnvironmentConfig(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetEnvironmentConfigResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\EnvironmentConfig|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/config/environment';
         $method = 'get';
@@ -468,7 +467,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetEnvironmentConfigResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\EnvironmentConfig::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -489,7 +488,7 @@ class SystemEndpoint
      */
     public function patchConfig(
         \CedricZiel\MattermostPhp\Client\Model\PatchConfigRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\PatchConfigResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Config|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/config/patch';
         $method = 'put';
@@ -505,7 +504,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PatchConfigResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Config::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
@@ -524,7 +523,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function uploadLicenseFile(
-    ): \CedricZiel\MattermostPhp\Client\Model\UploadLicenseFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse
     {
         $path = '/api/v4/license';
         $method = 'post';
@@ -540,7 +539,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\UploadLicenseFileResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -561,7 +560,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function removeLicenseFile(
-    ): \CedricZiel\MattermostPhp\Client\Model\RemoveLicenseFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/license';
         $method = 'delete';
@@ -577,7 +576,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RemoveLicenseFileResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
@@ -595,7 +593,7 @@ class SystemEndpoint
     public function getClientLicense(
         /** Must be `old`, other formats not implemented yet */
         string $format,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetClientLicenseResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/license/client';
         $method = 'get';
@@ -612,7 +610,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetClientLicenseResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
@@ -629,7 +626,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function requestLicenseRenewalLink(
-    ): \CedricZiel\MattermostPhp\Client\Model\RequestLicenseRenewalLinkResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/license/renewal';
         $method = 'get';
@@ -645,7 +642,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RequestLicenseRenewalLinkResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -665,7 +662,7 @@ class SystemEndpoint
      */
     public function requestTrialLicense(
         \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/trial-license';
         $method = 'post';
@@ -681,7 +678,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -699,7 +695,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getPrevTrialLicense(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetPrevTrialLicenseResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/trial-license/prev';
         $method = 'get';
@@ -715,7 +711,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetPrevTrialLicenseResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -769,7 +764,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function invalidateCaches(
-    ): \CedricZiel\MattermostPhp\Client\Model\InvalidateCachesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/caches/invalidate';
         $method = 'post';
@@ -785,7 +780,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\InvalidateCachesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -880,7 +875,7 @@ class SystemEndpoint
         ?string $name = 'standard',
         /** The team ID to filter the data by */
         ?string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetAnalyticsOldResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/analytics/old';
         $method = 'get';
@@ -898,7 +893,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetAnalyticsOldResponse::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -920,7 +914,7 @@ class SystemEndpoint
     public function setServerBusy(
         /** Number of seconds until server is automatically marked as not busy. */
         ?string $seconds = '3600',
-    ): \CedricZiel\MattermostPhp\Client\Model\SetServerBusyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/server_busy';
         $method = 'post';
@@ -937,7 +931,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SetServerBusyResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
@@ -956,7 +950,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getServerBusyExpires(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetServerBusyExpiresResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\Server_Busy|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/server_busy';
         $method = 'get';
@@ -972,7 +966,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetServerBusyExpiresResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Server_Busy::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -990,7 +984,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function clearServerBusy(
-    ): \CedricZiel\MattermostPhp\Client\Model\ClearServerBusyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/server_busy';
         $method = 'delete';
@@ -1006,7 +1000,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ClearServerBusyResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -1023,7 +1017,7 @@ class SystemEndpoint
     public function getRedirectLocation(
         /** Url to check */
         string $url,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetRedirectLocationResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/redirect_location';
         $method = 'get';
@@ -1040,7 +1034,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetRedirectLocationResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -1055,8 +1048,7 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getImageByUrl(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetImageByUrlResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    public function getImageByUrl(): \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/image';
         $method = 'get';
@@ -1072,7 +1064,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetImageByUrlResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -1088,7 +1079,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function upgradeToEnterprise(
-    ): \CedricZiel\MattermostPhp\Client\Model\UpgradeToEnterpriseResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooManyRequestsResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\PushNotification|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooManyRequestsResponse
     {
         $path = '/api/v4/upgrade_to_enterprise';
         $method = 'post';
@@ -1104,7 +1095,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[202] = \CedricZiel\MattermostPhp\Client\Model\UpgradeToEnterpriseResponse::class;
+        $map[202] = \CedricZiel\MattermostPhp\Client\Model\PushNotification::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[429] = \CedricZiel\MattermostPhp\Client\Model\DefaultTooManyRequestsResponse::class;
 
@@ -1153,7 +1144,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function restartServer(
-    ): \CedricZiel\MattermostPhp\Client\Model\RestartServerResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/restart';
         $method = 'post';
@@ -1169,7 +1160,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RestartServerResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -1193,7 +1184,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getWarnMetricsStatus(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetWarnMetricsStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/warn_metrics/status';
         $method = 'get';
@@ -1209,7 +1200,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetWarnMetricsStatusResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1235,7 +1226,7 @@ class SystemEndpoint
         /** Warn Metric Id. */
         string $warn_metric_id,
         \CedricZiel\MattermostPhp\Client\Model\SendWarnMetricAckRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\SendWarnMetricAckResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/warn_metrics/ack/{warn_metric_id}';
         $method = 'post';
@@ -1252,7 +1243,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SendWarnMetricAckResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1276,7 +1267,7 @@ class SystemEndpoint
     public function sendTrialLicenseWarnMetricAck(
         /** Warn Metric Id. */
         string $warn_metric_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\SendTrialLicenseWarnMetricAckResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/warn_metrics/trial-license-ack/{warn_metric_id}';
         $method = 'post';
@@ -1293,7 +1284,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\SendTrialLicenseWarnMetricAckResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1384,7 +1375,7 @@ class SystemEndpoint
      */
     public function updateMarketplaceVisitedByAdmin(
         \CedricZiel\MattermostPhp\Client\Model\UpdateMarketplaceVisitedByAdminRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\UpdateMarketplaceVisitedByAdminResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/plugins/marketplace/first_admin_visit';
         $method = 'post';
@@ -1400,7 +1391,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UpdateMarketplaceVisitedByAdminResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 

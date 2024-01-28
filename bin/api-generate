@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use CedricZiel\MattermostPhp\Client\ResponseTrait;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Client\ClientInterface;
@@ -107,7 +108,7 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
 
 foreach ($openApi['components']['responses'] as $schemaName => $schema) {
     $class = $modelNamespace->addClass('Default' . $schemaName . 'Response');
-    $class->addTrait(\CedricZiel\MattermostPhp\Client\ResponseTrait::class);
+    $class->addTrait(ResponseTrait::class);
 
     if (isset($schema['description'])) {
         $class->addComment($schema['description']);
@@ -254,6 +255,23 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 }
                 $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
             } else {
+                // focus on json
+                if (!isset($responseSpec['content']['application/json'])) {
+                    continue;
+                }
+                if (isset($responseSpec['content']['application/json']['schema']['$ref'])) {
+                    $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['$ref']);
+                    $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+                    if ($method->getReturnType() === null) {
+                        $method->setReturnType($responseClass);
+                    } else {
+                        $returnType = $method->getReturnType();
+                        $method->setReturnType($returnType . '|' . $responseClass);
+                    }
+
+                    continue;
+                }
+
                 $responseClass = $modelNamespaceName . '\\' . $methodSpec['operationId'] . 'Response';
                 if ($method->getReturnType() === null) {
                     $method->setReturnType($responseClass);

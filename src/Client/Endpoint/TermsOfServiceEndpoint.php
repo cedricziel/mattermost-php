@@ -30,7 +30,7 @@ class TermsOfServiceEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getTermsOfService(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTermsOfServiceResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\TermsOfService|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/terms_of_service';
         $method = 'get';
@@ -46,7 +46,7 @@ class TermsOfServiceEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTermsOfServiceResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TermsOfService::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 
@@ -64,7 +64,7 @@ class TermsOfServiceEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createTermsOfService(
-    ): \CedricZiel\MattermostPhp\Client\Model\CreateTermsOfServiceResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\TermsOfService|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/terms_of_service';
         $method = 'post';
@@ -80,7 +80,7 @@ class TermsOfServiceEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\CreateTermsOfServiceResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TermsOfService::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 

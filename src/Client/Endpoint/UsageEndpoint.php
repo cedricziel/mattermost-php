@@ -29,7 +29,7 @@ class UsageEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getPostsUsage(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetPostsUsageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\PostsUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/usage/posts';
         $method = 'get';
@@ -45,7 +45,7 @@ class UsageEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetPostsUsageResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PostsUsage::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
@@ -62,7 +62,7 @@ class UsageEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getStorageUsage(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetStorageUsageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\StorageUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/usage/storage';
         $method = 'get';
@@ -78,7 +78,7 @@ class UsageEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetStorageUsageResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StorageUsage::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
