@@ -6,7 +6,7 @@ class SearchAllChannelsRequest
 {
     public function __construct(
         /** The string to search in the channel name, display name, and purpose. */
-        public ?string $term = null,
+        public string $term,
         /** A group id to exclude channels that are associated to that group via GroupChannel records. */
         public ?string $not_associated_to_group = null,
         /** Exclude default channels from the results by setting this parameter to true. */

@@ -6,7 +6,7 @@ class EnableUserAccessTokenRequest
 {
     public function __construct(
         /** The personal access token GUID to enable */
-        public ?string $token_id = null,
+        public string $token_id,
     ) {
     }
 }

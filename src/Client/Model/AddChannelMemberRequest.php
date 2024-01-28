@@ -6,7 +6,7 @@ class AddChannelMemberRequest
 {
     public function __construct(
         /** The ID of user to add into the channel */
-        public ?string $user_id = null,
+        public string $user_id,
         /** The ID of root post where link to add channel member originates */
         public ?string $post_root_id = null,
     ) {

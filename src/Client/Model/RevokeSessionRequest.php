@@ -6,7 +6,7 @@ class RevokeSessionRequest
 {
     public function __construct(
         /** The session GUID to revoke. */
-        public ?string $session_id = null,
+        public string $session_id,
     ) {
     }
 }

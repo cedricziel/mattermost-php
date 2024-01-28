@@ -6,7 +6,7 @@ class SetPostReminderRequest
 {
     public function __construct(
         /** Target time for the reminder */
-        public ?int $target_time = null,
+        public int $target_time,
     ) {
     }
 }

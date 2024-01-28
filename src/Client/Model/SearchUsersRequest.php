@@ -6,7 +6,7 @@ class SearchUsersRequest
 {
     public function __construct(
         /** The term to match against username, full name, nickname and email */
-        public ?string $term = null,
+        public string $term,
         /** If provided, only search users on this team */
         public ?string $team_id = null,
         /** If provided, only search users not on this team */

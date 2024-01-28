@@ -8,7 +8,7 @@ class CreateGroupRequest
         /** Group object to create. */
         public \stdClass $group,
         /** The user ids of the group members to add. */
-        public ?array $user_ids = null,
+        public array $user_ids,
     ) {
     }
 }

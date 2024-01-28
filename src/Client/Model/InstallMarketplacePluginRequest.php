@@ -6,9 +6,9 @@ class InstallMarketplacePluginRequest
 {
     public function __construct(
         /** The ID of the plugin to install. */
-        public ?string $id = null,
+        public string $id,
         /** The version of the plugin to install. */
-        public ?string $version = null,
+        public string $version,
     ) {
     }
 }

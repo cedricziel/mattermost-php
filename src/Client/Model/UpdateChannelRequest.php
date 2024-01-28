@@ -6,7 +6,7 @@ class UpdateChannelRequest
 {
     public function __construct(
         /** The channel's id, not updatable */
-        public ?string $id = null,
+        public string $id,
         /** The unique handle for the channel, will be present in the channel URL */
         public ?string $name = null,
         /** The non-unique UI name for the channel */

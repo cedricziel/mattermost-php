@@ -6,7 +6,7 @@ class CreateUserAccessTokenRequest
 {
     public function __construct(
         /** A description of the token usage */
-        public ?string $description = null,
+        public string $description,
     ) {
     }
 }

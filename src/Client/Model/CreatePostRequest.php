@@ -6,9 +6,9 @@ class CreatePostRequest
 {
     public function __construct(
         /** The channel ID to post in */
-        public ?string $channel_id = null,
+        public string $channel_id,
         /** The message contents, can be formatted with Markdown */
-        public ?string $message = null,
+        public string $message,
         /** The post ID to comment on */
         public ?string $root_id = null,
         /** A list of file IDs to associate with the post. Note that posts are limited to 5 files maximum. Please use additional posts for more files. */

@@ -6,7 +6,7 @@ class MoveThreadRequest
 {
     public function __construct(
         /** The channel identifier of where the post/thread is to be moved */
-        public ?string $channel_id = null,
+        public string $channel_id,
     ) {
     }
 }

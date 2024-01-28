@@ -6,7 +6,7 @@ class VerifyUserEmailRequest
 {
     public function __construct(
         /** The token given to validate the email */
-        public ?string $token = null,
+        public string $token,
     ) {
     }
 }

@@ -6,7 +6,7 @@ class CreateIncomingWebhookRequest
 {
     public function __construct(
         /** The ID of a public channel or private group that receives the webhook payloads. */
-        public ?string $channel_id = null,
+        public string $channel_id,
         /** The ID of the owner of the webhook if different than the requester. Required for [local mode](https://docs.mattermost.com/administration/mmctl-cli-tool.html#local-mode). */
         public ?string $user_id = null,
         /** The display name for this incoming webhook */

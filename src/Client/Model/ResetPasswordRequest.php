@@ -6,9 +6,9 @@ class ResetPasswordRequest
 {
     public function __construct(
         /** The recovery code */
-        public ?string $code = null,
+        public string $code,
         /** The new password for the user */
-        public ?string $new_password = null,
+        public string $new_password,
     ) {
     }
 }

@@ -6,7 +6,7 @@ class UpdatePostRequest
 {
     public function __construct(
         /** ID of the post to update */
-        public ?string $id = null,
+        public string $id,
         /** Set to `true` to pin the post to the channel it is in */
         public ?bool $is_pinned = null,
         /** The message text of the post */

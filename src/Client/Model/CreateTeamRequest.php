@@ -6,11 +6,11 @@ class CreateTeamRequest
 {
     public function __construct(
         /** Unique handler for a team, will be present in the team URL */
-        public ?string $name = null,
+        public string $name,
         /** Non-unique UI name for the team */
-        public ?string $display_name = null,
+        public string $display_name,
         /** `'O'` for open, `'I'` for invite only */
-        public ?string $type = null,
+        public string $type,
     ) {
     }
 }

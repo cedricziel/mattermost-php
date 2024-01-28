@@ -6,7 +6,7 @@ class SendVerificationEmailRequest
 {
     public function __construct(
         /** Email of a user */
-        public ?string $email = null,
+        public string $email,
     ) {
     }
 }

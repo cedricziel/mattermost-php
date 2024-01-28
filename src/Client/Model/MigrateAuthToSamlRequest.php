@@ -6,10 +6,10 @@ class MigrateAuthToSamlRequest
 {
     public function __construct(
         /** The current authentication type for the matched users. */
-        public ?string $from = null,
+        public string $from,
         /** Users map. */
-        public ?\stdClass $matches = null,
-        public ?bool $auto = null,
+        public \stdClass $matches,
+        public bool $auto,
     ) {
     }
 }

@@ -6,11 +6,11 @@ class CreateUploadRequest
 {
     public function __construct(
         /** The ID of the channel to upload to. */
-        public ?string $channel_id = null,
+        public string $channel_id,
         /** The name of the file to upload. */
-        public ?string $filename = null,
+        public string $filename,
         /** The size of the file to upload in bytes. */
-        public ?int $file_size = null,
+        public int $file_size,
     ) {
     }
 }

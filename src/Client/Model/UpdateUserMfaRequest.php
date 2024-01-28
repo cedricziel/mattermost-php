@@ -6,7 +6,7 @@ class UpdateUserMfaRequest
 {
     public function __construct(
         /** Use `true` to activate, `false` to deactivate */
-        public ?bool $activate = null,
+        public bool $activate,
         /** The code produced by your MFA client. Required if `activate` is true */
         public ?string $code = null,
     ) {

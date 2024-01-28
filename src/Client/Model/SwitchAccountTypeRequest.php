@@ -6,9 +6,9 @@ class SwitchAccountTypeRequest
 {
     public function __construct(
         /** The service the user currently uses to login */
-        public ?string $current_service = null,
+        public string $current_service,
         /** The service the user will use to login */
-        public ?string $new_service = null,
+        public string $new_service,
         /** The email of the user */
         public ?string $email = null,
         /** The password used with the current service */

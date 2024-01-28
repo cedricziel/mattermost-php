@@ -6,10 +6,10 @@ class MigrateAuthToLdapRequest
 {
     public function __construct(
         /** The current authentication type for the matched users. */
-        public ?string $from = null,
+        public string $from,
         /** Foreign user field name to match. */
-        public ?string $match_field = null,
-        public ?bool $force = null,
+        public string $match_field,
+        public bool $force,
     ) {
     }
 }

@@ -6,7 +6,7 @@ class UpdateChannelSchemeRequest
 {
     public function __construct(
         /** The ID of the scheme. */
-        public ?string $scheme_id = null,
+        public string $scheme_id,
     ) {
     }
 }

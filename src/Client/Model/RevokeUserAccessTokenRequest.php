@@ -6,7 +6,7 @@ class RevokeUserAccessTokenRequest
 {
     public function __construct(
         /** The user access token GUID to revoke */
-        public ?string $token_id = null,
+        public string $token_id,
     ) {
     }
 }

@@ -5,8 +5,8 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 class CreateUserRequest
 {
     public function __construct(
-        public ?string $email = null,
-        public ?string $username = null,
+        public string $email,
+        public string $username,
         public ?string $first_name = null,
         public ?string $last_name = null,
         public ?string $nickname = null,

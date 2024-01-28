@@ -6,9 +6,9 @@ class PostLogRequest
 {
     public function __construct(
         /** The error level, ERROR or DEBUG */
-        public ?string $level = null,
+        public string $level,
         /** Message to send to the server logs */
-        public ?string $message = null,
+        public string $message,
     ) {
     }
 }

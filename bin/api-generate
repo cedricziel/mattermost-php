@@ -167,7 +167,8 @@ function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, str
         }
 
         foreach ($schema['properties'] as $propertyName => $property) {
-            $required = isset($property['required']) && $property['required'] !== false;
+            $required = (isset($property['required']) && $property['required'] !== false)
+                || (isset($schema['required']) && in_array($propertyName, $schema['required'], true));
 
             $cp = $constructor->addPromotedParameter($propertyName)->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
             if (!$required) {
