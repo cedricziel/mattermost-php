@@ -167,9 +167,9 @@ class BotsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchBot(
+        \CedricZiel\MattermostPhp\Client\Model\PatchBotRequest $requestBody,
         /** Bot user ID */
         string $bot_user_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchBotRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Bot|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/bots/{bot_user_id}';
@@ -494,11 +494,11 @@ class BotsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function convertBotToUser(
+        \CedricZiel\MattermostPhp\Client\Model\ConvertBotToUserRequest $requestBody,
         /** Bot user ID */
         string $bot_user_id,
         /** Whether to give the user the system admin role. */
         ?bool $set_system_admin = false,
-        \CedricZiel\MattermostPhp\Client\Model\ConvertBotToUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/bots/{bot_user_id}/convert_to_user';

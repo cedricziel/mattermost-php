@@ -141,11 +141,11 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createUser(
+        \CedricZiel\MattermostPhp\Client\Model\CreateUserRequest $requestBody,
         /** Token id from an email invitation */
         ?string $t = null,
         /** Token id from an invitation link */
         ?string $iid = null,
-        \CedricZiel\MattermostPhp\Client\Model\CreateUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users';
@@ -332,13 +332,13 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getUsersByIds(
+        \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest $requestBody,
         /**
          * Only return users that have been modified since the given Unix timestamp (in milliseconds).
          *
          * __Minimum server version__: 5.14
          */
         ?int $since = null,
-        \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/ids';
@@ -721,9 +721,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUser(
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}';
@@ -801,9 +801,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchUser(
+        \CedricZiel\MattermostPhp\Client\Model\PatchUserRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/patch';
@@ -840,9 +840,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserRoles(
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/roles';
@@ -882,9 +882,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserActive(
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserActiveRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserActiveRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/active';
@@ -1154,9 +1154,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserMfa(
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/mfa';
@@ -1358,9 +1358,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserPassword(
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/password';
@@ -1510,9 +1510,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function revokeSession(
+        \CedricZiel\MattermostPhp\Client\Model\RevokeSessionRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\RevokeSessionRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/sessions/revoke';
@@ -1823,9 +1823,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createUserAccessToken(
+        \CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\UserAccessToken|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/tokens';
@@ -2150,9 +2150,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserAuth(
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserAuthRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserAuthRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\UserAuthData|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/auth';
@@ -2193,9 +2193,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function registerTermsOfServiceAction(
+        \CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/terms_of_service';
@@ -2311,9 +2311,9 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function publishUserTyping(
+        \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest $requestBody,
         /** User GUID */
         string $user_id,
-        \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/typing';

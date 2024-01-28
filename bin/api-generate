@@ -270,6 +270,23 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $pathParameters = [];
         $queryParameters = [];
 
+        if (isset($methodSpec['requestBody'])) {
+            $requestBody = $methodSpec['requestBody'];
+            $requestBodyContent = $requestBody['content'];
+
+            if (isset($requestBodyContent['application/json'])) {
+                $requestBodyContentJson = $requestBodyContent['application/json'];
+
+                $requestBodyClass = createRequestBodyModelClassFromSchema(
+                    $modelNamespace,
+                    ucfirst($methodSpec['operationId']),
+                    $requestBodyContentJson['schema'] ?? [],
+                );
+
+                $method->addParameter('requestBody')->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
+            }
+        }
+
         if (isset($methodSpec['parameters'])) {
             foreach ($methodSpec['parameters'] as $parameter) {
                 $parameterIsNullable = !isset($parameter['required']) || $parameter['required'] === false;
@@ -289,23 +306,6 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $queryParameters[] = $parameter['name'];
                     $method->addBody(sprintf('$queryParameters[\'%s\'] = $%s;', $parameter['name'], $parameter['name']));
                 }
-            }
-        }
-
-        if (isset($methodSpec['requestBody'])) {
-            $requestBody = $methodSpec['requestBody'];
-            $requestBodyContent = $requestBody['content'];
-
-            if (isset($requestBodyContent['application/json'])) {
-                $requestBodyContentJson = $requestBodyContent['application/json'];
-
-                $requestBodyClass = createRequestBodyModelClassFromSchema(
-                    $modelNamespace,
-                    ucfirst($methodSpec['operationId']),
-                    $requestBodyContentJson['schema'] ?? [],
-                );
-
-                $method->addParameter('requestBody')->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
             }
         }
 

@@ -39,9 +39,9 @@ class PostsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createPost(
+        \CedricZiel\MattermostPhp\Client\Model\CreatePostRequest $requestBody,
         /** Whether to set the user status as online or not. */
         ?bool $set_online = null,
-        \CedricZiel\MattermostPhp\Client\Model\CreatePostRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Post|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/posts';
@@ -193,9 +193,9 @@ class PostsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updatePost(
+        \CedricZiel\MattermostPhp\Client\Model\UpdatePostRequest $requestBody,
         /** ID of the post to update */
         string $post_id,
-        \CedricZiel\MattermostPhp\Client\Model\UpdatePostRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Post|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/posts/{post_id}';
@@ -277,9 +277,9 @@ class PostsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchPost(
+        \CedricZiel\MattermostPhp\Client\Model\PatchPostRequest $requestBody,
         /** Post GUID */
         string $post_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchPostRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Post|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/posts/{post_id}/patch';
@@ -580,9 +580,9 @@ class PostsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function searchPosts(
+        \CedricZiel\MattermostPhp\Client\Model\SearchPostsRequest $requestBody,
         /** Team GUID */
         string $team_id,
-        \CedricZiel\MattermostPhp\Client\Model\SearchPostsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\PostListWithSearchMatches|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/posts/search';
@@ -774,11 +774,11 @@ class PostsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function setPostReminder(
+        \CedricZiel\MattermostPhp\Client\Model\SetPostReminderRequest $requestBody,
         /** User GUID */
         string $user_id,
         /** Post GUID */
         string $post_id,
-        \CedricZiel\MattermostPhp\Client\Model\SetPostReminderRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/posts/{post_id}/reminder';
@@ -908,9 +908,9 @@ class PostsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function moveThread(
+        \CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest $requestBody,
         /** The identifier of the post to move */
         string $post_id,
-        \CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/posts/{post_id}/move';

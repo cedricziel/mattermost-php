@@ -373,9 +373,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchDataRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\PatchDataRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchDataRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DataRetentionPolicyWithTeamAndChannelCounts|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}';
@@ -515,9 +515,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function addTeamsToRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
@@ -561,9 +561,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function removeTeamsFromRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
@@ -607,9 +607,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function searchTeamsForRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams/search';
@@ -704,9 +704,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function addChannelsToRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
@@ -750,9 +750,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function removeChannelsFromRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
@@ -796,9 +796,9 @@ class DataRetentionEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function searchChannelsForRetentionPolicy(
+        \CedricZiel\MattermostPhp\Client\Model\SearchChannelsForRetentionPolicyRequest $requestBody,
         /** The ID of the granular retention policy. */
         string $policy_id,
-        \CedricZiel\MattermostPhp\Client\Model\SearchChannelsForRetentionPolicyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels/search';

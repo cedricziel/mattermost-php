@@ -1298,9 +1298,9 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function sendWarnMetricAck(
+        \CedricZiel\MattermostPhp\Client\Model\SendWarnMetricAckRequest $requestBody,
         /** Warn Metric Id. */
         string $warn_metric_id,
-        \CedricZiel\MattermostPhp\Client\Model\SendWarnMetricAckRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/warn_metrics/ack/{warn_metric_id}';

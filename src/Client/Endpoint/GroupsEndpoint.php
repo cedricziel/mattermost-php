@@ -266,9 +266,9 @@ class GroupsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchGroup(
+        \CedricZiel\MattermostPhp\Client\Model\PatchGroupRequest $requestBody,
         /** Group GUID */
         string $group_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchGroupRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Group|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/patch';
@@ -701,11 +701,11 @@ class GroupsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchGroupSyncableForTeam(
+        \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamRequest $requestBody,
         /** Group GUID */
         string $group_id,
         /** Team GUID */
         string $team_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/patch';
@@ -747,11 +747,11 @@ class GroupsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchGroupSyncableForChannel(
+        \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelRequest $requestBody,
         /** Group GUID */
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/patch';
@@ -842,9 +842,9 @@ class GroupsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function deleteGroupMembers(
+        \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersRequest $requestBody,
         /** The ID of the group to delete. */
         string $group_id,
-        \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/groups/{group_id}/members';
@@ -882,9 +882,9 @@ class GroupsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function addGroupMembers(
+        \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersRequest $requestBody,
         /** The ID of the group. */
         string $group_id,
-        \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/groups/{group_id}/members';

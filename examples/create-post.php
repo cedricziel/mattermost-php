@@ -16,7 +16,7 @@ try {
     $channel = $channelsEndpoint->getChannelByName($team->id, 'town-square');
 
     $postsEndpoint = new PostsEndpoint(getenv('MATTERMOST_SITE_URL'), getenv('MATTERMOST_TOKEN'));
-    $post = $postsEndpoint->createPost(true, new CreatePostRequest($channel->id, 'Hello World!'));
+    $post = $postsEndpoint->createPost(new CreatePostRequest($channel->id, 'Hello World!'), true);
     var_dump($post);
 } catch (\Throwable $e) {
     echo $e->getMessage();

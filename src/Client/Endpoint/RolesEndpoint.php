@@ -159,9 +159,9 @@ class RolesEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchRole(
+        \CedricZiel\MattermostPhp\Client\Model\PatchRoleRequest $requestBody,
         /** Role GUID */
         string $role_id,
-        \CedricZiel\MattermostPhp\Client\Model\PatchRoleRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/{role_id}/patch';
