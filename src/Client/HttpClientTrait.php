@@ -5,12 +5,15 @@ namespace CedricZiel\MattermostPhp\Client;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 trait HttpClientTrait
 {
     protected ClientInterface $httpClient;
 
     protected RequestFactoryInterface $requestFactory;
+
+    protected StreamFactoryInterface $streamFactory;
 
     public function setHttpClient(ClientInterface $httpClient): static
     {
@@ -22,6 +25,13 @@ trait HttpClientTrait
     public function setRequestFactory(RequestFactoryInterface $requestFactory): static
     {
         $this->requestFactory = $requestFactory;
+
+        return $this;
+    }
+
+    public function setStreamFactory(StreamFactoryInterface $streamFactory): static
+    {
+        $this->streamFactory = $streamFactory;
 
         return $this;
     }

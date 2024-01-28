@@ -7,6 +7,7 @@ use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
     throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
@@ -59,14 +60,19 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
             ->setType(ClientInterface::class)
             ->setNullable()
             ->setDefaultValue(null);
-
         $constructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
-        $constructor->addBody('$this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
 
         $constructor->addParameter('requestFactory')
             ->setType(RequestFactoryInterface::class)
             ->setNullable()
             ->setDefaultValue(null);
+        $constructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
+
+        $constructor->addParameter('streamFactory')
+            ->setType(StreamFactoryInterface::class)
+            ->setNullable()
+            ->setDefaultValue(null);
+        $constructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
 
         $baseUrlSetter = $class->addMethod('setBaseUrl');
         $baseUrlSetter->setReturnType('static');
@@ -303,7 +309,13 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             ->addBody('$uri = $this->buildUri($path, $pathParameters, $queryParameters);')
             ->addBody('')
             ->addBody('$request = $this->requestFactory->createRequest($method, $uri);')
-            ->addBody('$request = $request->withHeader(\'Authorization\', \'Bearer \' . $this->token);')
+            ->addBody('$request = $request->withHeader(\'Authorization\', \'Bearer \' . $this->token);');
+
+        if (isset($requestBodyContent['application/json'])) {
+            $method->addBody('$request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? \'\'));');
+        }
+
+        $method
             ->addBody('')
             ->addBody('$response = $this->httpClient->sendRequest($request);')
             ->addBody('')
