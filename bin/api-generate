@@ -52,10 +52,14 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
         $class->addTrait(\CedricZiel\MattermostPhp\Client\HttpClientTrait::class);
         $constructor = $class->addMethod('__construct');
         $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
+        $constructor->addPromotedParameter('token')->setType('string')->setProtected();
+
         $constructor->addParameter('httpClient')
             ->setType(ClientInterface::class)
             ->setNullable()
             ->setDefaultValue(null);
+        $constructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
+
         $constructor->addParameter('requestFactory')
             ->setType(RequestFactoryInterface::class)
             ->setNullable()
@@ -66,6 +70,12 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
         $baseUrlSetter->addParameter('baseUrl')->setType('string');
         $baseUrlSetter->addBody('$this->baseUrl = $baseUrl;');
         $baseUrlSetter->addBody('return $this;');
+
+        $tokenSetter = $class->addMethod('setToken');
+        $tokenSetter->setReturnType('static');
+        $tokenSetter->addParameter('token')->setType('string');
+        $tokenSetter->addBody('$this->token = $token;');
+        $tokenSetter->addBody('return $this;');
     }
 }
 

@@ -8,14 +8,22 @@ class PreferencesEndpoint
 
     public function __construct(
         protected string $baseUrl,
+        protected string $token,
         ?\Psr\Http\Client\ClientInterface $httpClient = null,
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
+        $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
     }
 
     public function setBaseUrl(string $baseUrl): static
     {
         $this->baseUrl = $baseUrl;
+        return $this;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
         return $this;
     }
 
