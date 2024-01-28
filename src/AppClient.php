@@ -2,8 +2,6 @@
 
 namespace CedricZiel\MattermostPhp;
 
-use CedricZiel\MattermostPhp\Client\Endpoint\ChannelsEndpoint;
-use CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -148,23 +146,23 @@ class AppClient
 
     public function createDMPost(string $userId, Post $post): Client\Model\DefaultBadRequestResponse|Client\Model\DefaultForbiddenResponse|Client\Model\DefaultUnauthorizedResponse|Client\Model\Post
     {
-        $channelEndpoint = new ChannelsEndpoint(
-            $this->client,
-            $this->requestFactory,
-            $this->streamFactory,
-        );
-
-        $createChannelResponse = $channelEndpoint->createDirectChannel(new CreateDirectChannelRequest([
+        /** @var Channel $directChannel */
+        $directChannel = $this->api()->channels()->createDirectChannel(new CreateDirectChannelRequest([
             $this->userId,
             $userId,
         ]));
 
-        $postApi = new PostsEndpoint(
+        return $this->api()->posts()->createPost(new CreatePostRequest($directChannel->getId(), $post->getMessage()));
+    }
+
+    public function api(): Client
+    {
+        return new Client(
+            $this->mattermostSiteUrl,
+            $this->token,
             $this->client,
             $this->requestFactory,
             $this->streamFactory,
         );
-
-        return $postApi->createPost(true, new CreatePostRequest());
     }
 }
