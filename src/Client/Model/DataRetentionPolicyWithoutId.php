@@ -18,8 +18,10 @@ class DataRetentionPolicyWithoutId
     ): static
     {
         if ($data === null) return $this;
-        $this->display_name = $data['display_name'];
-        $this->post_duration = $data['post_duration'];
+        /** @var string $data['display_name'] */
+        if (isset($data['display_name'])) $this->display_name = $data['display_name'];
+        /** @var int $data['post_duration'] */
+        if (isset($data['post_duration'])) $this->post_duration = $data['post_duration'];
         return $this;
     }
 }

@@ -22,10 +22,14 @@ class UserAccessTokenSanitized
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->user_id = $data['user_id'];
-        $this->description = $data['description'];
-        $this->is_active = $data['is_active'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['user_id'] */
+        if (isset($data['user_id'])) $this->user_id = $data['user_id'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var bool $data['is_active'] */
+        if (isset($data['is_active'])) $this->is_active = $data['is_active'];
         return $this;
     }
 }

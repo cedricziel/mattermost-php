@@ -12,7 +12,8 @@ class TeamsLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->active = $data['active'];
+        /** @var int $data['active'] */
+        if (isset($data['active'])) $this->active = $data['active'];
         return $this;
     }
 }

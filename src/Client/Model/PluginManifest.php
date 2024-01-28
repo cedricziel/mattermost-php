@@ -37,15 +37,24 @@ class PluginManifest
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->version = $data['version'];
-        $this->min_server_version = $data['min_server_version'];
-        $this->backend = $data['backend'];
-        $this->server = $data['server'];
-        $this->webapp = $data['webapp'];
-        $this->settings_schema = $data['settings_schema'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['version'] */
+        if (isset($data['version'])) $this->version = $data['version'];
+        /** @var string $data['min_server_version'] */
+        if (isset($data['min_server_version'])) $this->min_server_version = $data['min_server_version'];
+        /** @var stdClass $data['backend'] */
+        if (isset($data['backend'])) $this->backend = (object) $data['backend'];
+        /** @var stdClass $data['server'] */
+        if (isset($data['server'])) $this->server = (object) $data['server'];
+        /** @var stdClass $data['webapp'] */
+        if (isset($data['webapp'])) $this->webapp = (object) $data['webapp'];
+        /** @var stdClass $data['settings_schema'] */
+        if (isset($data['settings_schema'])) $this->settings_schema = (object) $data['settings_schema'];
         return $this;
     }
 }

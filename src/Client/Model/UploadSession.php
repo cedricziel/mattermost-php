@@ -37,14 +37,22 @@ class UploadSession
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->type = $data['type'];
-        $this->create_at = $data['create_at'];
-        $this->user_id = $data['user_id'];
-        $this->channel_id = $data['channel_id'];
-        $this->filename = $data['filename'];
-        $this->file_size = $data['file_size'];
-        $this->file_offset = $data['file_offset'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['type'] */
+        if (isset($data['type'])) $this->type = $data['type'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var string $data['user_id'] */
+        if (isset($data['user_id'])) $this->user_id = $data['user_id'];
+        /** @var string $data['channel_id'] */
+        if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
+        /** @var string $data['filename'] */
+        if (isset($data['filename'])) $this->filename = $data['filename'];
+        /** @var int $data['file_size'] */
+        if (isset($data['file_size'])) $this->file_size = $data['file_size'];
+        /** @var int $data['file_offset'] */
+        if (isset($data['file_offset'])) $this->file_offset = $data['file_offset'];
         return $this;
     }
 }

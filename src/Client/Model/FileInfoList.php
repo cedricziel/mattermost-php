@@ -19,10 +19,14 @@ class FileInfoList
     ): static
     {
         if ($data === null) return $this;
-        $this->order = $data['order'];
-        $this->file_infos = $data['file_infos'];
-        $this->next_file_id = $data['next_file_id'];
-        $this->prev_file_id = $data['prev_file_id'];
+        /** @var array $data['order'] */
+        if (isset($data['order'])) $this->order = $data['order'];
+        /** @var stdClass $data['file_infos'] */
+        if (isset($data['file_infos'])) $this->file_infos = (object) $data['file_infos'];
+        /** @var string $data['next_file_id'] */
+        if (isset($data['next_file_id'])) $this->next_file_id = $data['next_file_id'];
+        /** @var string $data['prev_file_id'] */
+        if (isset($data['prev_file_id'])) $this->prev_file_id = $data['prev_file_id'];
         return $this;
     }
 }

@@ -16,8 +16,10 @@ class UserAutocomplete
     ): static
     {
         if ($data === null) return $this;
-        $this->users = $data['users'];
-        $this->out_of_channel = $data['out_of_channel'];
+        /** @var array $data['users'] */
+        if (isset($data['users'])) $this->users = $data['users'];
+        /** @var array $data['out_of_channel'] */
+        if (isset($data['out_of_channel'])) $this->out_of_channel = $data['out_of_channel'];
         return $this;
     }
 }

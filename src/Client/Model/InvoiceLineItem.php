@@ -17,12 +17,18 @@ class InvoiceLineItem
     ): static
     {
         if ($data === null) return $this;
-        $this->price_id = $data['price_id'];
-        $this->total = $data['total'];
-        $this->quantity = $data['quantity'];
-        $this->price_per_unit = $data['price_per_unit'];
-        $this->description = $data['description'];
-        $this->metadata = $data['metadata'];
+        /** @var string $data['price_id'] */
+        if (isset($data['price_id'])) $this->price_id = $data['price_id'];
+        /** @var int $data['total'] */
+        if (isset($data['total'])) $this->total = $data['total'];
+        /** @var int $data['quantity'] */
+        if (isset($data['quantity'])) $this->quantity = $data['quantity'];
+        /** @var int $data['price_per_unit'] */
+        if (isset($data['price_per_unit'])) $this->price_per_unit = $data['price_per_unit'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var array $data['metadata'] */
+        if (isset($data['metadata'])) $this->metadata = $data['metadata'];
         return $this;
     }
 }

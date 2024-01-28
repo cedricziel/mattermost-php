@@ -22,10 +22,14 @@ class ChannelNotifyProps
     ): static
     {
         if ($data === null) return $this;
-        $this->email = $data['email'];
-        $this->push = $data['push'];
-        $this->desktop = $data['desktop'];
-        $this->mark_unread = $data['mark_unread'];
+        /** @var string $data['email'] */
+        if (isset($data['email'])) $this->email = $data['email'];
+        /** @var string $data['push'] */
+        if (isset($data['push'])) $this->push = $data['push'];
+        /** @var string $data['desktop'] */
+        if (isset($data['desktop'])) $this->desktop = $data['desktop'];
+        /** @var string $data['mark_unread'] */
+        if (isset($data['mark_unread'])) $this->mark_unread = $data['mark_unread'];
         return $this;
     }
 }

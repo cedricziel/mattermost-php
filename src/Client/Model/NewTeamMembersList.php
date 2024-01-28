@@ -19,9 +19,12 @@ class NewTeamMembersList
     ): static
     {
         if ($data === null) return $this;
-        $this->has_next = $data['has_next'];
-        $this->items = $data['items'];
-        $this->total_count = $data['total_count'];
+        /** @var bool $data['has_next'] */
+        if (isset($data['has_next'])) $this->has_next = $data['has_next'];
+        /** @var array $data['items'] */
+        if (isset($data['items'])) $this->items = $data['items'];
+        /** @var int $data['total_count'] */
+        if (isset($data['total_count'])) $this->total_count = $data['total_count'];
         return $this;
     }
 }

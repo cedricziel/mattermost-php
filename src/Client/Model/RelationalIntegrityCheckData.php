@@ -28,11 +28,16 @@ class RelationalIntegrityCheckData
     ): static
     {
         if ($data === null) return $this;
-        $this->parent_name = $data['parent_name'];
-        $this->child_name = $data['child_name'];
-        $this->parent_id_attr = $data['parent_id_attr'];
-        $this->child_id_attr = $data['child_id_attr'];
-        $this->records = $data['records'];
+        /** @var string $data['parent_name'] */
+        if (isset($data['parent_name'])) $this->parent_name = $data['parent_name'];
+        /** @var string $data['child_name'] */
+        if (isset($data['child_name'])) $this->child_name = $data['child_name'];
+        /** @var string $data['parent_id_attr'] */
+        if (isset($data['parent_id_attr'])) $this->parent_id_attr = $data['parent_id_attr'];
+        /** @var string $data['child_id_attr'] */
+        if (isset($data['child_id_attr'])) $this->child_id_attr = $data['child_id_attr'];
+        /** @var array $data['records'] */
+        if (isset($data['records'])) $this->records = $data['records'];
         return $this;
     }
 }

@@ -14,9 +14,12 @@ class TeamUnread
     ): static
     {
         if ($data === null) return $this;
-        $this->team_id = $data['team_id'];
-        $this->msg_count = $data['msg_count'];
-        $this->mention_count = $data['mention_count'];
+        /** @var string $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+        /** @var int $data['msg_count'] */
+        if (isset($data['msg_count'])) $this->msg_count = $data['msg_count'];
+        /** @var int $data['mention_count'] */
+        if (isset($data['mention_count'])) $this->mention_count = $data['mention_count'];
         return $this;
     }
 }

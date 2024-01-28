@@ -16,9 +16,12 @@ class SlackAttachmentField
     ): static
     {
         if ($data === null) return $this;
-        $this->Title = $data['Title'];
-        $this->Value = $data['Value'];
-        $this->Short = $data['Short'];
+        /** @var string $data['Title'] */
+        if (isset($data['Title'])) $this->Title = $data['Title'];
+        /** @var string $data['Value'] */
+        if (isset($data['Value'])) $this->Value = $data['Value'];
+        /** @var bool $data['Short'] */
+        if (isset($data['Short'])) $this->Short = $data['Short'];
         return $this;
     }
 }

@@ -40,15 +40,24 @@ class Notice
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->sysAdminOnly = $data['sysAdminOnly'];
-        $this->teamAdminOnly = $data['teamAdminOnly'];
-        $this->action = $data['action'];
-        $this->actionParam = $data['actionParam'];
-        $this->actionText = $data['actionText'];
-        $this->description = $data['description'];
-        $this->image = $data['image'];
-        $this->title = $data['title'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var bool $data['sysAdminOnly'] */
+        if (isset($data['sysAdminOnly'])) $this->sysAdminOnly = $data['sysAdminOnly'];
+        /** @var bool $data['teamAdminOnly'] */
+        if (isset($data['teamAdminOnly'])) $this->teamAdminOnly = $data['teamAdminOnly'];
+        /** @var string $data['action'] */
+        if (isset($data['action'])) $this->action = $data['action'];
+        /** @var string $data['actionParam'] */
+        if (isset($data['actionParam'])) $this->actionParam = $data['actionParam'];
+        /** @var string $data['actionText'] */
+        if (isset($data['actionText'])) $this->actionText = $data['actionText'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['image'] */
+        if (isset($data['image'])) $this->image = $data['image'];
+        /** @var string $data['title'] */
+        if (isset($data['title'])) $this->title = $data['title'];
         return $this;
     }
 }

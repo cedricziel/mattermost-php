@@ -12,7 +12,8 @@ class IntegrationsLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->enabled = $data['enabled'];
+        /** @var int $data['enabled'] */
+        if (isset($data['enabled'])) $this->enabled = $data['enabled'];
         return $this;
     }
 }

@@ -16,8 +16,10 @@ class GroupWithSchemeAdmin
     ): static
     {
         if ($data === null) return $this;
-        $this->group = $data['group'];
-        $this->scheme_admin = $data['scheme_admin'];
+        /** @var  $data['group'] */
+        if (isset($data['group'])) $this->group = $data['group'];
+        /** @var bool $data['scheme_admin'] */
+        if (isset($data['scheme_admin'])) $this->scheme_admin = $data['scheme_admin'];
         return $this;
     }
 }

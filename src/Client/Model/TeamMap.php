@@ -15,7 +15,8 @@ class TeamMap
     ): static
     {
         if ($data === null) return $this;
-        $this->team_id = $data['team_id'];
+        /** @var  $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
         return $this;
     }
 }

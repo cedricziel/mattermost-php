@@ -14,9 +14,12 @@ class TeamStats
     ): static
     {
         if ($data === null) return $this;
-        $this->team_id = $data['team_id'];
-        $this->total_member_count = $data['total_member_count'];
-        $this->active_member_count = $data['active_member_count'];
+        /** @var string $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+        /** @var int $data['total_member_count'] */
+        if (isset($data['total_member_count'])) $this->total_member_count = $data['total_member_count'];
+        /** @var int $data['active_member_count'] */
+        if (isset($data['active_member_count'])) $this->active_member_count = $data['active_member_count'];
         return $this;
     }
 }

@@ -53,21 +53,36 @@ class PlaybookRun
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->is_active = $data['is_active'];
-        $this->owner_user_id = $data['owner_user_id'];
-        $this->team_id = $data['team_id'];
-        $this->channel_id = $data['channel_id'];
-        $this->create_at = $data['create_at'];
-        $this->end_at = $data['end_at'];
-        $this->delete_at = $data['delete_at'];
-        $this->active_stage = $data['active_stage'];
-        $this->active_stage_title = $data['active_stage_title'];
-        $this->post_id = $data['post_id'];
-        $this->playbook_id = $data['playbook_id'];
-        $this->checklists = $data['checklists'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var bool $data['is_active'] */
+        if (isset($data['is_active'])) $this->is_active = $data['is_active'];
+        /** @var string $data['owner_user_id'] */
+        if (isset($data['owner_user_id'])) $this->owner_user_id = $data['owner_user_id'];
+        /** @var string $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+        /** @var string $data['channel_id'] */
+        if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['end_at'] */
+        if (isset($data['end_at'])) $this->end_at = $data['end_at'];
+        /** @var int $data['delete_at'] */
+        if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
+        /** @var int $data['active_stage'] */
+        if (isset($data['active_stage'])) $this->active_stage = $data['active_stage'];
+        /** @var string $data['active_stage_title'] */
+        if (isset($data['active_stage_title'])) $this->active_stage_title = $data['active_stage_title'];
+        /** @var string $data['post_id'] */
+        if (isset($data['post_id'])) $this->post_id = $data['post_id'];
+        /** @var string $data['playbook_id'] */
+        if (isset($data['playbook_id'])) $this->playbook_id = $data['playbook_id'];
+        /** @var array $data['checklists'] */
+        if (isset($data['checklists'])) $this->checklists = $data['checklists'];
         return $this;
     }
 }

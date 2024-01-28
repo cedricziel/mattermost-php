@@ -43,17 +43,28 @@ class Scheme
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->create_at = $data['create_at'];
-        $this->update_at = $data['update_at'];
-        $this->delete_at = $data['delete_at'];
-        $this->scope = $data['scope'];
-        $this->default_team_admin_role = $data['default_team_admin_role'];
-        $this->default_team_user_role = $data['default_team_user_role'];
-        $this->default_channel_admin_role = $data['default_channel_admin_role'];
-        $this->default_channel_user_role = $data['default_channel_user_role'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['update_at'] */
+        if (isset($data['update_at'])) $this->update_at = $data['update_at'];
+        /** @var int $data['delete_at'] */
+        if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
+        /** @var string $data['scope'] */
+        if (isset($data['scope'])) $this->scope = $data['scope'];
+        /** @var string $data['default_team_admin_role'] */
+        if (isset($data['default_team_admin_role'])) $this->default_team_admin_role = $data['default_team_admin_role'];
+        /** @var string $data['default_team_user_role'] */
+        if (isset($data['default_team_user_role'])) $this->default_team_user_role = $data['default_team_user_role'];
+        /** @var string $data['default_channel_admin_role'] */
+        if (isset($data['default_channel_admin_role'])) $this->default_channel_admin_role = $data['default_channel_admin_role'];
+        /** @var string $data['default_channel_user_role'] */
+        if (isset($data['default_channel_user_role'])) $this->default_channel_user_role = $data['default_channel_user_role'];
         return $this;
     }
 }

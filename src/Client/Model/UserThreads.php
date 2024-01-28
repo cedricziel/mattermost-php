@@ -16,8 +16,10 @@ class UserThreads
     ): static
     {
         if ($data === null) return $this;
-        $this->total = $data['total'];
-        $this->threads = $data['threads'];
+        /** @var int $data['total'] */
+        if (isset($data['total'])) $this->total = $data['total'];
+        /** @var array $data['threads'] */
+        if (isset($data['threads'])) $this->threads = $data['threads'];
         return $this;
     }
 }

@@ -37,15 +37,24 @@ class ChecklistItem
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->state = $data['state'];
-        $this->state_modified = $data['state_modified'];
-        $this->assignee_id = $data['assignee_id'];
-        $this->assignee_modified = $data['assignee_modified'];
-        $this->command = $data['command'];
-        $this->command_last_run = $data['command_last_run'];
-        $this->description = $data['description'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['title'] */
+        if (isset($data['title'])) $this->title = $data['title'];
+        /** @var string $data['state'] */
+        if (isset($data['state'])) $this->state = $data['state'];
+        /** @var int $data['state_modified'] */
+        if (isset($data['state_modified'])) $this->state_modified = $data['state_modified'];
+        /** @var string $data['assignee_id'] */
+        if (isset($data['assignee_id'])) $this->assignee_id = $data['assignee_id'];
+        /** @var int $data['assignee_modified'] */
+        if (isset($data['assignee_modified'])) $this->assignee_modified = $data['assignee_modified'];
+        /** @var string $data['command'] */
+        if (isset($data['command'])) $this->command = $data['command'];
+        /** @var int $data['command_last_run'] */
+        if (isset($data['command_last_run'])) $this->command_last_run = $data['command_last_run'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
         return $this;
     }
 }

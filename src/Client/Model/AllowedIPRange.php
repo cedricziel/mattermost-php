@@ -16,8 +16,10 @@ class AllowedIPRange
     ): static
     {
         if ($data === null) return $this;
-        $this->CIDRBlock = $data['CIDRBlock'];
-        $this->Description = $data['Description'];
+        /** @var string $data['CIDRBlock'] */
+        if (isset($data['CIDRBlock'])) $this->CIDRBlock = $data['CIDRBlock'];
+        /** @var string $data['Description'] */
+        if (isset($data['Description'])) $this->Description = $data['Description'];
         return $this;
     }
 }

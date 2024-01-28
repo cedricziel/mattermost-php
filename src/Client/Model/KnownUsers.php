@@ -12,7 +12,8 @@ class KnownUsers
     ): static
     {
         if ($data === null) return $this;
-        $this->items = $data['items'];
+        /** @var string $data['items'] */
+        if (isset($data['items'])) $this->items = $data['items'];
         return $this;
     }
 }

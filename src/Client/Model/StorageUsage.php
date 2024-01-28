@@ -13,7 +13,8 @@ class StorageUsage
     ): static
     {
         if ($data === null) return $this;
-        $this->bytes = $data['bytes'];
+        /** @var number $data['bytes'] */
+        if (isset($data['bytes'])) $this->bytes = $data['bytes'];
         return $this;
     }
 }

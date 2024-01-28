@@ -43,17 +43,28 @@ class Playbook
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->description = $data['description'];
-        $this->team_id = $data['team_id'];
-        $this->create_public_playbook_run = $data['create_public_playbook_run'];
-        $this->create_at = $data['create_at'];
-        $this->delete_at = $data['delete_at'];
-        $this->num_stages = $data['num_stages'];
-        $this->num_steps = $data['num_steps'];
-        $this->checklists = $data['checklists'];
-        $this->member_ids = $data['member_ids'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['title'] */
+        if (isset($data['title'])) $this->title = $data['title'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+        /** @var bool $data['create_public_playbook_run'] */
+        if (isset($data['create_public_playbook_run'])) $this->create_public_playbook_run = $data['create_public_playbook_run'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['delete_at'] */
+        if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
+        /** @var int $data['num_stages'] */
+        if (isset($data['num_stages'])) $this->num_stages = $data['num_stages'];
+        /** @var int $data['num_steps'] */
+        if (isset($data['num_steps'])) $this->num_steps = $data['num_steps'];
+        /** @var array $data['checklists'] */
+        if (isset($data['checklists'])) $this->checklists = $data['checklists'];
+        /** @var array $data['member_ids'] */
+        if (isset($data['member_ids'])) $this->member_ids = $data['member_ids'];
         return $this;
     }
 }

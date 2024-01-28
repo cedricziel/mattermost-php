@@ -12,7 +12,8 @@ class UsersStats
     ): static
     {
         if ($data === null) return $this;
-        $this->total_users_count = $data['total_users_count'];
+        /** @var int $data['total_users_count'] */
+        if (isset($data['total_users_count'])) $this->total_users_count = $data['total_users_count'];
         return $this;
     }
 }

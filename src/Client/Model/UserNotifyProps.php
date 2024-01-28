@@ -31,13 +31,20 @@ class UserNotifyProps
     ): static
     {
         if ($data === null) return $this;
-        $this->email = $data['email'];
-        $this->push = $data['push'];
-        $this->desktop = $data['desktop'];
-        $this->desktop_sound = $data['desktop_sound'];
-        $this->mention_keys = $data['mention_keys'];
-        $this->channel = $data['channel'];
-        $this->first_name = $data['first_name'];
+        /** @var string $data['email'] */
+        if (isset($data['email'])) $this->email = $data['email'];
+        /** @var string $data['push'] */
+        if (isset($data['push'])) $this->push = $data['push'];
+        /** @var string $data['desktop'] */
+        if (isset($data['desktop'])) $this->desktop = $data['desktop'];
+        /** @var string $data['desktop_sound'] */
+        if (isset($data['desktop_sound'])) $this->desktop_sound = $data['desktop_sound'];
+        /** @var string $data['mention_keys'] */
+        if (isset($data['mention_keys'])) $this->mention_keys = $data['mention_keys'];
+        /** @var string $data['channel'] */
+        if (isset($data['channel'])) $this->channel = $data['channel'];
+        /** @var string $data['first_name'] */
+        if (isset($data['first_name'])) $this->first_name = $data['first_name'];
         return $this;
     }
 }

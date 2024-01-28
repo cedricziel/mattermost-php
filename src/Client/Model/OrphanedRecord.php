@@ -19,8 +19,10 @@ class OrphanedRecord
     ): static
     {
         if ($data === null) return $this;
-        $this->parent_id = $data['parent_id'];
-        $this->child_id = $data['child_id'];
+        /** @var string $data['parent_id'] */
+        if (isset($data['parent_id'])) $this->parent_id = $data['parent_id'];
+        /** @var string $data['child_id'] */
+        if (isset($data['child_id'])) $this->child_id = $data['child_id'];
         return $this;
     }
 }

@@ -32,14 +32,22 @@ class MarketplacePlugin
     ): static
     {
         if ($data === null) return $this;
-        $this->homepage_url = $data['homepage_url'];
-        $this->icon_data = $data['icon_data'];
-        $this->download_url = $data['download_url'];
-        $this->release_notes_url = $data['release_notes_url'];
-        $this->labels = $data['labels'];
-        $this->signature = $data['signature'];
-        $this->manifest = $data['manifest'];
-        $this->installed_version = $data['installed_version'];
+        /** @var string $data['homepage_url'] */
+        if (isset($data['homepage_url'])) $this->homepage_url = $data['homepage_url'];
+        /** @var string $data['icon_data'] */
+        if (isset($data['icon_data'])) $this->icon_data = $data['icon_data'];
+        /** @var string $data['download_url'] */
+        if (isset($data['download_url'])) $this->download_url = $data['download_url'];
+        /** @var string $data['release_notes_url'] */
+        if (isset($data['release_notes_url'])) $this->release_notes_url = $data['release_notes_url'];
+        /** @var array $data['labels'] */
+        if (isset($data['labels'])) $this->labels = $data['labels'];
+        /** @var string $data['signature'] */
+        if (isset($data['signature'])) $this->signature = $data['signature'];
+        /** @var  $data['manifest'] */
+        if (isset($data['manifest'])) $this->manifest = $data['manifest'];
+        /** @var string $data['installed_version'] */
+        if (isset($data['installed_version'])) $this->installed_version = $data['installed_version'];
         return $this;
     }
 }

@@ -13,8 +13,10 @@ class ChannelModerationPatch
     ): static
     {
         if ($data === null) return $this;
-        $this->name = $data['name'];
-        $this->roles = $data['roles'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var  $data['roles'] */
+        if (isset($data['roles'])) $this->roles = $data['roles'];
         return $this;
     }
 }

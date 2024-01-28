@@ -121,7 +121,13 @@ function createHydrationMethod(ClassType $class): Method
     }
     $hydrationMethod->addBody('if ($data === null) return $this;');
     $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-        return sprintf('$this->%s = $data[\'%s\'];', $property->getName(), $property->getName());
+        if ($property->getType() === 'stdClass') {
+            return sprintf('/** @var %s $data[\'%s\'] */
+if (isset($data[\'%s\'])) $this->%s = (object) $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
+        }
+
+        return sprintf('/** @var %s $data[\'%s\'] */
+if (isset($data[\'%s\'])) $this->%s = $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
     }, $class->getProperties())));
     $hydrationMethod->addBody('return $this;');
 

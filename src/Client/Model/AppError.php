@@ -15,10 +15,14 @@ class AppError
     ): static
     {
         if ($data === null) return $this;
-        $this->status_code = $data['status_code'];
-        $this->id = $data['id'];
-        $this->message = $data['message'];
-        $this->request_id = $data['request_id'];
+        /** @var int $data['status_code'] */
+        if (isset($data['status_code'])) $this->status_code = $data['status_code'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['message'] */
+        if (isset($data['message'])) $this->message = $data['message'];
+        /** @var string $data['request_id'] */
+        if (isset($data['request_id'])) $this->request_id = $data['request_id'];
         return $this;
     }
 }

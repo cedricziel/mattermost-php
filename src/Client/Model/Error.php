@@ -16,8 +16,10 @@ class Error
     ): static
     {
         if ($data === null) return $this;
-        $this->error = $data['error'];
-        $this->details = $data['details'];
+        /** @var string $data['error'] */
+        if (isset($data['error'])) $this->error = $data['error'];
+        /** @var string $data['details'] */
+        if (isset($data['details'])) $this->details = $data['details'];
         return $this;
     }
 }

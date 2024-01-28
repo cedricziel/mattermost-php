@@ -13,7 +13,8 @@ class UserAutocompleteInTeam
     ): static
     {
         if ($data === null) return $this;
-        $this->in_team = $data['in_team'];
+        /** @var array $data['in_team'] */
+        if (isset($data['in_team'])) $this->in_team = $data['in_team'];
         return $this;
     }
 }

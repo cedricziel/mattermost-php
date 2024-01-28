@@ -13,7 +13,8 @@ class StatusOK
     ): static
     {
         if ($data === null) return $this;
-        $this->status = $data['status'];
+        /** @var string $data['status'] */
+        if (isset($data['status'])) $this->status = $data['status'];
         return $this;
     }
 }

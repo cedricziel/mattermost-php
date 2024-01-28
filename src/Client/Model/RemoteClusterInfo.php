@@ -19,9 +19,12 @@ class RemoteClusterInfo
     ): static
     {
         if ($data === null) return $this;
-        $this->display_name = $data['display_name'];
-        $this->create_at = $data['create_at'];
-        $this->last_ping_at = $data['last_ping_at'];
+        /** @var string $data['display_name'] */
+        if (isset($data['display_name'])) $this->display_name = $data['display_name'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['last_ping_at'] */
+        if (isset($data['last_ping_at'])) $this->last_ping_at = $data['last_ping_at'];
         return $this;
     }
 }

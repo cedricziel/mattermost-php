@@ -25,11 +25,16 @@ class PlaybookRunMetadata
     ): static
     {
         if ($data === null) return $this;
-        $this->channel_name = $data['channel_name'];
-        $this->channel_display_name = $data['channel_display_name'];
-        $this->team_name = $data['team_name'];
-        $this->num_members = $data['num_members'];
-        $this->total_posts = $data['total_posts'];
+        /** @var string $data['channel_name'] */
+        if (isset($data['channel_name'])) $this->channel_name = $data['channel_name'];
+        /** @var string $data['channel_display_name'] */
+        if (isset($data['channel_display_name'])) $this->channel_display_name = $data['channel_display_name'];
+        /** @var string $data['team_name'] */
+        if (isset($data['team_name'])) $this->team_name = $data['team_name'];
+        /** @var int $data['num_members'] */
+        if (isset($data['num_members'])) $this->num_members = $data['num_members'];
+        /** @var int $data['total_posts'] */
+        if (isset($data['total_posts'])) $this->total_posts = $data['total_posts'];
         return $this;
     }
 }

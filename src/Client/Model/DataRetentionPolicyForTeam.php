@@ -16,8 +16,10 @@ class DataRetentionPolicyForTeam
     ): static
     {
         if ($data === null) return $this;
-        $this->team_id = $data['team_id'];
-        $this->post_duration = $data['post_duration'];
+        /** @var string $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+        /** @var int $data['post_duration'] */
+        if (isset($data['post_duration'])) $this->post_duration = $data['post_duration'];
         return $this;
     }
 }

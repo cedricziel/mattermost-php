@@ -29,12 +29,18 @@ class UserThread
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->reply_count = $data['reply_count'];
-        $this->last_reply_at = $data['last_reply_at'];
-        $this->last_viewed_at = $data['last_viewed_at'];
-        $this->participants = $data['participants'];
-        $this->post = $data['post'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var int $data['reply_count'] */
+        if (isset($data['reply_count'])) $this->reply_count = $data['reply_count'];
+        /** @var int $data['last_reply_at'] */
+        if (isset($data['last_reply_at'])) $this->last_reply_at = $data['last_reply_at'];
+        /** @var int $data['last_viewed_at'] */
+        if (isset($data['last_viewed_at'])) $this->last_viewed_at = $data['last_viewed_at'];
+        /** @var array $data['participants'] */
+        if (isset($data['participants'])) $this->participants = $data['participants'];
+        /** @var  $data['post'] */
+        if (isset($data['post'])) $this->post = $data['post'];
         return $this;
     }
 }

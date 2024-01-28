@@ -22,9 +22,12 @@ class ChannelMemberCountByGroup
     ): static
     {
         if ($data === null) return $this;
-        $this->group_id = $data['group_id'];
-        $this->channel_member_count = $data['channel_member_count'];
-        $this->channel_member_timezones_count = $data['channel_member_timezones_count'];
+        /** @var string $data['group_id'] */
+        if (isset($data['group_id'])) $this->group_id = $data['group_id'];
+        /** @var number $data['channel_member_count'] */
+        if (isset($data['channel_member_count'])) $this->channel_member_count = $data['channel_member_count'];
+        /** @var number $data['channel_member_timezones_count'] */
+        if (isset($data['channel_member_timezones_count'])) $this->channel_member_timezones_count = $data['channel_member_timezones_count'];
         return $this;
     }
 }

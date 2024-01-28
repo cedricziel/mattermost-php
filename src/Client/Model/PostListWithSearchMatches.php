@@ -16,9 +16,12 @@ class PostListWithSearchMatches
     ): static
     {
         if ($data === null) return $this;
-        $this->order = $data['order'];
-        $this->posts = $data['posts'];
-        $this->matches = $data['matches'];
+        /** @var array $data['order'] */
+        if (isset($data['order'])) $this->order = $data['order'];
+        /** @var stdClass $data['posts'] */
+        if (isset($data['posts'])) $this->posts = (object) $data['posts'];
+        /** @var stdClass $data['matches'] */
+        if (isset($data['matches'])) $this->matches = (object) $data['matches'];
         return $this;
     }
 }

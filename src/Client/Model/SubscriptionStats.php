@@ -13,8 +13,10 @@ class SubscriptionStats
     ): static
     {
         if ($data === null) return $this;
-        $this->remaining_seats = $data['remaining_seats'];
-        $this->is_paid_tier = $data['is_paid_tier'];
+        /** @var int $data['remaining_seats'] */
+        if (isset($data['remaining_seats'])) $this->remaining_seats = $data['remaining_seats'];
+        /** @var string $data['is_paid_tier'] */
+        if (isset($data['is_paid_tier'])) $this->is_paid_tier = $data['is_paid_tier'];
         return $this;
     }
 }

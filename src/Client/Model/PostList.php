@@ -22,11 +22,16 @@ class PostList
     ): static
     {
         if ($data === null) return $this;
-        $this->order = $data['order'];
-        $this->posts = $data['posts'];
-        $this->next_post_id = $data['next_post_id'];
-        $this->prev_post_id = $data['prev_post_id'];
-        $this->has_next = $data['has_next'];
+        /** @var array $data['order'] */
+        if (isset($data['order'])) $this->order = $data['order'];
+        /** @var stdClass $data['posts'] */
+        if (isset($data['posts'])) $this->posts = (object) $data['posts'];
+        /** @var string $data['next_post_id'] */
+        if (isset($data['next_post_id'])) $this->next_post_id = $data['next_post_id'];
+        /** @var string $data['prev_post_id'] */
+        if (isset($data['prev_post_id'])) $this->prev_post_id = $data['prev_post_id'];
+        /** @var bool $data['has_next'] */
+        if (isset($data['has_next'])) $this->has_next = $data['has_next'];
         return $this;
     }
 }

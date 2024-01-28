@@ -16,8 +16,10 @@ class Server_Busy
     ): static
     {
         if ($data === null) return $this;
-        $this->busy = $data['busy'];
-        $this->expires = $data['expires'];
+        /** @var bool $data['busy'] */
+        if (isset($data['busy'])) $this->busy = $data['busy'];
+        /** @var int $data['expires'] */
+        if (isset($data['expires'])) $this->expires = $data['expires'];
         return $this;
     }
 }

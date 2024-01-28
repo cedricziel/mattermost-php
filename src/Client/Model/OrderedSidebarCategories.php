@@ -16,8 +16,10 @@ class OrderedSidebarCategories
     ): static
     {
         if ($data === null) return $this;
-        $this->order = $data['order'];
-        $this->categories = $data['categories'];
+        /** @var array $data['order'] */
+        if (isset($data['order'])) $this->order = $data['order'];
+        /** @var array $data['categories'] */
+        if (isset($data['categories'])) $this->categories = $data['categories'];
         return $this;
     }
 }

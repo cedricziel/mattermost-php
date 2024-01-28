@@ -13,8 +13,10 @@ class ChannelData
     ): static
     {
         if ($data === null) return $this;
-        $this->channel = $data['channel'];
-        $this->member = $data['member'];
+        /** @var  $data['channel'] */
+        if (isset($data['channel'])) $this->channel = $data['channel'];
+        /** @var  $data['member'] */
+        if (isset($data['member'])) $this->member = $data['member'];
         return $this;
     }
 }

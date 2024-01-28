@@ -16,8 +16,10 @@ class DataRetentionPolicyForChannel
     ): static
     {
         if ($data === null) return $this;
-        $this->channel_id = $data['channel_id'];
-        $this->post_duration = $data['post_duration'];
+        /** @var string $data['channel_id'] */
+        if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
+        /** @var int $data['post_duration'] */
+        if (isset($data['post_duration'])) $this->post_duration = $data['post_duration'];
         return $this;
     }
 }

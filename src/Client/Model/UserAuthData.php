@@ -16,8 +16,10 @@ class UserAuthData
     ): static
     {
         if ($data === null) return $this;
-        $this->auth_data = $data['auth_data'];
-        $this->auth_service = $data['auth_service'];
+        /** @var string $data['auth_data'] */
+        if (isset($data['auth_data'])) $this->auth_data = $data['auth_data'];
+        /** @var string $data['auth_service'] */
+        if (isset($data['auth_service'])) $this->auth_service = $data['auth_service'];
         return $this;
     }
 }

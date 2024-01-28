@@ -18,8 +18,10 @@ class IntegrityCheckResult
     ): static
     {
         if ($data === null) return $this;
-        $this->data = $data['data'];
-        $this->err = $data['err'];
+        /** @var  $data['data'] */
+        if (isset($data['data'])) $this->data = $data['data'];
+        /** @var string $data['err'] */
+        if (isset($data['err'])) $this->err = $data['err'];
         return $this;
     }
 }

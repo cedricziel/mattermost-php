@@ -22,10 +22,14 @@ class UserAccessToken
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->token = $data['token'];
-        $this->user_id = $data['user_id'];
-        $this->description = $data['description'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['token'] */
+        if (isset($data['token'])) $this->token = $data['token'];
+        /** @var string $data['user_id'] */
+        if (isset($data['user_id'])) $this->user_id = $data['user_id'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
         return $this;
     }
 }

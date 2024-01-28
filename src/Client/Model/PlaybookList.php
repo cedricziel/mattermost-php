@@ -22,10 +22,14 @@ class PlaybookList
     ): static
     {
         if ($data === null) return $this;
-        $this->total_count = $data['total_count'];
-        $this->page_count = $data['page_count'];
-        $this->has_more = $data['has_more'];
-        $this->items = $data['items'];
+        /** @var int $data['total_count'] */
+        if (isset($data['total_count'])) $this->total_count = $data['total_count'];
+        /** @var int $data['page_count'] */
+        if (isset($data['page_count'])) $this->page_count = $data['page_count'];
+        /** @var bool $data['has_more'] */
+        if (isset($data['has_more'])) $this->has_more = $data['has_more'];
+        /** @var array $data['items'] */
+        if (isset($data['items'])) $this->items = $data['items'];
         return $this;
     }
 }

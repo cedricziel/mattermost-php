@@ -13,8 +13,10 @@ class BoardsLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->cards = $data['cards'];
-        $this->views = $data['views'];
+        /** @var int $data['cards'] */
+        if (isset($data['cards'])) $this->cards = $data['cards'];
+        /** @var int $data['views'] */
+        if (isset($data['views'])) $this->views = $data['views'];
         return $this;
     }
 }

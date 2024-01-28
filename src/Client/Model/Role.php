@@ -28,12 +28,18 @@ class Role
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->display_name = $data['display_name'];
-        $this->description = $data['description'];
-        $this->permissions = $data['permissions'];
-        $this->scheme_managed = $data['scheme_managed'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['display_name'] */
+        if (isset($data['display_name'])) $this->display_name = $data['display_name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var array $data['permissions'] */
+        if (isset($data['permissions'])) $this->permissions = $data['permissions'];
+        /** @var bool $data['scheme_managed'] */
+        if (isset($data['scheme_managed'])) $this->scheme_managed = $data['scheme_managed'];
         return $this;
     }
 }

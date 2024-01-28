@@ -17,8 +17,10 @@ class LDAPGroupsPaged
     ): static
     {
         if ($data === null) return $this;
-        $this->count = $data['count'];
-        $this->groups = $data['groups'];
+        /** @var number $data['count'] */
+        if (isset($data['count'])) $this->count = $data['count'];
+        /** @var array $data['groups'] */
+        if (isset($data['groups'])) $this->groups = $data['groups'];
         return $this;
     }
 }

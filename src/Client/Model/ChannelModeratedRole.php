@@ -13,8 +13,10 @@ class ChannelModeratedRole
     ): static
     {
         if ($data === null) return $this;
-        $this->value = $data['value'];
-        $this->enabled = $data['enabled'];
+        /** @var bool $data['value'] */
+        if (isset($data['value'])) $this->value = $data['value'];
+        /** @var bool $data['enabled'] */
+        if (isset($data['enabled'])) $this->enabled = $data['enabled'];
         return $this;
     }
 }

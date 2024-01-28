@@ -23,13 +23,20 @@ class NewTeamMember
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->username = $data['username'];
-        $this->first_name = $data['first_name'];
-        $this->last_name = $data['last_name'];
-        $this->nickname = $data['nickname'];
-        $this->position = $data['position'];
-        $this->create_at = $data['create_at'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['username'] */
+        if (isset($data['username'])) $this->username = $data['username'];
+        /** @var string $data['first_name'] */
+        if (isset($data['first_name'])) $this->first_name = $data['first_name'];
+        /** @var string $data['last_name'] */
+        if (isset($data['last_name'])) $this->last_name = $data['last_name'];
+        /** @var string $data['nickname'] */
+        if (isset($data['nickname'])) $this->nickname = $data['nickname'];
+        /** @var string $data['position'] */
+        if (isset($data['position'])) $this->position = $data['position'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
         return $this;
     }
 }

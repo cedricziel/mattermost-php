@@ -16,8 +16,10 @@ class PlaybookAutofollows
     ): static
     {
         if ($data === null) return $this;
-        $this->total_count = $data['total_count'];
-        $this->items = $data['items'];
+        /** @var int $data['total_count'] */
+        if (isset($data['total_count'])) $this->total_count = $data['total_count'];
+        /** @var array $data['items'] */
+        if (isset($data['items'])) $this->items = $data['items'];
         return $this;
     }
 }

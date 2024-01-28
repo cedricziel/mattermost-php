@@ -31,13 +31,20 @@ class PluginStatus
     ): static
     {
         if ($data === null) return $this;
-        $this->plugin_id = $data['plugin_id'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->version = $data['version'];
-        $this->cluster_id = $data['cluster_id'];
-        $this->plugin_path = $data['plugin_path'];
-        $this->state = $data['state'];
+        /** @var string $data['plugin_id'] */
+        if (isset($data['plugin_id'])) $this->plugin_id = $data['plugin_id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['version'] */
+        if (isset($data['version'])) $this->version = $data['version'];
+        /** @var string $data['cluster_id'] */
+        if (isset($data['cluster_id'])) $this->cluster_id = $data['cluster_id'];
+        /** @var string $data['plugin_path'] */
+        if (isset($data['plugin_path'])) $this->plugin_path = $data['plugin_path'];
+        /** @var number $data['state'] */
+        if (isset($data['state'])) $this->state = $data['state'];
         return $this;
     }
 }

@@ -22,10 +22,14 @@ class Reaction
     ): static
     {
         if ($data === null) return $this;
-        $this->user_id = $data['user_id'];
-        $this->post_id = $data['post_id'];
-        $this->emoji_name = $data['emoji_name'];
-        $this->create_at = $data['create_at'];
+        /** @var string $data['user_id'] */
+        if (isset($data['user_id'])) $this->user_id = $data['user_id'];
+        /** @var string $data['post_id'] */
+        if (isset($data['post_id'])) $this->post_id = $data['post_id'];
+        /** @var string $data['emoji_name'] */
+        if (isset($data['emoji_name'])) $this->emoji_name = $data['emoji_name'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
         return $this;
     }
 }

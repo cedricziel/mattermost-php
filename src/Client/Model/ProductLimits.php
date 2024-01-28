@@ -16,11 +16,16 @@ class ProductLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->boards = $data['boards'];
-        $this->files = $data['files'];
-        $this->integrations = $data['integrations'];
-        $this->messages = $data['messages'];
-        $this->teams = $data['teams'];
+        /** @var  $data['boards'] */
+        if (isset($data['boards'])) $this->boards = $data['boards'];
+        /** @var  $data['files'] */
+        if (isset($data['files'])) $this->files = $data['files'];
+        /** @var  $data['integrations'] */
+        if (isset($data['integrations'])) $this->integrations = $data['integrations'];
+        /** @var  $data['messages'] */
+        if (isset($data['messages'])) $this->messages = $data['messages'];
+        /** @var  $data['teams'] */
+        if (isset($data['teams'])) $this->teams = $data['teams'];
         return $this;
     }
 }

@@ -16,8 +16,10 @@ class RetentionPolicyForTeamList
     ): static
     {
         if ($data === null) return $this;
-        $this->policies = $data['policies'];
-        $this->total_count = $data['total_count'];
+        /** @var array $data['policies'] */
+        if (isset($data['policies'])) $this->policies = $data['policies'];
+        /** @var int $data['total_count'] */
+        if (isset($data['total_count'])) $this->total_count = $data['total_count'];
         return $this;
     }
 }

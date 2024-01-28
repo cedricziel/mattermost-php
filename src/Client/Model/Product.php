@@ -16,11 +16,16 @@ class Product
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->price_per_seat = $data['price_per_seat'];
-        $this->add_ons = $data['add_ons'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['price_per_seat'] */
+        if (isset($data['price_per_seat'])) $this->price_per_seat = $data['price_per_seat'];
+        /** @var array $data['add_ons'] */
+        if (isset($data['add_ons'])) $this->add_ons = $data['add_ons'];
         return $this;
     }
 }

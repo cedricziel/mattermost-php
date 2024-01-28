@@ -40,16 +40,26 @@ class OAuthApp
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->client_secret = $data['client_secret'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->icon_url = $data['icon_url'];
-        $this->callback_urls = $data['callback_urls'];
-        $this->homepage = $data['homepage'];
-        $this->is_trusted = $data['is_trusted'];
-        $this->create_at = $data['create_at'];
-        $this->update_at = $data['update_at'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['client_secret'] */
+        if (isset($data['client_secret'])) $this->client_secret = $data['client_secret'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['icon_url'] */
+        if (isset($data['icon_url'])) $this->icon_url = $data['icon_url'];
+        /** @var array $data['callback_urls'] */
+        if (isset($data['callback_urls'])) $this->callback_urls = $data['callback_urls'];
+        /** @var string $data['homepage'] */
+        if (isset($data['homepage'])) $this->homepage = $data['homepage'];
+        /** @var bool $data['is_trusted'] */
+        if (isset($data['is_trusted'])) $this->is_trusted = $data['is_trusted'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['update_at'] */
+        if (isset($data['update_at'])) $this->update_at = $data['update_at'];
         return $this;
     }
 }

@@ -19,9 +19,12 @@ class UserTermsOfService
     ): static
     {
         if ($data === null) return $this;
-        $this->user_id = $data['user_id'];
-        $this->terms_of_service_id = $data['terms_of_service_id'];
-        $this->create_at = $data['create_at'];
+        /** @var string $data['user_id'] */
+        if (isset($data['user_id'])) $this->user_id = $data['user_id'];
+        /** @var string $data['terms_of_service_id'] */
+        if (isset($data['terms_of_service_id'])) $this->terms_of_service_id = $data['terms_of_service_id'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
         return $this;
     }
 }

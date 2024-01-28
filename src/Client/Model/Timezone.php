@@ -19,9 +19,12 @@ class Timezone
     ): static
     {
         if ($data === null) return $this;
-        $this->useAutomaticTimezone = $data['useAutomaticTimezone'];
-        $this->manualTimezone = $data['manualTimezone'];
-        $this->automaticTimezone = $data['automaticTimezone'];
+        /** @var bool $data['useAutomaticTimezone'] */
+        if (isset($data['useAutomaticTimezone'])) $this->useAutomaticTimezone = $data['useAutomaticTimezone'];
+        /** @var string $data['manualTimezone'] */
+        if (isset($data['manualTimezone'])) $this->manualTimezone = $data['manualTimezone'];
+        /** @var string $data['automaticTimezone'] */
+        if (isset($data['automaticTimezone'])) $this->automaticTimezone = $data['automaticTimezone'];
         return $this;
     }
 }

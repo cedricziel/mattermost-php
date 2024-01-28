@@ -31,13 +31,20 @@ class IncomingWebhook
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->create_at = $data['create_at'];
-        $this->update_at = $data['update_at'];
-        $this->delete_at = $data['delete_at'];
-        $this->channel_id = $data['channel_id'];
-        $this->description = $data['description'];
-        $this->display_name = $data['display_name'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['update_at'] */
+        if (isset($data['update_at'])) $this->update_at = $data['update_at'];
+        /** @var int $data['delete_at'] */
+        if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
+        /** @var string $data['channel_id'] */
+        if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['display_name'] */
+        if (isset($data['display_name'])) $this->display_name = $data['display_name'];
         return $this;
     }
 }

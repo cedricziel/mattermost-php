@@ -21,16 +21,26 @@ class Group
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->display_name = $data['display_name'];
-        $this->description = $data['description'];
-        $this->source = $data['source'];
-        $this->remote_id = $data['remote_id'];
-        $this->create_at = $data['create_at'];
-        $this->update_at = $data['update_at'];
-        $this->delete_at = $data['delete_at'];
-        $this->has_syncables = $data['has_syncables'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['name'] */
+        if (isset($data['name'])) $this->name = $data['name'];
+        /** @var string $data['display_name'] */
+        if (isset($data['display_name'])) $this->display_name = $data['display_name'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['source'] */
+        if (isset($data['source'])) $this->source = $data['source'];
+        /** @var string $data['remote_id'] */
+        if (isset($data['remote_id'])) $this->remote_id = $data['remote_id'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['update_at'] */
+        if (isset($data['update_at'])) $this->update_at = $data['update_at'];
+        /** @var int $data['delete_at'] */
+        if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
+        /** @var bool $data['has_syncables'] */
+        if (isset($data['has_syncables'])) $this->has_syncables = $data['has_syncables'];
         return $this;
     }
 }

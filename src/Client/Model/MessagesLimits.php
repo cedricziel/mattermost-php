@@ -12,7 +12,8 @@ class MessagesLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->history = $data['history'];
+        /** @var int $data['history'] */
+        if (isset($data['history'])) $this->history = $data['history'];
         return $this;
     }
 }

@@ -16,8 +16,10 @@ class OwnerInfo
     ): static
     {
         if ($data === null) return $this;
-        $this->user_id = $data['user_id'];
-        $this->username = $data['username'];
+        /** @var string $data['user_id'] */
+        if (isset($data['user_id'])) $this->user_id = $data['user_id'];
+        /** @var string $data['username'] */
+        if (isset($data['username'])) $this->username = $data['username'];
         return $this;
     }
 }

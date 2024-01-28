@@ -17,9 +17,12 @@ class Installation
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->allowed_ip_ranges = $data['allowed_ip_ranges'];
-        $this->state = $data['state'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var  $data['allowed_ip_ranges'] */
+        if (isset($data['allowed_ip_ranges'])) $this->allowed_ip_ranges = $data['allowed_ip_ranges'];
+        /** @var string $data['state'] */
+        if (isset($data['state'])) $this->state = $data['state'];
         return $this;
     }
 }

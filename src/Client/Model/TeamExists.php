@@ -12,7 +12,8 @@ class TeamExists
     ): static
     {
         if ($data === null) return $this;
-        $this->exists = $data['exists'];
+        /** @var bool $data['exists'] */
+        if (isset($data['exists'])) $this->exists = $data['exists'];
         return $this;
     }
 }

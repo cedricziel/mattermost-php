@@ -13,7 +13,8 @@ class LicenseRenewalLink
     ): static
     {
         if ($data === null) return $this;
-        $this->renewal_link = $data['renewal_link'];
+        /** @var string $data['renewal_link'] */
+        if (isset($data['renewal_link'])) $this->renewal_link = $data['renewal_link'];
         return $this;
     }
 }

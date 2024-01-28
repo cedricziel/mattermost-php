@@ -13,7 +13,8 @@ class PostsUsage
     ): static
     {
         if ($data === null) return $this;
-        $this->count = $data['count'];
+        /** @var number $data['count'] */
+        if (isset($data['count'])) $this->count = $data['count'];
         return $this;
     }
 }

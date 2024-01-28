@@ -19,9 +19,12 @@ class Checklist
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->items = $data['items'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['title'] */
+        if (isset($data['title'])) $this->title = $data['title'];
+        /** @var array $data['items'] */
+        if (isset($data['items'])) $this->items = $data['items'];
         return $this;
     }
 }

@@ -16,8 +16,10 @@ class UserLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->maxUsersLimit = $data['maxUsersLimit'];
-        $this->activeUserCount = $data['activeUserCount'];
+        /** @var int $data['maxUsersLimit'] */
+        if (isset($data['maxUsersLimit'])) $this->maxUsersLimit = $data['maxUsersLimit'];
+        /** @var int $data['activeUserCount'] */
+        if (isset($data['activeUserCount'])) $this->activeUserCount = $data['activeUserCount'];
         return $this;
     }
 }

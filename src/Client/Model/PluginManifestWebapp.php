@@ -17,9 +17,12 @@ class PluginManifestWebapp
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->version = $data['version'];
-        $this->webapp = $data['webapp'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['version'] */
+        if (isset($data['version'])) $this->version = $data['version'];
+        /** @var stdClass $data['webapp'] */
+        if (isset($data['webapp'])) $this->webapp = (object) $data['webapp'];
         return $this;
     }
 }

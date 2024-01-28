@@ -12,7 +12,8 @@ class FilesLimits
     ): static
     {
         if ($data === null) return $this;
-        $this->total_storage = $data['total_storage'];
+        /** @var int $data['total_storage'] */
+        if (isset($data['total_storage'])) $this->total_storage = $data['total_storage'];
         return $this;
     }
 }

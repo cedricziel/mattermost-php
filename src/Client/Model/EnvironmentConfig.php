@@ -32,27 +32,48 @@ class EnvironmentConfig
     ): static
     {
         if ($data === null) return $this;
-        $this->ServiceSettings = $data['ServiceSettings'];
-        $this->TeamSettings = $data['TeamSettings'];
-        $this->SqlSettings = $data['SqlSettings'];
-        $this->LogSettings = $data['LogSettings'];
-        $this->PasswordSettings = $data['PasswordSettings'];
-        $this->FileSettings = $data['FileSettings'];
-        $this->EmailSettings = $data['EmailSettings'];
-        $this->RateLimitSettings = $data['RateLimitSettings'];
-        $this->PrivacySettings = $data['PrivacySettings'];
-        $this->SupportSettings = $data['SupportSettings'];
-        $this->GitLabSettings = $data['GitLabSettings'];
-        $this->GoogleSettings = $data['GoogleSettings'];
-        $this->Office365Settings = $data['Office365Settings'];
-        $this->LdapSettings = $data['LdapSettings'];
-        $this->ComplianceSettings = $data['ComplianceSettings'];
-        $this->LocalizationSettings = $data['LocalizationSettings'];
-        $this->SamlSettings = $data['SamlSettings'];
-        $this->NativeAppSettings = $data['NativeAppSettings'];
-        $this->ClusterSettings = $data['ClusterSettings'];
-        $this->MetricsSettings = $data['MetricsSettings'];
-        $this->AnalyticsSettings = $data['AnalyticsSettings'];
+        /** @var stdClass $data['ServiceSettings'] */
+        if (isset($data['ServiceSettings'])) $this->ServiceSettings = (object) $data['ServiceSettings'];
+        /** @var stdClass $data['TeamSettings'] */
+        if (isset($data['TeamSettings'])) $this->TeamSettings = (object) $data['TeamSettings'];
+        /** @var stdClass $data['SqlSettings'] */
+        if (isset($data['SqlSettings'])) $this->SqlSettings = (object) $data['SqlSettings'];
+        /** @var stdClass $data['LogSettings'] */
+        if (isset($data['LogSettings'])) $this->LogSettings = (object) $data['LogSettings'];
+        /** @var stdClass $data['PasswordSettings'] */
+        if (isset($data['PasswordSettings'])) $this->PasswordSettings = (object) $data['PasswordSettings'];
+        /** @var stdClass $data['FileSettings'] */
+        if (isset($data['FileSettings'])) $this->FileSettings = (object) $data['FileSettings'];
+        /** @var stdClass $data['EmailSettings'] */
+        if (isset($data['EmailSettings'])) $this->EmailSettings = (object) $data['EmailSettings'];
+        /** @var stdClass $data['RateLimitSettings'] */
+        if (isset($data['RateLimitSettings'])) $this->RateLimitSettings = (object) $data['RateLimitSettings'];
+        /** @var stdClass $data['PrivacySettings'] */
+        if (isset($data['PrivacySettings'])) $this->PrivacySettings = (object) $data['PrivacySettings'];
+        /** @var stdClass $data['SupportSettings'] */
+        if (isset($data['SupportSettings'])) $this->SupportSettings = (object) $data['SupportSettings'];
+        /** @var stdClass $data['GitLabSettings'] */
+        if (isset($data['GitLabSettings'])) $this->GitLabSettings = (object) $data['GitLabSettings'];
+        /** @var stdClass $data['GoogleSettings'] */
+        if (isset($data['GoogleSettings'])) $this->GoogleSettings = (object) $data['GoogleSettings'];
+        /** @var stdClass $data['Office365Settings'] */
+        if (isset($data['Office365Settings'])) $this->Office365Settings = (object) $data['Office365Settings'];
+        /** @var stdClass $data['LdapSettings'] */
+        if (isset($data['LdapSettings'])) $this->LdapSettings = (object) $data['LdapSettings'];
+        /** @var stdClass $data['ComplianceSettings'] */
+        if (isset($data['ComplianceSettings'])) $this->ComplianceSettings = (object) $data['ComplianceSettings'];
+        /** @var stdClass $data['LocalizationSettings'] */
+        if (isset($data['LocalizationSettings'])) $this->LocalizationSettings = (object) $data['LocalizationSettings'];
+        /** @var stdClass $data['SamlSettings'] */
+        if (isset($data['SamlSettings'])) $this->SamlSettings = (object) $data['SamlSettings'];
+        /** @var stdClass $data['NativeAppSettings'] */
+        if (isset($data['NativeAppSettings'])) $this->NativeAppSettings = (object) $data['NativeAppSettings'];
+        /** @var stdClass $data['ClusterSettings'] */
+        if (isset($data['ClusterSettings'])) $this->ClusterSettings = (object) $data['ClusterSettings'];
+        /** @var stdClass $data['MetricsSettings'] */
+        if (isset($data['MetricsSettings'])) $this->MetricsSettings = (object) $data['MetricsSettings'];
+        /** @var stdClass $data['AnalyticsSettings'] */
+        if (isset($data['AnalyticsSettings'])) $this->AnalyticsSettings = (object) $data['AnalyticsSettings'];
         return $this;
     }
 }

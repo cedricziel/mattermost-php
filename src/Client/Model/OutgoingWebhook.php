@@ -49,19 +49,32 @@ class OutgoingWebhook
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->create_at = $data['create_at'];
-        $this->update_at = $data['update_at'];
-        $this->delete_at = $data['delete_at'];
-        $this->creator_id = $data['creator_id'];
-        $this->team_id = $data['team_id'];
-        $this->channel_id = $data['channel_id'];
-        $this->description = $data['description'];
-        $this->display_name = $data['display_name'];
-        $this->trigger_words = $data['trigger_words'];
-        $this->trigger_when = $data['trigger_when'];
-        $this->callback_urls = $data['callback_urls'];
-        $this->content_type = $data['content_type'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var int $data['create_at'] */
+        if (isset($data['create_at'])) $this->create_at = $data['create_at'];
+        /** @var int $data['update_at'] */
+        if (isset($data['update_at'])) $this->update_at = $data['update_at'];
+        /** @var int $data['delete_at'] */
+        if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
+        /** @var string $data['creator_id'] */
+        if (isset($data['creator_id'])) $this->creator_id = $data['creator_id'];
+        /** @var string $data['team_id'] */
+        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+        /** @var string $data['channel_id'] */
+        if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
+        /** @var string $data['description'] */
+        if (isset($data['description'])) $this->description = $data['description'];
+        /** @var string $data['display_name'] */
+        if (isset($data['display_name'])) $this->display_name = $data['display_name'];
+        /** @var array $data['trigger_words'] */
+        if (isset($data['trigger_words'])) $this->trigger_words = $data['trigger_words'];
+        /** @var int $data['trigger_when'] */
+        if (isset($data['trigger_when'])) $this->trigger_when = $data['trigger_when'];
+        /** @var array $data['callback_urls'] */
+        if (isset($data['callback_urls'])) $this->callback_urls = $data['callback_urls'];
+        /** @var string $data['content_type'] */
+        if (isset($data['content_type'])) $this->content_type = $data['content_type'];
         return $this;
     }
 }

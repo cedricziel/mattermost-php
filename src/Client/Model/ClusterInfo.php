@@ -31,13 +31,20 @@ class ClusterInfo
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->version = $data['version'];
-        $this->config_hash = $data['config_hash'];
-        $this->internode_url = $data['internode_url'];
-        $this->hostname = $data['hostname'];
-        $this->last_ping = $data['last_ping'];
-        $this->is_alive = $data['is_alive'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['version'] */
+        if (isset($data['version'])) $this->version = $data['version'];
+        /** @var string $data['config_hash'] */
+        if (isset($data['config_hash'])) $this->config_hash = $data['config_hash'];
+        /** @var string $data['internode_url'] */
+        if (isset($data['internode_url'])) $this->internode_url = $data['internode_url'];
+        /** @var string $data['hostname'] */
+        if (isset($data['hostname'])) $this->hostname = $data['hostname'];
+        /** @var int $data['last_ping'] */
+        if (isset($data['last_ping'])) $this->last_ping = $data['last_ping'];
+        /** @var bool $data['is_alive'] */
+        if (isset($data['is_alive'])) $this->is_alive = $data['is_alive'];
         return $this;
     }
 }

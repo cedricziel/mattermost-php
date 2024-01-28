@@ -13,8 +13,10 @@ class PaymentSetupIntent
     ): static
     {
         if ($data === null) return $this;
-        $this->id = $data['id'];
-        $this->client_secret = $data['client_secret'];
+        /** @var string $data['id'] */
+        if (isset($data['id'])) $this->id = $data['id'];
+        /** @var string $data['client_secret'] */
+        if (isset($data['client_secret'])) $this->client_secret = $data['client_secret'];
         return $this;
     }
 }

@@ -13,7 +13,8 @@ class TriggerIdReturn
     ): static
     {
         if ($data === null) return $this;
-        $this->trigger_id = $data['trigger_id'];
+        /** @var string $data['trigger_id'] */
+        if (isset($data['trigger_id'])) $this->trigger_id = $data['trigger_id'];
         return $this;
     }
 }
