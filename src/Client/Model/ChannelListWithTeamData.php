@@ -14,8 +14,7 @@ class ChannelListWithTeamData
     {
         if ($data === null) return $this;
         foreach ($data as $item) {
-            $this->items[] = new \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData();
-            $this->items[$item] = $this->items[$item]->hydrate($item);
+            $this->items[] = (new \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData())->hydrate($item);
         }
 
         return $this;

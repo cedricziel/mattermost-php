@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 /**
  * Access to the resource is forbidden for this user.
  */
-class Default403Response
+class Default403Response extends Error
 {
     use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 
@@ -14,6 +14,7 @@ class Default403Response
         ?array $data,
     ): static
     {
+        parent::hydrate($data);
         if ($data === null) return $this;
 
         return $this;

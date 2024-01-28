@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 /**
  * Something went wrong with the server
  */
-class DefaultInternalServerErrorResponse
+class DefaultInternalServerErrorResponse extends AppError
 {
     use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 
@@ -14,6 +14,7 @@ class DefaultInternalServerErrorResponse
         ?array $data,
     ): static
     {
+        parent::hydrate($data);
         if ($data === null) return $this;
 
         return $this;

@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 /**
  * The request is malformed.
  */
-class Default400Response
+class Default400Response extends Error
 {
     use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 
@@ -14,6 +14,7 @@ class Default400Response
         ?array $data,
     ): static
     {
+        parent::hydrate($data);
         if ($data === null) return $this;
 
         return $this;

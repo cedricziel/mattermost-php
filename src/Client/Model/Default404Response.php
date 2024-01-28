@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 /**
  * Resource requested not found.
  */
-class Default404Response
+class Default404Response extends Error
 {
     use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 
@@ -14,6 +14,7 @@ class Default404Response
         ?array $data,
     ): static
     {
+        parent::hydrate($data);
         if ($data === null) return $this;
 
         return $this;

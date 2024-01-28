@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 /**
  * Too many requests
  */
-class DefaultTooManyRequestsResponse
+class DefaultTooManyRequestsResponse extends AppError
 {
     use \CedricZiel\MattermostPhp\Client\ResponseTrait;
 
@@ -14,6 +14,7 @@ class DefaultTooManyRequestsResponse
         ?array $data,
     ): static
     {
+        parent::hydrate($data);
         if ($data === null) return $this;
 
         return $this;
