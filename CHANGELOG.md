@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.1](https://github.com/cedricziel/mattermost-php/compare/v1.3.0...v1.3.1) (2024-01-28)
+
+
+### Bug Fixes
+
+* Allow deserialization of app objects ([#60](https://github.com/cedricziel/mattermost-php/issues/60)) ([f060ad7](https://github.com/cedricziel/mattermost-php/commit/f060ad71dee23a91aa0d7d616a05d94391f377c4))
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpunit/phpunit from 10.5.8 to 10.5.9 ([#59](https://github.com/cedricziel/mattermost-php/issues/59)) ([da06de0](https://github.com/cedricziel/mattermost-php/commit/da06de0194d35e3e0796963f0ad4c48c18c0a3ea))
+
 ## [1.3.0](https://github.com/cedricziel/mattermost-php/compare/v1.2.12...v1.3.0) (2024-01-21)
 
 
