@@ -15,9 +15,10 @@ class OrphanedRecord
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->parent_id = $data['parent_id'];
         $this->child_id = $data['child_id'];
         return $this;

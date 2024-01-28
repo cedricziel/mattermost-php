@@ -12,9 +12,10 @@ class GroupWithSchemeAdmin
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->group = $data['group'];
         $this->scheme_admin = $data['scheme_admin'];
         return $this;

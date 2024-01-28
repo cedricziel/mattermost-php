@@ -13,6 +13,7 @@ class TeamsEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -49,6 +50,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -97,6 +99,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -132,6 +135,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -170,6 +174,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -212,6 +217,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -250,6 +256,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -290,6 +297,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -330,6 +338,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -366,6 +375,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -403,6 +413,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -440,6 +451,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -476,6 +488,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -518,6 +531,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -556,6 +570,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -593,6 +608,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -618,7 +634,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         /** Instead of aborting the operation if a user cannot be added, return an arrray that will contain both the success and added members and the ones with error, in form of `[{"member": {...}, "user_id", "...", "error": {...}}]` */
-        ?bool $graceful,
+        ?bool $graceful = null,
         \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
@@ -634,6 +650,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -671,6 +688,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -711,6 +729,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -751,6 +770,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -789,6 +809,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -825,6 +846,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -862,6 +884,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -902,6 +925,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -942,6 +966,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -983,6 +1008,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1025,6 +1051,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1069,6 +1096,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1112,6 +1140,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1151,6 +1180,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1191,6 +1221,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1234,6 +1265,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1268,6 +1300,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1304,6 +1337,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1342,6 +1376,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1380,6 +1415,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1431,6 +1467,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1467,6 +1504,7 @@ class TeamsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

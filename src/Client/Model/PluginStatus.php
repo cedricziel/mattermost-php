@@ -27,9 +27,10 @@ class PluginStatus
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->plugin_id = $data['plugin_id'];
         $this->name = $data['name'];
         $this->description = $data['description'];

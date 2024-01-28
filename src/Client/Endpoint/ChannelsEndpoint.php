@@ -13,6 +13,7 @@ class ChannelsEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -36,7 +37,7 @@ class ChannelsEndpoint
      */
     public function getAllChannels(
         /** A group id to exclude channels that are associated with that group via GroupChannel records. This can also be left blank with `not_associated_to_group=`. */
-        ?string $not_associated_to_group,
+        ?string $not_associated_to_group = null,
         /** The page to select. */
         ?int $page = 0,
         /** The number of channels per page. */
@@ -71,6 +72,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -105,6 +107,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -139,6 +142,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -173,6 +177,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -217,6 +222,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -250,6 +256,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -286,6 +293,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -325,6 +333,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -361,6 +370,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -398,6 +408,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -440,6 +451,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -477,6 +489,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -518,6 +531,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -558,6 +572,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -599,6 +614,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -636,6 +652,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -669,6 +686,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -711,6 +729,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -758,6 +777,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -801,6 +821,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -844,6 +865,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -887,6 +909,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -927,6 +950,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -970,6 +994,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1013,6 +1038,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1055,6 +1081,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1097,6 +1124,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1131,6 +1159,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1168,6 +1197,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1208,6 +1238,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1250,6 +1281,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1290,6 +1322,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1331,6 +1364,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1372,6 +1406,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1412,6 +1447,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1451,6 +1487,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1496,6 +1533,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1543,6 +1581,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1583,6 +1622,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1624,6 +1664,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1675,6 +1716,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1714,6 +1756,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1750,6 +1793,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1788,6 +1832,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1828,6 +1873,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1870,6 +1916,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1912,6 +1959,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1953,6 +2001,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1995,6 +2044,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2039,6 +2089,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2084,6 +2135,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2128,6 +2180,7 @@ class ChannelsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

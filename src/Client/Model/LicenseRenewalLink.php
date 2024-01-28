@@ -9,9 +9,10 @@ class LicenseRenewalLink
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->renewal_link = $data['renewal_link'];
         return $this;
     }

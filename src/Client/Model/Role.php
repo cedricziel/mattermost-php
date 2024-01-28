@@ -24,9 +24,10 @@ class Role
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->display_name = $data['display_name'];

@@ -18,9 +18,10 @@ class GroupSyncableChannels
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->channel_id = $data['channel_id'];
         $this->channel_display_name = $data['channel_display_name'];
         $this->channel_type = $data['channel_type'];

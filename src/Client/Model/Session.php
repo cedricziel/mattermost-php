@@ -23,9 +23,10 @@ class Session
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->create_at = $data['create_at'];
         $this->device_id = $data['device_id'];
         $this->expires_at = $data['expires_at'];

@@ -15,9 +15,10 @@ class FileInfoList
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->order = $data['order'];
         $this->file_infos = $data['file_infos'];
         $this->next_file_id = $data['next_file_id'];

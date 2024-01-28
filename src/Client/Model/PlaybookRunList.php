@@ -18,9 +18,10 @@ class PlaybookRunList
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->total_count = $data['total_count'];
         $this->page_count = $data['page_count'];
         $this->has_more = $data['has_more'];

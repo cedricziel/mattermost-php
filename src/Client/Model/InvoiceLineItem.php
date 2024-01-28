@@ -13,9 +13,10 @@ class InvoiceLineItem
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->price_id = $data['price_id'];
         $this->total = $data['total'];
         $this->quantity = $data['quantity'];

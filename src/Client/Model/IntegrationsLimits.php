@@ -8,9 +8,10 @@ class IntegrationsLimits
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->enabled = $data['enabled'];
         return $this;
     }

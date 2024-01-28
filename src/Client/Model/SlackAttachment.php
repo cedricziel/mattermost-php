@@ -25,9 +25,10 @@ class SlackAttachment
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->Id = $data['Id'];
         $this->Fallback = $data['Fallback'];
         $this->Color = $data['Color'];

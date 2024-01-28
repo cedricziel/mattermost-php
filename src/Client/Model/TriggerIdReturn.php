@@ -9,9 +9,10 @@ class TriggerIdReturn
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->trigger_id = $data['trigger_id'];
         return $this;
     }

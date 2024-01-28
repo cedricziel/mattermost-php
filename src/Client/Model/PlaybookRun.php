@@ -49,9 +49,10 @@ class PlaybookRun
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->description = $data['description'];

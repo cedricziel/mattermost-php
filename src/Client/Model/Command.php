@@ -57,9 +57,10 @@ class Command
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->token = $data['token'];
         $this->create_at = $data['create_at'];

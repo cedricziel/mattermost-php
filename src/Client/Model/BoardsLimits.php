@@ -9,9 +9,10 @@ class BoardsLimits
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->cards = $data['cards'];
         $this->views = $data['views'];
         return $this;

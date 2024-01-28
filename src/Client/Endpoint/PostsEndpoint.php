@@ -13,6 +13,7 @@ class PostsEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -37,7 +38,7 @@ class PostsEndpoint
      */
     public function createPost(
         /** Whether to set the user status as online or not. */
-        ?bool $set_online,
+        ?bool $set_online = null,
         \CedricZiel\MattermostPhp\Client\Model\CreatePostRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Post|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
@@ -52,6 +53,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -86,6 +88,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -125,6 +128,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -161,6 +165,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -198,6 +203,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -240,6 +246,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -278,6 +285,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -335,6 +343,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -359,9 +368,9 @@ class PostsEndpoint
         /** ID of the user */
         string $user_id,
         /** Team ID */
-        ?string $team_id,
+        ?string $team_id = null,
         /** Channel ID */
-        ?string $channel_id,
+        ?string $channel_id = null,
         /** The page to select */
         ?int $page = 0,
         /** The number of posts per page */
@@ -383,6 +392,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -422,6 +432,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -451,11 +462,11 @@ class PostsEndpoint
         /** The number of posts per page */
         ?int $per_page = 60,
         /** Provide a non-zero value in Unix time milliseconds to select posts modified after that time */
-        ?int $since,
+        ?int $since = null,
         /** A post id to select the posts that came before this one */
-        ?string $before,
+        ?string $before = null,
         /** A post id to select the posts that came after this one */
-        ?string $after,
+        ?string $after = null,
         /** Whether to include deleted posts or not. Must have system admin permissions. */
         ?bool $include_deleted = false,
     ): \CedricZiel\MattermostPhp\Client\Model\PostList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
@@ -477,6 +488,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -532,6 +544,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -569,6 +582,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -605,6 +619,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -641,6 +656,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -680,6 +696,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -714,6 +731,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -756,6 +774,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -798,6 +817,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -840,6 +860,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -881,6 +902,7 @@ class PostsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

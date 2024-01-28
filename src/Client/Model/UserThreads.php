@@ -12,9 +12,10 @@ class UserThreads
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->total = $data['total'];
         $this->threads = $data['threads'];
         return $this;

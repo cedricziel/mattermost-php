@@ -14,9 +14,10 @@ class LDAPGroup
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->has_syncables = $data['has_syncables'];
         $this->mattermost_group_id = $data['mattermost_group_id'];
         $this->primary_key = $data['primary_key'];

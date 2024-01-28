@@ -15,9 +15,10 @@ class GroupSyncableTeams
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->team_id = $data['team_id'];
         $this->team_display_name = $data['team_display_name'];
         $this->team_type = $data['team_type'];

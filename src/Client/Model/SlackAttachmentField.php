@@ -12,9 +12,10 @@ class SlackAttachmentField
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->Title = $data['Title'];
         $this->Value = $data['Value'];
         $this->Short = $data['Short'];

@@ -18,9 +18,10 @@ class PostList
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->order = $data['order'];
         $this->posts = $data['posts'];
         $this->next_post_id = $data['next_post_id'];

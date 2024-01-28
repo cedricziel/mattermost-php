@@ -44,9 +44,10 @@ class PostMetadata
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->embeds = $data['embeds'];
         $this->emojis = $data['emojis'];
         $this->files = $data['files'];

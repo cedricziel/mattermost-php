@@ -13,6 +13,7 @@ class GroupsEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -51,6 +52,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -83,9 +85,9 @@ class GroupsEndpoint
         /** The number of groups per page. */
         ?int $per_page = 60,
         /** String to pattern match the `name` and `display_name` field. Will return all groups whose `name` and `display_name` field match any of the text. */
-        ?string $q,
+        ?string $q = null,
         /** Boolean which adds the `member_count` attribute to each group JSON object */
-        ?bool $include_member_count,
+        ?bool $include_member_count = null,
         /** Team GUID which is used to return all the groups not associated to this team */
         string $not_associated_to_team,
         /** Group GUID which is used to return all the groups not associated to this channel */
@@ -94,7 +96,7 @@ class GroupsEndpoint
          * Only return groups that have been modified since the given Unix timestamp (in milliseconds). All modified groups, including deleted and created groups, will be returned.
          * __Minimum server version__: 5.24
          */
-        ?int $since,
+        ?int $since = null,
         /** Boolean which filters the group entries with the `allow_reference` attribute set. */
         ?bool $filter_allow_reference = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
@@ -117,6 +119,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -155,6 +158,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -192,6 +196,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -232,6 +237,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -270,6 +276,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -308,6 +315,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -350,6 +358,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -392,6 +401,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -435,6 +445,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -478,6 +489,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -520,6 +532,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -563,6 +576,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -603,6 +617,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -643,6 +658,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -688,6 +704,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -732,6 +749,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -778,6 +796,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -820,6 +839,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -858,6 +878,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -895,6 +916,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -945,6 +967,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -992,6 +1015,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1045,6 +1069,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1083,6 +1108,7 @@ class GroupsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

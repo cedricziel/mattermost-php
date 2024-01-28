@@ -19,9 +19,10 @@ class ChannelMember
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->channel_id = $data['channel_id'];
         $this->user_id = $data['user_id'];
         $this->roles = $data['roles'];

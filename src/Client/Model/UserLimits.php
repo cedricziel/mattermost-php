@@ -12,9 +12,10 @@ class UserLimits
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->maxUsersLimit = $data['maxUsersLimit'];
         $this->activeUserCount = $data['activeUserCount'];
         return $this;

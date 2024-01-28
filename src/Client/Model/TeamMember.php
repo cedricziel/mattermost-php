@@ -27,9 +27,10 @@ class TeamMember
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->team_id = $data['team_id'];
         $this->user_id = $data['user_id'];
         $this->roles = $data['roles'];

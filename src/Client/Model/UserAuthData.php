@@ -12,9 +12,10 @@ class UserAuthData
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->auth_data = $data['auth_data'];
         $this->auth_service = $data['auth_service'];
         return $this;

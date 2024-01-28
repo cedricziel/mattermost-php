@@ -18,9 +18,10 @@ class ChannelNotifyProps
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->email = $data['email'];
         $this->push = $data['push'];
         $this->desktop = $data['desktop'];

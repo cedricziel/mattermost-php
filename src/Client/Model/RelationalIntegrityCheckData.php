@@ -24,9 +24,10 @@ class RelationalIntegrityCheckData
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->parent_name = $data['parent_name'];
         $this->child_name = $data['child_name'];
         $this->parent_id_attr = $data['parent_id_attr'];

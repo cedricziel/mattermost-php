@@ -15,9 +15,10 @@ class RemoteClusterInfo
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->display_name = $data['display_name'];
         $this->create_at = $data['create_at'];
         $this->last_ping_at = $data['last_ping_at'];

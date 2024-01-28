@@ -13,9 +13,10 @@ class PaymentMethod
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->type = $data['type'];
         $this->last_four = $data['last_four'];
         $this->exp_month = $data['exp_month'];

@@ -45,9 +45,10 @@ class FileInfo
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->user_id = $data['user_id'];
         $this->post_id = $data['post_id'];

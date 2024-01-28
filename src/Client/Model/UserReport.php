@@ -31,9 +31,10 @@ class UserReport
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->create_at = $data['create_at'];
         $this->username = $data['username'];

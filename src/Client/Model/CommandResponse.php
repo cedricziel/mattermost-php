@@ -14,9 +14,10 @@ class CommandResponse
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->ResponseType = $data['ResponseType'];
         $this->Text = $data['Text'];
         $this->Username = $data['Username'];

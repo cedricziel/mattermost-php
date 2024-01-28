@@ -25,9 +25,10 @@ class UserThread
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->reply_count = $data['reply_count'];
         $this->last_reply_at = $data['last_reply_at'];

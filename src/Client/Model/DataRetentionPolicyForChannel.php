@@ -12,9 +12,10 @@ class DataRetentionPolicyForChannel
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->channel_id = $data['channel_id'];
         $this->post_duration = $data['post_duration'];
         return $this;

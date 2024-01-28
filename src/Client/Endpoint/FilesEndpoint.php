@@ -13,6 +13,7 @@ class FilesEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -45,9 +46,9 @@ class FilesEndpoint
      */
     public function uploadFile(
         /** The ID of the channel that this file will be uploaded to */
-        ?string $channel_id,
+        ?string $channel_id = null,
         /** The name of the file to be uploaded */
-        ?string $filename,
+        ?string $filename = null,
     ): \CedricZiel\MattermostPhp\Client\Model\UploadFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files';
@@ -62,6 +63,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -100,6 +102,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -137,6 +140,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -174,6 +178,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -211,6 +216,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -249,6 +255,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -289,6 +296,7 @@ class FilesEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

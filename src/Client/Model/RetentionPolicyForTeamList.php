@@ -12,9 +12,10 @@ class RetentionPolicyForTeamList
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->policies = $data['policies'];
         $this->total_count = $data['total_count'];
         return $this;

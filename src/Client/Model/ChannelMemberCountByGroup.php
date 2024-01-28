@@ -18,9 +18,10 @@ class ChannelMemberCountByGroup
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->group_id = $data['group_id'];
         $this->channel_member_count = $data['channel_member_count'];
         $this->channel_member_timezones_count = $data['channel_member_timezones_count'];

@@ -28,9 +28,10 @@ class MarketplacePlugin
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->homepage_url = $data['homepage_url'];
         $this->icon_data = $data['icon_data'];
         $this->download_url = $data['download_url'];

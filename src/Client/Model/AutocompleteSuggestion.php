@@ -21,9 +21,10 @@ class AutocompleteSuggestion
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->Complete = $data['Complete'];
         $this->Suggestion = $data['Suggestion'];
         $this->Hint = $data['Hint'];

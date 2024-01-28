@@ -36,9 +36,10 @@ class SystemStatusResponse
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->AndroidLatestVersion = $data['AndroidLatestVersion'];
         $this->AndroidMinVersion = $data['AndroidMinVersion'];
         $this->DesktopLatestVersion = $data['DesktopLatestVersion'];

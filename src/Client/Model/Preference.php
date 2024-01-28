@@ -12,9 +12,10 @@ class Preference
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->user_id = $data['user_id'];
         $this->category = $data['category'];
         $this->name = $data['name'];

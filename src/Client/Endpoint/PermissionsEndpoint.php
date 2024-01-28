@@ -13,6 +13,7 @@ class PermissionsEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -39,7 +40,7 @@ class PermissionsEndpoint
         /**
          * The subsection permissions to return the ancillary permissions for. These values are comma seperated. Ex. subsection_permissions=sysconsole_read_reporting_site_statistics,sysconsole_write_reporting_site_statistics,sysconsole_write_user_management_channels
          */
-        ?string $subsection_permissions,
+        ?string $subsection_permissions = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetAncillaryPermissionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/permissions/ancillary';
@@ -53,6 +54,7 @@ class PermissionsEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

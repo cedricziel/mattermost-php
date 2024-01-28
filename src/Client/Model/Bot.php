@@ -27,9 +27,10 @@ class Bot
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->user_id = $data['user_id'];
         $this->create_at = $data['create_at'];
         $this->update_at = $data['update_at'];

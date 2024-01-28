@@ -9,9 +9,10 @@ class ChannelData
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->channel = $data['channel'];
         $this->member = $data['member'];
         return $this;

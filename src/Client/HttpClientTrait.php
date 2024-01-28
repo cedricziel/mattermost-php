@@ -35,7 +35,7 @@ trait HttpClientTrait
     {
         $responseCode = $response->getStatusCode();
 
-        if (!in_array($responseCode, $map, true)) {
+        if (!array_key_exists($responseCode, $map)) {
             throw new \RuntimeException(sprintf('Expected status code 200, got %d', $response->getStatusCode()));
         }
 

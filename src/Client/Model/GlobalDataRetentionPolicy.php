@@ -18,9 +18,10 @@ class GlobalDataRetentionPolicy
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->message_deletion_enabled = $data['message_deletion_enabled'];
         $this->file_deletion_enabled = $data['file_deletion_enabled'];
         $this->message_retention_cutoff = $data['message_retention_cutoff'];

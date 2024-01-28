@@ -14,9 +14,10 @@ class IntegrityCheckResult
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->data = $data['data'];
         $this->err = $data['err'];
         return $this;

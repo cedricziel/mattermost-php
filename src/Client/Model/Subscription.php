@@ -16,9 +16,10 @@ class Subscription
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->id = $data['id'];
         $this->customer_id = $data['customer_id'];
         $this->product_id = $data['product_id'];

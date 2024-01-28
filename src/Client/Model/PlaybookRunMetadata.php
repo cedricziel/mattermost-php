@@ -21,9 +21,10 @@ class PlaybookRunMetadata
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->channel_name = $data['channel_name'];
         $this->channel_display_name = $data['channel_display_name'];
         $this->team_name = $data['team_name'];

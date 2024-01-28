@@ -13,9 +13,10 @@ class Address
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->city = $data['city'];
         $this->country = $data['country'];
         $this->line1 = $data['line1'];

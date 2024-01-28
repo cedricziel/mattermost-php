@@ -29,9 +29,10 @@ class PushNotification
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->ack_id = $data['ack_id'];
         $this->platform = $data['platform'];
         $this->server_id = $data['server_id'];

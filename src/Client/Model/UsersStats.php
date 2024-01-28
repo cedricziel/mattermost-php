@@ -8,9 +8,10 @@ class UsersStats
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->total_users_count = $data['total_users_count'];
         return $this;
     }

@@ -10,9 +10,10 @@ class TeamStats
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->team_id = $data['team_id'];
         $this->total_member_count = $data['total_member_count'];
         $this->active_member_count = $data['active_member_count'];

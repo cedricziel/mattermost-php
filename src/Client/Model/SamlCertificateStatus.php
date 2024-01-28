@@ -15,9 +15,10 @@ class SamlCertificateStatus
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->idp_certificate_file = $data['idp_certificate_file'];
         $this->public_certificate_file = $data['public_certificate_file'];
         $this->private_key_file = $data['private_key_file'];

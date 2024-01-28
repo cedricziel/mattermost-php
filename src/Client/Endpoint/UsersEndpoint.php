@@ -13,6 +13,7 @@ class UsersEndpoint
         ?\Psr\Http\Message\RequestFactoryInterface $requestFactory = null,
     ) {
         $this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();
+        $this->requestFactory = $httpClient ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function setBaseUrl(string $baseUrl): static
@@ -48,6 +49,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -81,6 +83,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -112,6 +115,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -133,9 +137,9 @@ class UsersEndpoint
      */
     public function createUser(
         /** Token id from an email invitation */
-        ?string $t,
+        ?string $t = null,
         /** Token id from an invitation link */
-        ?string $iid,
+        ?string $iid = null,
         \CedricZiel\MattermostPhp\Client\Model\CreateUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
@@ -151,6 +155,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -178,25 +183,25 @@ class UsersEndpoint
         /** The number of users per page. There is a maximum limit of 200 users per page. */
         ?int $per_page = 60,
         /** The ID of the team to get users for. */
-        ?string $in_team,
+        ?string $in_team = null,
         /** The ID of the team to exclude users for. Must not be used with "in_team" query parameter. */
-        ?string $not_in_team,
+        ?string $not_in_team = null,
         /** The ID of the channel to get users for. */
-        ?string $in_channel,
+        ?string $in_channel = null,
         /** The ID of the channel to exclude users for. Must be used with "in_channel" query parameter. */
-        ?string $not_in_channel,
+        ?string $not_in_channel = null,
         /** The ID of the group to get users for. Must have `manage_system` permission. */
-        ?string $in_group,
+        ?string $in_group = null,
         /** When used with `not_in_channel` or `not_in_team`, returns only the users that are allowed to join the channel or team based on its group constrains. */
-        ?bool $group_constrained,
+        ?bool $group_constrained = null,
         /** Whether or not to list users that are not on any team. This option takes precendence over `in_team`, `in_channel`, and `not_in_channel`. */
-        ?bool $without_team,
+        ?bool $without_team = null,
         /** Whether or not to list only users that are active. This option cannot be used along with the `inactive` option. */
-        ?bool $active,
+        ?bool $active = null,
         /** Whether or not to list only users that are deactivated. This option cannot be used along with the `active` option. */
-        ?bool $inactive,
+        ?bool $inactive = null,
         /** Returns users that have this role. */
-        ?string $role,
+        ?string $role = null,
         /**
          * Sort is only available in conjunction with certain options below. The paging parameter is also always available.
          *
@@ -213,7 +218,7 @@ class UsersEndpoint
          * When left blank, sorting is done by username. `display_name` will sort alphabetically by user's display name.
          * __Minimum server version__: 7.7
          */
-        ?string $sort,
+        ?string $sort = null,
         /**
          * Comma separated string used to filter users based on any of the specified system roles
          *
@@ -221,7 +226,7 @@ class UsersEndpoint
          *
          * __Minimum server version__: 5.26
          */
-        ?string $roles,
+        ?string $roles = null,
         /**
          * Comma separated string used to filter users based on any of the specified channel roles, can only be used in conjunction with `in_channel`
          *
@@ -229,7 +234,7 @@ class UsersEndpoint
          *
          * __Minimum server version__: 5.26
          */
-        ?string $channel_roles,
+        ?string $channel_roles = null,
         /**
          * Comma separated string used to filter users based on any of the specified team roles, can only be used in conjunction with `in_team`
          *
@@ -237,7 +242,7 @@ class UsersEndpoint
          *
          * __Minimum server version__: 5.26
          */
-        ?string $team_roles,
+        ?string $team_roles = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users';
@@ -266,6 +271,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -300,6 +306,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -322,7 +329,7 @@ class UsersEndpoint
          *
          * __Minimum server version__: 5.14
          */
-        ?int $since,
+        ?int $since = null,
         \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
@@ -337,6 +344,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -377,6 +385,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -410,6 +419,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -443,6 +453,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -465,9 +476,9 @@ class UsersEndpoint
      */
     public function autocompleteUsers(
         /** Team ID */
-        ?string $team_id,
+        ?string $team_id = null,
         /** Channel ID */
-        ?string $channel_id,
+        ?string $channel_id = null,
         /** Username, nickname first name or last name */
         string $name,
         /**
@@ -492,6 +503,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -529,6 +541,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -560,6 +573,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -586,31 +600,31 @@ class UsersEndpoint
      */
     public function getTotalUsersStatsFiltered(
         /** The ID of the team to get user stats for. */
-        ?string $in_team,
+        ?string $in_team = null,
         /** The ID of the channel to get user stats for. */
-        ?string $in_channel,
+        ?string $in_channel = null,
         /** If deleted accounts should be included in the count. */
-        ?bool $include_deleted,
+        ?bool $include_deleted = null,
         /** If bot accounts should be included in the count. */
-        ?bool $include_bots,
+        ?bool $include_bots = null,
         /**
          * Comma separated string used to filter users based on any of the specified system roles
          *
          * Example: `?roles=system_admin,system_user` will include users that are either system admins or system users
          */
-        ?string $roles,
+        ?string $roles = null,
         /**
          * Comma separated string used to filter users based on any of the specified channel roles, can only be used in conjunction with `in_channel`
          *
          * Example: `?in_channel=4eb6axxw7fg3je5iyasnfudc5y&channel_roles=channel_user` will include users that are only channel users and not admins or guests
          */
-        ?string $channel_roles,
+        ?string $channel_roles = null,
         /**
          * Comma separated string used to filter users based on any of the specified team roles, can only be used in conjunction with `in_team`
          *
          * Example: `?in_team=4eb6axxw7fg3je5iyasnfudc5y&team_roles=team_user` will include users that are only team users and not admins or guests
          */
-        ?string $team_roles,
+        ?string $team_roles = null,
     ): \CedricZiel\MattermostPhp\Client\Model\UsersStats|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/stats/filtered';
@@ -630,6 +644,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -667,6 +682,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -704,6 +720,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -742,6 +759,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -780,6 +798,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -817,6 +836,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -857,6 +877,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -881,7 +902,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         /** Not used by the server. Clients can pass in the last picture update time of the user to potentially take advantage of caching */
-        ?\number $_,
+        ?\number $_ = null,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/image';
@@ -896,6 +917,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -933,6 +955,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -972,6 +995,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1011,6 +1035,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1048,6 +1073,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1082,6 +1108,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1119,6 +1146,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1156,6 +1184,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1199,6 +1228,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1242,6 +1272,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1278,6 +1309,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1313,6 +1345,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1347,6 +1380,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1383,6 +1417,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1420,6 +1455,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1457,6 +1493,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1494,6 +1531,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1528,6 +1566,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1563,6 +1602,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1603,6 +1643,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1637,6 +1678,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1669,6 +1711,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1712,6 +1755,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1754,6 +1798,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1799,6 +1844,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1841,6 +1887,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1878,6 +1925,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1917,6 +1965,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1955,6 +2004,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1992,6 +2042,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2029,6 +2080,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2065,6 +2117,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2106,6 +2159,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2145,6 +2199,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2182,6 +2237,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2218,6 +2274,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2256,6 +2313,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2283,9 +2341,9 @@ class UsersEndpoint
         /** The ID of the user. This can also be "me" which will point to the current user. */
         string $user_id,
         /** Page specifies which part of the results to return, by PageSize. */
-        ?int $page,
+        ?int $page = null,
         /** PageSize specifies the size of the returned chunk of results. */
-        ?int $pageSize,
+        ?int $pageSize = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersWithTeamDataForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/channel_members';
@@ -2301,6 +2359,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2336,6 +2395,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2371,6 +2431,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2411,6 +2472,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2442,21 +2504,21 @@ class UsersEndpoint
         /** The maximum number of users to return. */
         ?int $page_size = 50,
         /** The value of the sorted column corresponding to the cursor to read from. Should be blank for the first page asked for. */
-        ?string $from_column_value,
+        ?string $from_column_value = null,
         /** The value of the user id corresponding to the cursor to read from. Should be blank for the first page asked for. */
-        ?string $from_id,
+        ?string $from_id = null,
         /** The date range of the post statistics to display. Must be one of ("last30days", "previousmonth", "last6months", "alltime"). Will default to 'alltime' if the input is not valid. */
         ?string $date_range = 'alltime',
         /** Filter users by their role. */
-        ?string $role_filter,
+        ?string $role_filter = null,
         /** Filter users by a specified team ID. */
-        ?string $team_filter,
+        ?string $team_filter = null,
         /** If true, show only users that have no team. Will ignore provided "team_filter" if true. */
-        ?bool $has_no_team,
+        ?bool $has_no_team = null,
         /** If true, show only users that are inactive. Cannot be used at the same time as "hide_inactive" */
-        ?bool $hide_active,
+        ?bool $hide_active = null,
         /** If true, show only users that are active. Cannot be used at the same time as "hide_active" */
-        ?bool $hide_inactive,
+        ?bool $hide_inactive = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetUsersForReportingResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/reports/users';
@@ -2481,6 +2543,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2515,6 +2578,7 @@ class UsersEndpoint
         $uri = $this->buildUri($path, $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 

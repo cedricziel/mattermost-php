@@ -12,9 +12,10 @@ class AllowedIPRange
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->CIDRBlock = $data['CIDRBlock'];
         $this->Description = $data['Description'];
         return $this;

@@ -14,9 +14,10 @@ class DataRetentionPolicyWithoutId
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->display_name = $data['display_name'];
         $this->post_duration = $data['post_duration'];
         return $this;

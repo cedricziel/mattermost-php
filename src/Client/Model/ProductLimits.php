@@ -12,9 +12,10 @@ class ProductLimits
 
     public function hydrate(
         /** @param array<string, mixed> $data */
-        array $data,
+        ?array $data,
     ): static
     {
+        if ($data === null) return $this;
         $this->boards = $data['boards'];
         $this->files = $data['files'];
         $this->integrations = $data['integrations'];
