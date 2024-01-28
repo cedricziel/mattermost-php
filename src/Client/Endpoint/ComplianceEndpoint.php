@@ -27,7 +27,8 @@ class ComplianceEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createComplianceReport(): array
+    public function createComplianceReport(
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateComplianceReportResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/compliance/reports';
         $method = 'post';
@@ -65,7 +66,7 @@ class ComplianceEndpoint
         ?int $page = 0,
         /** The number of reports per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetComplianceReportsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/compliance/reports';
         $method = 'get';
@@ -103,7 +104,7 @@ class ComplianceEndpoint
     public function getComplianceReport(
         /** Compliance report GUID */
         string $report_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetComplianceReportResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/compliance/reports/{report_id}';
         $method = 'get';
@@ -140,7 +141,7 @@ class ComplianceEndpoint
     public function downloadComplianceReport(
         /** Compliance report GUID */
         string $report_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DownloadComplianceReportResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/compliance/reports/{report_id}/download';
         $method = 'get';

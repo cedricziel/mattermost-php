@@ -27,7 +27,8 @@ class ClusterEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getClusterStatus(): array
+    public function getClusterStatus(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetClusterStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/cluster/status';
         $method = 'get';

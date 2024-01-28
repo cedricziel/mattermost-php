@@ -33,7 +33,7 @@ class JobsEndpoint
         ?int $page = 0,
         /** The number of jobs per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetJobsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/jobs';
         $method = 'get';
@@ -68,7 +68,9 @@ class JobsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createJob(\CedricZiel\MattermostPhp\Client\Model\CreateJobRequest $requestBody): array
+    public function createJob(
+        \CedricZiel\MattermostPhp\Client\Model\CreateJobRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateJobResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/jobs';
         $method = 'post';
@@ -104,7 +106,7 @@ class JobsEndpoint
     public function getJob(
         /** Job GUID */
         string $job_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetJobResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/jobs/{job_id}';
         $method = 'get';
@@ -142,7 +144,7 @@ class JobsEndpoint
     public function downloadJob(
         /** Job GUID */
         string $job_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/jobs/{job_id}/download';
         $method = 'get';
@@ -179,7 +181,7 @@ class JobsEndpoint
     public function cancelJob(
         /** Job GUID */
         string $job_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CancelJobResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/jobs/{job_id}/cancel';
         $method = 'post';
@@ -221,7 +223,7 @@ class JobsEndpoint
         ?int $page = 0,
         /** The number of jobs per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetJobsByTypeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/jobs/type/{type}';
         $method = 'get';

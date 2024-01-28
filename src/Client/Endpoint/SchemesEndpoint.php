@@ -37,7 +37,7 @@ class SchemesEndpoint
         ?int $page = 0,
         /** The number of schemes per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSchemesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/schemes';
         $method = 'get';
@@ -75,7 +75,9 @@ class SchemesEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createScheme(\CedricZiel\MattermostPhp\Client\Model\CreateSchemeRequest $requestBody): array
+    public function createScheme(
+        \CedricZiel\MattermostPhp\Client\Model\CreateSchemeRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes';
         $method = 'post';
@@ -114,7 +116,7 @@ class SchemesEndpoint
     public function getScheme(
         /** Scheme GUID */
         string $scheme_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}';
         $method = 'get';
@@ -153,7 +155,7 @@ class SchemesEndpoint
     public function deleteScheme(
         /** ID of the scheme to delete */
         string $scheme_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}';
         $method = 'delete';
@@ -194,7 +196,7 @@ class SchemesEndpoint
         /** Scheme GUID */
         string $scheme_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchSchemeRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}/patch';
         $method = 'put';
@@ -240,7 +242,7 @@ class SchemesEndpoint
         ?int $page = 0,
         /** The number of teams per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamsForSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/schemes/{scheme_id}/teams';
         $method = 'get';
@@ -287,7 +289,7 @@ class SchemesEndpoint
         ?int $page = 0,
         /** The number of channels per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelsForSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/schemes/{scheme_id}/channels';
         $method = 'get';

@@ -44,7 +44,7 @@ class ChannelsEndpoint
          * __Minimum server version__: 5.35
          */
         ?bool $exclude_policy_constrained = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetAllChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels';
         $method = 'get';
@@ -83,7 +83,9 @@ class ChannelsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createChannel(\CedricZiel\MattermostPhp\Client\Model\CreateChannelRequest $requestBody): array
+    public function createChannel(
+        \CedricZiel\MattermostPhp\Client\Model\CreateChannelRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels';
         $method = 'post';
@@ -117,7 +119,7 @@ class ChannelsEndpoint
      */
     public function createDirectChannel(
         \CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/direct';
         $method = 'post';
@@ -151,7 +153,7 @@ class ChannelsEndpoint
      */
     public function createGroupChannel(
         \CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/group';
         $method = 'post';
@@ -194,7 +196,7 @@ class ChannelsEndpoint
          */
         ?bool $system_console = true,
         \CedricZiel\MattermostPhp\Client\Model\SearchAllChannelsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchAllChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/channels/search';
         $method = 'post';
@@ -228,7 +230,7 @@ class ChannelsEndpoint
      */
     public function searchGroupChannels(
         \CedricZiel\MattermostPhp\Client\Model\SearchGroupChannelsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchGroupChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/channels/group/search';
         $method = 'post';
@@ -263,7 +265,7 @@ class ChannelsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/ids';
         $method = 'post';
@@ -302,7 +304,7 @@ class ChannelsEndpoint
     public function getChannelMembersTimezones(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersTimezonesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/timezones';
         $method = 'get';
@@ -338,7 +340,7 @@ class ChannelsEndpoint
     public function getChannel(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}';
         $method = 'get';
@@ -375,7 +377,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}';
         $method = 'put';
@@ -417,7 +419,7 @@ class ChannelsEndpoint
     public function deleteChannel(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}';
         $method = 'delete';
@@ -454,7 +456,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/patch';
         $method = 'put';
@@ -495,7 +497,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/privacy';
         $method = 'put';
@@ -535,7 +537,7 @@ class ChannelsEndpoint
     public function restoreChannel(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RestoreChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/restore';
         $method = 'post';
@@ -576,7 +578,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\MoveChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\MoveChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/move';
         $method = 'post';
@@ -613,7 +615,7 @@ class ChannelsEndpoint
     public function getChannelStats(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelStatsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/stats';
         $method = 'get';
@@ -646,7 +648,7 @@ class ChannelsEndpoint
     public function getPinnedPosts(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPinnedPostsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/pinned';
         $method = 'get';
@@ -686,7 +688,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of public channels per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels';
         $method = 'get';
@@ -733,7 +735,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of private channels per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPrivateChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/private';
         $method = 'get';
@@ -776,7 +778,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of public channels per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetDeletedChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/deleted';
         $method = 'get';
@@ -820,7 +822,7 @@ class ChannelsEndpoint
         string $team_id,
         /** Name or display name */
         string $name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AutocompleteChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/autocomplete';
         $method = 'get';
@@ -863,7 +865,7 @@ class ChannelsEndpoint
         string $team_id,
         /** Name or display name */
         string $name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AutocompleteChannelsForTeamForSearchResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/search_autocomplete';
         $method = 'get';
@@ -904,7 +906,7 @@ class ChannelsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\SearchChannelsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/search';
         $method = 'post';
@@ -947,7 +949,7 @@ class ChannelsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/search_archived';
         $method = 'post';
@@ -988,7 +990,7 @@ class ChannelsEndpoint
         string $channel_name,
         /** Defines if deleted channels should be returned or not (Mattermost Server 5.26.0+) */
         ?bool $include_deleted = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/name/{channel_name}';
         $method = 'get';
@@ -1030,7 +1032,7 @@ class ChannelsEndpoint
         string $channel_name,
         /** Defines if deleted channels should be returned or not (Mattermost Server 5.26.0+) */
         ?bool $include_deleted = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelByNameForTeamNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/name/{team_name}/channels/name/{channel_name}';
         $method = 'get';
@@ -1072,7 +1074,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of members per page. There is a maximum limit of 200 members. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members';
         $method = 'get';
@@ -1108,7 +1110,7 @@ class ChannelsEndpoint
         /** The channel ID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members';
         $method = 'post';
@@ -1145,7 +1147,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/ids';
         $method = 'post';
@@ -1184,7 +1186,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}';
         $method = 'get';
@@ -1226,7 +1228,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveUserFromChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}';
         $method = 'delete';
@@ -1266,7 +1268,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/roles';
         $method = 'put';
@@ -1307,7 +1309,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/schemeRoles';
         $method = 'put';
@@ -1348,7 +1350,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/notify_props';
         $method = 'put';
@@ -1389,7 +1391,7 @@ class ChannelsEndpoint
         /** User ID to perform the view action for */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\ViewChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ViewChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/members/{user_id}/view';
         $method = 'post';
@@ -1427,7 +1429,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/members';
         $method = 'get';
@@ -1470,7 +1472,7 @@ class ChannelsEndpoint
         ?bool $include_deleted = false,
         /** Filters the deleted channels by this time in epoch format. Does not have any effect if include_deleted is set to false. */
         ?int $last_delete_at = 0,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelsForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels';
         $method = 'get';
@@ -1518,7 +1520,7 @@ class ChannelsEndpoint
         ?int $last_delete_at = 0,
         /** Defines if deleted channels should be returned or not */
         ?bool $include_deleted = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/channels';
         $method = 'get';
@@ -1559,7 +1561,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelUnreadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/channels/{channel_id}/unread';
         $method = 'get';
@@ -1601,7 +1603,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/channels/{channel_id}/scheme';
         $method = 'put';
@@ -1649,7 +1651,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 0,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ChannelMembersMinusGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members_minus_group_members';
         $method = 'get';
@@ -1691,7 +1693,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** Defines if member timezone counts should be returned or not */
         ?bool $include_timezones = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMemberCountsByGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/member_counts_by_group';
         $method = 'get';
@@ -1729,7 +1731,7 @@ class ChannelsEndpoint
     public function getChannelModerations(
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelModerationsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/moderations';
         $method = 'get';
@@ -1767,7 +1769,7 @@ class ChannelsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/moderations/patch';
         $method = 'put';
@@ -1806,7 +1808,7 @@ class ChannelsEndpoint
         string $team_id,
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoriesForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
         $method = 'get';
@@ -1848,7 +1850,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
         $method = 'post';
@@ -1890,7 +1892,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
         $method = 'put';
@@ -1931,7 +1933,7 @@ class ChannelsEndpoint
         string $team_id,
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoryOrderForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order';
         $method = 'get';
@@ -1973,7 +1975,7 @@ class ChannelsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order';
         $method = 'put';
@@ -2016,7 +2018,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Category GUID */
         string $category_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
         $method = 'get';
@@ -2061,7 +2063,7 @@ class ChannelsEndpoint
         /** Category GUID */
         string $category_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
         $method = 'put';
@@ -2105,7 +2107,7 @@ class ChannelsEndpoint
         string $user_id,
         /** Category GUID */
         string $category_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveSidebarCategoryForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
         $method = 'delete';

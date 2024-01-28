@@ -30,7 +30,7 @@ class StatusEndpoint
     public function getUserStatus(
         /** User ID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status';
         $method = 'get';
@@ -66,7 +66,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status';
         $method = 'put';
@@ -100,7 +100,7 @@ class StatusEndpoint
      */
     public function getUsersStatusesByIds(
         \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/status/ids';
         $method = 'post';
@@ -135,7 +135,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom';
         $method = 'put';
@@ -170,7 +170,7 @@ class StatusEndpoint
     public function unsetUserCustomStatus(
         /** User ID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UnsetUserCustomStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom';
         $method = 'delete';
@@ -206,7 +206,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom/recent';
         $method = 'delete';
@@ -242,7 +242,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom/recent/delete';
         $method = 'post';

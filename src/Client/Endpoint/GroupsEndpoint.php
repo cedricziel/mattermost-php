@@ -30,7 +30,7 @@ class GroupsEndpoint
     public function unlinkLdapGroup(
         /** Group GUID */
         string $remote_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UnlinkLdapGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/ldap/groups/{remote_id}/link';
         $method = 'delete';
@@ -89,7 +89,7 @@ class GroupsEndpoint
         ?int $since,
         /** Boolean which filters the group entries with the `allow_reference` attribute set. */
         ?bool $filter_allow_reference = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups';
         $method = 'get';
@@ -133,7 +133,9 @@ class GroupsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createGroup(\CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest $requestBody): array
+    public function createGroup(
+        \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\CreateGroupResponse
     {
         $path = '/api/v4/groups';
         $method = 'post';
@@ -171,7 +173,7 @@ class GroupsEndpoint
     public function getGroup(
         /** Group GUID */
         string $group_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}';
         $method = 'get';
@@ -211,7 +213,7 @@ class GroupsEndpoint
     public function deleteGroup(
         /** The ID of the group. */
         string $group_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupResponse
     {
         $path = '/api/v4/groups/{group_id}';
         $method = 'delete';
@@ -251,7 +253,7 @@ class GroupsEndpoint
         /** Group GUID */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/patch';
         $method = 'put';
@@ -289,7 +291,7 @@ class GroupsEndpoint
     public function restoreGroup(
         /** Group GUID */
         string $group_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RestoreGroupResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/restore';
         $method = 'post';
@@ -330,7 +332,7 @@ class GroupsEndpoint
         string $group_id,
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\LinkGroupSyncableForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/link';
         $method = 'post';
@@ -372,7 +374,7 @@ class GroupsEndpoint
         string $group_id,
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UnlinkGroupSyncableForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/link';
         $method = 'delete';
@@ -415,7 +417,7 @@ class GroupsEndpoint
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\LinkGroupSyncableForChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/link';
         $method = 'post';
@@ -458,7 +460,7 @@ class GroupsEndpoint
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UnlinkGroupSyncableForChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/link';
         $method = 'delete';
@@ -500,7 +502,7 @@ class GroupsEndpoint
         string $group_id,
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncableForTeamIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}';
         $method = 'get';
@@ -543,7 +545,7 @@ class GroupsEndpoint
         string $group_id,
         /** Channel GUID */
         string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncableForChannelIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}';
         $method = 'get';
@@ -584,7 +586,7 @@ class GroupsEndpoint
     public function getGroupSyncablesTeams(
         /** Group GUID */
         string $group_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncablesTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams';
         $method = 'get';
@@ -624,7 +626,7 @@ class GroupsEndpoint
     public function getGroupSyncablesChannels(
         /** Group GUID */
         string $group_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncablesChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels';
         $method = 'get';
@@ -668,7 +670,7 @@ class GroupsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/teams/{team_id}/patch';
         $method = 'put';
@@ -712,7 +714,7 @@ class GroupsEndpoint
         /** Channel GUID */
         string $channel_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/channels/{channel_id}/patch';
         $method = 'put';
@@ -757,7 +759,7 @@ class GroupsEndpoint
         ?int $page = 0,
         /** The number of groups per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/members';
         $method = 'get';
@@ -801,7 +803,7 @@ class GroupsEndpoint
         /** The ID of the group to delete. */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersResponse
     {
         $path = '/api/v4/groups/{group_id}/members';
         $method = 'delete';
@@ -841,7 +843,7 @@ class GroupsEndpoint
         /** The ID of the group. */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\AddGroupMembersResponse
     {
         $path = '/api/v4/groups/{group_id}/members';
         $method = 'post';
@@ -880,7 +882,7 @@ class GroupsEndpoint
     public function getGroupStats(
         /** Group GUID */
         string $group_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupStatsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/groups/{group_id}/stats';
         $method = 'get';
@@ -927,7 +929,7 @@ class GroupsEndpoint
         ?int $per_page = 60,
         /** Boolean which filters the group entries with the `allow_reference` attribute set. */
         ?bool $filter_allow_reference = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsByChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/channels/{channel_id}/groups';
         $method = 'get';
@@ -974,7 +976,7 @@ class GroupsEndpoint
         ?int $per_page = 60,
         /** Boolean which filters in the group entries with the `allow_reference` attribute set. */
         ?bool $filter_allow_reference = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsByTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/teams/{team_id}/groups';
         $method = 'get';
@@ -1026,7 +1028,7 @@ class GroupsEndpoint
         ?bool $filter_allow_reference = false,
         /** Boolean to determine whether the pagination should be applied or not */
         ?bool $paginate = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsAssociatedToChannelsByTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/teams/{team_id}/groups_by_channels';
         $method = 'get';
@@ -1068,7 +1070,7 @@ class GroupsEndpoint
     public function getGroupsByUserId(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsByUserIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/groups';
         $method = 'get';

@@ -28,7 +28,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getCloudLimits(): array
+    public function getCloudLimits(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetCloudLimitsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/limits';
         $method = 'get';
@@ -61,7 +62,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getCloudProducts(): array
+    public function getCloudProducts(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetCloudProductsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/products';
         $method = 'get';
@@ -99,7 +101,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createCustomerPayment(): array
+    public function createCustomerPayment(
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateCustomerPaymentResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/payment';
         $method = 'post';
@@ -133,7 +136,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function confirmCustomerPayment(): array
+    public function confirmCustomerPayment(
+    ): \CedricZiel\MattermostPhp\Client\Model\ConfirmCustomerPaymentResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/payment/confirm';
         $method = 'post';
@@ -167,7 +171,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getCloudCustomer(): array
+    public function getCloudCustomer(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetCloudCustomerResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/customer';
         $method = 'get';
@@ -203,7 +208,7 @@ class CloudEndpoint
      */
     public function updateCloudCustomer(
         \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/customer';
         $method = 'put';
@@ -239,7 +244,7 @@ class CloudEndpoint
      */
     public function updateCloudCustomerAddress(
         \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerAddressRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateCloudCustomerAddressResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/customer/address';
         $method = 'put';
@@ -273,7 +278,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getSubscription(): array
+    public function getSubscription(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSubscriptionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/subscription';
         $method = 'get';
@@ -307,7 +313,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getEndpointForInstallationInformation(): array
+    public function getEndpointForInstallationInformation(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetEndpointForInstallationInformationResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/installation';
         $method = 'get';
@@ -341,7 +348,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getInvoicesForSubscription(): array
+    public function getInvoicesForSubscription(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetInvoicesForSubscriptionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/subscription/invoices';
         $method = 'get';
@@ -378,7 +386,7 @@ class CloudEndpoint
     public function getInvoiceForSubscriptionAsPdf(
         /** Invoice ID */
         string $invoice_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/subscription/invoices/{invoice_id}/pdf';
         $method = 'get';
@@ -412,7 +420,8 @@ class CloudEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function postEndpointForCwsWebhooks(): array
+    public function postEndpointForCwsWebhooks(
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/cloud/webhook';
         $method = 'post';

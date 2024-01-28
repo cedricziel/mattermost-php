@@ -49,7 +49,7 @@ class ThreadsEndpoint
         ?bool $totalsOnly = false,
         /** Setting this to true will only return threads. */
         ?bool $threadsOnly = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserThreadsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads';
         $method = 'get';
@@ -98,7 +98,7 @@ class ThreadsEndpoint
         string $user_id,
         /** The ID of the team in which the thread is. */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetThreadMentionCountsByChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/mention_counts';
         $method = 'get';
@@ -140,7 +140,7 @@ class ThreadsEndpoint
         string $user_id,
         /** The ID of the team in which the thread is. */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateThreadsReadForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/read';
         $method = 'put';
@@ -186,7 +186,7 @@ class ThreadsEndpoint
         string $thread_id,
         /** The timestamp to which the thread's "last read" state will be reset. */
         string $timestamp,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateThreadReadForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/read/{timestamp}';
         $method = 'put';
@@ -236,7 +236,7 @@ class ThreadsEndpoint
         string $thread_id,
         /** The ID of a post belonging to the thread to mark as unread. */
         string $post_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SetThreadUnreadByPostIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/set_unread/{post_id}';
         $method = 'post';
@@ -282,7 +282,7 @@ class ThreadsEndpoint
         string $team_id,
         /** The ID of the thread to follow */
         string $thread_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\StartFollowingThreadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following';
         $method = 'put';
@@ -327,7 +327,7 @@ class ThreadsEndpoint
         string $team_id,
         /** The ID of the thread to update */
         string $thread_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\StopFollowingThreadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following';
         $method = 'delete';
@@ -372,7 +372,7 @@ class ThreadsEndpoint
         string $team_id,
         /** The ID of the thread to follow */
         string $thread_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserThreadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}';
         $method = 'get';

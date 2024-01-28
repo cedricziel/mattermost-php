@@ -40,7 +40,7 @@ class DataRetentionEndpoint
         ?int $page = 0,
         /** The number of policies per page. There is a maximum limit of 200 per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamPoliciesForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/data_retention/team_policies';
         $method = 'get';
@@ -89,7 +89,7 @@ class DataRetentionEndpoint
         ?int $page = 0,
         /** The number of policies per page. There is a maximum limit of 200 per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelPoliciesForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/data_retention/channel_policies';
         $method = 'get';
@@ -133,7 +133,8 @@ class DataRetentionEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getDataRetentionPolicy(): array
+    public function getDataRetentionPolicy(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policy';
         $method = 'get';
@@ -173,7 +174,8 @@ class DataRetentionEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getDataRetentionPoliciesCount(): array
+    public function getDataRetentionPoliciesCount(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies_count';
         $method = 'get';
@@ -218,7 +220,7 @@ class DataRetentionEndpoint
         ?int $page = 0,
         /** The number of policies per page. There is a maximum limit of 200 per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies';
         $method = 'get';
@@ -262,7 +264,7 @@ class DataRetentionEndpoint
      */
     public function createDataRetentionPolicy(
         \CedricZiel\MattermostPhp\Client\Model\CreateDataRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateDataRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies';
         $method = 'post';
@@ -304,7 +306,7 @@ class DataRetentionEndpoint
     public function getDataRetentionPolicyByID(
         /** The ID of the granular retention policy. */
         string $policy_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPolicyByIDResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}';
         $method = 'get';
@@ -349,7 +351,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchDataRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchDataRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}';
         $method = 'patch';
@@ -392,7 +394,7 @@ class DataRetentionEndpoint
     public function deleteDataRetentionPolicy(
         /** The ID of the granular retention policy. */
         string $policy_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteDataRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}';
         $method = 'delete';
@@ -439,7 +441,7 @@ class DataRetentionEndpoint
         ?int $page = 0,
         /** The number of teams per page. There is a maximum limit of 200 per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamsForRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
         $method = 'get';
@@ -485,7 +487,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
         $method = 'post';
@@ -529,7 +531,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams';
         $method = 'delete';
@@ -573,7 +575,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchTeamsForRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/teams/search';
         $method = 'post';
@@ -620,7 +622,7 @@ class DataRetentionEndpoint
         ?int $page = 0,
         /** The number of channels per page. There is a maximum limit of 200 per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelsForRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
         $method = 'get';
@@ -666,7 +668,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
         $method = 'post';
@@ -710,7 +712,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels';
         $method = 'delete';
@@ -754,7 +756,7 @@ class DataRetentionEndpoint
         /** The ID of the granular retention policy. */
         string $policy_id,
         \CedricZiel\MattermostPhp\Client\Model\SearchChannelsForRetentionPolicyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchChannelsForRetentionPolicyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/data_retention/policies/{policy_id}/channels/search';
         $method = 'post';

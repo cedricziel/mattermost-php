@@ -30,7 +30,7 @@ class PreferencesEndpoint
     public function getPreferences(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPreferencesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/preferences';
         $method = 'get';
@@ -67,7 +67,7 @@ class PreferencesEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/preferences';
         $method = 'put';
@@ -105,7 +105,7 @@ class PreferencesEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/preferences/delete';
         $method = 'post';
@@ -143,7 +143,7 @@ class PreferencesEndpoint
         string $user_id,
         /** The category of a group of preferences */
         string $category,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPreferencesByCategoryResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/preferences/{category}';
         $method = 'get';
@@ -184,7 +184,7 @@ class PreferencesEndpoint
         string $category,
         /** The name of the preference */
         string $preference_name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPreferencesByCategoryByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/preferences/{category}/name/{preference_name}';
         $method = 'get';

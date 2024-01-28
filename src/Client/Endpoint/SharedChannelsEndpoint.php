@@ -37,7 +37,7 @@ class SharedChannelsEndpoint
         ?int $page = 0,
         /** The number of sharedchannels per page. */
         ?int $per_page = 0,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetAllSharedChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/sharedchannels/{team_id}';
         $method = 'get';
@@ -78,7 +78,7 @@ class SharedChannelsEndpoint
     public function getRemoteClusterInfo(
         /** Remote Cluster GUID */
         string $remote_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetRemoteClusterInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/sharedchannels/remote_info/{remote_id}';
         $method = 'get';

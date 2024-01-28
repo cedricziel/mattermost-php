@@ -31,7 +31,7 @@ class WebhooksEndpoint
      */
     public function createIncomingWebhook(
         \CedricZiel\MattermostPhp\Client\Model\CreateIncomingWebhookRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateIncomingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/hooks/incoming';
         $method = 'post';
@@ -70,7 +70,7 @@ class WebhooksEndpoint
         ?int $per_page = 60,
         /** The ID of the team to get hooks for. */
         ?string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetIncomingWebhooksResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/hooks/incoming';
         $method = 'get';
@@ -108,7 +108,7 @@ class WebhooksEndpoint
     public function getIncomingWebhook(
         /** Incoming Webhook GUID */
         string $hook_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetIncomingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/incoming/{hook_id}';
         $method = 'get';
@@ -145,7 +145,7 @@ class WebhooksEndpoint
     public function deleteIncomingWebhook(
         /** Incoming webhook GUID */
         string $hook_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteIncomingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/incoming/{hook_id}';
         $method = 'delete';
@@ -183,7 +183,7 @@ class WebhooksEndpoint
         /** Incoming Webhook GUID */
         string $hook_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateIncomingWebhookRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateIncomingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/incoming/{hook_id}';
         $method = 'put';
@@ -221,7 +221,7 @@ class WebhooksEndpoint
      */
     public function createOutgoingWebhook(
         \CedricZiel\MattermostPhp\Client\Model\CreateOutgoingWebhookRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateOutgoingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing';
         $method = 'post';
@@ -263,7 +263,7 @@ class WebhooksEndpoint
         ?string $team_id,
         /** The ID of the channel to get hooks for. */
         ?string $channel_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetOutgoingWebhooksResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing';
         $method = 'get';
@@ -303,7 +303,7 @@ class WebhooksEndpoint
     public function getOutgoingWebhook(
         /** Outgoing webhook GUID */
         string $hook_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetOutgoingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing/{hook_id}';
         $method = 'get';
@@ -340,7 +340,7 @@ class WebhooksEndpoint
     public function deleteOutgoingWebhook(
         /** Outgoing webhook GUID */
         string $hook_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteOutgoingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing/{hook_id}';
         $method = 'delete';
@@ -378,7 +378,7 @@ class WebhooksEndpoint
         /** outgoing Webhook GUID */
         string $hook_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateOutgoingWebhookRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateOutgoingWebhookResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing/{hook_id}';
         $method = 'put';
@@ -415,7 +415,7 @@ class WebhooksEndpoint
     public function regenOutgoingHookToken(
         /** Outgoing webhook GUID */
         string $hook_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RegenOutgoingHookTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing/{hook_id}/regen_token';
         $method = 'post';

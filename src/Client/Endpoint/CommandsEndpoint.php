@@ -27,7 +27,9 @@ class CommandsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createCommand(\CedricZiel\MattermostPhp\Client\Model\CreateCommandRequest $requestBody): array
+    public function createCommand(
+        \CedricZiel\MattermostPhp\Client\Model\CreateCommandRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateCommandResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/commands';
         $method = 'post';
@@ -68,7 +70,7 @@ class CommandsEndpoint
          * if the user have access plus the system commands, otherwise just the system commands.
          */
         ?bool $custom_only = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ListCommandsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/commands';
         $method = 'get';
@@ -106,7 +108,7 @@ class CommandsEndpoint
     public function listAutocompleteCommands(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ListAutocompleteCommandsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/commands/autocomplete';
         $method = 'get';
@@ -145,7 +147,7 @@ class CommandsEndpoint
         string $team_id,
         /** String inputted by the user. */
         string $user_input,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ListCommandAutocompleteSuggestionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/commands/autocomplete_suggestions';
         $method = 'get';
@@ -184,7 +186,7 @@ class CommandsEndpoint
     public function getCommandById(
         /** ID of the command to get */
         string $command_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetCommandByIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/commands/{command_id}';
         $method = 'get';
@@ -221,7 +223,7 @@ class CommandsEndpoint
         /** ID of the command to update */
         string $command_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateCommandRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateCommandResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/commands/{command_id}';
         $method = 'put';
@@ -257,7 +259,7 @@ class CommandsEndpoint
     public function deleteCommand(
         /** ID of the command to delete */
         string $command_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteCommandResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/commands/{command_id}';
         $method = 'delete';
@@ -297,7 +299,7 @@ class CommandsEndpoint
         /** ID of the command to move */
         string $command_id,
         \CedricZiel\MattermostPhp\Client\Model\MoveCommandRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\MoveCommandResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/commands/{command_id}/move';
         $method = 'put';
@@ -334,7 +336,7 @@ class CommandsEndpoint
     public function regenCommandToken(
         /** ID of the command to generate the new token */
         string $command_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RegenCommandTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/commands/{command_id}/regen_token';
         $method = 'put';
@@ -367,7 +369,9 @@ class CommandsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function executeCommand(\CedricZiel\MattermostPhp\Client\Model\ExecuteCommandRequest $requestBody): array
+    public function executeCommand(
+        \CedricZiel\MattermostPhp\Client\Model\ExecuteCommandRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\ExecuteCommandResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/commands/execute';
         $method = 'post';

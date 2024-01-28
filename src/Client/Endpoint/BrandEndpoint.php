@@ -27,7 +27,8 @@ class BrandEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getBrandImage(): array
+    public function getBrandImage(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetBrandImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/brand/image';
         $method = 'get';
@@ -58,7 +59,8 @@ class BrandEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadBrandImage(): array
+    public function uploadBrandImage(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadBrandImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/brand/image';
         $method = 'post';
@@ -93,7 +95,8 @@ class BrandEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function deleteBrandImage(): array
+    public function deleteBrandImage(
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteBrandImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/brand/image';
         $method = 'delete';

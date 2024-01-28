@@ -27,7 +27,9 @@ class OAuthEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createOAuthApp(\CedricZiel\MattermostPhp\Client\Model\CreateOAuthAppRequest $requestBody): array
+    public function createOAuthApp(
+        \CedricZiel\MattermostPhp\Client\Model\CreateOAuthAppRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateOAuthAppResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps';
         $method = 'post';
@@ -65,7 +67,7 @@ class OAuthEndpoint
         ?int $page = 0,
         /** The number of apps per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetOAuthAppsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps';
         $method = 'get';
@@ -103,7 +105,7 @@ class OAuthEndpoint
     public function getOAuthApp(
         /** Application client id */
         string $app_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetOAuthAppResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps/{app_id}';
         $method = 'get';
@@ -142,7 +144,7 @@ class OAuthEndpoint
         /** Application client id */
         string $app_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateOAuthAppRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateOAuthAppResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps/{app_id}';
         $method = 'put';
@@ -180,7 +182,7 @@ class OAuthEndpoint
     public function deleteOAuthApp(
         /** Application client id */
         string $app_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteOAuthAppResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps/{app_id}';
         $method = 'delete';
@@ -218,7 +220,7 @@ class OAuthEndpoint
     public function regenerateOAuthAppSecret(
         /** Application client id */
         string $app_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RegenerateOAuthAppSecretResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps/{app_id}/regen_secret';
         $method = 'post';
@@ -256,7 +258,7 @@ class OAuthEndpoint
     public function getOAuthAppInfo(
         /** Application client id */
         string $app_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetOAuthAppInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/oauth/apps/{app_id}/info';
         $method = 'get';
@@ -297,7 +299,7 @@ class OAuthEndpoint
         ?int $page = 0,
         /** The number of apps per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetAuthorizedOAuthAppsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/oauth/apps/authorized';
         $method = 'get';

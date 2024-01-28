@@ -29,7 +29,9 @@ class UploadsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createUpload(\CedricZiel\MattermostPhp\Client\Model\CreateUploadRequest $requestBody): array
+    public function createUpload(
+        \CedricZiel\MattermostPhp\Client\Model\CreateUploadRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateUploadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/uploads';
         $method = 'post';
@@ -67,7 +69,7 @@ class UploadsEndpoint
     public function getUpload(
         /** The ID of the upload session to get. */
         string $upload_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/uploads/{upload_id}';
         $method = 'get';
@@ -110,7 +112,7 @@ class UploadsEndpoint
     public function uploadData(
         /** The ID of the upload session the data belongs to. */
         string $upload_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadDataResponse|\CedricZiel\MattermostPhp\Client\Model\UploadDataResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/uploads/{upload_id}';
         $method = 'post';

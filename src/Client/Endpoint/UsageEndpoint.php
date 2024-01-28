@@ -28,7 +28,8 @@ class UsageEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getPostsUsage(): array
+    public function getPostsUsage(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPostsUsageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/usage/posts';
         $method = 'get';
@@ -60,7 +61,8 @@ class UsageEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getStorageUsage(): array
+    public function getStorageUsage(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetStorageUsageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/usage/storage';
         $method = 'get';

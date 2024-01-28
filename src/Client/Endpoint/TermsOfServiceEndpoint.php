@@ -29,7 +29,8 @@ class TermsOfServiceEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getTermsOfService(): array
+    public function getTermsOfService(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTermsOfServiceResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/terms_of_service';
         $method = 'get';
@@ -62,7 +63,8 @@ class TermsOfServiceEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createTermsOfService(): array
+    public function createTermsOfService(
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateTermsOfServiceResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/terms_of_service';
         $method = 'post';

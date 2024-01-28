@@ -29,7 +29,8 @@ class ImportsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function listImports(): array
+    public function listImports(
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/imports';
         $method = 'get';

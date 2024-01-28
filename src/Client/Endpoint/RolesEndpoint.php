@@ -29,7 +29,8 @@ class RolesEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getAllRoles(): array
+    public function getAllRoles(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetAllRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/roles';
         $method = 'get';
@@ -67,7 +68,7 @@ class RolesEndpoint
     public function getRole(
         /** Role GUID */
         string $role_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetRoleResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/{role_id}';
         $method = 'get';
@@ -105,7 +106,7 @@ class RolesEndpoint
     public function getRoleByName(
         /** Role Name */
         string $role_name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetRoleByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/name/{role_name}';
         $method = 'get';
@@ -144,7 +145,7 @@ class RolesEndpoint
         /** Role GUID */
         string $role_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchRoleRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchRoleResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/{role_id}/patch';
         $method = 'put';
@@ -181,7 +182,9 @@ class RolesEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getRolesByNames(\CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest $requestBody): array
+    public function getRolesByNames(
+        \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/roles/names';
         $method = 'post';

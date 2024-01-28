@@ -27,7 +27,8 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function syncLdap(): array
+    public function syncLdap(
+    ): \CedricZiel\MattermostPhp\Client\Model\SyncLdapResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/sync';
         $method = 'post';
@@ -57,7 +58,8 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function testLdap(): array
+    public function testLdap(
+    ): \CedricZiel\MattermostPhp\Client\Model\TestLdapResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/test';
         $method = 'post';
@@ -89,7 +91,9 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function migrateIdLdap(\CedricZiel\MattermostPhp\Client\Model\MigrateIdLdapRequest $requestBody): array
+    public function migrateIdLdap(
+        \CedricZiel\MattermostPhp\Client\Model\MigrateIdLdapRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\MigrateIdLdapResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/migrateid';
         $method = 'post';
@@ -123,7 +127,8 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadLdapPublicCertificate(): array
+    public function uploadLdapPublicCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadLdapPublicCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/certificate/public';
         $method = 'post';
@@ -156,7 +161,8 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function deleteLdapPublicCertificate(): array
+    public function deleteLdapPublicCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteLdapPublicCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/certificate/public';
         $method = 'delete';
@@ -188,7 +194,8 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadLdapPrivateCertificate(): array
+    public function uploadLdapPrivateCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadLdapPrivateCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/certificate/private';
         $method = 'post';
@@ -221,7 +228,8 @@ class LDAPEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function deleteLdapPrivateCertificate(): array
+    public function deleteLdapPrivateCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteLdapPrivateCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/certificate/private';
         $method = 'delete';
@@ -256,7 +264,7 @@ class LDAPEndpoint
     public function addUserToGroupSyncables(
         /** User Id */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddUserToGroupSyncablesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/ldap/users/{user_id}/group_sync_memberships';
         $method = 'post';

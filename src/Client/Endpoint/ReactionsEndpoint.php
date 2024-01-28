@@ -27,7 +27,9 @@ class ReactionsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function saveReaction(\CedricZiel\MattermostPhp\Client\Model\SaveReactionRequest $requestBody): array
+    public function saveReaction(
+        \CedricZiel\MattermostPhp\Client\Model\SaveReactionRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\SaveReactionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/reactions';
         $method = 'post';
@@ -61,7 +63,7 @@ class ReactionsEndpoint
     public function getReactions(
         /** ID of a post */
         string $post_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetReactionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/posts/{post_id}/reactions';
         $method = 'get';
@@ -101,7 +103,7 @@ class ReactionsEndpoint
         string $post_id,
         /** emoji name */
         string $emoji_name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteReactionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/posts/{post_id}/reactions/{emoji_name}';
         $method = 'delete';
@@ -140,7 +142,7 @@ class ReactionsEndpoint
      */
     public function getBulkReactions(
         \CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/posts/ids/reactions';
         $method = 'post';

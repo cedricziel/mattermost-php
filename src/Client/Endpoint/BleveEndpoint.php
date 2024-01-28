@@ -29,7 +29,8 @@ class BleveEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function purgeBleveIndexes(): array
+    public function purgeBleveIndexes(
+    ): \CedricZiel\MattermostPhp\Client\Model\PurgeBleveIndexesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/bleve/purge_indexes';
         $method = 'post';

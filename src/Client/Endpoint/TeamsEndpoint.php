@@ -27,7 +27,9 @@ class TeamsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function createTeam(\CedricZiel\MattermostPhp\Client\Model\CreateTeamRequest $requestBody): array
+    public function createTeam(
+        \CedricZiel\MattermostPhp\Client\Model\CreateTeamRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams';
         $method = 'post';
@@ -71,7 +73,7 @@ class TeamsEndpoint
          * __Minimum server version__: 5.35
          */
         ?bool $exclude_policy_constrained = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetAllTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/teams';
         $method = 'get';
@@ -109,7 +111,7 @@ class TeamsEndpoint
     public function getTeam(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}';
         $method = 'get';
@@ -147,7 +149,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}';
         $method = 'put';
@@ -188,7 +190,7 @@ class TeamsEndpoint
         string $team_id,
         /** Permanently delete the team, to be used for compliance reasons only. As of server version 5.0, `ServiceSettings.EnableAPITeamDeletion` must be set to `true` in the server's configuration. */
         ?bool $permanent = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SoftDeleteTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}';
         $method = 'delete';
@@ -227,7 +229,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchTeamRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/patch';
         $method = 'put';
@@ -267,7 +269,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamPrivacyRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateTeamPrivacyResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/privacy';
         $method = 'put';
@@ -307,7 +309,7 @@ class TeamsEndpoint
     public function restoreTeam(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RestoreTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/restore';
         $method = 'post';
@@ -343,7 +345,7 @@ class TeamsEndpoint
     public function getTeamByName(
         /** Team Name */
         string $name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamByNameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/name/{name}';
         $method = 'get';
@@ -379,7 +381,9 @@ class TeamsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function searchTeams(\CedricZiel\MattermostPhp\Client\Model\SearchTeamsRequest $requestBody): array
+    public function searchTeams(
+        \CedricZiel\MattermostPhp\Client\Model\SearchTeamsRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/search';
         $method = 'post';
@@ -415,7 +419,7 @@ class TeamsEndpoint
     public function teamExists(
         /** Team Name */
         string $name,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamExistsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/name/{name}/exists';
         $method = 'get';
@@ -451,7 +455,7 @@ class TeamsEndpoint
     public function getTeamsForUser(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/teams';
         $method = 'get';
@@ -491,7 +495,7 @@ class TeamsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members';
         $method = 'get';
@@ -531,7 +535,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\AddTeamMemberRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddTeamMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members';
         $method = 'post';
@@ -568,7 +572,7 @@ class TeamsEndpoint
     public function addTeamMemberFromInvite(
         /** Token id from the invitation */
         string $token,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddTeamMemberFromInviteResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/members/invite';
         $method = 'post';
@@ -608,7 +612,7 @@ class TeamsEndpoint
         /** Instead of aborting the operation if a user cannot be added, return an arrray that will contain both the success and added members and the ones with error, in form of `[{"member": {...}, "user_id", "...", "error": {...}}]` */
         ?bool $graceful,
         \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members/batch';
         $method = 'post';
@@ -646,7 +650,7 @@ class TeamsEndpoint
     public function getTeamMembersForUser(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/members';
         $method = 'get';
@@ -685,7 +689,7 @@ class TeamsEndpoint
         string $team_id,
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members/{user_id}';
         $method = 'get';
@@ -725,7 +729,7 @@ class TeamsEndpoint
         string $team_id,
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveTeamMemberResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members/{user_id}';
         $method = 'delete';
@@ -764,7 +768,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/members/ids';
         $method = 'post';
@@ -800,7 +804,7 @@ class TeamsEndpoint
     public function getTeamStats(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamStatsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/stats';
         $method = 'get';
@@ -837,7 +841,7 @@ class TeamsEndpoint
     public function regenerateTeamInviteId(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RegenerateTeamInviteIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/regenerate_invite_id';
         $method = 'post';
@@ -877,7 +881,7 @@ class TeamsEndpoint
     public function getTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamIconResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/teams/{team_id}/image';
         $method = 'get';
@@ -918,7 +922,7 @@ class TeamsEndpoint
     public function setTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SetTeamIconResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/teams/{team_id}/image';
         $method = 'post';
@@ -959,7 +963,7 @@ class TeamsEndpoint
     public function removeTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemoveTeamIconResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/teams/{team_id}/image';
         $method = 'delete';
@@ -1000,7 +1004,7 @@ class TeamsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberRolesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members/{user_id}/roles';
         $method = 'put';
@@ -1044,7 +1048,7 @@ class TeamsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberSchemeRolesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberSchemeRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/members/{user_id}/schemeRoles';
         $method = 'put';
@@ -1086,7 +1090,7 @@ class TeamsEndpoint
         string $exclude_team,
         /** Boolean to determine whether the collapsed threads should be included or not */
         ?bool $include_collapsed_threads = false,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamsUnreadForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/teams/unread';
         $method = 'get';
@@ -1126,7 +1130,7 @@ class TeamsEndpoint
         string $user_id,
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamUnreadResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/unread';
         $method = 'get';
@@ -1167,7 +1171,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\InviteUsersToTeamRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\InviteUsersToTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse
     {
         $path = '/api/v4/teams/{team_id}/invite/email';
         $method = 'post';
@@ -1210,7 +1214,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse
     {
         $path = '/api/v4/teams/{team_id}/invite-guests/email';
         $method = 'post';
@@ -1244,7 +1248,8 @@ class TeamsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function invalidateEmailInvites(): array
+    public function invalidateEmailInvites(
+    ): \CedricZiel\MattermostPhp\Client\Model\InvalidateEmailInvitesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/invites/email';
         $method = 'delete';
@@ -1279,7 +1284,7 @@ class TeamsEndpoint
     public function importTeam(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/import';
         $method = 'post';
@@ -1317,7 +1322,7 @@ class TeamsEndpoint
     public function getTeamInviteInfo(
         /** Invite id for a team */
         string $invite_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamInviteInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/teams/invite/{invite_id}';
         $method = 'get';
@@ -1355,7 +1360,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamSchemeRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateTeamSchemeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/teams/{team_id}/scheme';
         $method = 'put';
@@ -1403,7 +1408,7 @@ class TeamsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 0,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamMembersMinusGroupMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/members_minus_group_members';
         $method = 'get';
@@ -1443,7 +1448,7 @@ class TeamsEndpoint
     public function searchFiles(
         /** Team GUID */
         string $team_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchFilesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/teams/{team_id}/files/search';
         $method = 'post';

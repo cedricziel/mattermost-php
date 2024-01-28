@@ -26,7 +26,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function login(\CedricZiel\MattermostPhp\Client\Model\LoginRequest $requestBody): array
+    public function login(
+        \CedricZiel\MattermostPhp\Client\Model\LoginRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\LoginResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/login';
         $method = 'post';
@@ -57,7 +59,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function loginByCwsToken(\CedricZiel\MattermostPhp\Client\Model\LoginByCwsTokenRequest $requestBody): array
+    public function loginByCwsToken(
+        \CedricZiel\MattermostPhp\Client\Model\LoginByCwsTokenRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\LoginByCwsTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/login/cws';
         $method = 'post';
@@ -88,7 +92,8 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function logout(): array
+    public function logout(
+    ): \CedricZiel\MattermostPhp\Client\Model\LogoutResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/logout';
         $method = 'post';
@@ -125,7 +130,7 @@ class UsersEndpoint
         /** Token id from an invitation link */
         ?string $iid,
         \CedricZiel\MattermostPhp\Client\Model\CreateUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users';
         $method = 'post';
@@ -226,7 +231,7 @@ class UsersEndpoint
          * __Minimum server version__: 5.26
          */
         ?string $team_roles,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users';
         $method = 'get';
@@ -276,7 +281,7 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function permanentDeleteAllUsers(): array
+    public function permanentDeleteAllUsers(): \CedricZiel\MattermostPhp\Client\Model\PermanentDeleteAllUsersResponse
     {
         $path = '/api/v4/users';
         $method = 'delete';
@@ -313,7 +318,7 @@ class UsersEndpoint
          */
         ?int $since,
         \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/ids';
         $method = 'post';
@@ -354,7 +359,7 @@ class UsersEndpoint
      */
     public function getUsersByGroupChannelIds(
         \CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/group_channels';
         $method = 'post';
@@ -387,7 +392,7 @@ class UsersEndpoint
      */
     public function getUsersByUsernames(
         \CedricZiel\MattermostPhp\Client\Model\GetUsersByUsernamesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersByUsernamesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/usernames';
         $method = 'post';
@@ -418,7 +423,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function searchUsers(\CedricZiel\MattermostPhp\Client\Model\SearchUsersRequest $requestBody): array
+    public function searchUsers(
+        \CedricZiel\MattermostPhp\Client\Model\SearchUsersRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/search';
         $method = 'post';
@@ -463,7 +470,7 @@ class UsersEndpoint
          * __Available as of server version 5.6. Defaults to `100` if not provided or on an earlier server version.__
          */
         ?int $limit = 100,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\AutocompleteUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/autocomplete';
         $method = 'get';
@@ -503,7 +510,8 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getKnownUsers(): array
+    public function getKnownUsers(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetKnownUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/known';
         $method = 'get';
@@ -533,7 +541,8 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getTotalUsersStats(): array
+    public function getTotalUsersStats(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTotalUsersStatsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/stats';
         $method = 'get';
@@ -596,7 +605,7 @@ class UsersEndpoint
          * Example: `?in_team=4eb6axxw7fg3je5iyasnfudc5y&team_roles=team_user` will include users that are only team users and not admins or guests
          */
         ?string $team_roles,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTotalUsersStatsFilteredResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/stats/filtered';
         $method = 'get';
@@ -639,7 +648,7 @@ class UsersEndpoint
     public function getUser(
         /** User GUID. This can also be "me" which will point to the current user. */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}';
         $method = 'get';
@@ -676,7 +685,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}';
         $method = 'put';
@@ -714,7 +723,7 @@ class UsersEndpoint
     public function deleteUser(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}';
         $method = 'delete';
@@ -752,7 +761,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchUserRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PatchUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/patch';
         $method = 'put';
@@ -789,7 +798,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/roles';
         $method = 'put';
@@ -829,7 +838,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserActiveRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserActiveResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/active';
         $method = 'put';
@@ -867,7 +876,7 @@ class UsersEndpoint
         string $user_id,
         /** Not used by the server. Clients can pass in the last picture update time of the user to potentially take advantage of caching */
         ?\number $_,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetProfileImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/image';
         $method = 'get';
@@ -906,7 +915,7 @@ class UsersEndpoint
     public function setProfileImage(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SetProfileImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/image';
         $method = 'post';
@@ -945,7 +954,7 @@ class UsersEndpoint
     public function setDefaultProfileImage(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SetDefaultProfileImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/image';
         $method = 'delete';
@@ -984,7 +993,7 @@ class UsersEndpoint
     public function getDefaultProfileImage(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetDefaultProfileImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/image/default';
         $method = 'get';
@@ -1022,7 +1031,7 @@ class UsersEndpoint
     public function getUserByUsername(
         /** Username */
         string $username,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserByUsernameResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/username/{username}';
         $method = 'get';
@@ -1055,7 +1064,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function resetPassword(\CedricZiel\MattermostPhp\Client\Model\ResetPasswordRequest $requestBody): array
+    public function resetPassword(
+        \CedricZiel\MattermostPhp\Client\Model\ResetPasswordRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\ResetPasswordResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/password/reset';
         $method = 'post';
@@ -1091,7 +1102,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/mfa';
         $method = 'put';
@@ -1128,7 +1139,7 @@ class UsersEndpoint
     public function generateMfaSecret(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GenerateMfaSecretResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/mfa/generate';
         $method = 'post';
@@ -1171,7 +1182,7 @@ class UsersEndpoint
     public function demoteUserToGuest(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DemoteUserToGuestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/demote';
         $method = 'post';
@@ -1214,7 +1225,7 @@ class UsersEndpoint
     public function promoteGuestToUser(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PromoteGuestToUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/promote';
         $method = 'post';
@@ -1249,7 +1260,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function checkUserMfa(\CedricZiel\MattermostPhp\Client\Model\CheckUserMfaRequest $requestBody): array
+    public function checkUserMfa(
+        \CedricZiel\MattermostPhp\Client\Model\CheckUserMfaRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\CheckUserMfaResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/users/mfa';
         $method = 'post';
@@ -1283,7 +1296,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/password';
         $method = 'put';
@@ -1318,7 +1331,7 @@ class UsersEndpoint
      */
     public function sendPasswordResetEmail(
         \CedricZiel\MattermostPhp\Client\Model\SendPasswordResetEmailRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SendPasswordResetEmailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/password/reset/send';
         $method = 'post';
@@ -1353,7 +1366,7 @@ class UsersEndpoint
     public function getUserByEmail(
         /** User Email */
         string $email,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserByEmailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/email/{email}';
         $method = 'get';
@@ -1390,7 +1403,7 @@ class UsersEndpoint
     public function getSessions(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSessionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/sessions';
         $method = 'get';
@@ -1427,7 +1440,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\RevokeSessionRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RevokeSessionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/sessions/revoke';
         $method = 'post';
@@ -1464,7 +1477,7 @@ class UsersEndpoint
     public function revokeAllSessions(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RevokeAllSessionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/sessions/revoke/all';
         $method = 'post';
@@ -1497,7 +1510,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function attachDeviceId(\CedricZiel\MattermostPhp\Client\Model\AttachDeviceIdRequest $requestBody): array
+    public function attachDeviceId(
+        \CedricZiel\MattermostPhp\Client\Model\AttachDeviceIdRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\AttachDeviceIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/sessions/device';
         $method = 'put';
@@ -1531,7 +1546,7 @@ class UsersEndpoint
     public function getUserAudits(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserAuditsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/audits';
         $method = 'get';
@@ -1571,7 +1586,7 @@ class UsersEndpoint
     public function verifyUserEmailWithoutToken(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\VerifyUserEmailWithoutTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/email/verify/member';
         $method = 'post';
@@ -1604,7 +1619,9 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function verifyUserEmail(\CedricZiel\MattermostPhp\Client\Model\VerifyUserEmailRequest $requestBody): array
+    public function verifyUserEmail(
+        \CedricZiel\MattermostPhp\Client\Model\VerifyUserEmailRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\VerifyUserEmailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/users/email/verify';
         $method = 'post';
@@ -1636,7 +1653,7 @@ class UsersEndpoint
      */
     public function sendVerificationEmail(
         \CedricZiel\MattermostPhp\Client\Model\SendVerificationEmailRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SendVerificationEmailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/users/email/verify/send';
         $method = 'post';
@@ -1679,7 +1696,7 @@ class UsersEndpoint
      */
     public function switchAccountType(
         \CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/login/switch';
         $method = 'post';
@@ -1720,7 +1737,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/tokens';
         $method = 'post';
@@ -1763,7 +1780,7 @@ class UsersEndpoint
         ?int $page = 0,
         /** The number of tokens per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserAccessTokensForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/tokens';
         $method = 'get';
@@ -1806,7 +1823,7 @@ class UsersEndpoint
         ?int $page = 0,
         /** The number of tokens per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserAccessTokensResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/tokens';
         $method = 'get';
@@ -1845,7 +1862,7 @@ class UsersEndpoint
      */
     public function revokeUserAccessToken(
         \CedricZiel\MattermostPhp\Client\Model\RevokeUserAccessTokenRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RevokeUserAccessTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/tokens/revoke';
         $method = 'post';
@@ -1883,7 +1900,7 @@ class UsersEndpoint
     public function getUserAccessToken(
         /** User access token GUID */
         string $token_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserAccessTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/tokens/{token_id}';
         $method = 'get';
@@ -1922,7 +1939,7 @@ class UsersEndpoint
      */
     public function disableUserAccessToken(
         \CedricZiel\MattermostPhp\Client\Model\DisableUserAccessTokenRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DisableUserAccessTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/tokens/disable';
         $method = 'post';
@@ -1959,7 +1976,7 @@ class UsersEndpoint
      */
     public function enableUserAccessToken(
         \CedricZiel\MattermostPhp\Client\Model\EnableUserAccessTokenRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\EnableUserAccessTokenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/tokens/enable';
         $method = 'post';
@@ -1996,7 +2013,7 @@ class UsersEndpoint
      */
     public function searchUserAccessTokens(
         \CedricZiel\MattermostPhp\Client\Model\SearchUserAccessTokensRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchUserAccessTokensResponse
     {
         $path = '/api/v4/users/tokens/search';
         $method = 'post';
@@ -2031,7 +2048,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserAuthRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UpdateUserAuthResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/{user_id}/auth';
         $method = 'put';
@@ -2072,7 +2089,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/terms_of_service';
         $method = 'post';
@@ -2111,7 +2128,7 @@ class UsersEndpoint
     public function getUserTermsOfService(
         /** User GUID */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUserTermsOfServiceResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetUserTermsOfServiceResponse
     {
         $path = '/api/v4/users/{user_id}/terms_of_service';
         $method = 'get';
@@ -2148,7 +2165,8 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function revokeSessionsFromAllUsers(): array
+    public function revokeSessionsFromAllUsers(
+    ): \CedricZiel\MattermostPhp\Client\Model\RevokeSessionsFromAllUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/sessions/revoke/all';
         $method = 'post';
@@ -2184,7 +2202,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/typing';
         $method = 'post';
@@ -2223,7 +2241,7 @@ class UsersEndpoint
     public function getUploadsForUser(
         /** The ID of the user. This can also be "me" which will point to the current user. */
         string $user_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUploadsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/uploads';
         $method = 'get';
@@ -2266,7 +2284,7 @@ class UsersEndpoint
         ?int $page,
         /** PageSize specifies the size of the returned chunk of results. */
         ?int $pageSize,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersWithTeamDataForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/channel_members';
         $method = 'get';
@@ -2304,7 +2322,7 @@ class UsersEndpoint
      */
     public function migrateAuthToLdap(
         \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToLdapRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToLdapResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/migrate_auth/ldap';
         $method = 'post';
@@ -2340,7 +2358,7 @@ class UsersEndpoint
      */
     public function migrateAuthToSaml(
         \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToSamlRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToSamlResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/users/migrate_auth/saml';
         $method = 'post';
@@ -2379,7 +2397,7 @@ class UsersEndpoint
         ?int $page = 0,
         /** The number of users per page. There is a maximum limit of 200 users per page. */
         ?int $per_page = 60,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersWithInvalidEmailsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/invalid_emails';
         $method = 'get';
@@ -2439,7 +2457,7 @@ class UsersEndpoint
         ?bool $hide_active,
         /** If true, show only users that are active. Cannot be used at the same time as "hide_active" */
         ?bool $hide_inactive,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersForReportingResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/reports/users';
         $method = 'get';
@@ -2484,7 +2502,8 @@ class UsersEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getUserLimits(): array
+    public function getUserLimits(
+    ): \CedricZiel\MattermostPhp\Client\Model\getUserLimitsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/limits/users';
         $method = 'get';

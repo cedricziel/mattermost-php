@@ -173,7 +173,6 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         }
 
         $method = $class->addMethod(lcfirst($methodSpec['operationId']))
-            ->setReturnType('array')
             ->setComment($methodSpec['summary'] ?? null)
             ->addComment($methodSpec['description'] ?? null)
             ->addComment('@throws \Psr\Http\Client\ClientExceptionInterface')
@@ -247,9 +246,21 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $responseClass = $modelNamespaceName . '\\' . $responseSpec['$ref'];
                 }
 
+                if ($method->getReturnType() === null) {
+                    $method->setReturnType($responseClass);
+                } else {
+                    $returnType = $method->getReturnType();
+                    $method->setReturnType($returnType . '|' . $responseClass);
+                }
                 $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
             } else {
                 $responseClass = $modelNamespaceName . '\\' . $methodSpec['operationId'] . 'Response';
+                if ($method->getReturnType() === null) {
+                    $method->setReturnType($responseClass);
+                } else {
+                    $returnType = $method->getReturnType();
+                    $method->setReturnType($returnType . '|' . $responseClass);
+                }
                 $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
             }
         }

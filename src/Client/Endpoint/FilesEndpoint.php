@@ -40,7 +40,7 @@ class FilesEndpoint
         ?string $channel_id,
         /** The name of the file to be uploaded */
         ?string $filename,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files';
         $method = 'post';
@@ -79,7 +79,7 @@ class FilesEndpoint
     public function getFile(
         /** The ID of the file to get */
         string $file_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files/{file_id}';
         $method = 'get';
@@ -116,7 +116,7 @@ class FilesEndpoint
     public function getFileThumbnail(
         /** The ID of the file to get */
         string $file_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetFileThumbnailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files/{file_id}/thumbnail';
         $method = 'get';
@@ -153,7 +153,7 @@ class FilesEndpoint
     public function getFilePreview(
         /** The ID of the file to get */
         string $file_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetFilePreviewResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files/{file_id}/preview';
         $method = 'get';
@@ -190,7 +190,7 @@ class FilesEndpoint
     public function getFileLink(
         /** The ID of the file to get a link for */
         string $file_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files/{file_id}/link';
         $method = 'get';
@@ -228,7 +228,7 @@ class FilesEndpoint
     public function getFileInfo(
         /** The ID of the file info to get */
         string $file_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetFileInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetFileInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/files/{file_id}/info';
         $method = 'get';
@@ -267,7 +267,7 @@ class FilesEndpoint
         string $file_id,
         /** File hash */
         string $h,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\GetFilePublicResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/files/{file_id}/public';
         $method = 'get';

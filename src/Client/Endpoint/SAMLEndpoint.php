@@ -27,7 +27,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getSamlMetadata(): array
+    public function getSamlMetadata(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/metadata';
         $method = 'get';
@@ -59,7 +60,7 @@ class SAMLEndpoint
      */
     public function getSamlMetadataFromIdp(
         \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataFromIdpRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataFromIdpResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/metadatafromidp';
         $method = 'post';
@@ -89,7 +90,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadSamlIdpCertificate(): array
+    public function uploadSamlIdpCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadSamlIdpCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/idp';
         $method = 'post';
@@ -122,7 +124,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function deleteSamlIdpCertificate(): array
+    public function deleteSamlIdpCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteSamlIdpCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/idp';
         $method = 'delete';
@@ -154,7 +157,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadSamlPublicCertificate(): array
+    public function uploadSamlPublicCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadSamlPublicCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/public';
         $method = 'post';
@@ -187,7 +191,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function deleteSamlPublicCertificate(): array
+    public function deleteSamlPublicCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteSamlPublicCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/public';
         $method = 'delete';
@@ -219,7 +224,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadSamlPrivateCertificate(): array
+    public function uploadSamlPrivateCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadSamlPrivateCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/private';
         $method = 'post';
@@ -252,7 +258,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function deleteSamlPrivateCertificate(): array
+    public function deleteSamlPrivateCertificate(
+    ): \CedricZiel\MattermostPhp\Client\Model\DeleteSamlPrivateCertificateResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/private';
         $method = 'delete';
@@ -284,7 +291,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getSamlCertificateStatus(): array
+    public function getSamlCertificateStatus(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetSamlCertificateStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/certificate/status';
         $method = 'get';
@@ -318,7 +326,7 @@ class SAMLEndpoint
      */
     public function resetSamlAuthDataToEmail(
         \CedricZiel\MattermostPhp\Client\Model\ResetSamlAuthDataToEmailRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\ResetSamlAuthDataToEmailResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/saml/reset_auth_data';
         $method = 'post';

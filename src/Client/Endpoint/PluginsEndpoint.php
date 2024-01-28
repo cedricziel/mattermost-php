@@ -30,7 +30,8 @@ class PluginsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function uploadPlugin(): array
+    public function uploadPlugin(
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadPluginResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins';
         $method = 'post';
@@ -67,7 +68,8 @@ class PluginsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getPlugins(): array
+    public function getPlugins(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPluginsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins';
         $method = 'get';
@@ -108,7 +110,7 @@ class PluginsEndpoint
         string $plugin_download_url,
         /** Set to 'true' to overwrite a previously installed plugin with the same ID, if any */
         ?string $force,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\InstallPluginFromUrlResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/install_from_url';
         $method = 'post';
@@ -148,7 +150,7 @@ class PluginsEndpoint
     public function removePlugin(
         /** Id of the plugin to be removed */
         string $plugin_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\RemovePluginResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/{plugin_id}';
         $method = 'delete';
@@ -189,7 +191,7 @@ class PluginsEndpoint
     public function enablePlugin(
         /** Id of the plugin to be enabled */
         string $plugin_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\EnablePluginResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/{plugin_id}/enable';
         $method = 'post';
@@ -230,7 +232,7 @@ class PluginsEndpoint
     public function disablePlugin(
         /** Id of the plugin to be disabled */
         string $plugin_id,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\DisablePluginResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/{plugin_id}/disable';
         $method = 'post';
@@ -268,7 +270,8 @@ class PluginsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getWebappPlugins(): array
+    public function getWebappPlugins(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetWebappPluginsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/webapp';
         $method = 'get';
@@ -304,7 +307,8 @@ class PluginsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getPluginStatuses(): array
+    public function getPluginStatuses(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetPluginStatusesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/statuses';
         $method = 'get';
@@ -342,7 +346,7 @@ class PluginsEndpoint
      */
     public function installMarketplacePlugin(
         \CedricZiel\MattermostPhp\Client\Model\InstallMarketplacePluginRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\InstallMarketplacePluginResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/marketplace';
         $method = 'post';
@@ -390,7 +394,7 @@ class PluginsEndpoint
         ?string $server_version,
         /** Set true to only retrieve local plugins. */
         ?bool $local_only,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\GetMarketplacePluginsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/plugins/marketplace';
         $method = 'get';
@@ -429,7 +433,8 @@ class PluginsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getMarketplaceVisitedByAdmin(): array
+    public function getMarketplaceVisitedByAdmin(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetMarketplaceVisitedByAdminResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/plugins/marketplace/first_admin_visit';
         $method = 'get';

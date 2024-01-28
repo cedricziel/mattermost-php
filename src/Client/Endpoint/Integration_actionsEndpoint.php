@@ -28,7 +28,7 @@ class Integration_actionsEndpoint
      */
     public function openInteractiveDialog(
         \CedricZiel\MattermostPhp\Client\Model\OpenInteractiveDialogRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\OpenInteractiveDialogResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
         $path = '/api/v4/actions/dialogs/open';
         $method = 'post';
@@ -59,7 +59,7 @@ class Integration_actionsEndpoint
      */
     public function submitInteractiveDialog(
         \CedricZiel\MattermostPhp\Client\Model\SubmitInteractiveDialogRequest $requestBody,
-    ): array
+    ): \CedricZiel\MattermostPhp\Client\Model\SubmitInteractiveDialogResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/actions/dialogs/submit';
         $method = 'post';
