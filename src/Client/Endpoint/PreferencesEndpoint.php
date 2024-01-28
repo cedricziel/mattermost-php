@@ -55,7 +55,6 @@ class PreferencesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -77,9 +76,9 @@ class PreferencesEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updatePreferences(
-        \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesRequest $requestBody,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/preferences';
@@ -117,9 +116,9 @@ class PreferencesEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function deletePreferences(
-        \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesRequest $requestBody,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/users/{user_id}/preferences/delete';
@@ -175,7 +174,6 @@ class PreferencesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -219,7 +217,6 @@ class PreferencesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 

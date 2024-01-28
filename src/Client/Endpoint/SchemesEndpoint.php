@@ -64,7 +64,6 @@ class SchemesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -145,7 +144,6 @@ class SchemesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -186,7 +184,6 @@ class SchemesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -212,9 +209,9 @@ class SchemesEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchScheme(
-        \CedricZiel\MattermostPhp\Client\Model\PatchSchemeRequest $requestBody,
         /** Scheme GUID */
         string $scheme_id,
+        \CedricZiel\MattermostPhp\Client\Model\PatchSchemeRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Scheme|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/schemes/{scheme_id}/patch';
@@ -279,7 +276,6 @@ class SchemesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -328,7 +324,6 @@ class SchemesEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 

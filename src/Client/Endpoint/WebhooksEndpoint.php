@@ -99,7 +99,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -137,7 +136,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -176,7 +174,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -199,9 +196,9 @@ class WebhooksEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateIncomingWebhook(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateIncomingWebhookRequest $requestBody,
         /** Incoming Webhook GUID */
         string $hook_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateIncomingWebhookRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/incoming/{hook_id}';
@@ -303,7 +300,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -342,7 +338,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -381,7 +376,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -404,9 +398,9 @@ class WebhooksEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateOutgoingWebhook(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateOutgoingWebhookRequest $requestBody,
         /** outgoing Webhook GUID */
         string $hook_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateOutgoingWebhookRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/hooks/outgoing/{hook_id}';
@@ -460,7 +454,6 @@ class WebhooksEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 

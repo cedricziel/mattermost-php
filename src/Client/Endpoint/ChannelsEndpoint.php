@@ -75,7 +75,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -285,9 +284,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getPublicChannelsByIdsForTeam(
-        \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamRequest $requestBody,
         /** Team GUID */
         string $team_id,
+        \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/ids';
@@ -343,7 +342,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -381,7 +379,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -403,9 +400,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateChannel(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}';
@@ -464,7 +461,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -486,9 +482,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchChannel(
-        \CedricZiel\MattermostPhp\Client\Model\PatchChannelRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\PatchChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/patch';
@@ -529,9 +525,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateChannelPrivacy(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/privacy';
@@ -588,7 +584,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -614,9 +609,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function moveChannel(
-        \CedricZiel\MattermostPhp\Client\Model\MoveChannelRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\MoveChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/move';
@@ -670,7 +665,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -705,7 +699,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -749,7 +742,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -798,7 +790,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -843,7 +834,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -888,7 +878,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -933,7 +922,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -958,9 +946,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function searchChannels(
-        \CedricZiel\MattermostPhp\Client\Model\SearchChannelsRequest $requestBody,
         /** Team GUID */
         string $team_id,
+        \CedricZiel\MattermostPhp\Client\Model\SearchChannelsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/search';
@@ -1003,9 +991,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function searchArchivedChannels(
-        \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsRequest $requestBody,
         /** Team GUID */
         string $team_id,
+        \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/teams/{team_id}/channels/search_archived';
@@ -1065,7 +1053,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1109,7 +1096,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1153,7 +1139,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1172,9 +1157,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function addChannelMember(
-        \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberRequest $requestBody,
         /** The channel ID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members';
@@ -1211,9 +1196,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getChannelMembersByIds(
-        \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/ids';
@@ -1270,7 +1255,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1314,7 +1298,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1336,11 +1319,11 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateChannelRoles(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/roles';
@@ -1379,11 +1362,11 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateChannelMemberSchemeRoles(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/schemeRoles';
@@ -1422,11 +1405,11 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateChannelNotifyProps(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/channels/{channel_id}/members/{user_id}/notify_props';
@@ -1467,9 +1450,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function viewChannel(
-        \CedricZiel\MattermostPhp\Client\Model\ViewChannelRequest $requestBody,
         /** User ID to perform the view action for */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\ViewChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\ViewChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/members/{user_id}/view';
@@ -1525,7 +1508,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1572,7 +1554,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1621,7 +1602,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1663,7 +1643,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1689,9 +1668,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateChannelScheme(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $path = '/api/v4/channels/{channel_id}/scheme';
@@ -1759,7 +1738,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1800,7 +1778,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1838,7 +1815,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1861,9 +1837,9 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function patchChannelModerations(
-        \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsRequest $requestBody,
         /** Channel GUID */
         string $channel_id,
+        \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $path = '/api/v4/channels/{channel_id}/moderations/patch';
@@ -1920,7 +1896,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1944,11 +1919,11 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createSidebarCategoryForTeamForUser(
-        \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserRequest $requestBody,
         /** Team GUID */
         string $team_id,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
@@ -1988,11 +1963,11 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateSidebarCategoriesForTeamForUser(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserRequest $requestBody,
         /** Team GUID */
         string $team_id,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
@@ -2051,7 +2026,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2075,11 +2049,11 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateSidebarCategoryOrderForTeamForUser(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserRequest $requestBody,
         /** Team GUID */
         string $team_id,
         /** User GUID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order';
@@ -2141,7 +2115,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -2165,13 +2138,13 @@ class ChannelsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateSidebarCategoryForTeamForUser(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserRequest $requestBody,
         /** Team GUID */
         string $team_id,
         /** User GUID */
         string $user_id,
         /** Category GUID */
         string $category_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
@@ -2234,7 +2207,6 @@ class ChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 

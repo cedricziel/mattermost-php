@@ -64,7 +64,6 @@ class SharedChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -105,7 +104,6 @@ class SharedChannelsEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 

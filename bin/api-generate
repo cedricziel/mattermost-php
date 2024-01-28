@@ -4,6 +4,7 @@
 use CedricZiel\MattermostPhp\Client\ResponseTrait;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
+use Nette\PhpGenerator\Parameter;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -268,6 +269,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         ;
 
         $pathParameters = [];
+        $bodyParameters = [];
         $queryParameters = [];
 
         if (isset($methodSpec['requestBody'])) {
@@ -283,14 +285,15 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $requestBodyContentJson['schema'] ?? [],
                 );
 
-                $method->addParameter('requestBody')->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
+                $bodyParameters[] = (new Parameter('requestBody'))
+                    ->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
             }
         }
 
         if (isset($methodSpec['parameters'])) {
             foreach ($methodSpec['parameters'] as $parameter) {
                 $parameterIsNullable = !isset($parameter['required']) || $parameter['required'] === false;
-                $p = $method->addParameter($parameter['name'])->setType(mapParameterType($parameter['schema']['type']));
+                $p = (new Parameter($parameter['name']))->setType(mapParameterType($parameter['schema']['type']));
                 $p->setComment($parameter['description'])->setNullable($parameterIsNullable);
 
                 if (isset($parameter['schema']['default'])) {
@@ -300,11 +303,11 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 }
 
                 if ($parameter['in'] === 'path') {
-                    $pathParameters[] = $parameter['name'];
-                    $method->addBody(sprintf('$pathParameters[\'%s\'] = $%s;', $parameter['name'], $parameter['name']));
+                    $pathParameters[] = $p;
+                    $method->addBody(sprintf('$pathParameters[\'%s\'] = $%s;', $p->getName(), $p->getName()));
                 } elseif ($parameter['in'] === 'query') {
-                    $queryParameters[] = $parameter['name'];
-                    $method->addBody(sprintf('$queryParameters[\'%s\'] = $%s;', $parameter['name'], $parameter['name']));
+                    $queryParameters[] = $p;
+                    $method->addBody(sprintf('$queryParameters[\'%s\'] = $%s;', $p->getName(), $p->getName()));
                 }
             }
         }
@@ -317,9 +320,23 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             ->addBody('$request = $this->requestFactory->createRequest($method, $uri);')
             ->addBody('$request = $request->withHeader(\'Authorization\', \'Bearer \' . $this->token);');
 
-        if (isset($requestBodyContent['application/json'])) {
+        if (count($bodyParameters) > 0) {
             $method->addBody('$request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? \'\'));');
         }
+
+        // add parameters to method
+        $parameters = [];
+        foreach ($pathParameters as $pathParameter) {
+            $parameters[] = $pathParameter;
+        }
+        foreach ($bodyParameters as $bodyParameter) {
+            $parameters[] = $bodyParameter;
+        }
+        foreach ($queryParameters as $queryParameter) {
+            $parameters[] = $queryParameter;
+        }
+
+        $method->setParameters($parameters);
 
         $method
             ->addBody('')

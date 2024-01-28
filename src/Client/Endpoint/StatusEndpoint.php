@@ -55,7 +55,6 @@ class StatusEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -76,9 +75,9 @@ class StatusEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserStatus(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusRequest $requestBody,
         /** User ID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Status|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status';
@@ -149,9 +148,9 @@ class StatusEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function updateUserCustomStatus(
-        \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest $requestBody,
         /** User ID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom';
@@ -202,7 +201,6 @@ class StatusEndpoint
 
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -222,9 +220,9 @@ class StatusEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function removeRecentCustomStatus(
-        \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest $requestBody,
         /** User ID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom/recent';
@@ -259,9 +257,9 @@ class StatusEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function postUserRecentCustomStatusDelete(
-        \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest $requestBody,
         /** User ID */
         string $user_id,
+        \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $path = '/api/v4/users/{user_id}/status/custom/recent/delete';
