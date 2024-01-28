@@ -82,6 +82,10 @@ class GroupsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getGroups(
+        /** Team GUID which is used to return all the groups not associated to this team */
+        string $not_associated_to_team,
+        /** Group GUID which is used to return all the groups not associated to this channel */
+        string $not_associated_to_channel,
         /** The page to select. */
         ?int $page = 0,
         /** The number of groups per page. */
@@ -90,10 +94,6 @@ class GroupsEndpoint
         ?string $q = null,
         /** Boolean which adds the `member_count` attribute to each group JSON object */
         ?bool $include_member_count = null,
-        /** Team GUID which is used to return all the groups not associated to this team */
-        string $not_associated_to_team,
-        /** Group GUID which is used to return all the groups not associated to this channel */
-        string $not_associated_to_channel,
         /**
          * Only return groups that have been modified since the given Unix timestamp (in milliseconds). All modified groups, including deleted and created groups, will be returned.
          * __Minimum server version__: 5.24

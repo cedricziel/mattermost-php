@@ -294,6 +294,8 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $pathParameters = [];
         $bodyParameters = [];
         $queryParameters = [];
+        $optionalPathParameters = [];
+        $optionalQueryParameters = [];
 
         if (isset($methodSpec['requestBody'])) {
             $requestBody = $methodSpec['requestBody'];
@@ -326,10 +328,20 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 }
 
                 if ($parameter['in'] === 'path') {
-                    $pathParameters[] = $p;
+                    if ($parameterIsNullable) {
+                        $optionalPathParameters[] = $p;
+                    } else {
+                        $pathParameters[] = $p;
+                    }
+
                     $method->addBody(sprintf('$pathParameters[\'%s\'] = $%s;', $p->getName(), $p->getName()));
                 } elseif ($parameter['in'] === 'query') {
-                    $queryParameters[] = $p;
+                    if ($parameterIsNullable) {
+                        $optionalQueryParameters[] = $p;
+                    } else {
+                        $queryParameters[] = $p;
+                    }
+
                     $method->addBody(sprintf('$queryParameters[\'%s\'] = $%s;', $p->getName(), $p->getName()));
                 }
             }
@@ -356,6 +368,12 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             $parameters[] = $bodyParameter;
         }
         foreach ($queryParameters as $queryParameter) {
+            $parameters[] = $queryParameter;
+        }
+        foreach ($optionalPathParameters as $pathParameter) {
+            $parameters[] = $pathParameter;
+        }
+        foreach ($optionalQueryParameters as $queryParameter) {
             $parameters[] = $queryParameter;
         }
 

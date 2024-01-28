@@ -484,12 +484,12 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function autocompleteUsers(
+        /** Username, nickname first name or last name */
+        string $name,
         /** Team ID */
         ?string $team_id = null,
         /** Channel ID */
         ?string $channel_id = null,
-        /** Username, nickname first name or last name */
-        string $name,
         /**
          * The maximum number of users to return in each subresult
          *

@@ -120,10 +120,10 @@ class SystemEndpoint
         string $teamId,
         /** Version of the client (desktop/mobile/web) that issues the request */
         string $clientVersion,
-        /** Client locale */
-        ?string $locale = null,
         /** Client type (web/mobile-ios/mobile-android/desktop) */
         string $client,
+        /** Client locale */
+        ?string $locale = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetNoticesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $path = '/api/v4/system/notices/{teamId}';
