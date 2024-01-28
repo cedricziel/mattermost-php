@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use CedricZiel\MattermostPhp\Client\ClientTrait;
+use CedricZiel\MattermostPhp\Client\HttpClientTrait;
 use CedricZiel\MattermostPhp\Client\ResponseTrait;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
@@ -39,11 +41,28 @@ $printer = new Nette\PhpGenerator\PsrPrinter;
 
 $endpointNamespaceName = 'CedricZiel\MattermostPhp\Client\Endpoint';
 $modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
+$clientNamespaceName = 'CedricZiel\MattermostPhp';
 $endpointNamespace = new PhpNamespace($endpointNamespaceName);
 $modelNamespace = new PhpNamespace($modelNamespaceName);
+$clientNamespace = new PhpNamespace($clientNamespaceName);
 
+@mkdir(__DIR__ . '/../src/Client');
 @mkdir(__DIR__ . '/../src/Client/Endpoint');
 @mkdir(__DIR__ . '/../src/Client/Model');
+
+$clientClass = $clientNamespace->addClass('Client');
+$clientClass->addTrait(ClientTrait::class);
+$clientConstructor = $clientClass->addMethod('__construct');
+
+$clientConstructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
+$clientConstructor->addPromotedParameter('token')->setType('string')->setProtected()->setNullable()->setDefaultValue(null);
+$clientConstructor->addPromotedParameter('httpClient')->setType(ClientInterface::class)->setProtected()->setNullable()->setDefaultValue(null);
+$clientConstructor->addPromotedParameter('requestFactory')->setType(RequestFactoryInterface::class)->setProtected()->setNullable()->setDefaultValue(null);
+$clientConstructor->addPromotedParameter('streamFactory')->setType(StreamFactoryInterface::class)->setProtected()->setNullable()->setDefaultValue(null);
+
+$clientConstructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
+$clientConstructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
+$clientConstructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
 
 foreach ($openApi['x-tagGroups'] as $tagGroup) {
     if ($tagGroup['name'] !== 'Endpoints') {
@@ -52,7 +71,7 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
 
     foreach ($tagGroup['tags'] as $tag) {
         $class = $endpointNamespace->addClass(prepareEndpointName($tag));
-        $class->addTrait(\CedricZiel\MattermostPhp\Client\HttpClientTrait::class);
+        $class->addTrait(HttpClientTrait::class);
         $constructor = $class->addMethod('__construct');
         $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
         $constructor->addPromotedParameter('token')->setType('string')->setProtected();
@@ -86,6 +105,10 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
         $tokenSetter->addParameter('token')->setType('string');
         $tokenSetter->addBody('$this->token = $token;');
         $tokenSetter->addBody('return $this;');
+
+        $m = $clientClass->addMethod(str_replace('Endpoint', '', lcfirst(prepareEndpointName($tag))));
+        $m->setReturnType('\\' . $endpointNamespaceName . '\\' . prepareEndpointName($tag));
+        $m->addBody(sprintf('return new \%s\%s($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);', $endpointNamespaceName, prepareEndpointName($tag)));
     }
 }
 
@@ -420,6 +443,22 @@ foreach ($endpointNamespace->getClasses() as $genClass) {
 namespace {$genClass->getNamespace()->getName()};
 
 {$printer->printClass($genClass, $genClass->getNamespace())}
+PHP);
+}
+
+{
+    $clientFile = new Nette\PhpGenerator\PhpFile;
+    $clientFile->addComment('This file is auto-generated.');
+    $clientFile->setStrictTypes(); // adds declare(strict_types=1)
+
+    $class = $clientFile->addClass($clientNamespaceName . '\\' . $clientClass->getName());
+
+    file_put_contents(__DIR__ . '/../src/' . $clientClass->getName() . '.php', <<<PHP
+<?php
+
+namespace {$clientClass->getNamespace()->getName()};
+
+{$printer->printClass($clientClass, $clientClass->getNamespace())}
 PHP);
 }
 
