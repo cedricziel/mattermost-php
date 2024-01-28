@@ -2,6 +2,6 @@
 
 namespace CedricZiel\MattermostPhp\Client\Model;
 
-class ChannelMemberWithTeamData
+class ChannelMemberWithTeamData extends ChannelMember
 {
 }

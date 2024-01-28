@@ -3,6 +3,7 @@
 
 use CedricZiel\MattermostPhp\Client\ResponseTrait;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -102,21 +103,8 @@ function mapParameterType(mixed $type)
     return $type;
 }
 
-foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
-    $class = $modelNamespace->addClass($schemaName);
-
-    if (isset($schema['description'])) {
-        $class->setComment($schema['description']);
-    }
-
-    if (!isset($schema['properties'])) continue;
-    foreach ($schema['properties'] as $propertyName => $property) {
-        $p = $class->addProperty($propertyName);
-        $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
-        $p->setComment($property['description'] ?? null)
-            ->setNullable(!isset($property['required']) || $property['required'] === false);
-    }
-
+function createHydrationMethod(ClassType $class): Method
+{
     $hydrationMethod = $class->addMethod('hydrate')->setReturnType('static');
     $dataParameter = $hydrationMethod->addParameter('data')
         ->setType('array')
@@ -124,9 +112,60 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
         ->setComment('@param array<string, mixed> $data');
     $hydrationMethod->addBody('if ($data === null) return $this;');
     $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-            return sprintf('$this->%s = $data[\'%s\'];', $property->getName(), $property->getName());
-        }, $class->getProperties())));
+        return sprintf('$this->%s = $data[\'%s\'];', $property->getName(), $property->getName());
+    }, $class->getProperties())));
     $hydrationMethod->addBody('return $this;');
+
+    return $hydrationMethod;
+}
+
+function createHydrationMethodForArrayBody(ClassType $class, string $itemType): Method
+{
+    $hydrationMethod = createHydrationMethod($class);
+    $hydrationMethod->setBody(<<<PHP
+if (\$data === null) return \$this;
+foreach (\$data as \$item) {
+    \$this->items[] = new $itemType();
+    \$this->items[\$item] = \$this->items[\$item]->hydrate(\$item);
+}
+
+return \$this;
+PHP);
+
+    return $hydrationMethod;
+}
+
+foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
+    $class = $modelNamespace->addClass($schemaName);
+
+    if (isset($schema['description'])) {
+        $class->setComment($schema['description']);
+    }
+
+    if (isset($schema['properties'])) {
+        foreach ($schema['properties'] as $propertyName => $property) {
+            $p = $class->addProperty($propertyName);
+            $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            $p->setComment($property['description'] ?? null)
+                ->setNullable(!isset($property['required']) || $property['required'] === false);
+        }
+        $hydrationMethod = createHydrationMethod($class);
+    } elseif (isset($schema['type']) && $schema['type'] === 'array' && isset($schema['items']['$ref'])) {
+        $itemType = '\\' . $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $schema['items']['$ref']);
+        $class->addProperty('items')
+            ->setType('array')
+            ->setComment(sprintf('@var %s[]', $itemType))
+        ;
+        $hydrationMethod = createHydrationMethodForArrayBody($class, $itemType);
+    } elseif (isset($schema['allOf'])) {
+        foreach ($schema['allOf'] as $i => $allOf) {
+            // class extends another object (allOf)
+            if (isset($allOf['$ref'])) {
+                $itemType = '\\' . $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $allOf['$ref']);
+                $class->setExtends($itemType);
+            }
+        }
+    }
 }
 
 foreach ($openApi['components']['responses'] as $schemaName => $schema) {
@@ -149,16 +188,7 @@ foreach ($openApi['components']['responses'] as $schemaName => $schema) {
         }
     }
 
-    $hydrationMethod = $class->addMethod('hydrate')->setReturnType('static');
-    $dataParameter = $hydrationMethod->addParameter('data')
-        ->setType('array')
-        ->setNullable()
-        ->setComment('@param array<string, mixed> $data');
-    $hydrationMethod->addBody('if ($data === null) return $this;');
-    $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-        return sprintf('$this->%s = $data[\'%s\'];', $property->getName(), $property->getName());
-    }, $class->getProperties())));
-    $hydrationMethod->addBody('return $this;');
+    $hydrationMethod = createHydrationMethod($class);
 }
 
 function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, string $operationId, array $schema): ClassType

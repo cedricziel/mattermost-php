@@ -2,6 +2,6 @@
 
 namespace CedricZiel\MattermostPhp\Client\Model;
 
-class DataRetentionPolicyCreate
+class DataRetentionPolicyCreate extends DataRetentionPolicyWithTeamAndChannelIds
 {
 }

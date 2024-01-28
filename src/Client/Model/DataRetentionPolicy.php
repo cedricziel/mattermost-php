@@ -2,6 +2,6 @@
 
 namespace CedricZiel\MattermostPhp\Client\Model;
 
-class DataRetentionPolicy
+class DataRetentionPolicy extends DataRetentionPolicyWithoutId
 {
 }
