@@ -2,6 +2,10 @@
 
 namespace CedricZiel\MattermostPhp;
 
+use CedricZiel\MattermostPhp\Client\Endpoint\ChannelsEndpoint;
+use CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelRequest;
+use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18Client;
 use Psr\Http\Client\ClientInterface;
@@ -32,7 +36,7 @@ class AppClient
         ?StreamFactoryInterface $streamFactory = null,
     ): AppClient {
 
-        return new AppClient(
+        $client = new AppClient(
             $context->getBotAccessToken(),
             $context->getMattermostSiteUrl(),
             $serializer,
@@ -40,6 +44,10 @@ class AppClient
             $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
             $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory(),
         );
+
+        $client->setUserId($context->getBotUserId());
+
+        return $client;
     }
 
     public static function asActingUser(
@@ -138,7 +146,25 @@ class AppClient
         return $this->createDMPost($userId, new Post(message: $message));
     }
 
-    public function createDMPost(string $userId, Post $post)
+    public function createDMPost(string $userId, Post $post): Post
     {
+        $channelEndpoint = new ChannelsEndpoint(
+            $this->client,
+            $this->requestFactory,
+            $this->streamFactory,
+        );
+
+        $createChannelResponse = $channelEndpoint->createDirectChannel(new CreateDirectChannelRequest([
+            $this->userId,
+            $userId,
+        ]));
+
+        $postApi = new PostsEndpoint(
+            $this->client,
+            $this->requestFactory,
+            $this->streamFactory,
+        );
+
+        return $postApi->createPost(true, new CreatePostRequest());
     }
 }

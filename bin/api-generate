@@ -130,21 +130,34 @@ function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, str
     $class = $modelNamespace->addClass($operationId . 'Request');
     $constructor = $class->addMethod('__construct');
 
-    if (!isset($schema['properties'])) {
-        return $class;
-    }
-
-    foreach ($schema['properties'] as $propertyName => $property) {
-        $required = isset($property['required']) && $property['required'] !== false;
-
-        $cp = $constructor->addPromotedParameter($propertyName)->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
-        if (!$required) {
-            $cp
-                ->setNullable()
-                ->setDefaultValue(null);
+    if (isset($schema['type']) && $schema['type'] === 'array') {
+        if (!isset($schema['items']) || !is_array($schema['items'])) {
+            return $class;
         }
 
-        $cp->setComment($property['description'] ?? null);
+        $itemsType = isset($schema['items']['type']) ? mapParameterType($schema['items']['type']) : null;
+        $cp = $constructor->addPromotedParameter('items')
+            ->setType('array')
+            ->setComment(sprintf('@var %s[]', $itemsType))
+            ->addComment($schema['items']['description'] ?? '')
+        ;
+    } elseif (isset($schema['type']) && $schema['type'] === 'object') {
+        if (!isset($schema['properties']) || !is_array($schema['properties'])) {
+            return $class;
+        }
+
+        foreach ($schema['properties'] as $propertyName => $property) {
+            $required = isset($property['required']) && $property['required'] !== false;
+
+            $cp = $constructor->addPromotedParameter($propertyName)->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            if (!$required) {
+                $cp
+                    ->setNullable()
+                    ->setDefaultValue(null);
+            }
+
+            $cp->setComment($property['description'] ?? null);
+        }
     }
 
     return $class;
