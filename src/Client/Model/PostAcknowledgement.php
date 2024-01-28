@@ -12,4 +12,15 @@ class PostAcknowledgement
 
     /** The time in milliseconds in which this acknowledgement was made. */
     public ?int $acknowledged_at;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->user_id = $data['user_id'];
+        $this->post_id = $data['post_id'];
+        $this->acknowledged_at = $data['acknowledged_at'];
+        return $this;
+    }
 }

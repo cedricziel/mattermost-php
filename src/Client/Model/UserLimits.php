@@ -9,4 +9,14 @@ class UserLimits
 
     /** The number of active users in the server */
     public ?int $activeUserCount;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->maxUsersLimit = $data['maxUsersLimit'];
+        $this->activeUserCount = $data['activeUserCount'];
+        return $this;
+    }
 }

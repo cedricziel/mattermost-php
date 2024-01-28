@@ -9,4 +9,14 @@ class OwnerInfo
 
     /** Owner's username. */
     public ?string $username;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->user_id = $data['user_id'];
+        $this->username = $data['username'];
+        return $this;
+    }
 }

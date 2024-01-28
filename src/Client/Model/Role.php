@@ -21,4 +21,18 @@ class Role
 
     /** indicates if this role is managed by a scheme (true), or is a custom stand-alone role (false). */
     public ?bool $scheme_managed;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->display_name = $data['display_name'];
+        $this->description = $data['description'];
+        $this->permissions = $data['permissions'];
+        $this->scheme_managed = $data['scheme_managed'];
+        return $this;
+    }
 }

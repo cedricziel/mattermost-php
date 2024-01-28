@@ -21,4 +21,18 @@ class OutgoingOAuthConnectionGetItem
 
     /** The audiences of the outgoing OAuth connection. */
     public ?string $audiences;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->grant_type = $data['grant_type'];
+        $this->audiences = $data['audiences'];
+        return $this;
+    }
 }

@@ -9,4 +9,14 @@ class RetentionPolicyForChannelList
 
     /** The total number of channel policies. */
     public ?int $total_count;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->policies = $data['policies'];
+        $this->total_count = $data['total_count'];
+        return $this;
+    }
 }

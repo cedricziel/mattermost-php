@@ -15,4 +15,17 @@ class PostList
 
     /** Whether there are more items after this page. */
     public ?bool $has_next;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->order = $data['order'];
+        $this->posts = $data['posts'];
+        $this->next_post_id = $data['next_post_id'];
+        $this->prev_post_id = $data['prev_post_id'];
+        $this->has_next = $data['has_next'];
+        return $this;
+    }
 }

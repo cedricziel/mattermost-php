@@ -9,4 +9,14 @@ class AllowedIPRange
 
     /** A description for the CIDRBlock */
     public ?string $Description;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->CIDRBlock = $data['CIDRBlock'];
+        $this->Description = $data['Description'];
+        return $this;
+    }
 }

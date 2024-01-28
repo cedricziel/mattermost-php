@@ -9,4 +9,14 @@ class Server_Busy
 
     /** timestamp - number of seconds since Jan 1, 1970 UTC. */
     public ?int $expires;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->busy = $data['busy'];
+        $this->expires = $data['expires'];
+        return $this;
+    }
 }

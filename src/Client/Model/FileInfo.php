@@ -42,4 +42,25 @@ class FileInfo
 
     /** If this file is an image, whether or not it has a preview-sized version */
     public ?bool $has_preview_image;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->user_id = $data['user_id'];
+        $this->post_id = $data['post_id'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->name = $data['name'];
+        $this->extension = $data['extension'];
+        $this->size = $data['size'];
+        $this->mime_type = $data['mime_type'];
+        $this->width = $data['width'];
+        $this->height = $data['height'];
+        $this->has_preview_image = $data['has_preview_image'];
+        return $this;
+    }
 }

@@ -41,4 +41,19 @@ class PostMetadata
      * Any acknowledgements made to this point.
      */
     public ?array $acknowledgements;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->embeds = $data['embeds'];
+        $this->emojis = $data['emojis'];
+        $this->files = $data['files'];
+        $this->images = $data['images'];
+        $this->reactions = $data['reactions'];
+        $this->priority = $data['priority'];
+        $this->acknowledgements = $data['acknowledgements'];
+        return $this;
+    }
 }

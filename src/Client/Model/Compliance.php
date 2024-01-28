@@ -15,4 +15,23 @@ class Compliance
     public ?int $end_at;
     public ?string $keywords;
     public ?string $emails;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->create_at = $data['create_at'];
+        $this->user_id = $data['user_id'];
+        $this->status = $data['status'];
+        $this->count = $data['count'];
+        $this->desc = $data['desc'];
+        $this->type = $data['type'];
+        $this->start_at = $data['start_at'];
+        $this->end_at = $data['end_at'];
+        $this->keywords = $data['keywords'];
+        $this->emails = $data['emails'];
+        return $this;
+    }
 }

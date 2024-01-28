@@ -46,4 +46,27 @@ class PlaybookRun
     /** The identifier of the playbook with from which this playbook run was created. */
     public ?string $playbook_id;
     public ?array $checklists;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->is_active = $data['is_active'];
+        $this->owner_user_id = $data['owner_user_id'];
+        $this->team_id = $data['team_id'];
+        $this->channel_id = $data['channel_id'];
+        $this->create_at = $data['create_at'];
+        $this->end_at = $data['end_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->active_stage = $data['active_stage'];
+        $this->active_stage_title = $data['active_stage_title'];
+        $this->post_id = $data['post_id'];
+        $this->playbook_id = $data['playbook_id'];
+        $this->checklists = $data['checklists'];
+        return $this;
+    }
 }

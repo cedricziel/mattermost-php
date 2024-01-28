@@ -12,4 +12,16 @@ class FileInfoList
 
     /** The ID of previous file info. Not omitted when empty or not relevant. */
     public ?string $prev_file_id;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->order = $data['order'];
+        $this->file_infos = $data['file_infos'];
+        $this->next_file_id = $data['next_file_id'];
+        $this->prev_file_id = $data['prev_file_id'];
+        return $this;
+    }
 }

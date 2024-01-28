@@ -33,4 +33,22 @@ class OAuthApp
 
     /** The last time of update for the application */
     public ?int $update_at;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->client_secret = $data['client_secret'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->icon_url = $data['icon_url'];
+        $this->callback_urls = $data['callback_urls'];
+        $this->homepage = $data['homepage'];
+        $this->is_trusted = $data['is_trusted'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        return $this;
+    }
 }

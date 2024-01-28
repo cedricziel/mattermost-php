@@ -12,4 +12,15 @@ class Checklist
 
     /** The list of tasks to do. */
     public ?array $items;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->title = $data['title'];
+        $this->items = $data['items'];
+        return $this;
+    }
 }

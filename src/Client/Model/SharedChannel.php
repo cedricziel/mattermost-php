@@ -33,4 +33,24 @@ class SharedChannel
 
     /** Id of the remote cluster where the shared channel is homed */
     public ?string $remote_id;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->team_id = $data['team_id'];
+        $this->home = $data['home'];
+        $this->readonly = $data['readonly'];
+        $this->name = $data['name'];
+        $this->display_name = $data['display_name'];
+        $this->purpose = $data['purpose'];
+        $this->header = $data['header'];
+        $this->creator_id = $data['creator_id'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->remote_id = $data['remote_id'];
+        return $this;
+    }
 }

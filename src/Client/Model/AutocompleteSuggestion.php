@@ -18,4 +18,17 @@ class AutocompleteSuggestion
 
     /** Base64 encoded svg image */
     public ?string $IconData;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->Complete = $data['Complete'];
+        $this->Suggestion = $data['Suggestion'];
+        $this->Hint = $data['Hint'];
+        $this->Description = $data['Description'];
+        $this->IconData = $data['IconData'];
+        return $this;
+    }
 }

@@ -30,4 +30,21 @@ class PluginManifest
 
     /** Settings schema used to define the System Console UI for the plugin. */
     public ?\stdClass $settings_schema;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->version = $data['version'];
+        $this->min_server_version = $data['min_server_version'];
+        $this->backend = $data['backend'];
+        $this->server = $data['server'];
+        $this->webapp = $data['webapp'];
+        $this->settings_schema = $data['settings_schema'];
+        return $this;
+    }
 }

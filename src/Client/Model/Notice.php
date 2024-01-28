@@ -33,4 +33,21 @@ class Notice
 
     /** Notice title. Use {{Mattermost}} instead of plain text to support white-labeling. Text supports Markdown. */
     public ?string $title;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->sysAdminOnly = $data['sysAdminOnly'];
+        $this->teamAdminOnly = $data['teamAdminOnly'];
+        $this->action = $data['action'];
+        $this->actionParam = $data['actionParam'];
+        $this->actionText = $data['actionText'];
+        $this->description = $data['description'];
+        $this->image = $data['image'];
+        $this->title = $data['title'];
+        return $this;
+    }
 }

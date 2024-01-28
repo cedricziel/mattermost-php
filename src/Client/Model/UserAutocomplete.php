@@ -9,4 +9,14 @@ class UserAutocomplete
 
     /** A special case list of users returned when autocompleting in a specific channel. Omitted when empty or not relevant */
     public ?array $out_of_channel;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->users = $data['users'];
+        $this->out_of_channel = $data['out_of_channel'];
+        return $this;
+    }
 }

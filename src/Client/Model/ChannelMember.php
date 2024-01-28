@@ -16,4 +16,20 @@ class ChannelMember
 
     /** The time in milliseconds the channel member was last updated */
     public ?int $last_update_at;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->channel_id = $data['channel_id'];
+        $this->user_id = $data['user_id'];
+        $this->roles = $data['roles'];
+        $this->last_viewed_at = $data['last_viewed_at'];
+        $this->msg_count = $data['msg_count'];
+        $this->mention_count = $data['mention_count'];
+        $this->notify_props = $data['notify_props'];
+        $this->last_update_at = $data['last_update_at'];
+        return $this;
+    }
 }

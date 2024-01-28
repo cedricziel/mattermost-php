@@ -18,4 +18,17 @@ class ChannelUnreadAt
 
     /** time in milliseconds when the user last viewed the channel. */
     public ?int $last_viewed_at;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->team_id = $data['team_id'];
+        $this->channel_id = $data['channel_id'];
+        $this->msg_count = $data['msg_count'];
+        $this->mention_count = $data['mention_count'];
+        $this->last_viewed_at = $data['last_viewed_at'];
+        return $this;
+    }
 }

@@ -25,4 +25,25 @@ class Team
 
     /** The data retention policy to which this team has been assigned. If no such policy exists, or the caller does not have the `sysconsole_read_compliance_data_retention` permission, this field will be null. */
     public ?string $policy_id;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->display_name = $data['display_name'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->email = $data['email'];
+        $this->type = $data['type'];
+        $this->allowed_domains = $data['allowed_domains'];
+        $this->invite_id = $data['invite_id'];
+        $this->allow_open_invite = $data['allow_open_invite'];
+        $this->policy_id = $data['policy_id'];
+        return $this;
+    }
 }

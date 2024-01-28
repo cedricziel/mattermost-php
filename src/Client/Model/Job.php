@@ -27,4 +27,20 @@ class Job
 
     /** A freeform data field containing additional information about the job */
     public ?\stdClass $data;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->type = $data['type'];
+        $this->create_at = $data['create_at'];
+        $this->start_at = $data['start_at'];
+        $this->last_activity_at = $data['last_activity_at'];
+        $this->status = $data['status'];
+        $this->progress = $data['progress'];
+        $this->data = $data['data'];
+        return $this;
+    }
 }

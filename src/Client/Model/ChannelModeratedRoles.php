@@ -6,4 +6,14 @@ class ChannelModeratedRoles
 {
     public $guests;
     public $members;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->guests = $data['guests'];
+        $this->members = $data['members'];
+        return $this;
+    }
 }

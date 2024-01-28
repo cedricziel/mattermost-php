@@ -9,4 +9,14 @@ class UserThreads
 
     /** Array of threads */
     public ?array $threads;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->total = $data['total'];
+        $this->threads = $data['threads'];
+        return $this;
+    }
 }

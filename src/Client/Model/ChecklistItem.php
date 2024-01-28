@@ -30,4 +30,21 @@ class ChecklistItem
 
     /** A detailed description of the checklist item, formatted with Markdown. */
     public ?string $description;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->title = $data['title'];
+        $this->state = $data['state'];
+        $this->state_modified = $data['state_modified'];
+        $this->assignee_id = $data['assignee_id'];
+        $this->assignee_modified = $data['assignee_modified'];
+        $this->command = $data['command'];
+        $this->command_last_run = $data['command_last_run'];
+        $this->description = $data['description'];
+        return $this;
+    }
 }

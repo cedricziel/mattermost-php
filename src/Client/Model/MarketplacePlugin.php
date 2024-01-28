@@ -25,4 +25,20 @@ class MarketplacePlugin
 
     /** Version number of the already installed plugin, if any. */
     public ?string $installed_version;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->homepage_url = $data['homepage_url'];
+        $this->icon_data = $data['icon_data'];
+        $this->download_url = $data['download_url'];
+        $this->release_notes_url = $data['release_notes_url'];
+        $this->labels = $data['labels'];
+        $this->signature = $data['signature'];
+        $this->manifest = $data['manifest'];
+        $this->installed_version = $data['installed_version'];
+        return $this;
+    }
 }

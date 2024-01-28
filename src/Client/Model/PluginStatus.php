@@ -24,4 +24,19 @@ class PluginStatus
 
     /** State of the plugin */
     public ?\number $state;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->plugin_id = $data['plugin_id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->version = $data['version'];
+        $this->cluster_id = $data['cluster_id'];
+        $this->plugin_path = $data['plugin_path'];
+        $this->state = $data['state'];
+        return $this;
+    }
 }

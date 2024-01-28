@@ -12,4 +12,15 @@ class Timezone
 
     /** This value is set automatically when the "useAutomaticTimezone" is set to "true". */
     public ?string $automaticTimezone;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->useAutomaticTimezone = $data['useAutomaticTimezone'];
+        $this->manualTimezone = $data['manualTimezone'];
+        $this->automaticTimezone = $data['automaticTimezone'];
+        return $this;
+    }
 }

@@ -15,4 +15,16 @@ class UserAccessToken
 
     /** A description of the token usage */
     public ?string $description;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->token = $data['token'];
+        $this->user_id = $data['user_id'];
+        $this->description = $data['description'];
+        return $this;
+    }
 }

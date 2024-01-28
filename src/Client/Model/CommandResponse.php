@@ -11,4 +11,18 @@ class CommandResponse
     public ?string $IconURL;
     public ?string $GotoLocation;
     public ?array $Attachments;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->ResponseType = $data['ResponseType'];
+        $this->Text = $data['Text'];
+        $this->Username = $data['Username'];
+        $this->IconURL = $data['IconURL'];
+        $this->GotoLocation = $data['GotoLocation'];
+        $this->Attachments = $data['Attachments'];
+        return $this;
+    }
 }

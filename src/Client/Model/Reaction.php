@@ -15,4 +15,16 @@ class Reaction
 
     /** The time in milliseconds this reaction was made */
     public ?int $create_at;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->user_id = $data['user_id'];
+        $this->post_id = $data['post_id'];
+        $this->emoji_name = $data['emoji_name'];
+        $this->create_at = $data['create_at'];
+        return $this;
+    }
 }

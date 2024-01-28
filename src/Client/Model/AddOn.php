@@ -8,4 +8,16 @@ class AddOn
     public ?string $name;
     public ?string $display_name;
     public ?string $price_per_seat;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->display_name = $data['display_name'];
+        $this->price_per_seat = $data['price_per_seat'];
+        return $this;
+    }
 }

@@ -6,4 +6,14 @@ class ChannelStats
 {
     public ?string $channel_id;
     public ?int $member_count;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->channel_id = $data['channel_id'];
+        $this->member_count = $data['member_count'];
+        return $this;
+    }
 }

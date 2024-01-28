@@ -24,4 +24,20 @@ class Bot
 
     /** The user id of the user that currently owns this bot. */
     public ?string $owner_id;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->user_id = $data['user_id'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->username = $data['username'];
+        $this->display_name = $data['display_name'];
+        $this->description = $data['description'];
+        $this->owner_id = $data['owner_id'];
+        return $this;
+    }
 }

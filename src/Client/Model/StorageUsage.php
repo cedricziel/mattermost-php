@@ -6,4 +6,13 @@ class StorageUsage
 {
     /** Total file storage usage for the instance in bytes rounded down to the most significant digit */
     public ?\number $bytes;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->bytes = $data['bytes'];
+        return $this;
+    }
 }

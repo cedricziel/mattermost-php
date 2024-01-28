@@ -36,4 +36,23 @@ class Scheme
 
     /** The id of the default channel user role for this scheme. */
     public ?string $default_channel_user_role;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->scope = $data['scope'];
+        $this->default_team_admin_role = $data['default_team_admin_role'];
+        $this->default_team_user_role = $data['default_team_user_role'];
+        $this->default_channel_admin_role = $data['default_channel_admin_role'];
+        $this->default_channel_user_role = $data['default_channel_user_role'];
+        return $this;
+    }
 }

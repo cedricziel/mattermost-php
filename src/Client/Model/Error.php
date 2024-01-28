@@ -9,4 +9,14 @@ class Error
 
     /** Further details on where and why this error happened. */
     public ?string $details;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->error = $data['error'];
+        $this->details = $data['details'];
+        return $this;
+    }
 }

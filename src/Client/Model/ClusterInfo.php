@@ -24,4 +24,19 @@ class ClusterInfo
 
     /** Whether or not the node is alive and well */
     public ?bool $is_alive;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->version = $data['version'];
+        $this->config_hash = $data['config_hash'];
+        $this->internode_url = $data['internode_url'];
+        $this->hostname = $data['hostname'];
+        $this->last_ping = $data['last_ping'];
+        $this->is_alive = $data['is_alive'];
+        return $this;
+    }
 }

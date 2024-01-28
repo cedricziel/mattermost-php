@@ -24,4 +24,19 @@ class UserNotifyProps
 
     /** Set to "true" to enable mentions for first name. Defaults to "true" if a first name is set, "false" otherwise. */
     public ?string $first_name;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->email = $data['email'];
+        $this->push = $data['push'];
+        $this->desktop = $data['desktop'];
+        $this->desktop_sound = $data['desktop_sound'];
+        $this->mention_keys = $data['mention_keys'];
+        $this->channel = $data['channel'];
+        $this->first_name = $data['first_name'];
+        return $this;
+    }
 }

@@ -15,4 +15,16 @@ class PlaybookRunList
 
     /** The playbook runs in this page. */
     public ?array $items;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->total_count = $data['total_count'];
+        $this->page_count = $data['page_count'];
+        $this->has_more = $data['has_more'];
+        $this->items = $data['items'];
+        return $this;
+    }
 }

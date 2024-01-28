@@ -15,4 +15,16 @@ class ChannelNotifyProps
 
     /** Set to "all" to mark the channel unread for any new message, "mention" to mark unread for new mentions only. Defaults to "all". */
     public ?string $mark_unread;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->email = $data['email'];
+        $this->push = $data['push'];
+        $this->desktop = $data['desktop'];
+        $this->mark_unread = $data['mark_unread'];
+        return $this;
+    }
 }

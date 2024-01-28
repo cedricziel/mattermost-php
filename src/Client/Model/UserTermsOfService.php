@@ -12,4 +12,15 @@ class UserTermsOfService
 
     /** The time in milliseconds that this action was performed. */
     public ?int $create_at;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->user_id = $data['user_id'];
+        $this->terms_of_service_id = $data['terms_of_service_id'];
+        $this->create_at = $data['create_at'];
+        return $this;
+    }
 }

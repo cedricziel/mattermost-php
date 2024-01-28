@@ -28,4 +28,22 @@ class UserReport
 
     /** Total number of posts made by a user within the given date range */
     public ?int $total_posts;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->create_at = $data['create_at'];
+        $this->username = $data['username'];
+        $this->email = $data['email'];
+        $this->display_name = $data['display_name'];
+        $this->last_login_at = $data['last_login_at'];
+        $this->last_status_at = $data['last_status_at'];
+        $this->last_post_date = $data['last_post_date'];
+        $this->days_active = $data['days_active'];
+        $this->total_posts = $data['total_posts'];
+        return $this;
+    }
 }

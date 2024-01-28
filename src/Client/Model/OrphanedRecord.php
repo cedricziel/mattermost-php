@@ -12,4 +12,14 @@ class OrphanedRecord
 
     /** the id of the child relation (table) entry. */
     public ?string $child_id;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->parent_id = $data['parent_id'];
+        $this->child_id = $data['child_id'];
+        return $this;
+    }
 }

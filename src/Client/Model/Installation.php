@@ -10,4 +10,15 @@ class Installation
 
     /** The current state of the installation */
     public ?string $state;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->allowed_ip_ranges = $data['allowed_ip_ranges'];
+        $this->state = $data['state'];
+        return $this;
+    }
 }

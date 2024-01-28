@@ -30,4 +30,20 @@ class UploadSession
 
     /** The amount of data uploaded in bytes. */
     public ?int $file_offset;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->type = $data['type'];
+        $this->create_at = $data['create_at'];
+        $this->user_id = $data['user_id'];
+        $this->channel_id = $data['channel_id'];
+        $this->filename = $data['filename'];
+        $this->file_size = $data['file_size'];
+        $this->file_offset = $data['file_offset'];
+        return $this;
+    }
 }

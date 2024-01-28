@@ -10,4 +10,14 @@ class LDAPGroupsPaged
     /** Total number of groups */
     public ?\number $count;
     public ?array $groups;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->count = $data['count'];
+        $this->groups = $data['groups'];
+        return $this;
+    }
 }

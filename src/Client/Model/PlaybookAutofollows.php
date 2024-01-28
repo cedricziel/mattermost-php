@@ -9,4 +9,14 @@ class PlaybookAutofollows
 
     /** The user IDs of who marked this playbook to auto-follow. */
     public ?array $items;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->total_count = $data['total_count'];
+        $this->items = $data['items'];
+        return $this;
+    }
 }

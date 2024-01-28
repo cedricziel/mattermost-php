@@ -15,4 +15,16 @@ class TermsOfService
 
     /** The text of terms of service. Supports Markdown. */
     public ?string $text;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->create_at = $data['create_at'];
+        $this->user_id = $data['user_id'];
+        $this->text = $data['text'];
+        return $this;
+    }
 }

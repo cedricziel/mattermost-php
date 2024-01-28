@@ -20,4 +20,23 @@ class Session
     public ?array $team_members;
     public ?string $token;
     public ?string $user_id;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->create_at = $data['create_at'];
+        $this->device_id = $data['device_id'];
+        $this->expires_at = $data['expires_at'];
+        $this->id = $data['id'];
+        $this->is_oauth = $data['is_oauth'];
+        $this->last_activity_at = $data['last_activity_at'];
+        $this->props = $data['props'];
+        $this->roles = $data['roles'];
+        $this->team_members = $data['team_members'];
+        $this->token = $data['token'];
+        $this->user_id = $data['user_id'];
+        return $this;
+    }
 }

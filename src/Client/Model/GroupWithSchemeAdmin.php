@@ -9,4 +9,14 @@ class GroupWithSchemeAdmin
 {
     public $group;
     public ?bool $scheme_admin;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->group = $data['group'];
+        $this->scheme_admin = $data['scheme_admin'];
+        return $this;
+    }
 }

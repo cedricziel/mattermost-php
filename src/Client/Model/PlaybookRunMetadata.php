@@ -18,4 +18,17 @@ class PlaybookRunMetadata
 
     /** Number of posts in the channel associated to the playbook run. */
     public ?int $total_posts;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->channel_name = $data['channel_name'];
+        $this->channel_display_name = $data['channel_display_name'];
+        $this->team_name = $data['team_name'];
+        $this->num_members = $data['num_members'];
+        $this->total_posts = $data['total_posts'];
+        return $this;
+    }
 }

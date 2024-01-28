@@ -10,4 +10,18 @@ class InvoiceLineItem
     public ?int $price_per_unit;
     public ?string $description;
     public ?array $metadata;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->price_id = $data['price_id'];
+        $this->total = $data['total'];
+        $this->quantity = $data['quantity'];
+        $this->price_per_unit = $data['price_per_unit'];
+        $this->description = $data['description'];
+        $this->metadata = $data['metadata'];
+        return $this;
+    }
 }

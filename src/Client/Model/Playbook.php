@@ -36,4 +36,23 @@ class Playbook
 
     /** The identifiers of all the users that are members of this playbook. */
     public ?array $member_ids;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->title = $data['title'];
+        $this->description = $data['description'];
+        $this->team_id = $data['team_id'];
+        $this->create_public_playbook_run = $data['create_public_playbook_run'];
+        $this->create_at = $data['create_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->num_stages = $data['num_stages'];
+        $this->num_steps = $data['num_steps'];
+        $this->checklists = $data['checklists'];
+        $this->member_ids = $data['member_ids'];
+        return $this;
+    }
 }

@@ -54,4 +54,29 @@ class Command
 
     /** The URL that is triggered */
     public ?string $url;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->token = $data['token'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->creator_id = $data['creator_id'];
+        $this->team_id = $data['team_id'];
+        $this->trigger = $data['trigger'];
+        $this->method = $data['method'];
+        $this->username = $data['username'];
+        $this->icon_url = $data['icon_url'];
+        $this->auto_complete = $data['auto_complete'];
+        $this->auto_complete_desc = $data['auto_complete_desc'];
+        $this->auto_complete_hint = $data['auto_complete_hint'];
+        $this->display_name = $data['display_name'];
+        $this->description = $data['description'];
+        $this->url = $data['url'];
+        return $this;
+    }
 }

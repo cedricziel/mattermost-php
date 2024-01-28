@@ -21,4 +21,17 @@ class RelationalIntegrityCheckData
 
     /** the list of orphaned records found. */
     public ?array $records;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->parent_name = $data['parent_name'];
+        $this->child_name = $data['child_name'];
+        $this->parent_id_attr = $data['parent_id_attr'];
+        $this->child_id_attr = $data['child_id_attr'];
+        $this->records = $data['records'];
+        return $this;
+    }
 }

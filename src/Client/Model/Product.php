@@ -9,4 +9,17 @@ class Product
     public ?string $description;
     public ?string $price_per_seat;
     public ?array $add_ons;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->price_per_seat = $data['price_per_seat'];
+        $this->add_ons = $data['add_ons'];
+        return $this;
+    }
 }

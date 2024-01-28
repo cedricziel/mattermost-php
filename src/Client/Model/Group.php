@@ -14,4 +14,22 @@ class Group
     public ?int $update_at;
     public ?int $delete_at;
     public ?bool $has_syncables;
+
+    public function hydrate(
+        /** @param array<string, mixed> $data */
+        array $data,
+    ): static
+    {
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->display_name = $data['display_name'];
+        $this->description = $data['description'];
+        $this->source = $data['source'];
+        $this->remote_id = $data['remote_id'];
+        $this->create_at = $data['create_at'];
+        $this->update_at = $data['update_at'];
+        $this->delete_at = $data['delete_at'];
+        $this->has_syncables = $data['has_syncables'];
+        return $this;
+    }
 }
