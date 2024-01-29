@@ -4,8 +4,11 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class UserAutocompleteInTeam
 {
-    /** A list of user objects in the team */
-    public ?array $in_team;
+    public function __construct(
+        /** A list of user objects in the team */
+        public ?array $in_team = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -14,7 +17,7 @@ class UserAutocompleteInTeam
     {
         if ($data === null) return $this;
         /** @var array $data['in_team'] */
-        if (isset($data['in_team'])) $this->in_team = $data['in_team'];
+            if (isset($data['in_team'])) $this->in_team = $data['in_team'];
         return $this;
     }
 }

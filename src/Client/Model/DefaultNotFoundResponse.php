@@ -16,7 +16,6 @@ class DefaultNotFoundResponse extends AppError
     {
         parent::hydrate($data);
         if ($data === null) return $this;
-
         return $this;
     }
 }

@@ -4,8 +4,11 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class PostsUsage
 {
-    /** Total no. of posts */
-    public ?\number $count;
+    public function __construct(
+        /** Total no. of posts */
+        public ?\number $count = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -14,7 +17,7 @@ class PostsUsage
     {
         if ($data === null) return $this;
         /** @var number $data['count'] */
-        if (isset($data['count'])) $this->count = $data['count'];
+            if (isset($data['count'])) $this->count = $data['count'];
         return $this;
     }
 }

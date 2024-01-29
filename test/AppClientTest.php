@@ -4,15 +4,14 @@ namespace CedricZiel\MattermostPhp\Test;
 
 use CedricZiel\MattermostPhp\AppClient;
 use CedricZiel\MattermostPhp\Apps\Call;
+use CedricZiel\MattermostPhp\Client\Model\Post;
 use CedricZiel\MattermostPhp\Context;
-use CedricZiel\MattermostPhp\Post;
 use CedricZiel\MattermostPhp\Timer;
 use CedricZiel\MattermostPhp\User;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpClient\Psr18Client;
-use Symfony\Component\HttpClient\Response\JsonMockResponse;
-use Symfony\Component\HttpClient\Response\MockResponse;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Http\Mock\Client as MockClient;
+use function PHPUnit\Framework\assertInstanceOf;
 
 #[CoversClass(AppClient::class)]
 class AppClientTest extends MattermostTestCase
@@ -71,48 +70,50 @@ class AppClientTest extends MattermostTestCase
 
     public function testCanCreatePost()
     {
-        $httpClient = $this->createMock(HttpClientInterface::class);
+        $c = new MockClient();
+        $channelResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $channelResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
+        $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn('{"message": "foo"}');
+        $c->addResponse($channelResponse);
 
-        $httpClient->expects(self::once())
-            ->method('request')->with('POST', 'https://example.com/api/v4/posts')
-            ->willReturn(
-                MockResponse::fromRequest(
-                    'POST',
-                    'https://example.com/api/v4/posts',
-                    [],
-                    new JsonMockResponse(<<<JSON
-{
-  "message": "foo"
-}
-JSON),
-                )
-            )
-        ;
-
-        $psr18Client = new Psr18Client($httpClient);
+        $psr18Client = new Psr18Client();
 
         $appClient = AppClient::asBot(
             $this->createBotContext(),
             $this->serializer,
-            $psr18Client,
-            $psr18Client,
-            $psr18Client,
+            $c,
         );
 
-        $post = (new Post())->setMessage('foo');
+        $post = new Post(channel_id: '123', message: 'foo');
         $appClient->createPost($post);
 
-        self::assertEquals('foo', $post->getMessage());
+        self::assertEquals('foo', $post->message);
     }
 
     public function testCanCreateDM()
     {
-        $client = AppClient::asBot($this->createBotContext(), $this->serializer);
+        $c = new MockClient();
+        $channelResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $channelResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
+        $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn('{"id": "foo"}');
+        $c->addResponse($channelResponse);
+
+        $postResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $postResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
+        $postResponse->expects(self::atLeast(1))->method('getBody')->willReturn('{"id": "foo"}');
+        $c->addResponse($postResponse);
+
+        $client = AppClient::asBot(
+            $this->createBotContext(),
+            $this->serializer,
+            $c,
+        );
 
         $this->assertInstanceOf(AppClient::class, $client);
         self::assertEquals('bot_access_token', $client->getToken());
         self::assertEquals('https://example.com', $client->getMattermostSiteUrl());
 
-        $client->DM('user_id', 'message');
+        $post = $client->DM('user_id', 'message');
+        assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $post);
     }
 }

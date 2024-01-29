@@ -7,9 +7,12 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class LDAPGroupsPaged
 {
-    /** Total number of groups */
-    public ?\number $count;
-    public ?array $groups;
+    public function __construct(
+        /** Total number of groups */
+        public ?\number $count = null,
+        public ?array $groups = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -18,9 +21,9 @@ class LDAPGroupsPaged
     {
         if ($data === null) return $this;
         /** @var number $data['count'] */
-        if (isset($data['count'])) $this->count = $data['count'];
+            if (isset($data['count'])) $this->count = $data['count'];
         /** @var array $data['groups'] */
-        if (isset($data['groups'])) $this->groups = $data['groups'];
+            if (isset($data['groups'])) $this->groups = $data['groups'];
         return $this;
     }
 }

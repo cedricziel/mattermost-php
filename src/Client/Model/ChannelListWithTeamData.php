@@ -4,8 +4,11 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class ChannelListWithTeamData
 {
-    /** @var \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData[] */
-    public array $items;
+    public function __construct(
+        /** @var \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData[] */
+        public array $items,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */

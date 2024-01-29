@@ -4,11 +4,13 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class System
 {
-    /** System property name */
-    public ?string $name;
-
-    /** System property value */
-    public ?string $value;
+    public function __construct(
+        /** System property name */
+        public ?string $name = null,
+        /** System property value */
+        public ?string $value = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -17,9 +19,9 @@ class System
     {
         if ($data === null) return $this;
         /** @var string $data['name'] */
-        if (isset($data['name'])) $this->name = $data['name'];
+            if (isset($data['name'])) $this->name = $data['name'];
         /** @var string $data['value'] */
-        if (isset($data['value'])) $this->value = $data['value'];
+            if (isset($data['value'])) $this->value = $data['value'];
         return $this;
     }
 }

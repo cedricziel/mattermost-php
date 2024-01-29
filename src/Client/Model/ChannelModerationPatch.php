@@ -4,8 +4,11 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class ChannelModerationPatch
 {
-    public ?string $name;
-    public $roles;
+    public function __construct(
+        public ?string $name = null,
+        public $roles = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -14,9 +17,9 @@ class ChannelModerationPatch
     {
         if ($data === null) return $this;
         /** @var string $data['name'] */
-        if (isset($data['name'])) $this->name = $data['name'];
+            if (isset($data['name'])) $this->name = $data['name'];
         /** @var  $data['roles'] */
-        if (isset($data['roles'])) $this->roles = $data['roles'];
+            if (isset($data['roles'])) $this->roles = $data['roles'];
         return $this;
     }
 }

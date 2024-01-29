@@ -7,4 +7,7 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class GroupsAssociatedToChannels
 {
+    public function __construct()
+    {
+    }
 }

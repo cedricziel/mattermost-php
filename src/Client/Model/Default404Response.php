@@ -16,7 +16,6 @@ class Default404Response extends Error
     {
         parent::hydrate($data);
         if ($data === null) return $this;
-
         return $this;
     }
 }

@@ -7,8 +7,11 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class GroupWithSchemeAdmin
 {
-    public $group;
-    public ?bool $scheme_admin;
+    public function __construct(
+        public $group = null,
+        public ?bool $scheme_admin = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -17,9 +20,9 @@ class GroupWithSchemeAdmin
     {
         if ($data === null) return $this;
         /** @var  $data['group'] */
-        if (isset($data['group'])) $this->group = $data['group'];
+            if (isset($data['group'])) $this->group = $data['group'];
         /** @var bool $data['scheme_admin'] */
-        if (isset($data['scheme_admin'])) $this->scheme_admin = $data['scheme_admin'];
+            if (isset($data['scheme_admin'])) $this->scheme_admin = $data['scheme_admin'];
         return $this;
     }
 }

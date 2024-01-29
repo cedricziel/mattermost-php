@@ -46,7 +46,11 @@ trait HttpClientTrait
         $responseCode = $response->getStatusCode();
 
         if (!array_key_exists($responseCode, $map)) {
-            throw new \RuntimeException(sprintf('Expected status code 200, got %d', $response->getStatusCode()));
+            throw new \RuntimeException(sprintf(
+                'Expected one of %s, got %d',
+                implode(', ', array_keys($map)),
+                $response->getStatusCode()
+            ));
         }
 
         $body = json_decode($response->getBody(), true);

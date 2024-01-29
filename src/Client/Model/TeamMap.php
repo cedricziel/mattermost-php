@@ -7,7 +7,10 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class TeamMap
 {
-    public $team_id;
+    public function __construct(
+        public $team_id = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -16,7 +19,7 @@ class TeamMap
     {
         if ($data === null) return $this;
         /** @var  $data['team_id'] */
-        if (isset($data['team_id'])) $this->team_id = $data['team_id'];
+            if (isset($data['team_id'])) $this->team_id = $data['team_id'];
         return $this;
     }
 }

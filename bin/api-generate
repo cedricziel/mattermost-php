@@ -144,15 +144,18 @@ function createHydrationMethod(ClassType $class): Method
         $hydrationMethod->addBody('parent::hydrate($data);');
     }
     $hydrationMethod->addBody('if ($data === null) return $this;');
-    $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-        if ($property->getType() === 'stdClass') {
-            return sprintf('/** @var %s $data[\'%s\'] */
-if (isset($data[\'%s\'])) $this->%s = (object) $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
-        }
+    if ($class->hasMethod('__construct')) {
+        $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
+            if ($property->getType() === 'stdClass') {
+                return sprintf('/** @var %s $data[\'%s\'] */
+    if (isset($data[\'%s\'])) $this->%s = (object) $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
+            }
 
-        return sprintf('/** @var %s $data[\'%s\'] */
-if (isset($data[\'%s\'])) $this->%s = $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
-    }, $class->getProperties())));
+            return sprintf('/** @var %s $data[\'%s\'] */
+    if (isset($data[\'%s\'])) $this->%s = $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
+        }, $class->getMethod('__construct')?->getParameters())));
+    }
+
     $hydrationMethod->addBody('return $this;');
 
     return $hydrationMethod;
@@ -175,6 +178,7 @@ PHP);
 
 foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
     $class = $modelNamespace->addClass($schemaName);
+    $class->addMethod('__construct');
 
     if (isset($schema['description'])) {
         $class->setComment($schema['description']);
@@ -182,15 +186,20 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
 
     if (isset($schema['properties'])) {
         foreach ($schema['properties'] as $propertyName => $property) {
-            $p = $class->addProperty($propertyName);
+            $propertyIsNullable = !isset($property['required']) || $property['required'] === false;
+            $p = $class->getMethod('__construct')->addPromotedParameter($propertyName);
             $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
-            $p->setComment($property['description'] ?? null)
-                ->setNullable(!isset($property['required']) || $property['required'] === false);
+            $p->setComment($property['description'] ?? null)->setNullable($propertyIsNullable);
+            if (isset($property['default'])) {
+                $p->setDefaultValue($property['default']);
+            } elseif ($propertyIsNullable) {
+                $p->setDefaultValue(null);
+            }
         }
         $hydrationMethod = createHydrationMethod($class);
     } elseif (isset($schema['type']) && $schema['type'] === 'array' && isset($schema['items']['$ref'])) {
         $itemType = '\\' . $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $schema['items']['$ref']);
-        $class->addProperty('items')
+        $class->getMethod('__construct')->addPromotedParameter('items')
             ->setType('array')
             ->setComment(sprintf('@var %s[]', $itemType))
         ;

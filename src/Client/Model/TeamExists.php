@@ -4,7 +4,10 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class TeamExists
 {
-    public ?bool $exists;
+    public function __construct(
+        public ?bool $exists = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -13,7 +16,7 @@ class TeamExists
     {
         if ($data === null) return $this;
         /** @var bool $data['exists'] */
-        if (isset($data['exists'])) $this->exists = $data['exists'];
+            if (isset($data['exists'])) $this->exists = $data['exists'];
         return $this;
     }
 }

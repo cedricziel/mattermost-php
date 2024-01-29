@@ -4,7 +4,10 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class FilesLimits
 {
-    public ?int $total_storage;
+    public function __construct(
+        public ?int $total_storage = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -13,7 +16,7 @@ class FilesLimits
     {
         if ($data === null) return $this;
         /** @var int $data['total_storage'] */
-        if (isset($data['total_storage'])) $this->total_storage = $data['total_storage'];
+            if (isset($data['total_storage'])) $this->total_storage = $data['total_storage'];
         return $this;
     }
 }

@@ -7,8 +7,11 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class OrderedSidebarCategories
 {
-    public ?array $order;
-    public ?array $categories;
+    public function __construct(
+        public ?array $order = null,
+        public ?array $categories = null,
+    ) {
+    }
 
     public function hydrate(
         /** @param array<string, mixed> $data */
@@ -17,9 +20,9 @@ class OrderedSidebarCategories
     {
         if ($data === null) return $this;
         /** @var array $data['order'] */
-        if (isset($data['order'])) $this->order = $data['order'];
+            if (isset($data['order'])) $this->order = $data['order'];
         /** @var array $data['categories'] */
-        if (isset($data['categories'])) $this->categories = $data['categories'];
+            if (isset($data['categories'])) $this->categories = $data['categories'];
         return $this;
     }
 }

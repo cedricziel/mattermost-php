@@ -55,9 +55,9 @@ class Context
         #[SerializedName('team_member')]
         protected readonly ?TeamMember $team_member = null,
         #[SerializedName('post')]
-        protected readonly ?Post $post = null,
+        protected readonly ?\CedricZiel\MattermostPhp\Client\Model\Post $post = null,
         #[SerializedName('post')]
-        protected readonly ?Post $root_post = null,
+        protected readonly ?\CedricZiel\MattermostPhp\Client\Model\Post $root_post = null,
         #[SerializedName('user')]
         protected readonly ?User $user = null,
         /**
@@ -179,12 +179,12 @@ class Context
         return $this->team_member;
     }
 
-    public function getPost(): ?Post
+    public function getPost(): ?\CedricZiel\MattermostPhp\Client\Model\Post
     {
         return $this->post;
     }
 
-    public function getRootPost(): ?Post
+    public function getRootPost(): ?\CedricZiel\MattermostPhp\Client\Model\Post
     {
         return $this->root_post;
     }
