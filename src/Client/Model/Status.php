@@ -17,7 +17,7 @@ class Status
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             status: isset($data['status']) ? $data['status'] : null,
             manual: isset($data['manual']) ? $data['manual'] : null,

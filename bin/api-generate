@@ -113,6 +113,10 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
 
 function mapParameterType(mixed $type)
 {
+    if ($type === 'number') {
+        return 'int';
+    }
+
     if ($type === 'integer') {
         return 'int';
     }
@@ -143,7 +147,7 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
         ->setNullable()
         ->setComment('@param array<string, mixed> $data');
 
-    $hydrationMethod->addBody('$object = new static(');
+    $hydrationMethod->addBody('$object = new self(');
 
     if ($class->hasMethod('__construct')) {
         if ($class->getExtends() !== null) {
@@ -175,7 +179,7 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
 function createHydrationMethodForArrayBody(PhpNamespace $modelNamespace, ClassType $class, string $itemType): Method
 {
     $hydrationMethod = createHydrationMethod($modelNamespace, $class);
-    $hydrationMethod->setBody('$object = new static(' . PHP_EOL);
+    $hydrationMethod->setBody('$object = new self(' . PHP_EOL);
 
     $hydrationMethod->addBody('    items: array_map(function ($item) {');
     $hydrationMethod->addBody(sprintf('    return %s::hydrate($item);', $itemType));
@@ -199,6 +203,9 @@ function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName,
 
     if (isset($schema['properties'])) {
         foreach ($schema['properties'] as $propertyName => $property) {
+            if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+                continue;
+            }
             $propertyIsNullable = !isset($property['required']) || $property['required'] === false;
             $p = $constructor->addPromotedParameter($propertyName);
             $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
@@ -453,6 +460,38 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 }
                 if (isset($responseSpec['content']['application/json']['schema']['$ref'])) {
                     $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['$ref']);
+                    $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+                    if ($method->getReturnType() === null) {
+                        $method->setReturnType($responseClass);
+                    } else {
+                        $returnType = $method->getReturnType();
+                        $method->setReturnType($returnType . '|' . $responseClass);
+                    }
+
+                    continue;
+                }
+
+                if (isset($responseSpec['content']['application/json']['schema']['type']) && $responseSpec['content']['application/json']['schema']['type'] === 'array') {
+                    if (isset($responseSpec['content']['application/json']['schema']['items']['$ref'])) {
+                        $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['items']['$ref']);
+                        $method->addBody(sprintf('$map[%d] = \\%s::class . \'[]\';', $responseCode, $responseClass));
+                        $method->addComment('@return \\' . $responseClass . '[]');
+                        if ($method->getReturnType() === null) {
+                            $method->setReturnType('array');
+                        } else {
+                            $returnType = $method->getReturnType();
+                            $method->setReturnType($returnType . '|' . 'array');
+                        }
+
+                        continue;
+                    }
+
+                    continue;
+                }
+
+                if (isset($responseSpec['content']['application/json']['schema']['type']) && $responseSpec['content']['application/json']['schema']['type'] === 'object') {
+                    $responseClass = $modelNamespaceName . '\\' . ucfirst($methodSpec['operationId']) . 'Response';
+                    $class = createClassFromSchema($modelNamespace, ucfirst($methodSpec['operationId']) . 'Response', $responseSpec['content']['application/json']['schema']);
                     $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
                     if ($method->getReturnType() === null) {
                         $method->setReturnType($responseClass);

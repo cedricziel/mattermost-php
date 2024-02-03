@@ -21,7 +21,7 @@ class TermsOfService
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,
             user_id: isset($data['user_id']) ? $data['user_id'] : null,

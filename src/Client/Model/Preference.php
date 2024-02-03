@@ -18,7 +18,7 @@ class Preference
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             category: isset($data['category']) ? $data['category'] : null,
             name: isset($data['name']) ? $data['name'] : null,

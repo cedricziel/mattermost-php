@@ -1,0 +1,31 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetBrandImageResponse not found\\.$#"
+			count: 1
+			path: src/Client/Endpoint/BrandEndpoint.php
+
+		-
+			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\BrandEndpoint\\:\\:getBrandImage\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetBrandImageResponse\\.$#"
+			count: 1
+			path: src/Client/Endpoint/BrandEndpoint.php
+
+		-
+			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSamlMetadataFromIdpResponse not found\\.$#"
+			count: 1
+			path: src/Client/Endpoint/SAMLEndpoint.php
+
+		-
+			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSamlMetadataResponse not found\\.$#"
+			count: 1
+			path: src/Client/Endpoint/SAMLEndpoint.php
+
+		-
+			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SAMLEndpoint\\:\\:getSamlMetadata\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSamlMetadataResponse\\.$#"
+			count: 1
+			path: src/Client/Endpoint/SAMLEndpoint.php
+
+		-
+			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SAMLEndpoint\\:\\:getSamlMetadataFromIdp\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSamlMetadataFromIdpResponse\\.$#"
+			count: 1
+			path: src/Client/Endpoint/SAMLEndpoint.php

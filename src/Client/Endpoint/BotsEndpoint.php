@@ -112,6 +112,7 @@ class BotsEndpoint
      * __Minimum server version__: 5.10
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Bot[]
      */
     public function getBots(
         /** The page to select. */
@@ -122,7 +123,7 @@ class BotsEndpoint
         ?bool $include_deleted = null,
         /** When true, only orphaned bots will be returned. A bot is consitered orphaned if it's owner has been deactivated. */
         ?bool $only_orphaned = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetBotsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -141,7 +142,7 @@ class BotsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetBotsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Bot::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

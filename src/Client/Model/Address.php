@@ -19,7 +19,7 @@ class Address
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             city: isset($data['city']) ? $data['city'] : null,
             country: isset($data['country']) ? $data['country'] : null,
             line1: isset($data['line1']) ? $data['line1'] : null,

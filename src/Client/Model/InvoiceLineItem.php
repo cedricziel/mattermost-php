@@ -19,7 +19,7 @@ class InvoiceLineItem
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             price_id: isset($data['price_id']) ? $data['price_id'] : null,
             total: isset($data['total']) ? $data['total'] : null,
             quantity: isset($data['quantity']) ? $data['quantity'] : null,

@@ -26,7 +26,7 @@ class RelationalIntegrityCheckData
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             parent_name: isset($data['parent_name']) ? $data['parent_name'] : null,
             child_name: isset($data['child_name']) ? $data['child_name'] : null,
             parent_id_attr: isset($data['parent_id_attr']) ? $data['parent_id_attr'] : null,

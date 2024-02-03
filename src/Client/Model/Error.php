@@ -17,7 +17,7 @@ class Error
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             error: isset($data['error']) ? $data['error'] : null,
             details: isset($data['details']) ? $data['details'] : null,
         );

@@ -17,7 +17,7 @@ class OwnerInfo
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             username: isset($data['username']) ? $data['username'] : null,
         );

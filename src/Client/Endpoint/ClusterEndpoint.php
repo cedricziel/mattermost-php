@@ -37,9 +37,9 @@ class ClusterEndpoint
      * Must have `manage_system` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\ClusterInfo[]
      */
-    public function getClusterStatus(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetClusterStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    public function getClusterStatus(): array|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -54,7 +54,7 @@ class ClusterEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetClusterStatusResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ClusterInfo::class . '[]';
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);

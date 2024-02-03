@@ -15,7 +15,7 @@ class UserAutocompleteInTeam
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             in_team: isset($data['in_team']) ? $data['in_team'] : null,
         );
         return $object;

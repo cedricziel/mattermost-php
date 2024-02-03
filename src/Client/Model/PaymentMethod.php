@@ -19,7 +19,7 @@ class PaymentMethod
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             type: isset($data['type']) ? $data['type'] : null,
             last_four: isset($data['last_four']) ? $data['last_four'] : null,
             exp_month: isset($data['exp_month']) ? $data['exp_month'] : null,

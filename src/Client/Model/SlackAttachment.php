@@ -30,7 +30,7 @@ class SlackAttachment
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             Id: isset($data['Id']) ? $data['Id'] : null,
             Fallback: isset($data['Fallback']) ? $data['Fallback'] : null,
             Color: isset($data['Color']) ? $data['Color'] : null,

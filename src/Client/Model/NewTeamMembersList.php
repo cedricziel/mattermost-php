@@ -19,7 +19,7 @@ class NewTeamMembersList
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             has_next: isset($data['has_next']) ? $data['has_next'] : null,
             items: isset($data['items']) ? $data['items'] : null,
             total_count: isset($data['total_count']) ? $data['total_count'] : null,

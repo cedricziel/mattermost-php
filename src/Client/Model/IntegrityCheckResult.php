@@ -19,7 +19,7 @@ class IntegrityCheckResult
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             data: isset($data['data']) ? $data['data'] : null,
             err: isset($data['err']) ? $data['err'] : null,
         );

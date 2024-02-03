@@ -30,7 +30,7 @@ class UserReport
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,
             username: isset($data['username']) ? $data['username'] : null,

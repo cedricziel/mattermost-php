@@ -25,7 +25,7 @@ class Role
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             name: isset($data['name']) ? $data['name'] : null,
             display_name: isset($data['display_name']) ? $data['display_name'] : null,

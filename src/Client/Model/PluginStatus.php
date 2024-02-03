@@ -18,7 +18,7 @@ class PluginStatus
         /** Path to the plugin on the server */
         public ?string $plugin_path = null,
         /** State of the plugin */
-        public ?\number $state = null,
+        public ?int $state = null,
     ) {
     }
 
@@ -27,7 +27,7 @@ class PluginStatus
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             plugin_id: isset($data['plugin_id']) ? $data['plugin_id'] : null,
             name: isset($data['name']) ? $data['name'] : null,
             description: isset($data['description']) ? $data['description'] : null,

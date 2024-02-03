@@ -18,7 +18,7 @@ class Installation
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             allowed_ip_ranges: isset($data['allowed_ip_ranges']) ? $data['allowed_ip_ranges'] : null,
             state: isset($data['state']) ? $data['state'] : null,

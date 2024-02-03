@@ -14,7 +14,7 @@ class MessagesLimits
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             history: isset($data['history']) ? $data['history'] : null,
         );
         return $object;

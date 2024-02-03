@@ -19,7 +19,7 @@ class Checklist
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             title: isset($data['title']) ? $data['title'] : null,
             items: isset($data['items']) ? $data['items'] : null,

@@ -17,7 +17,7 @@ class UserAutocomplete
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             users: isset($data['users']) ? $data['users'] : null,
             out_of_channel: isset($data['out_of_channel']) ? $data['out_of_channel'] : null,
         );

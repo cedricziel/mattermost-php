@@ -23,7 +23,7 @@ class ChannelMember
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             roles: isset($data['roles']) ? $data['roles'] : null,

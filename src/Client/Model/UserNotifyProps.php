@@ -27,7 +27,7 @@ class UserNotifyProps
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             email: isset($data['email']) ? $data['email'] : null,
             push: isset($data['push']) ? $data['push'] : null,
             desktop: isset($data['desktop']) ? $data['desktop'] : null,

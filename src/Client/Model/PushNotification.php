@@ -13,8 +13,8 @@ class PushNotification
         public ?string $category = null,
         public ?string $sound = null,
         public ?string $message = null,
-        public ?\number $badge = null,
-        public ?\number $cont_ava = null,
+        public ?int $badge = null,
+        public ?int $cont_ava = null,
         public ?string $team_id = null,
         public ?string $channel_id = null,
         public ?string $root_id = null,
@@ -35,7 +35,7 @@ class PushNotification
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             ack_id: isset($data['ack_id']) ? $data['ack_id'] : null,
             platform: isset($data['platform']) ? $data['platform'] : null,
             server_id: isset($data['server_id']) ? $data['server_id'] : null,

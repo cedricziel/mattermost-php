@@ -32,7 +32,7 @@ class OpenGraph
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             type: isset($data['type']) ? $data['type'] : null,
             url: isset($data['url']) ? $data['url'] : null,
             title: isset($data['title']) ? $data['title'] : null,

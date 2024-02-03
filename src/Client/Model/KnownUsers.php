@@ -14,7 +14,7 @@ class KnownUsers
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             items: isset($data['items']) ? $data['items'] : null,
         );
         return $object;

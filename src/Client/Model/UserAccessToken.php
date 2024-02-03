@@ -21,7 +21,7 @@ class UserAccessToken
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             token: isset($data['token']) ? $data['token'] : null,
             user_id: isset($data['user_id']) ? $data['user_id'] : null,

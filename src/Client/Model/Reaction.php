@@ -21,7 +21,7 @@ class Reaction
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             post_id: isset($data['post_id']) ? $data['post_id'] : null,
             emoji_name: isset($data['emoji_name']) ? $data['emoji_name'] : null,

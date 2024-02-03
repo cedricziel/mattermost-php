@@ -5,7 +5,7 @@ namespace CedricZiel\MattermostPhp\Common\Attachments;
 /**
  * @see https://developers.mattermost.com/integrate/reference/message-attachments/#fields
  */
-class Field implements \JsonSerializable
+final class Field implements \JsonSerializable
 {
     public function __construct(
         protected string $title,

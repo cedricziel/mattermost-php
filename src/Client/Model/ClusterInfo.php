@@ -27,7 +27,7 @@ class ClusterInfo
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             version: isset($data['version']) ? $data['version'] : null,
             config_hash: isset($data['config_hash']) ? $data['config_hash'] : null,

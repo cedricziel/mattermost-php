@@ -34,7 +34,7 @@ class Notice
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             sysAdminOnly: isset($data['sysAdminOnly']) ? $data['sysAdminOnly'] : null,
             teamAdminOnly: isset($data['teamAdminOnly']) ? $data['teamAdminOnly'] : null,

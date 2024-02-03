@@ -23,7 +23,7 @@ class Invoice
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             number: isset($data['number']) ? $data['number'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,

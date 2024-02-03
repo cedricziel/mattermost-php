@@ -17,7 +17,7 @@ class UserAutocompleteInChannel
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             in_channel: isset($data['in_channel']) ? $data['in_channel'] : null,
             out_of_channel: isset($data['out_of_channel']) ? $data['out_of_channel'] : null,
         );

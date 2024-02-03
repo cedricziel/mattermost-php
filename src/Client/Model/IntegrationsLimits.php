@@ -14,7 +14,7 @@ class IntegrationsLimits
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             enabled: isset($data['enabled']) ? $data['enabled'] : null,
         );
         return $object;

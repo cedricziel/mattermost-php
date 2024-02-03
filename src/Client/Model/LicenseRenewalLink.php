@@ -15,7 +15,7 @@ class LicenseRenewalLink
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             renewal_link: isset($data['renewal_link']) ? $data['renewal_link'] : null,
         );
         return $object;

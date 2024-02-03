@@ -6,7 +6,7 @@ class StorageUsage
 {
     public function __construct(
         /** Total file storage usage for the instance in bytes rounded down to the most significant digit */
-        public ?\number $bytes = null,
+        public ?int $bytes = null,
     ) {
     }
 
@@ -15,7 +15,7 @@ class StorageUsage
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             bytes: isset($data['bytes']) ? $data['bytes'] : null,
         );
         return $object;

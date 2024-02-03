@@ -17,7 +17,7 @@ class UserThreads
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             total: isset($data['total']) ? $data['total'] : null,
             threads: isset($data['threads']) ? $data['threads'] : null,
         );

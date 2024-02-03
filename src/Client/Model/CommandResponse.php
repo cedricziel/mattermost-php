@@ -20,7 +20,7 @@ class CommandResponse
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             ResponseType: isset($data['ResponseType']) ? $data['ResponseType'] : null,
             Text: isset($data['Text']) ? $data['Text'] : null,
             Username: isset($data['Username']) ? $data['Username'] : null,

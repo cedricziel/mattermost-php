@@ -6,7 +6,7 @@ class PostsUsage
 {
     public function __construct(
         /** Total no. of posts */
-        public ?\number $count = null,
+        public ?int $count = null,
     ) {
     }
 
@@ -15,7 +15,7 @@ class PostsUsage
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             count: isset($data['count']) ? $data['count'] : null,
         );
         return $object;

@@ -19,7 +19,7 @@ class FileInfoList
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             file_infos: isset($data['file_infos']) ? (object) $data['file_infos'] : null,
             next_file_id: isset($data['next_file_id']) ? $data['next_file_id'] : null,

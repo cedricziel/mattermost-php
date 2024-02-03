@@ -35,7 +35,7 @@ class Scheme
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             name: isset($data['name']) ? $data['name'] : null,
             description: isset($data['description']) ? $data['description'] : null,

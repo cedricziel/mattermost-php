@@ -22,7 +22,7 @@ class Subscription
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             customer_id: isset($data['customer_id']) ? $data['customer_id'] : null,
             product_id: isset($data['product_id']) ? $data['product_id'] : null,

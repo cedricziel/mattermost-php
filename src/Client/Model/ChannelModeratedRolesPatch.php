@@ -15,7 +15,7 @@ class ChannelModeratedRolesPatch
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             guests: isset($data['guests']) ? $data['guests'] : null,
             members: isset($data['members']) ? $data['members'] : null,
         );

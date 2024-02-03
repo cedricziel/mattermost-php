@@ -73,6 +73,7 @@ class WebhooksEndpoint
      * `manage_webhooks` for the system or `manage_webhooks` for the specific team.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook[]
      */
     public function getIncomingWebhooks(
         /** The page to select. */
@@ -81,7 +82,7 @@ class WebhooksEndpoint
         ?int $per_page = 60,
         /** The ID of the team to get hooks for. */
         ?string $team_id = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetIncomingWebhooksResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -99,7 +100,7 @@ class WebhooksEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetIncomingWebhooksResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -261,6 +262,7 @@ class WebhooksEndpoint
      * `manage_webhooks` for the system or `manage_webhooks` for the specific team/channel.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook[]
      */
     public function getOutgoingWebhooks(
         /** The page to select. */
@@ -271,7 +273,7 @@ class WebhooksEndpoint
         ?string $team_id = null,
         /** The ID of the channel to get hooks for. */
         ?string $channel_id = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetOutgoingWebhooksResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -290,7 +292,7 @@ class WebhooksEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetOutgoingWebhooksResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

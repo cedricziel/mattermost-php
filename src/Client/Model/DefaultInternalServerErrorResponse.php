@@ -12,7 +12,7 @@ class DefaultInternalServerErrorResponse extends AppError
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
         );
         return $object;
     }
