@@ -17,6 +17,11 @@ class ChannelSelectAction extends Action
         parent::__construct($id, $name, $integration);
     }
 
+    public static function create(string $id, string $name, ActionIntegration $integration): self
+    {
+        return new self($id, $name, $integration);
+    }
+
     public function jsonSerialize(): \stdClass
     {
         $o = parent::jsonSerialize();
