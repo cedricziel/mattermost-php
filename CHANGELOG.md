@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/cedricziel/mattermost-php/compare/v1.4.1...v1.4.2) (2024-02-03)
+
+
+### Bug Fixes
+
+* make default responses valid code ([#69](https://github.com/cedricziel/mattermost-php/issues/69)) ([96d7dfa](https://github.com/cedricziel/mattermost-php/commit/96d7dfa3c5d044a444ada3b86890fa59731252b1))
+
 ## [1.4.1](https://github.com/cedricziel/mattermost-php/compare/v1.4.0...v1.4.1) (2024-02-03)
 
 
