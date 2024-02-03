@@ -219,6 +219,16 @@ function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName,
             ->setComment(sprintf('@var %s[]', $itemType))
         ;
         $hydrationMethod = createHydrationMethodForArrayBody($modelNamespace, $class, $itemType);
+
+        $class->addImplement('\\JsonSerializable');
+        $jsonSerialize = $class->addMethod('jsonSerialize');
+        $jsonSerialize->setReturnType('array');
+        $jsonSerialize->addBody('return array_map(function ($item) {');
+        $jsonSerialize->addBody('    if ($item instanceof \JsonSerializable) {');
+        $jsonSerialize->addBody('      return $item->jsonSerialize();');
+        $jsonSerialize->addBody('    }');
+        $jsonSerialize->addBody('    return $item;');
+        $jsonSerialize->addBody('}, $this->items);');
     } elseif (isset($schema['allOf'])) {
         foreach ($schema['allOf'] as $i => $allOf) {
             // class extends another object (allOf)
@@ -279,6 +289,16 @@ function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, str
             ->setComment(sprintf('@var %s[]', $itemsType))
             ->addComment($schema['items']['description'] ?? '')
         ;
+
+        $class->addImplement('\\JsonSerializable');
+        $jsonSerialize = $class->addMethod('jsonSerialize');
+        $jsonSerialize->setReturnType('array');
+        $jsonSerialize->addBody('return array_map(function ($item) {');
+        $jsonSerialize->addBody('    if ($item instanceof \JsonSerializable) {');
+        $jsonSerialize->addBody('      return $item->jsonSerialize();');
+        $jsonSerialize->addBody('    }');
+        $jsonSerialize->addBody('    return $item;');
+        $jsonSerialize->addBody('}, $this->items);');
     } elseif (isset($schema['type']) && $schema['type'] === 'object') {
         if (!isset($schema['properties']) || !is_array($schema['properties'])) {
             return $class;

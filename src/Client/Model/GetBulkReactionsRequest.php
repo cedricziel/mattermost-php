@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Client\Model;
 
-class GetBulkReactionsRequest
+class GetBulkReactionsRequest implements \JsonSerializable
 {
     public function __construct(
         /**
@@ -10,5 +10,15 @@ class GetBulkReactionsRequest
          */
         public array $items,
     ) {
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_map(function ($item) {
+            if ($item instanceof \JsonSerializable) {
+              return $item->jsonSerialize();
+            }
+            return $item;
+        }, $this->items);
     }
 }

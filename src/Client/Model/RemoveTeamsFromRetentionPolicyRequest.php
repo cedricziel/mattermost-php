@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Client\Model;
 
-class RemoveTeamsFromRetentionPolicyRequest
+class RemoveTeamsFromRetentionPolicyRequest implements \JsonSerializable
 {
     public function __construct(
         /**
@@ -11,5 +11,15 @@ class RemoveTeamsFromRetentionPolicyRequest
          */
         public array $items,
     ) {
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_map(function ($item) {
+            if ($item instanceof \JsonSerializable) {
+              return $item->jsonSerialize();
+            }
+            return $item;
+        }, $this->items);
     }
 }
