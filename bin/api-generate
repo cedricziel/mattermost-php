@@ -315,8 +315,6 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             ->setComment($methodSpec['summary'] ?? null)
             ->addComment($methodSpec['description'] ?? null)
             ->addComment('@throws \Psr\Http\Client\ClientExceptionInterface')
-            ->addBody(sprintf('$path = \'%s\';', $path))
-            ->addBody(sprintf('$method = \'%s\';', $httpMethod))
             ->addBody('$pathParameters = [];')
             ->addBody('$queryParameters = [];')
             ->addBody('')
@@ -381,9 +379,9 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $method
             ->addBody('')
             ->addBody('// build URI through path and query parameters')
-            ->addBody('$uri = $this->buildUri($path, $pathParameters, $queryParameters);')
+            ->addBody('$uri = $this->buildUri(\'' . $path . '\', $pathParameters, $queryParameters);')
             ->addBody('')
-            ->addBody('$request = $this->requestFactory->createRequest($method, $uri);')
+            ->addBody('$request = $this->requestFactory->createRequest(\'' .strtoupper($httpMethod) . '\', $uri);')
             ->addBody('$request = $request->withHeader(\'Authorization\', \'Bearer \' . $this->token);');
 
         if (count($bodyParameters) > 0) {

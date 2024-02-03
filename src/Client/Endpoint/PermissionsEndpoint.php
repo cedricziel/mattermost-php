@@ -45,17 +45,15 @@ class PermissionsEndpoint
         ?string $subsection_permissions = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetAncillaryPermissionsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
     {
-        $path = '/api/v4/permissions/ancillary';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $queryParameters['subsection_permissions'] = $subsection_permissions;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/permissions/ancillary', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
