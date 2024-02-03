@@ -38,8 +38,7 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getSupportedTimezone(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetSupportedTimezoneResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    public function getSupportedTimezone(): \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -54,7 +53,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetSupportedTimezoneResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -110,6 +108,7 @@ class SystemEndpoint
      * Must be logged in.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Notice[]
      */
     public function getNotices(
         /** ID of the team */
@@ -120,7 +119,7 @@ class SystemEndpoint
         string $client,
         /** Client locale */
         ?string $locale = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetNoticesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -139,7 +138,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetNoticesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Notice::class . '[]';
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -723,13 +722,14 @@ class SystemEndpoint
      * Must have `manage_system` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Audit[]
      */
     public function getAudits(
         /** The page to select. */
         ?int $page = 0,
         /** The number of audits per page. */
         ?int $per_page = 60,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetAuditsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -746,7 +746,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetAuditsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Audit::class . '[]';
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -795,7 +795,7 @@ class SystemEndpoint
         ?int $page = 0,
         /** The number of logs per page. There is a maximum limit of 10000 logs per page. */
         ?string $logs_per_page = '10000',
-    ): \CedricZiel\MattermostPhp\Client\Model\GetLogsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -812,7 +812,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetLogsResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -1290,8 +1289,9 @@ class SystemEndpoint
      * __Local mode only__: This endpoint is only available through [local mode](https://docs.mattermost.com/administration/mmctl-cli-tool.html#local-mode).
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\IntegrityCheckResult[]
      */
-    public function checkIntegrity(): \CedricZiel\MattermostPhp\Client\Model\CheckIntegrityResponse
+    public function checkIntegrity(): array
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -1306,7 +1306,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\CheckIntegrityResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\IntegrityCheckResult::class . '[]';
 
         return $this->mapResponse($response, $map);
     }

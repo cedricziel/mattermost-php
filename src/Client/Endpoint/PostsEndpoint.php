@@ -353,6 +353,7 @@ class PostsEndpoint
      * Must be user or have `manage_system` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\PostList[]
      */
     public function getFlaggedPostsForUser(
         /** ID of the user */
@@ -365,7 +366,7 @@ class PostsEndpoint
         ?int $page = 0,
         /** The number of posts per page */
         ?int $per_page = 60,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetFlaggedPostsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -385,7 +386,7 @@ class PostsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetFlaggedPostsForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PostList::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -400,13 +401,14 @@ class PostsEndpoint
      * Must have `read_channel` permission for the channel the post is in.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\FileInfo[]
      */
     public function getFileInfosForPost(
         /** ID of the post */
         string $post_id,
         /** Defines if result should include deleted posts, must have 'manage_system' (admin) permission. */
         ?bool $include_deleted = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetFileInfosForPostResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -423,7 +425,7 @@ class PostsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetFileInfosForPostResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\FileInfo::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -691,10 +693,11 @@ class PostsEndpoint
      * Must have `read_channel` permission for the channel the post is in or if the channel is public, have the `read_public_channels` permission for the team.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Post[]
      */
     public function getPostsByIds(
         \CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\getPostsByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -710,7 +713,7 @@ class PostsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\getPostsByIdsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Post::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

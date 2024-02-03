@@ -38,13 +38,14 @@ class JobsEndpoint
      * Must have `manage_jobs` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Job[]
      */
     public function getJobs(
         /** The page to select. */
         ?int $page = 0,
         /** The number of jobs per page. */
         ?int $per_page = 60,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetJobsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -61,7 +62,7 @@ class JobsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetJobsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Job::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -222,6 +223,7 @@ class JobsEndpoint
      * Must have `manage_jobs` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Job[]
      */
     public function getJobsByType(
         /** Job type */
@@ -230,7 +232,7 @@ class JobsEndpoint
         ?int $page = 0,
         /** The number of jobs per page. */
         ?int $per_page = 60,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetJobsByTypeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -248,7 +250,7 @@ class JobsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetJobsByTypeResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Job::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

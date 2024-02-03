@@ -39,9 +39,10 @@ class RolesEndpoint
      * __Minimum server version__: 5.33
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Role[]
      */
     public function getAllRoles(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetAllRolesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -56,7 +57,7 @@ class RolesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetAllRolesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Role::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -189,10 +190,11 @@ class RolesEndpoint
      * __Minimum server version__: 4.9
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Role[]
      */
     public function getRolesByNames(
         \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -208,7 +210,7 @@ class RolesEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Role::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;

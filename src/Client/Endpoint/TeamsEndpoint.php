@@ -71,6 +71,7 @@ class TeamsEndpoint
      * Must be authenticated. "manage_system" permission is required to show all teams.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Team[]
      */
     public function getAllTeams(
         /** The page to select. */
@@ -84,7 +85,7 @@ class TeamsEndpoint
          * __Minimum server version__: 5.35
          */
         ?bool $exclude_policy_constrained = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetAllTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -103,7 +104,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetAllTeamsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Team::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 
@@ -456,11 +457,12 @@ class TeamsEndpoint
      * Must be authenticated as the user or have the `manage_system` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Team[]
      */
     public function getTeamsForUser(
         /** User GUID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -476,7 +478,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamsForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Team::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -491,6 +493,7 @@ class TeamsEndpoint
      * Must be authenticated and have the `view_team` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\TeamMember[]
      */
     public function getTeamMembers(
         /** Team GUID */
@@ -499,7 +502,7 @@ class TeamsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 60,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -517,7 +520,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TeamMember::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -607,6 +610,7 @@ class TeamsEndpoint
      * Must be authenticated. Authenticated user must have the `add_user_to_team` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\TeamMember[]
      */
     public function addTeamMembers(
         /** Team GUID */
@@ -614,7 +618,7 @@ class TeamsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest $requestBody,
         /** Instead of aborting the operation if a user cannot be added, return an arrray that will contain both the success and added members and the ones with error, in form of `[{"member": {...}, "user_id", "...", "error": {...}}]` */
         ?bool $graceful = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -632,7 +636,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersResponse::class;
+        $map[201] = \CedricZiel\MattermostPhp\Client\Model\TeamMember::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -648,11 +652,12 @@ class TeamsEndpoint
      * Must be logged in as the user or have the `edit_other_users` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\TeamMember[]
      */
     public function getTeamMembersForUser(
         /** User GUID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -668,7 +673,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TeamMember::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -762,12 +767,13 @@ class TeamsEndpoint
      * Must have `view_team` permission for the team.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\TeamMember[]
      */
     public function getTeamMembersByIds(
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -784,7 +790,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TeamMember::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
@@ -1075,6 +1081,7 @@ class TeamsEndpoint
      * Must be logged in.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\TeamUnread[]
      */
     public function getTeamsUnreadForUser(
         /** User GUID */
@@ -1083,7 +1090,7 @@ class TeamsEndpoint
         string $exclude_team,
         /** Boolean to determine whether the collapsed threads should be included or not */
         ?bool $include_collapsed_threads = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamsUnreadForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -1101,7 +1108,7 @@ class TeamsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetTeamsUnreadForUserResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\TeamUnread::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

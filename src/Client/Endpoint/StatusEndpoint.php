@@ -107,10 +107,11 @@ class StatusEndpoint
      * Must be authenticated.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Status[]
      */
     public function getUsersStatusesByIds(
         \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -126,7 +127,7 @@ class StatusEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Status::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 

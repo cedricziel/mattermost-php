@@ -6,16 +6,6 @@ parameters:
 			path: src/Apps/MattermostApp.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetBotsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/BotsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\BotsEndpoint\\:\\:getBots\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetBotsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/BotsEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetBrandImageResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/BrandEndpoint.php
@@ -26,107 +16,7 @@ parameters:
 			path: src/Client/Endpoint/BrandEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\AutocompleteChannelsForTeamForSearchResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\AutocompleteChannelsForTeamResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersByIdsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersTimezonesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelModerationsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelsForTeamForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelsForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetDeletedChannelsForTeamResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPrivateChannelsForTeamResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPublicChannelsByIdsForTeamResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPublicChannelsForTeamResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSidebarCategoriesForTeamForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSidebarCategoryOrderForTeamForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\PatchChannelModerationsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchAllChannelsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchArchivedChannelsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchChannelsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchGroupChannelsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\UpdateSidebarCategoryOrderForTeamForUserResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/ChannelsEndpoint.php
 
@@ -136,107 +26,7 @@ parameters:
 			path: src/Client/Endpoint/ChannelsEndpoint.php
 
 		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:autocompleteChannelsForTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\AutocompleteChannelsForTeamResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:autocompleteChannelsForTeamForSearch\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\AutocompleteChannelsForTeamForSearchResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelMembers\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelMembersByIds\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersByIdsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelMembersForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelMembersTimezones\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersTimezonesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelModerations\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelModerationsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelsForTeamForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelsForTeamForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getChannelsForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelsForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getDeletedChannelsForTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetDeletedChannelsForTeamResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getPrivateChannelsForTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPrivateChannelsForTeamResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getPublicChannelsByIdsForTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPublicChannelsByIdsForTeamResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getPublicChannelsForTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPublicChannelsForTeamResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getSidebarCategoriesForTeamForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSidebarCategoriesForTeamForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:getSidebarCategoryOrderForTeamForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSidebarCategoryOrderForTeamForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:patchChannelModerations\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\PatchChannelModerationsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:searchAllChannels\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchAllChannelsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:searchArchivedChannels\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchArchivedChannelsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:searchChannels\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchChannelsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:searchGroupChannels\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchGroupChannelsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ChannelsEndpoint\\:\\:updateSidebarCategoryOrderForTeamForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\UpdateSidebarCategoryOrderForTeamForUserResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/ChannelsEndpoint.php
 
@@ -246,67 +36,7 @@ parameters:
 			path: src/Client/Endpoint/ChannelsEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetCloudProductsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CloudEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetInvoicesForSubscriptionResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CloudEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\CloudEndpoint\\:\\:getCloudProducts\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetCloudProductsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CloudEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\CloudEndpoint\\:\\:getInvoicesForSubscription\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetInvoicesForSubscriptionResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CloudEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetClusterStatusResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ClusterEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ClusterEndpoint\\:\\:getClusterStatus\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetClusterStatusResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ClusterEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\ListAutocompleteCommandsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CommandsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\ListCommandAutocompleteSuggestionsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CommandsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\ListCommandsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CommandsEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\RegenCommandTokenResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CommandsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\CommandsEndpoint\\:\\:listAutocompleteCommands\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\ListAutocompleteCommandsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CommandsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\CommandsEndpoint\\:\\:listCommandAutocompleteSuggestions\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\ListCommandAutocompleteSuggestionsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/CommandsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\CommandsEndpoint\\:\\:listCommands\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\ListCommandsResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/CommandsEndpoint.php
 
@@ -316,37 +46,7 @@ parameters:
 			path: src/Client/Endpoint/CommandsEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetComplianceReportsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ComplianceEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ComplianceEndpoint\\:\\:getComplianceReports\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetComplianceReportsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ComplianceEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetDataRetentionPoliciesCountResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetDataRetentionPoliciesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsForRetentionPolicyResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchTeamsForRetentionPolicyResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\DataRetentionEndpoint\\:\\:getDataRetentionPolicies\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetDataRetentionPoliciesResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/DataRetentionEndpoint.php
 
@@ -354,36 +54,6 @@ parameters:
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\DataRetentionEndpoint\\:\\:getDataRetentionPoliciesCount\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetDataRetentionPoliciesCountResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\DataRetentionEndpoint\\:\\:getTeamsForRetentionPolicy\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsForRetentionPolicyResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\DataRetentionEndpoint\\:\\:searchTeamsForRetentionPolicy\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchTeamsForRetentionPolicyResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/DataRetentionEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetEmojisByNamesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/EmojiEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchEmojiResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/EmojiEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\EmojiEndpoint\\:\\:getEmojisByNames\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetEmojisByNamesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/EmojiEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\EmojiEndpoint\\:\\:searchEmoji\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchEmojiResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/EmojiEndpoint.php
 
 		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetFileLinkResponse not found\\.$#"
@@ -411,16 +81,6 @@ parameters:
 			path: src/Client/Endpoint/GroupsEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupSyncablesChannelsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupSyncablesTeamsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupUsersResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/GroupsEndpoint.php
@@ -431,37 +91,7 @@ parameters:
 			path: src/Client/Endpoint/GroupsEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsByChannelResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsByTeamResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsByUserIdResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupStats\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupStatsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupSyncablesChannels\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupSyncablesChannelsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupSyncablesTeams\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupSyncablesTeamsResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/GroupsEndpoint.php
 
@@ -471,89 +101,9 @@ parameters:
 			path: src/Client/Endpoint/GroupsEndpoint.php
 
 		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroups\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupsAssociatedToChannelsByTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsAssociatedToChannelsByTeamResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupsByChannel\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsByChannelResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupsByTeam\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsByTeamResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\GroupsEndpoint\\:\\:getGroupsByUserId\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetGroupsByUserIdResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/GroupsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetJobsByTypeResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/JobsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetJobsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/JobsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\JobsEndpoint\\:\\:getJobs\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetJobsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/JobsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\JobsEndpoint\\:\\:getJobsByType\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetJobsByTypeResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/JobsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAuthorizedOAuthAppsForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/OAuthEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetOAuthAppsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/OAuthEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\OAuthEndpoint\\:\\:getAuthorizedOAuthAppsForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAuthorizedOAuthAppsForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/OAuthEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\OAuthEndpoint\\:\\:getOAuthApps\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetOAuthAppsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/OAuthEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAncillaryPermissionsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PermissionsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PermissionsEndpoint\\:\\:getAncillaryPermissions\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAncillaryPermissionsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PermissionsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetMarketplacePluginsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PluginsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPluginStatusesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PluginsEndpoint.php
 
 		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPluginsResponse not found\\.$#"
@@ -561,109 +111,9 @@ parameters:
 			path: src/Client/Endpoint/PluginsEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetWebappPluginsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PluginsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PluginsEndpoint\\:\\:getMarketplacePlugins\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetMarketplacePluginsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PluginsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PluginsEndpoint\\:\\:getPluginStatuses\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPluginStatusesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PluginsEndpoint.php
-
-		-
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PluginsEndpoint\\:\\:getPlugins\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPluginsResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/PluginsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PluginsEndpoint\\:\\:getWebappPlugins\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetWebappPluginsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PluginsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetFileInfosForPostResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PostsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetFlaggedPostsForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PostsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\getPostsByIdsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PostsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PostsEndpoint\\:\\:getFileInfosForPost\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetFileInfosForPostResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PostsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PostsEndpoint\\:\\:getFlaggedPostsForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetFlaggedPostsForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PostsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PostsEndpoint\\:\\:getPostsByIds\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\getPostsByIdsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PostsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPreferencesByCategoryResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PreferencesEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPreferencesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PreferencesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PreferencesEndpoint\\:\\:getPreferences\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPreferencesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PreferencesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\PreferencesEndpoint\\:\\:getPreferencesByCategory\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetPreferencesByCategoryResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/PreferencesEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetReactionsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ReactionsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\ReactionsEndpoint\\:\\:getReactions\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetReactionsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/ReactionsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAllRolesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/RolesEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetRolesByNamesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/RolesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\RolesEndpoint\\:\\:getAllRoles\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAllRolesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/RolesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\RolesEndpoint\\:\\:getRolesByNames\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetRolesByNamesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/RolesEndpoint.php
 
 		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSamlMetadataFromIdpResponse not found\\.$#"
@@ -696,112 +146,12 @@ parameters:
 			path: src/Client/Endpoint/SAMLEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelsForSchemeResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SchemesEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSchemesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SchemesEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsForSchemeResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SchemesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SchemesEndpoint\\:\\:getChannelsForScheme\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelsForSchemeResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SchemesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SchemesEndpoint\\:\\:getSchemes\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSchemesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SchemesEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SchemesEndpoint\\:\\:getTeamsForScheme\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsForSchemeResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SchemesEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAllSharedChannelsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SharedChannelsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SharedChannelsEndpoint\\:\\:getAllSharedChannels\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAllSharedChannelsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SharedChannelsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersStatusesByIdsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/StatusEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\StatusEndpoint\\:\\:getUsersStatusesByIds\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersStatusesByIdsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/StatusEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\CheckIntegrityResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAuditsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetLogsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetNoticesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSupportedTimezoneResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\PostLogResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/SystemEndpoint.php
 
 		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\UpgradeToEnterpriseStatusResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SystemEndpoint\\:\\:checkIntegrity\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\CheckIntegrityResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SystemEndpoint\\:\\:getAudits\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAuditsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SystemEndpoint\\:\\:getLogs\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetLogsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SystemEndpoint\\:\\:getNotices\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetNoticesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/SystemEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SystemEndpoint\\:\\:getSupportedTimezone\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSupportedTimezoneResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/SystemEndpoint.php
 
@@ -816,42 +166,7 @@ parameters:
 			path: src/Client/Endpoint/SystemEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\AddTeamMembersResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAllTeamsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamInviteInfoResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamMembersByIdsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamMembersForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamMembersResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsUnreadForUserResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/TeamsEndpoint.php
 
@@ -866,42 +181,7 @@ parameters:
 			path: src/Client/Endpoint/TeamsEndpoint.php
 
 		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:addTeamMembers\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\AddTeamMembersResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getAllTeams\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetAllTeamsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getTeamInviteInfo\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamInviteInfoResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getTeamMembers\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamMembersResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getTeamMembersByIds\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamMembersByIdsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getTeamMembersForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamMembersForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getTeamsForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/TeamsEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\TeamsEndpoint\\:\\:getTeamsUnreadForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetTeamsUnreadForUserResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/TeamsEndpoint.php
 
@@ -926,82 +206,12 @@ parameters:
 			path: src/Client/Endpoint/UsersEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersWithTeamDataForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSessionsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUploadsForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUserAccessTokensForUserResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUserAccessTokensResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUserAuditsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersByGroupChannelIdsResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/UsersEndpoint.php
 
 		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersByIdsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersByUsernamesResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersForReportingResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersWithInvalidEmailsResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchUserAccessTokensResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchUsersResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SwitchAccountTypeResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\getUserLimitsResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/UsersEndpoint.php
 
@@ -1016,77 +226,7 @@ parameters:
 			path: src/Client/Endpoint/UsersEndpoint.php
 
 		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getChannelMembersWithTeamDataForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetChannelMembersWithTeamDataForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getSessions\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSessionsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUploadsForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUploadsForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUserAccessTokens\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUserAccessTokensResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUserAccessTokensForUser\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUserAccessTokensForUserResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUserAudits\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUserAuditsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUserLimits\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\getUserLimitsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUsers\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUsersByGroupChannelIds\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersByGroupChannelIdsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUsersByIds\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersByIdsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUsersByUsernames\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersByUsernamesResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUsersForReporting\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersForReportingResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:getUsersWithInvalidEmails\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetUsersWithInvalidEmailsResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:searchUserAccessTokens\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchUserAccessTokensResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:searchUsers\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SearchUsersResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/UsersEndpoint.php
 
@@ -1094,26 +234,6 @@ parameters:
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\UsersEndpoint\\:\\:switchAccountType\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\SwitchAccountTypeResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/UsersEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetIncomingWebhooksResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/WebhooksEndpoint.php
-
-		-
-			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetOutgoingWebhooksResponse not found\\.$#"
-			count: 1
-			path: src/Client/Endpoint/WebhooksEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\WebhooksEndpoint\\:\\:getIncomingWebhooks\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetIncomingWebhooksResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/WebhooksEndpoint.php
-
-		-
-			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\WebhooksEndpoint\\:\\:getOutgoingWebhooks\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetOutgoingWebhooksResponse\\.$#"
-			count: 1
-			path: src/Client/Endpoint/WebhooksEndpoint.php
 
 		-
 			message: "#^Class class@anonymous/test/SlashCommands/SlashCommandInputTest\\.php\\:24 does not have a constructor and must be instantiated without any parameters\\.$#"

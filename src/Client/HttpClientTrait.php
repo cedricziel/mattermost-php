@@ -39,9 +39,9 @@ trait HttpClientTrait
     /**
      * @param ResponseInterface $response
      * @param array<int, string> $map
-     * @return object
+     * @return object|array
      */
-    protected function mapResponse(ResponseInterface $response, array $map): object
+    protected function mapResponse(ResponseInterface $response, array $map): object|array
     {
         $responseCode = $response->getStatusCode();
 
@@ -54,6 +54,13 @@ trait HttpClientTrait
         }
 
         $body = json_decode($response->getBody(), true);
+        if (str_contains($map[$responseCode], '[]')) {
+            $objects = [];
+            foreach ($body as $item) {
+                $objects[] = $map[$responseCode]::hydrate($item);
+            }
+            return $objects;
+        }
         return $map[$responseCode]::hydrate($body);
     }
 
