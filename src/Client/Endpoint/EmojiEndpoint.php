@@ -41,16 +41,14 @@ class EmojiEndpoint
     public function createEmoji(
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -83,8 +81,6 @@ class EmojiEndpoint
         ?string $sort = '',
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -93,9 +89,9 @@ class EmojiEndpoint
         $queryParameters['sort'] = $sort;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -123,17 +119,15 @@ class EmojiEndpoint
         string $emoji_id,
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/{emoji_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['emoji_id'] = $emoji_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/{emoji_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -161,17 +155,15 @@ class EmojiEndpoint
         string $emoji_id,
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/{emoji_id}';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['emoji_id'] = $emoji_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/{emoji_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -201,17 +193,15 @@ class EmojiEndpoint
         string $emoji_name,
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/name/{emoji_name}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['emoji_name'] = $emoji_name;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/name/{emoji_name}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -239,17 +229,15 @@ class EmojiEndpoint
         string $emoji_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/{emoji_id}/image';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['emoji_id'] = $emoji_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/{emoji_id}/image', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -278,16 +266,14 @@ class EmojiEndpoint
         \CedricZiel\MattermostPhp\Client\Model\SearchEmojiRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchEmojiResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/search';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/search', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -318,17 +304,15 @@ class EmojiEndpoint
         string $name,
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/autocomplete';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $queryParameters['name'] = $name;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/autocomplete', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -356,16 +340,14 @@ class EmojiEndpoint
         \CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/emoji/names';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/emoji/names', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 

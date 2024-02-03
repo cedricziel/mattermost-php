@@ -57,8 +57,6 @@ class ChannelsEndpoint
         ?bool $exclude_policy_constrained = false,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -71,9 +69,9 @@ class ChannelsEndpoint
         $queryParameters['exclude_policy_constrained'] = $exclude_policy_constrained;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -99,16 +97,14 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\CreateChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -135,16 +131,14 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/direct';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/direct', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -171,16 +165,14 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/group';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/group', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -216,17 +208,15 @@ class ChannelsEndpoint
         ?bool $system_console = true,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchAllChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
-        $path = '/api/v4/channels/search';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $queryParameters['system_console'] = $system_console;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/search', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -252,16 +242,14 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\SearchGroupChannelsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchGroupChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
     {
-        $path = '/api/v4/channels/group/search';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/group/search', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -289,17 +277,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/ids';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/ids', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -330,17 +316,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersTimezonesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/timezones';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/timezones', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -367,17 +351,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -405,17 +387,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -449,17 +429,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -487,17 +465,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\PatchChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/patch';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/patch', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -530,17 +506,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/privacy';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/privacy', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -572,17 +546,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/restore';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/restore', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -614,17 +586,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\MoveChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/move';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/move', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -653,17 +623,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelStats|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/stats';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/stats', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -687,17 +655,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\PostList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/pinned';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/pinned', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -728,8 +694,6 @@ class ChannelsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -738,9 +702,9 @@ class ChannelsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -776,8 +740,6 @@ class ChannelsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetPrivateChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/private';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -786,9 +748,9 @@ class ChannelsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/private', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -820,8 +782,6 @@ class ChannelsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetDeletedChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/deleted';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -830,9 +790,9 @@ class ChannelsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/deleted', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -865,8 +825,6 @@ class ChannelsEndpoint
         string $name,
     ): \CedricZiel\MattermostPhp\Client\Model\AutocompleteChannelsForTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/autocomplete';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -874,9 +832,9 @@ class ChannelsEndpoint
         $queryParameters['name'] = $name;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/autocomplete', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -909,8 +867,6 @@ class ChannelsEndpoint
         string $name,
     ): \CedricZiel\MattermostPhp\Client\Model\AutocompleteChannelsForTeamForSearchResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/search_autocomplete';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -918,9 +874,9 @@ class ChannelsEndpoint
         $queryParameters['name'] = $name;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/search_autocomplete', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -951,17 +907,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\SearchChannelsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/search';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/search', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -996,17 +950,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/search_archived';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/search_archived', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1039,8 +991,6 @@ class ChannelsEndpoint
         ?bool $include_deleted = false,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/{team_id}/channels/name/{channel_name}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1049,9 +999,9 @@ class ChannelsEndpoint
         $queryParameters['include_deleted'] = $include_deleted;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/name/{channel_name}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1082,8 +1032,6 @@ class ChannelsEndpoint
         ?bool $include_deleted = false,
     ): \CedricZiel\MattermostPhp\Client\Model\Channel|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/teams/name/{team_name}/channels/name/{channel_name}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1092,9 +1040,9 @@ class ChannelsEndpoint
         $queryParameters['include_deleted'] = $include_deleted;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/name/{team_name}/channels/name/{channel_name}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1125,8 +1073,6 @@ class ChannelsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1135,9 +1081,9 @@ class ChannelsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1162,17 +1108,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\AddChannelMemberRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1201,17 +1145,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members/ids';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members/ids', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1242,8 +1184,6 @@ class ChannelsEndpoint
         string $user_id,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members/{user_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1251,9 +1191,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members/{user_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1285,8 +1225,6 @@ class ChannelsEndpoint
         string $user_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members/{user_id}';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1294,9 +1232,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members/{user_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1326,8 +1264,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelRolesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members/{user_id}/roles';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1335,9 +1271,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members/{user_id}/roles', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1369,8 +1305,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members/{user_id}/schemeRoles';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1378,9 +1312,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members/{user_id}/schemeRoles', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1412,8 +1346,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelNotifyPropsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members/{user_id}/notify_props';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1421,9 +1353,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members/{user_id}/notify_props', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1455,17 +1387,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\ViewChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\ViewChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/members/{user_id}/view';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/members/{user_id}/view', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1495,8 +1425,6 @@ class ChannelsEndpoint
         string $team_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/members';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1504,9 +1432,9 @@ class ChannelsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1539,8 +1467,6 @@ class ChannelsEndpoint
         ?int $last_delete_at = 0,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelsForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1550,9 +1476,9 @@ class ChannelsEndpoint
         $queryParameters['last_delete_at'] = $last_delete_at;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1588,8 +1514,6 @@ class ChannelsEndpoint
         ?bool $include_deleted = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelsForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/channels';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1598,9 +1522,9 @@ class ChannelsEndpoint
         $queryParameters['include_deleted'] = $include_deleted;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1630,8 +1554,6 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelUnread|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/channels/{channel_id}/unread';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1639,9 +1561,9 @@ class ChannelsEndpoint
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/channels/{channel_id}/unread', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1673,17 +1595,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateChannelSchemeRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/channels/{channel_id}/scheme';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/scheme', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1723,8 +1643,6 @@ class ChannelsEndpoint
         ?int $per_page = 0,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/members_minus_group_members';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1734,9 +1652,9 @@ class ChannelsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/members_minus_group_members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1765,8 +1683,6 @@ class ChannelsEndpoint
         ?bool $include_timezones = false,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/member_counts_by_group';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1774,9 +1690,9 @@ class ChannelsEndpoint
         $queryParameters['include_timezones'] = $include_timezones;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/member_counts_by_group', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1803,17 +1719,15 @@ class ChannelsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetChannelModerationsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/moderations';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/moderations', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1842,17 +1756,15 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\PatchChannelModerationsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/channels/{channel_id}/moderations/patch';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/moderations/patch', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1883,8 +1795,6 @@ class ChannelsEndpoint
         string $user_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoriesForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1892,9 +1802,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1926,8 +1836,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\CreateSidebarCategoryForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1935,9 +1843,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -1970,8 +1878,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoriesForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1979,9 +1885,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -2013,8 +1919,6 @@ class ChannelsEndpoint
         string $user_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetSidebarCategoryOrderForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -2022,9 +1926,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -2056,8 +1960,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryOrderForTeamForUserResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -2065,9 +1967,9 @@ class ChannelsEndpoint
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -2101,8 +2003,6 @@ class ChannelsEndpoint
         string $category_id,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -2111,9 +2011,9 @@ class ChannelsEndpoint
         $pathParameters['category_id'] = $category_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -2147,8 +2047,6 @@ class ChannelsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\UpdateSidebarCategoryForTeamForUserRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -2157,9 +2055,9 @@ class ChannelsEndpoint
         $pathParameters['category_id'] = $category_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -2193,8 +2091,6 @@ class ChannelsEndpoint
         string $category_id,
     ): \CedricZiel\MattermostPhp\Client\Model\SidebarCategory|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -2203,9 +2099,9 @@ class ChannelsEndpoint
         $pathParameters['category_id'] = $category_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);

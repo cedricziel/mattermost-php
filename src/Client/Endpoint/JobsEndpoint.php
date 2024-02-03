@@ -46,8 +46,6 @@ class JobsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetJobsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/jobs';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -55,9 +53,9 @@ class JobsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/jobs', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -84,16 +82,14 @@ class JobsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\CreateJobRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Job|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/jobs';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/jobs', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -122,17 +118,15 @@ class JobsEndpoint
         string $job_id,
     ): \CedricZiel\MattermostPhp\Client\Model\Job|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/jobs/{job_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['job_id'] = $job_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/jobs/{job_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -161,17 +155,15 @@ class JobsEndpoint
         string $job_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/jobs/{job_id}/download';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['job_id'] = $job_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/jobs/{job_id}/download', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -199,17 +191,15 @@ class JobsEndpoint
         string $job_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/jobs/{job_id}/cancel';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['job_id'] = $job_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/jobs/{job_id}/cancel', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -242,8 +232,6 @@ class JobsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetJobsByTypeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/jobs/type/{type}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -252,9 +240,9 @@ class JobsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/jobs/type/{type}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);

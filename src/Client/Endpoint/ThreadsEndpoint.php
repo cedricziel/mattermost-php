@@ -62,8 +62,6 @@ class ThreadsEndpoint
         ?bool $threadsOnly = false,
     ): \CedricZiel\MattermostPhp\Client\Model\UserThreads|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -78,9 +76,9 @@ class ThreadsEndpoint
         $queryParameters['threadsOnly'] = $threadsOnly;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -112,8 +110,6 @@ class ThreadsEndpoint
         string $team_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/mention_counts';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -121,9 +117,9 @@ class ThreadsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/mention_counts', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -154,8 +150,6 @@ class ThreadsEndpoint
         string $team_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/read';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -163,9 +157,9 @@ class ThreadsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/read', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -200,8 +194,6 @@ class ThreadsEndpoint
         string $timestamp,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/read/{timestamp}';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -211,9 +203,9 @@ class ThreadsEndpoint
         $pathParameters['timestamp'] = $timestamp;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/read/{timestamp}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -250,8 +242,6 @@ class ThreadsEndpoint
         string $post_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/set_unread/{post_id}';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -261,9 +251,9 @@ class ThreadsEndpoint
         $pathParameters['post_id'] = $post_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/set_unread/{post_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -296,8 +286,6 @@ class ThreadsEndpoint
         string $thread_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -306,9 +294,9 @@ class ThreadsEndpoint
         $pathParameters['thread_id'] = $thread_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -341,8 +329,6 @@ class ThreadsEndpoint
         string $thread_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -351,9 +337,9 @@ class ThreadsEndpoint
         $pathParameters['thread_id'] = $thread_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -386,8 +372,6 @@ class ThreadsEndpoint
         string $thread_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
     {
-        $path = '/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -396,9 +380,9 @@ class ThreadsEndpoint
         $pathParameters['thread_id'] = $thread_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);

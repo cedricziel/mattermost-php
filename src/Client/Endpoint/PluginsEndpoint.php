@@ -44,16 +44,14 @@ class PluginsEndpoint
     public function uploadPlugin(
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -83,16 +81,14 @@ class PluginsEndpoint
     public function getPlugins(
     ): \CedricZiel\MattermostPhp\Client\Model\GetPluginsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -125,8 +121,6 @@ class PluginsEndpoint
         ?string $force = null,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/install_from_url';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -134,9 +128,9 @@ class PluginsEndpoint
         $queryParameters['force'] = $force;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/install_from_url', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -166,17 +160,15 @@ class PluginsEndpoint
         string $plugin_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/{plugin_id}';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['plugin_id'] = $plugin_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/{plugin_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -208,17 +200,15 @@ class PluginsEndpoint
         string $plugin_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/{plugin_id}/enable';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['plugin_id'] = $plugin_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/{plugin_id}/enable', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -250,17 +240,15 @@ class PluginsEndpoint
         string $plugin_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/{plugin_id}/disable';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['plugin_id'] = $plugin_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/{plugin_id}/disable', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -290,16 +278,14 @@ class PluginsEndpoint
     public function getWebappPlugins(
     ): \CedricZiel\MattermostPhp\Client\Model\GetWebappPluginsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/webapp';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/webapp', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -328,16 +314,14 @@ class PluginsEndpoint
     public function getPluginStatuses(
     ): \CedricZiel\MattermostPhp\Client\Model\GetPluginStatusesResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/statuses';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/statuses', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -367,16 +351,14 @@ class PluginsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\InstallMarketplacePluginRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\PluginManifest|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/marketplace';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/marketplace', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -417,8 +399,6 @@ class PluginsEndpoint
         ?bool $local_only = null,
     ): \CedricZiel\MattermostPhp\Client\Model\GetMarketplacePluginsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/plugins/marketplace';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -429,9 +409,9 @@ class PluginsEndpoint
         $queryParameters['local_only'] = $local_only;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/marketplace', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -458,16 +438,14 @@ class PluginsEndpoint
     public function getMarketplaceVisitedByAdmin(
     ): \CedricZiel\MattermostPhp\Client\Model\System|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
     {
-        $path = '/api/v4/plugins/marketplace/first_admin_visit';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/plugins/marketplace/first_admin_visit', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);

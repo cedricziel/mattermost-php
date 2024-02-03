@@ -43,17 +43,15 @@ class GroupsEndpoint
         string $remote_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/ldap/groups/{remote_id}/link';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['remote_id'] = $remote_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/ldap/groups/{remote_id}/link', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -103,8 +101,6 @@ class GroupsEndpoint
         ?bool $filter_allow_reference = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -118,9 +114,9 @@ class GroupsEndpoint
         $queryParameters['filter_allow_reference'] = $filter_allow_reference;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -150,16 +146,14 @@ class GroupsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/groups';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -188,17 +182,15 @@ class GroupsEndpoint
         string $group_id,
     ): \CedricZiel\MattermostPhp\Client\Model\Group|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -229,17 +221,15 @@ class GroupsEndpoint
         string $group_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/groups/{group_id}';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -268,17 +258,15 @@ class GroupsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\Group|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/patch';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/patch', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -308,17 +296,15 @@ class GroupsEndpoint
         string $group_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/restore';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/restore', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -350,8 +336,6 @@ class GroupsEndpoint
         string $team_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/teams/{team_id}/link';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -359,9 +343,9 @@ class GroupsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/teams/{team_id}/link', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -393,8 +377,6 @@ class GroupsEndpoint
         string $team_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/teams/{team_id}/link';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -402,9 +384,9 @@ class GroupsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/teams/{team_id}/link', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -437,8 +419,6 @@ class GroupsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/channels/{channel_id}/link';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -446,9 +426,9 @@ class GroupsEndpoint
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/channels/{channel_id}/link', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -481,8 +461,6 @@ class GroupsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/channels/{channel_id}/link';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -490,9 +468,9 @@ class GroupsEndpoint
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/channels/{channel_id}/link', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -524,8 +502,6 @@ class GroupsEndpoint
         string $team_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/teams/{team_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -533,9 +509,9 @@ class GroupsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/teams/{team_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -568,8 +544,6 @@ class GroupsEndpoint
         string $channel_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/channels/{channel_id}';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -577,9 +551,9 @@ class GroupsEndpoint
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/channels/{channel_id}', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -610,17 +584,15 @@ class GroupsEndpoint
         string $group_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncablesTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/teams';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/teams', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -651,17 +623,15 @@ class GroupsEndpoint
         string $group_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupSyncablesChannelsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/channels';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -696,8 +666,6 @@ class GroupsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForTeamRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/teams/{team_id}/patch';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -705,9 +673,9 @@ class GroupsEndpoint
         $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/teams/{team_id}/patch', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -742,8 +710,6 @@ class GroupsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\PatchGroupSyncableForChannelRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/channels/{channel_id}/patch';
-        $method = 'put';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -751,9 +717,9 @@ class GroupsEndpoint
         $pathParameters['channel_id'] = $channel_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/channels/{channel_id}/patch', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('PUT', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -789,8 +755,6 @@ class GroupsEndpoint
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/members';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -799,9 +763,9 @@ class GroupsEndpoint
         $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -834,17 +798,15 @@ class GroupsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/groups/{group_id}/members';
-        $method = 'delete';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -874,17 +836,15 @@ class GroupsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
     {
-        $path = '/api/v4/groups/{group_id}/members';
-        $method = 'post';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/members', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
         $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
@@ -913,17 +873,15 @@ class GroupsEndpoint
         string $group_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupStatsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/groups/{group_id}/stats';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['group_id'] = $group_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/groups/{group_id}/stats', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -961,8 +919,6 @@ class GroupsEndpoint
         ?bool $filter_allow_reference = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsByChannelResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/channels/{channel_id}/groups';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -972,9 +928,9 @@ class GroupsEndpoint
         $queryParameters['filter_allow_reference'] = $filter_allow_reference;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/groups', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1009,8 +965,6 @@ class GroupsEndpoint
         ?bool $filter_allow_reference = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsByTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/teams/{team_id}/groups';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1020,9 +974,9 @@ class GroupsEndpoint
         $queryParameters['filter_allow_reference'] = $filter_allow_reference;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/groups', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1062,8 +1016,6 @@ class GroupsEndpoint
         ?bool $paginate = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsAssociatedToChannelsByTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/teams/{team_id}/groups_by_channels';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1074,9 +1026,9 @@ class GroupsEndpoint
         $queryParameters['paginate'] = $paginate;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/teams/{team_id}/groups_by_channels', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
@@ -1105,17 +1057,15 @@ class GroupsEndpoint
         string $user_id,
     ): \CedricZiel\MattermostPhp\Client\Model\GetGroupsByUserIdResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
-        $path = '/api/v4/users/{user_id}/groups';
-        $method = 'get';
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri($path, $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/groups', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest($method, $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
