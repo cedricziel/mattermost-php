@@ -21,7 +21,7 @@ class SlashCommandInputTest extends TestCase
     public function canHandleSlashCommandAction()
     {
         $parsingMiddleware = new ParsingMiddleware();
-        $slashCommand = new class('pling') extends AbstractSlashCommand {
+        $slashCommand = new class extends AbstractSlashCommand {
             public function execute(SlashCommandInput $input): SlashCommandOutput
             {
                 if ($input->getContext()->action === 'drink-tea') {

@@ -29,18 +29,3 @@ parameters:
 			message: "#^Method CedricZiel\\\\MattermostPhp\\\\Client\\\\Endpoint\\\\SAMLEndpoint\\:\\:getSamlMetadataFromIdp\\(\\) has invalid return type CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetSamlMetadataFromIdpResponse\\.$#"
 			count: 1
 			path: src/Client/Endpoint/SAMLEndpoint.php
-
-		-
-			message: "#^Class class@anonymous/test/SlashCommands/SlashCommandInputTest\\.php\\:24 does not have a constructor and must be instantiated without any parameters\\.$#"
-			count: 1
-			path: test/SlashCommands/SlashCommandInputTest.php
-
-		-
-			message: "#^Class class@anonymous/test/SlashCommands/SlashCommandTest\\.php\\:21 does not have a constructor and must be instantiated without any parameters\\.$#"
-			count: 1
-			path: test/SlashCommands/SlashCommandTest.php
-
-		-
-			message: "#^Class class@anonymous/test/SlashCommands/SlashCommandTest\\.php\\:42 does not have a constructor and must be instantiated without any parameters\\.$#"
-			count: 1
-			path: test/SlashCommands/SlashCommandTest.php
