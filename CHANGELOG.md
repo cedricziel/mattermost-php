@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/cedricziel/mattermost-php/compare/v1.4.0...v1.4.1) (2024-02-03)
+
+
+### Bug Fixes
+
+* use uppercase http methods ([#67](https://github.com/cedricziel/mattermost-php/issues/67)) ([c965727](https://github.com/cedricziel/mattermost-php/commit/c965727a2347eceeaebf28a607ccb91eb7d086f8))
+
 ## [1.4.0](https://github.com/cedricziel/mattermost-php/compare/v1.3.2...v1.4.0) (2024-02-03)
 
 
