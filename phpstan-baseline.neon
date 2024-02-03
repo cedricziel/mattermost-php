@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Apps/MattermostApp.php
-
-		-
 			message: "#^Class CedricZiel\\\\MattermostPhp\\\\Client\\\\Model\\\\GetBrandImageResponse not found\\.$#"
 			count: 1
 			path: src/Client/Endpoint/BrandEndpoint.php

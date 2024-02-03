@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class MattermostApp implements RequestHandlerInterface
+final class MattermostApp implements RequestHandlerInterface
 {
     /**
      * @var array<string, array<LocationBinding>>
