@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/cedricziel/mattermost-php/compare/v1.4.3...v1.4.4) (2024-02-03)
+
+
+### Miscellaneous Chores
+
+* install phpstan ([#73](https://github.com/cedricziel/mattermost-php/issues/73)) ([25616c1](https://github.com/cedricziel/mattermost-php/commit/25616c1aa91ff70004c9ec6d37de9de02be0f862))
+
 ## [1.4.3](https://github.com/cedricziel/mattermost-php/compare/v1.4.2...v1.4.3) (2024-02-03)
 
 
