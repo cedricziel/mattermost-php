@@ -23,7 +23,8 @@
         "symfony/http-client": "^6.4|^7.0",
         "nette/php-generator": "^4.1",
         "nikic/php-parser": "^5.0",
-        "php-http/mock-client": "^1.6"
+        "php-http/mock-client": "^1.6",
+        "phpstan/phpstan": "^1.10"
     },
     "license": "MIT",
     "autoload": {
