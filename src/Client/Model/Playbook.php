@@ -36,17 +36,17 @@ class Playbook
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            title: $data['title'] ?? null,
-            description: $data['description'] ?? null,
-            team_id: $data['team_id'] ?? null,
-            create_public_playbook_run: $data['create_public_playbook_run'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            num_stages: $data['num_stages'] ?? null,
-            num_steps: $data['num_steps'] ?? null,
-            checklists: $data['checklists'] ?? null,
-            member_ids: $data['member_ids'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            title: isset($data['title']) ? $data['title'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            create_public_playbook_run: isset($data['create_public_playbook_run']) ? $data['create_public_playbook_run'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            num_stages: isset($data['num_stages']) ? $data['num_stages'] : null,
+            num_steps: isset($data['num_steps']) ? $data['num_steps'] : null,
+            checklists: isset($data['checklists']) ? $data['checklists'] : null,
+            member_ids: isset($data['member_ids']) ? $data['member_ids'] : null,
         );
         return $object;
     }

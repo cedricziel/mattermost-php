@@ -28,13 +28,13 @@ class UserNotifyProps
     ): static
     {
         $object = new static(
-            email: $data['email'] ?? null,
-            push: $data['push'] ?? null,
-            desktop: $data['desktop'] ?? null,
-            desktop_sound: $data['desktop_sound'] ?? null,
-            mention_keys: $data['mention_keys'] ?? null,
-            channel: $data['channel'] ?? null,
-            first_name: $data['first_name'] ?? null,
+            email: isset($data['email']) ? $data['email'] : null,
+            push: isset($data['push']) ? $data['push'] : null,
+            desktop: isset($data['desktop']) ? $data['desktop'] : null,
+            desktop_sound: isset($data['desktop_sound']) ? $data['desktop_sound'] : null,
+            mention_keys: isset($data['mention_keys']) ? $data['mention_keys'] : null,
+            channel: isset($data['channel']) ? $data['channel'] : null,
+            first_name: isset($data['first_name']) ? $data['first_name'] : null,
         );
         return $object;
     }

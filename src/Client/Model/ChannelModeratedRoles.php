@@ -16,8 +16,8 @@ class ChannelModeratedRoles
     ): static
     {
         $object = new static(
-            guests: $data['guests'] ?? null,
-            members: $data['members'] ?? null,
+            guests: isset($data['guests']) ? $data['guests'] : null,
+            members: isset($data['members']) ? $data['members'] : null,
         );
         return $object;
     }

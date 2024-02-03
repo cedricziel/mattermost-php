@@ -21,8 +21,8 @@ class OrphanedRecord
     ): static
     {
         $object = new static(
-            parent_id: $data['parent_id'] ?? null,
-            child_id: $data['child_id'] ?? null,
+            parent_id: isset($data['parent_id']) ? $data['parent_id'] : null,
+            child_id: isset($data['child_id']) ? $data['child_id'] : null,
         );
         return $object;
     }

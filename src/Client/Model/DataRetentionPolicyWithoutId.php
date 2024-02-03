@@ -20,8 +20,8 @@ class DataRetentionPolicyWithoutId
     ): static
     {
         $object = new static(
-            display_name: $data['display_name'] ?? null,
-            post_duration: $data['post_duration'] ?? null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,
         );
         return $object;
     }

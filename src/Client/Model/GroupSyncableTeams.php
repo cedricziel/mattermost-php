@@ -22,14 +22,14 @@ class GroupSyncableTeams
     ): static
     {
         $object = new static(
-            team_id: $data['team_id'] ?? null,
-            team_display_name: $data['team_display_name'] ?? null,
-            team_type: $data['team_type'] ?? null,
-            group_id: $data['group_id'] ?? null,
-            auto_add: $data['auto_add'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            team_display_name: isset($data['team_display_name']) ? $data['team_display_name'] : null,
+            team_type: isset($data['team_type']) ? $data['team_type'] : null,
+            group_id: isset($data['group_id']) ? $data['group_id'] : null,
+            auto_add: isset($data['auto_add']) ? $data['auto_add'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
         );
         return $object;
     }

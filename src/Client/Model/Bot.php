@@ -30,14 +30,14 @@ class Bot
     ): static
     {
         $object = new static(
-            user_id: $data['user_id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            username: $data['username'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            description: $data['description'] ?? null,
-            owner_id: $data['owner_id'] ?? null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            username: isset($data['username']) ? $data['username'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            owner_id: isset($data['owner_id']) ? $data['owner_id'] : null,
         );
         return $object;
     }

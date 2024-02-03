@@ -16,8 +16,8 @@ class ChannelModerationPatch
     ): static
     {
         $object = new static(
-            name: $data['name'] ?? null,
-            roles: $data['roles'] ?? null,
+            name: isset($data['name']) ? $data['name'] : null,
+            roles: isset($data['roles']) ? $data['roles'] : null,
         );
         return $object;
     }

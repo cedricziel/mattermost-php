@@ -18,10 +18,10 @@ class ChannelUnread
     ): static
     {
         $object = new static(
-            team_id: $data['team_id'] ?? null,
-            channel_id: $data['channel_id'] ?? null,
-            msg_count: $data['msg_count'] ?? null,
-            mention_count: $data['mention_count'] ?? null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
+            msg_count: isset($data['msg_count']) ? $data['msg_count'] : null,
+            mention_count: isset($data['mention_count']) ? $data['mention_count'] : null,
         );
         return $object;
     }

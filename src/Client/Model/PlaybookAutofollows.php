@@ -18,8 +18,8 @@ class PlaybookAutofollows
     ): static
     {
         $object = new static(
-            total_count: $data['total_count'] ?? null,
-            items: $data['items'] ?? null,
+            total_count: isset($data['total_count']) ? $data['total_count'] : null,
+            items: isset($data['items']) ? $data['items'] : null,
         );
         return $object;
     }

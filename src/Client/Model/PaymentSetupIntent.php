@@ -16,8 +16,8 @@ class PaymentSetupIntent
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            client_secret: $data['client_secret'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            client_secret: isset($data['client_secret']) ? $data['client_secret'] : null,
         );
         return $object;
     }

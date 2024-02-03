@@ -18,10 +18,10 @@ class AddOn
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            name: $data['name'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            price_per_seat: $data['price_per_seat'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            price_per_seat: isset($data['price_per_seat']) ? $data['price_per_seat'] : null,
         );
         return $object;
     }

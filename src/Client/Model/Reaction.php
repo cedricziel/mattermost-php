@@ -22,10 +22,10 @@ class Reaction
     ): static
     {
         $object = new static(
-            user_id: $data['user_id'] ?? null,
-            post_id: $data['post_id'] ?? null,
-            emoji_name: $data['emoji_name'] ?? null,
-            create_at: $data['create_at'] ?? null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            post_id: isset($data['post_id']) ? $data['post_id'] : null,
+            emoji_name: isset($data['emoji_name']) ? $data['emoji_name'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
         );
         return $object;
     }

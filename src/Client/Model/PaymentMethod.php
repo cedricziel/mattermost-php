@@ -20,12 +20,12 @@ class PaymentMethod
     ): static
     {
         $object = new static(
-            type: $data['type'] ?? null,
-            last_four: $data['last_four'] ?? null,
-            exp_month: $data['exp_month'] ?? null,
-            exp_year: $data['exp_year'] ?? null,
-            card_brand: $data['card_brand'] ?? null,
-            name: $data['name'] ?? null,
+            type: isset($data['type']) ? $data['type'] : null,
+            last_four: isset($data['last_four']) ? $data['last_four'] : null,
+            exp_month: isset($data['exp_month']) ? $data['exp_month'] : null,
+            exp_year: isset($data['exp_year']) ? $data['exp_year'] : null,
+            card_brand: isset($data['card_brand']) ? $data['card_brand'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
         );
         return $object;
     }

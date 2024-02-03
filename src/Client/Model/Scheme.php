@@ -36,17 +36,17 @@ class Scheme
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            name: $data['name'] ?? null,
-            description: $data['description'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            scope: $data['scope'] ?? null,
-            default_team_admin_role: $data['default_team_admin_role'] ?? null,
-            default_team_user_role: $data['default_team_user_role'] ?? null,
-            default_channel_admin_role: $data['default_channel_admin_role'] ?? null,
-            default_channel_user_role: $data['default_channel_user_role'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            scope: isset($data['scope']) ? $data['scope'] : null,
+            default_team_admin_role: isset($data['default_team_admin_role']) ? $data['default_team_admin_role'] : null,
+            default_team_user_role: isset($data['default_team_user_role']) ? $data['default_team_user_role'] : null,
+            default_channel_admin_role: isset($data['default_channel_admin_role']) ? $data['default_channel_admin_role'] : null,
+            default_channel_user_role: isset($data['default_channel_user_role']) ? $data['default_channel_user_role'] : null,
         );
         return $object;
     }

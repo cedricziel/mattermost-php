@@ -18,10 +18,10 @@ class AppError
     ): static
     {
         $object = new static(
-            status_code: $data['status_code'] ?? null,
-            id: $data['id'] ?? null,
-            message: $data['message'] ?? null,
-            request_id: $data['request_id'] ?? null,
+            status_code: isset($data['status_code']) ? $data['status_code'] : null,
+            id: isset($data['id']) ? $data['id'] : null,
+            message: isset($data['message']) ? $data['message'] : null,
+            request_id: isset($data['request_id']) ? $data['request_id'] : null,
         );
         return $object;
     }

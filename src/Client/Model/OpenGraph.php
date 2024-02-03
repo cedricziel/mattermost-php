@@ -33,20 +33,20 @@ class OpenGraph
     ): static
     {
         $object = new static(
-            type: $data['type'] ?? null,
-            url: $data['url'] ?? null,
-            title: $data['title'] ?? null,
-            description: $data['description'] ?? null,
-            determiner: $data['determiner'] ?? null,
-            site_name: $data['site_name'] ?? null,
-            locale: $data['locale'] ?? null,
-            locales_alternate: $data['locales_alternate'] ?? null,
-            images: $data['images'] ?? null,
-            videos: $data['videos'] ?? null,
-            audios: $data['audios'] ?? null,
-            article: (object) $data['article'] ?? null,
-            book: (object) $data['book'] ?? null,
-            profile: (object) $data['profile'] ?? null,
+            type: isset($data['type']) ? $data['type'] : null,
+            url: isset($data['url']) ? $data['url'] : null,
+            title: isset($data['title']) ? $data['title'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            determiner: isset($data['determiner']) ? $data['determiner'] : null,
+            site_name: isset($data['site_name']) ? $data['site_name'] : null,
+            locale: isset($data['locale']) ? $data['locale'] : null,
+            locales_alternate: isset($data['locales_alternate']) ? $data['locales_alternate'] : null,
+            images: isset($data['images']) ? $data['images'] : null,
+            videos: isset($data['videos']) ? $data['videos'] : null,
+            audios: isset($data['audios']) ? $data['audios'] : null,
+            article: isset($data['article']) ? (object) $data['article'] : null,
+            book: isset($data['book']) ? (object) $data['book'] : null,
+            profile: isset($data['profile']) ? (object) $data['profile'] : null,
         );
         return $object;
     }

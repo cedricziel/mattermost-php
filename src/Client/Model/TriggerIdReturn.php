@@ -16,7 +16,7 @@ class TriggerIdReturn
     ): static
     {
         $object = new static(
-            trigger_id: $data['trigger_id'] ?? null,
+            trigger_id: isset($data['trigger_id']) ? $data['trigger_id'] : null,
         );
         return $object;
     }

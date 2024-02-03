@@ -33,22 +33,22 @@ class Post
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            edit_at: $data['edit_at'] ?? null,
-            user_id: $data['user_id'] ?? null,
-            channel_id: $data['channel_id'] ?? null,
-            root_id: $data['root_id'] ?? null,
-            original_id: $data['original_id'] ?? null,
-            message: $data['message'] ?? null,
-            type: $data['type'] ?? null,
-            props: (object) $data['props'] ?? null,
-            hashtag: $data['hashtag'] ?? null,
-            file_ids: $data['file_ids'] ?? null,
-            pending_post_id: $data['pending_post_id'] ?? null,
-            metadata: $data['metadata'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            edit_at: isset($data['edit_at']) ? $data['edit_at'] : null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
+            root_id: isset($data['root_id']) ? $data['root_id'] : null,
+            original_id: isset($data['original_id']) ? $data['original_id'] : null,
+            message: isset($data['message']) ? $data['message'] : null,
+            type: isset($data['type']) ? $data['type'] : null,
+            props: isset($data['props']) ? (object) $data['props'] : null,
+            hashtag: isset($data['hashtag']) ? $data['hashtag'] : null,
+            file_ids: isset($data['file_ids']) ? $data['file_ids'] : null,
+            pending_post_id: isset($data['pending_post_id']) ? $data['pending_post_id'] : null,
+            metadata: isset($data['metadata']) ? $data['metadata'] : null,
         );
         return $object;
     }

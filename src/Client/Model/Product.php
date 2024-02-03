@@ -19,11 +19,11 @@ class Product
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            name: $data['name'] ?? null,
-            description: $data['description'] ?? null,
-            price_per_seat: $data['price_per_seat'] ?? null,
-            add_ons: $data['add_ons'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            price_per_seat: isset($data['price_per_seat']) ? $data['price_per_seat'] : null,
+            add_ons: isset($data['add_ons']) ? $data['add_ons'] : null,
         );
         return $object;
     }

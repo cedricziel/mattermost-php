@@ -16,7 +16,7 @@ class StatusOK
     ): static
     {
         $object = new static(
-            status: $data['status'] ?? null,
+            status: isset($data['status']) ? $data['status'] : null,
         );
         return $object;
     }

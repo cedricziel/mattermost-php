@@ -22,11 +22,11 @@ class PostList
     ): static
     {
         $object = new static(
-            order: $data['order'] ?? null,
-            posts: (object) $data['posts'] ?? null,
-            next_post_id: $data['next_post_id'] ?? null,
-            prev_post_id: $data['prev_post_id'] ?? null,
-            has_next: $data['has_next'] ?? null,
+            order: isset($data['order']) ? $data['order'] : null,
+            posts: isset($data['posts']) ? (object) $data['posts'] : null,
+            next_post_id: isset($data['next_post_id']) ? $data['next_post_id'] : null,
+            prev_post_id: isset($data['prev_post_id']) ? $data['prev_post_id'] : null,
+            has_next: isset($data['has_next']) ? $data['has_next'] : null,
         );
         return $object;
     }

@@ -26,12 +26,12 @@ class Role
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            name: $data['name'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            description: $data['description'] ?? null,
-            permissions: $data['permissions'] ?? null,
-            scheme_managed: $data['scheme_managed'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            permissions: isset($data['permissions']) ? $data['permissions'] : null,
+            scheme_managed: isset($data['scheme_managed']) ? $data['scheme_managed'] : null,
         );
         return $object;
     }

@@ -22,13 +22,13 @@ class Audit
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            user_id: $data['user_id'] ?? null,
-            action: $data['action'] ?? null,
-            extra_info: $data['extra_info'] ?? null,
-            ip_address: $data['ip_address'] ?? null,
-            session_id: $data['session_id'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            action: isset($data['action']) ? $data['action'] : null,
+            extra_info: isset($data['extra_info']) ? $data['extra_info'] : null,
+            ip_address: isset($data['ip_address']) ? $data['ip_address'] : null,
+            session_id: isset($data['session_id']) ? $data['session_id'] : null,
         );
         return $object;
     }

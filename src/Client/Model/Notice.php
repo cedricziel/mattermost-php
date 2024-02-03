@@ -35,15 +35,15 @@ class Notice
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            sysAdminOnly: $data['sysAdminOnly'] ?? null,
-            teamAdminOnly: $data['teamAdminOnly'] ?? null,
-            action: $data['action'] ?? null,
-            actionParam: $data['actionParam'] ?? null,
-            actionText: $data['actionText'] ?? null,
-            description: $data['description'] ?? null,
-            image: $data['image'] ?? null,
-            title: $data['title'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            sysAdminOnly: isset($data['sysAdminOnly']) ? $data['sysAdminOnly'] : null,
+            teamAdminOnly: isset($data['teamAdminOnly']) ? $data['teamAdminOnly'] : null,
+            action: isset($data['action']) ? $data['action'] : null,
+            actionParam: isset($data['actionParam']) ? $data['actionParam'] : null,
+            actionText: isset($data['actionText']) ? $data['actionText'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            image: isset($data['image']) ? $data['image'] : null,
+            title: isset($data['title']) ? $data['title'] : null,
         );
         return $object;
     }

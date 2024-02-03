@@ -20,9 +20,9 @@ class Checklist
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            title: $data['title'] ?? null,
-            items: $data['items'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            title: isset($data['title']) ? $data['title'] : null,
+            items: isset($data['items']) ? $data['items'] : null,
         );
         return $object;
     }

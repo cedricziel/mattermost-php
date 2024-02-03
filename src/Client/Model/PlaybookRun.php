@@ -43,21 +43,21 @@ class PlaybookRun
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            name: $data['name'] ?? null,
-            description: $data['description'] ?? null,
-            is_active: $data['is_active'] ?? null,
-            owner_user_id: $data['owner_user_id'] ?? null,
-            team_id: $data['team_id'] ?? null,
-            channel_id: $data['channel_id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            end_at: $data['end_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            active_stage: $data['active_stage'] ?? null,
-            active_stage_title: $data['active_stage_title'] ?? null,
-            post_id: $data['post_id'] ?? null,
-            playbook_id: $data['playbook_id'] ?? null,
-            checklists: $data['checklists'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            is_active: isset($data['is_active']) ? $data['is_active'] : null,
+            owner_user_id: isset($data['owner_user_id']) ? $data['owner_user_id'] : null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            end_at: isset($data['end_at']) ? $data['end_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            active_stage: isset($data['active_stage']) ? $data['active_stage'] : null,
+            active_stage_title: isset($data['active_stage_title']) ? $data['active_stage_title'] : null,
+            post_id: isset($data['post_id']) ? $data['post_id'] : null,
+            playbook_id: isset($data['playbook_id']) ? $data['playbook_id'] : null,
+            checklists: isset($data['checklists']) ? $data['checklists'] : null,
         );
         return $object;
     }

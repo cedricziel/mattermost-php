@@ -16,8 +16,8 @@ class SubscriptionStats
     ): static
     {
         $object = new static(
-            remaining_seats: $data['remaining_seats'] ?? null,
-            is_paid_tier: $data['is_paid_tier'] ?? null,
+            remaining_seats: isset($data['remaining_seats']) ? $data['remaining_seats'] : null,
+            is_paid_tier: isset($data['is_paid_tier']) ? $data['is_paid_tier'] : null,
         );
         return $object;
     }

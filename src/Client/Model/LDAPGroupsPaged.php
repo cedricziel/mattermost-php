@@ -20,8 +20,8 @@ class LDAPGroupsPaged
     ): static
     {
         $object = new static(
-            count: $data['count'] ?? null,
-            groups: $data['groups'] ?? null,
+            count: isset($data['count']) ? $data['count'] : null,
+            groups: isset($data['groups']) ? $data['groups'] : null,
         );
         return $object;
     }

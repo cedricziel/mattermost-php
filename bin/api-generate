@@ -149,19 +149,19 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
         if ($class->getExtends() !== null) {
             $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
                 if ($property->getType() === 'stdClass') {
-                    return sprintf('    %s: (object) $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
+                    return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
                 }
 
-                return sprintf('    %s: $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
+                return sprintf('    %s: isset($data[\'%s\']) ? isset($data[\'%s\']) : null,', $property->getName(), $property->getName(), $property->getName());
             }, findClass($modelNamespace,$class->getExtends())->getMethod('__construct')?->getParameters() ?? [])));
         }
 
         $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
             if ($property->getType() === 'stdClass') {
-                return sprintf('    %s: (object) $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
+                return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
             }
 
-            return sprintf('    %s: $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
+            return sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $property->getName(), $property->getName(),  $property->getName());
         }, $class->getMethod('__construct')?->getParameters())));
 
         $hydrationMethod->addBody(');');

@@ -18,8 +18,8 @@ class Error
     ): static
     {
         $object = new static(
-            error: $data['error'] ?? null,
-            details: $data['details'] ?? null,
+            error: isset($data['error']) ? $data['error'] : null,
+            details: isset($data['details']) ? $data['details'] : null,
         );
         return $object;
     }

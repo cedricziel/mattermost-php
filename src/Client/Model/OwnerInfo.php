@@ -18,8 +18,8 @@ class OwnerInfo
     ): static
     {
         $object = new static(
-            user_id: $data['user_id'] ?? null,
-            username: $data['username'] ?? null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            username: isset($data['username']) ? $data['username'] : null,
         );
         return $object;
     }

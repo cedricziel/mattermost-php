@@ -15,7 +15,7 @@ class IntegrationsLimits
     ): static
     {
         $object = new static(
-            enabled: $data['enabled'] ?? null,
+            enabled: isset($data['enabled']) ? $data['enabled'] : null,
         );
         return $object;
     }

@@ -24,11 +24,11 @@ class AutocompleteSuggestion
     ): static
     {
         $object = new static(
-            Complete: $data['Complete'] ?? null,
-            Suggestion: $data['Suggestion'] ?? null,
-            Hint: $data['Hint'] ?? null,
-            Description: $data['Description'] ?? null,
-            IconData: $data['IconData'] ?? null,
+            Complete: isset($data['Complete']) ? $data['Complete'] : null,
+            Suggestion: isset($data['Suggestion']) ? $data['Suggestion'] : null,
+            Hint: isset($data['Hint']) ? $data['Hint'] : null,
+            Description: isset($data['Description']) ? $data['Description'] : null,
+            IconData: isset($data['IconData']) ? $data['IconData'] : null,
         );
         return $object;
     }

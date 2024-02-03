@@ -27,11 +27,11 @@ class RelationalIntegrityCheckData
     ): static
     {
         $object = new static(
-            parent_name: $data['parent_name'] ?? null,
-            child_name: $data['child_name'] ?? null,
-            parent_id_attr: $data['parent_id_attr'] ?? null,
-            child_id_attr: $data['child_id_attr'] ?? null,
-            records: $data['records'] ?? null,
+            parent_name: isset($data['parent_name']) ? $data['parent_name'] : null,
+            child_name: isset($data['child_name']) ? $data['child_name'] : null,
+            parent_id_attr: isset($data['parent_id_attr']) ? $data['parent_id_attr'] : null,
+            child_id_attr: isset($data['child_id_attr']) ? $data['child_id_attr'] : null,
+            records: isset($data['records']) ? $data['records'] : null,
         );
         return $object;
     }

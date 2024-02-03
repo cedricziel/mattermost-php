@@ -19,10 +19,10 @@ class Preference
     ): static
     {
         $object = new static(
-            user_id: $data['user_id'] ?? null,
-            category: $data['category'] ?? null,
-            name: $data['name'] ?? null,
-            value: $data['value'] ?? null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            category: isset($data['category']) ? $data['category'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            value: isset($data['value']) ? $data['value'] : null,
         );
         return $object;
     }

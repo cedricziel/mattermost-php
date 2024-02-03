@@ -28,13 +28,13 @@ class PluginStatus
     ): static
     {
         $object = new static(
-            plugin_id: $data['plugin_id'] ?? null,
-            name: $data['name'] ?? null,
-            description: $data['description'] ?? null,
-            version: $data['version'] ?? null,
-            cluster_id: $data['cluster_id'] ?? null,
-            plugin_path: $data['plugin_path'] ?? null,
-            state: $data['state'] ?? null,
+            plugin_id: isset($data['plugin_id']) ? $data['plugin_id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            version: isset($data['version']) ? $data['version'] : null,
+            cluster_id: isset($data['cluster_id']) ? $data['cluster_id'] : null,
+            plugin_path: isset($data['plugin_path']) ? $data['plugin_path'] : null,
+            state: isset($data['state']) ? $data['state'] : null,
         );
         return $object;
     }

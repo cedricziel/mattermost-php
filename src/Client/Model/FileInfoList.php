@@ -20,10 +20,10 @@ class FileInfoList
     ): static
     {
         $object = new static(
-            order: $data['order'] ?? null,
-            file_infos: (object) $data['file_infos'] ?? null,
-            next_file_id: $data['next_file_id'] ?? null,
-            prev_file_id: $data['prev_file_id'] ?? null,
+            order: isset($data['order']) ? $data['order'] : null,
+            file_infos: isset($data['file_infos']) ? (object) $data['file_infos'] : null,
+            next_file_id: isset($data['next_file_id']) ? $data['next_file_id'] : null,
+            prev_file_id: isset($data['prev_file_id']) ? $data['prev_file_id'] : null,
         );
         return $object;
     }

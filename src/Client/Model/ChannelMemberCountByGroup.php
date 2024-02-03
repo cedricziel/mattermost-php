@@ -23,9 +23,9 @@ class ChannelMemberCountByGroup
     ): static
     {
         $object = new static(
-            group_id: $data['group_id'] ?? null,
-            channel_member_count: $data['channel_member_count'] ?? null,
-            channel_member_timezones_count: $data['channel_member_timezones_count'] ?? null,
+            group_id: isset($data['group_id']) ? $data['group_id'] : null,
+            channel_member_count: isset($data['channel_member_count']) ? $data['channel_member_count'] : null,
+            channel_member_timezones_count: isset($data['channel_member_timezones_count']) ? $data['channel_member_timezones_count'] : null,
         );
         return $object;
     }

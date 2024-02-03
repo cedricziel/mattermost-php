@@ -16,8 +16,8 @@ class ChannelModeratedRole
     ): static
     {
         $object = new static(
-            value: $data['value'] ?? null,
-            enabled: $data['enabled'] ?? null,
+            value: isset($data['value']) ? $data['value'] : null,
+            enabled: isset($data['enabled']) ? $data['enabled'] : null,
         );
         return $object;
     }

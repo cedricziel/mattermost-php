@@ -19,11 +19,11 @@ class ProductLimits
     ): static
     {
         $object = new static(
-            boards: $data['boards'] ?? null,
-            files: $data['files'] ?? null,
-            integrations: $data['integrations'] ?? null,
-            messages: $data['messages'] ?? null,
-            teams: $data['teams'] ?? null,
+            boards: isset($data['boards']) ? $data['boards'] : null,
+            files: isset($data['files']) ? $data['files'] : null,
+            integrations: isset($data['integrations']) ? $data['integrations'] : null,
+            messages: isset($data['messages']) ? $data['messages'] : null,
+            teams: isset($data['teams']) ? $data['teams'] : null,
         );
         return $object;
     }

@@ -18,8 +18,8 @@ class Server_Busy
     ): static
     {
         $object = new static(
-            busy: $data['busy'] ?? null,
-            expires: $data['expires'] ?? null,
+            busy: isset($data['busy']) ? $data['busy'] : null,
+            expires: isset($data['expires']) ? $data['expires'] : null,
         );
         return $object;
     }

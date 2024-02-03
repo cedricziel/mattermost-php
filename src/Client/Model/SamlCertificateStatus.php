@@ -20,9 +20,9 @@ class SamlCertificateStatus
     ): static
     {
         $object = new static(
-            idp_certificate_file: $data['idp_certificate_file'] ?? null,
-            public_certificate_file: $data['public_certificate_file'] ?? null,
-            private_key_file: $data['private_key_file'] ?? null,
+            idp_certificate_file: isset($data['idp_certificate_file']) ? $data['idp_certificate_file'] : null,
+            public_certificate_file: isset($data['public_certificate_file']) ? $data['public_certificate_file'] : null,
+            private_key_file: isset($data['private_key_file']) ? $data['private_key_file'] : null,
         );
         return $object;
     }

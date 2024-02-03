@@ -18,8 +18,8 @@ class RetentionPolicyForChannelList
     ): static
     {
         $object = new static(
-            policies: $data['policies'] ?? null,
-            total_count: $data['total_count'] ?? null,
+            policies: isset($data['policies']) ? $data['policies'] : null,
+            total_count: isset($data['total_count']) ? $data['total_count'] : null,
         );
         return $object;
     }

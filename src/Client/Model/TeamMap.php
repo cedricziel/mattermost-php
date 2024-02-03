@@ -18,7 +18,7 @@ class TeamMap
     ): static
     {
         $object = new static(
-            team_id: $data['team_id'] ?? null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
         );
         return $object;
     }

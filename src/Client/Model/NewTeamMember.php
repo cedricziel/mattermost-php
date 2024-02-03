@@ -24,13 +24,13 @@ class NewTeamMember
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            username: $data['username'] ?? null,
-            first_name: $data['first_name'] ?? null,
-            last_name: $data['last_name'] ?? null,
-            nickname: $data['nickname'] ?? null,
-            position: $data['position'] ?? null,
-            create_at: $data['create_at'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            username: isset($data['username']) ? $data['username'] : null,
+            first_name: isset($data['first_name']) ? $data['first_name'] : null,
+            last_name: isset($data['last_name']) ? $data['last_name'] : null,
+            nickname: isset($data['nickname']) ? $data['nickname'] : null,
+            position: isset($data['position']) ? $data['position'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
         );
         return $object;
     }

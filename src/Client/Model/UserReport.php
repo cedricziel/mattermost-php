@@ -31,16 +31,16 @@ class UserReport
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            username: $data['username'] ?? null,
-            email: $data['email'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            last_login_at: $data['last_login_at'] ?? null,
-            last_status_at: $data['last_status_at'] ?? null,
-            last_post_date: $data['last_post_date'] ?? null,
-            days_active: $data['days_active'] ?? null,
-            total_posts: $data['total_posts'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            username: isset($data['username']) ? $data['username'] : null,
+            email: isset($data['email']) ? $data['email'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            last_login_at: isset($data['last_login_at']) ? $data['last_login_at'] : null,
+            last_status_at: isset($data['last_status_at']) ? $data['last_status_at'] : null,
+            last_post_date: isset($data['last_post_date']) ? $data['last_post_date'] : null,
+            days_active: isset($data['days_active']) ? $data['days_active'] : null,
+            total_posts: isset($data['total_posts']) ? $data['total_posts'] : null,
         );
         return $object;
     }

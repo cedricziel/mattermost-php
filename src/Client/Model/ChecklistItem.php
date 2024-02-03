@@ -32,15 +32,15 @@ class ChecklistItem
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            title: $data['title'] ?? null,
-            state: $data['state'] ?? null,
-            state_modified: $data['state_modified'] ?? null,
-            assignee_id: $data['assignee_id'] ?? null,
-            assignee_modified: $data['assignee_modified'] ?? null,
-            command: $data['command'] ?? null,
-            command_last_run: $data['command_last_run'] ?? null,
-            description: $data['description'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            title: isset($data['title']) ? $data['title'] : null,
+            state: isset($data['state']) ? $data['state'] : null,
+            state_modified: isset($data['state_modified']) ? $data['state_modified'] : null,
+            assignee_id: isset($data['assignee_id']) ? $data['assignee_id'] : null,
+            assignee_modified: isset($data['assignee_modified']) ? $data['assignee_modified'] : null,
+            command: isset($data['command']) ? $data['command'] : null,
+            command_last_run: isset($data['command_last_run']) ? $data['command_last_run'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
         );
         return $object;
     }

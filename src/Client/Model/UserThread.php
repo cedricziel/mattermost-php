@@ -28,12 +28,12 @@ class UserThread
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            reply_count: $data['reply_count'] ?? null,
-            last_reply_at: $data['last_reply_at'] ?? null,
-            last_viewed_at: $data['last_viewed_at'] ?? null,
-            participants: $data['participants'] ?? null,
-            post: $data['post'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            reply_count: isset($data['reply_count']) ? $data['reply_count'] : null,
+            last_reply_at: isset($data['last_reply_at']) ? $data['last_reply_at'] : null,
+            last_viewed_at: isset($data['last_viewed_at']) ? $data['last_viewed_at'] : null,
+            participants: isset($data['participants']) ? $data['participants'] : null,
+            post: isset($data['post']) ? $data['post'] : null,
         );
         return $object;
     }

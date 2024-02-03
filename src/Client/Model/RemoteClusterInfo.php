@@ -20,9 +20,9 @@ class RemoteClusterInfo
     ): static
     {
         $object = new static(
-            display_name: $data['display_name'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            last_ping_at: $data['last_ping_at'] ?? null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            last_ping_at: isset($data['last_ping_at']) ? $data['last_ping_at'] : null,
         );
         return $object;
     }

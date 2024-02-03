@@ -17,9 +17,9 @@ class TeamUnread
     ): static
     {
         $object = new static(
-            team_id: $data['team_id'] ?? null,
-            msg_count: $data['msg_count'] ?? null,
-            mention_count: $data['mention_count'] ?? null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            msg_count: isset($data['msg_count']) ? $data['msg_count'] : null,
+            mention_count: isset($data['mention_count']) ? $data['mention_count'] : null,
         );
         return $object;
     }

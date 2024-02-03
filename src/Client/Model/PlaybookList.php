@@ -22,10 +22,10 @@ class PlaybookList
     ): static
     {
         $object = new static(
-            total_count: $data['total_count'] ?? null,
-            page_count: $data['page_count'] ?? null,
-            has_more: $data['has_more'] ?? null,
-            items: $data['items'] ?? null,
+            total_count: isset($data['total_count']) ? $data['total_count'] : null,
+            page_count: isset($data['page_count']) ? $data['page_count'] : null,
+            has_more: isset($data['has_more']) ? $data['has_more'] : null,
+            items: isset($data['items']) ? $data['items'] : null,
         );
         return $object;
     }

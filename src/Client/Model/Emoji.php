@@ -26,12 +26,12 @@ class Emoji
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            creator_id: $data['creator_id'] ?? null,
-            name: $data['name'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
         );
         return $object;
     }

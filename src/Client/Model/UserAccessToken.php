@@ -22,10 +22,10 @@ class UserAccessToken
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            token: $data['token'] ?? null,
-            user_id: $data['user_id'] ?? null,
-            description: $data['description'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            token: isset($data['token']) ? $data['token'] : null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
         );
         return $object;
     }

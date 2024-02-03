@@ -15,7 +15,7 @@ class TeamsLimits
     ): static
     {
         $object = new static(
-            active: $data['active'] ?? null,
+            active: isset($data['active']) ? $data['active'] : null,
         );
         return $object;
     }

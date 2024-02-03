@@ -23,12 +23,12 @@ class SidebarCategoryWithChannels
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            user_id: $data['user_id'] ?? null,
-            team_id: $data['team_id'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            type: $data['type'] ?? null,
-            channel_ids: $data['channel_ids'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            type: isset($data['type']) ? $data['type'] : null,
+            channel_ids: isset($data['channel_ids']) ? $data['channel_ids'] : null,
         );
         return $object;
     }

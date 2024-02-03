@@ -16,8 +16,8 @@ class ChannelData
     ): static
     {
         $object = new static(
-            channel: $data['channel'] ?? null,
-            member: $data['member'] ?? null,
+            channel: isset($data['channel']) ? $data['channel'] : null,
+            member: isset($data['member']) ? $data['member'] : null,
         );
         return $object;
     }

@@ -21,12 +21,12 @@ class CommandResponse
     ): static
     {
         $object = new static(
-            ResponseType: $data['ResponseType'] ?? null,
-            Text: $data['Text'] ?? null,
-            Username: $data['Username'] ?? null,
-            IconURL: $data['IconURL'] ?? null,
-            GotoLocation: $data['GotoLocation'] ?? null,
-            Attachments: $data['Attachments'] ?? null,
+            ResponseType: isset($data['ResponseType']) ? $data['ResponseType'] : null,
+            Text: isset($data['Text']) ? $data['Text'] : null,
+            Username: isset($data['Username']) ? $data['Username'] : null,
+            IconURL: isset($data['IconURL']) ? $data['IconURL'] : null,
+            GotoLocation: isset($data['GotoLocation']) ? $data['GotoLocation'] : null,
+            Attachments: isset($data['Attachments']) ? $data['Attachments'] : null,
         );
         return $object;
     }

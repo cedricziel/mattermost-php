@@ -15,7 +15,7 @@ class UsersStats
     ): static
     {
         $object = new static(
-            total_users_count: $data['total_users_count'] ?? null,
+            total_users_count: isset($data['total_users_count']) ? $data['total_users_count'] : null,
         );
         return $object;
     }

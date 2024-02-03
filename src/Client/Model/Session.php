@@ -28,17 +28,17 @@ class Session
     ): static
     {
         $object = new static(
-            create_at: $data['create_at'] ?? null,
-            device_id: $data['device_id'] ?? null,
-            expires_at: $data['expires_at'] ?? null,
-            id: $data['id'] ?? null,
-            is_oauth: $data['is_oauth'] ?? null,
-            last_activity_at: $data['last_activity_at'] ?? null,
-            props: (object) $data['props'] ?? null,
-            roles: $data['roles'] ?? null,
-            team_members: $data['team_members'] ?? null,
-            token: $data['token'] ?? null,
-            user_id: $data['user_id'] ?? null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            device_id: isset($data['device_id']) ? $data['device_id'] : null,
+            expires_at: isset($data['expires_at']) ? $data['expires_at'] : null,
+            id: isset($data['id']) ? $data['id'] : null,
+            is_oauth: isset($data['is_oauth']) ? $data['is_oauth'] : null,
+            last_activity_at: isset($data['last_activity_at']) ? $data['last_activity_at'] : null,
+            props: isset($data['props']) ? (object) $data['props'] : null,
+            roles: isset($data['roles']) ? $data['roles'] : null,
+            team_members: isset($data['team_members']) ? $data['team_members'] : null,
+            token: isset($data['token']) ? $data['token'] : null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
         );
         return $object;
     }

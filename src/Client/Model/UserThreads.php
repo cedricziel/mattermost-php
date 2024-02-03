@@ -18,8 +18,8 @@ class UserThreads
     ): static
     {
         $object = new static(
-            total: $data['total'] ?? null,
-            threads: $data['threads'] ?? null,
+            total: isset($data['total']) ? $data['total'] : null,
+            threads: isset($data['threads']) ? $data['threads'] : null,
         );
         return $object;
     }

@@ -20,9 +20,9 @@ class Timezone
     ): static
     {
         $object = new static(
-            useAutomaticTimezone: $data['useAutomaticTimezone'] ?? null,
-            manualTimezone: $data['manualTimezone'] ?? null,
-            automaticTimezone: $data['automaticTimezone'] ?? null,
+            useAutomaticTimezone: isset($data['useAutomaticTimezone']) ? $data['useAutomaticTimezone'] : null,
+            manualTimezone: isset($data['manualTimezone']) ? $data['manualTimezone'] : null,
+            automaticTimezone: isset($data['automaticTimezone']) ? $data['automaticTimezone'] : null,
         );
         return $object;
     }

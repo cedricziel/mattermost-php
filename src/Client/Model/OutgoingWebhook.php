@@ -40,19 +40,19 @@ class OutgoingWebhook
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            creator_id: $data['creator_id'] ?? null,
-            team_id: $data['team_id'] ?? null,
-            channel_id: $data['channel_id'] ?? null,
-            description: $data['description'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            trigger_words: $data['trigger_words'] ?? null,
-            trigger_when: $data['trigger_when'] ?? null,
-            callback_urls: $data['callback_urls'] ?? null,
-            content_type: $data['content_type'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            trigger_words: isset($data['trigger_words']) ? $data['trigger_words'] : null,
+            trigger_when: isset($data['trigger_when']) ? $data['trigger_when'] : null,
+            callback_urls: isset($data['callback_urls']) ? $data['callback_urls'] : null,
+            content_type: isset($data['content_type']) ? $data['content_type'] : null,
         );
         return $object;
     }

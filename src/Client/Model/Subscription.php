@@ -23,15 +23,15 @@ class Subscription
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            customer_id: $data['customer_id'] ?? null,
-            product_id: $data['product_id'] ?? null,
-            add_ons: $data['add_ons'] ?? null,
-            start_at: $data['start_at'] ?? null,
-            end_at: $data['end_at'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            seats: $data['seats'] ?? null,
-            dns: $data['dns'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            customer_id: isset($data['customer_id']) ? $data['customer_id'] : null,
+            product_id: isset($data['product_id']) ? $data['product_id'] : null,
+            add_ons: isset($data['add_ons']) ? $data['add_ons'] : null,
+            start_at: isset($data['start_at']) ? $data['start_at'] : null,
+            end_at: isset($data['end_at']) ? $data['end_at'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            seats: isset($data['seats']) ? $data['seats'] : null,
+            dns: isset($data['dns']) ? $data['dns'] : null,
         );
         return $object;
     }

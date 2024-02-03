@@ -18,10 +18,10 @@ class Status
     ): static
     {
         $object = new static(
-            user_id: $data['user_id'] ?? null,
-            status: $data['status'] ?? null,
-            manual: $data['manual'] ?? null,
-            last_activity_at: $data['last_activity_at'] ?? null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            status: isset($data['status']) ? $data['status'] : null,
+            manual: isset($data['manual']) ? $data['manual'] : null,
+            last_activity_at: isset($data['last_activity_at']) ? $data['last_activity_at'] : null,
         );
         return $object;
     }

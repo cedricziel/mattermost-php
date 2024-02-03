@@ -18,8 +18,8 @@ class UserLimits
     ): static
     {
         $object = new static(
-            maxUsersLimit: $data['maxUsersLimit'] ?? null,
-            activeUserCount: $data['activeUserCount'] ?? null,
+            maxUsersLimit: isset($data['maxUsersLimit']) ? $data['maxUsersLimit'] : null,
+            activeUserCount: isset($data['activeUserCount']) ? $data['activeUserCount'] : null,
         );
         return $object;
     }

@@ -18,9 +18,9 @@ class SlackAttachmentField
     ): static
     {
         $object = new static(
-            Title: $data['Title'] ?? null,
-            Value: $data['Value'] ?? null,
-            Short: $data['Short'] ?? null,
+            Title: isset($data['Title']) ? $data['Title'] : null,
+            Value: isset($data['Value']) ? $data['Value'] : null,
+            Short: isset($data['Short']) ? $data['Short'] : null,
         );
         return $object;
     }

@@ -26,12 +26,12 @@ class OutgoingOAuthConnectionGetItem
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            name: $data['name'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            grant_type: $data['grant_type'] ?? null,
-            audiences: $data['audiences'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            grant_type: isset($data['grant_type']) ? $data['grant_type'] : null,
+            audiences: isset($data['audiences']) ? $data['audiences'] : null,
         );
         return $object;
     }

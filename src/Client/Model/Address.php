@@ -20,12 +20,12 @@ class Address
     ): static
     {
         $object = new static(
-            city: $data['city'] ?? null,
-            country: $data['country'] ?? null,
-            line1: $data['line1'] ?? null,
-            line2: $data['line2'] ?? null,
-            postal_code: $data['postal_code'] ?? null,
-            state: $data['state'] ?? null,
+            city: isset($data['city']) ? $data['city'] : null,
+            country: isset($data['country']) ? $data['country'] : null,
+            line1: isset($data['line1']) ? $data['line1'] : null,
+            line2: isset($data['line2']) ? $data['line2'] : null,
+            postal_code: isset($data['postal_code']) ? $data['postal_code'] : null,
+            state: isset($data['state']) ? $data['state'] : null,
         );
         return $object;
     }

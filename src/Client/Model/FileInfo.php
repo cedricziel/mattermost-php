@@ -40,19 +40,19 @@ class FileInfo
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            user_id: $data['user_id'] ?? null,
-            post_id: $data['post_id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            name: $data['name'] ?? null,
-            extension: $data['extension'] ?? null,
-            size: $data['size'] ?? null,
-            mime_type: $data['mime_type'] ?? null,
-            width: $data['width'] ?? null,
-            height: $data['height'] ?? null,
-            has_preview_image: $data['has_preview_image'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            user_id: isset($data['user_id']) ? $data['user_id'] : null,
+            post_id: isset($data['post_id']) ? $data['post_id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            extension: isset($data['extension']) ? $data['extension'] : null,
+            size: isset($data['size']) ? $data['size'] : null,
+            mime_type: isset($data['mime_type']) ? $data['mime_type'] : null,
+            width: isset($data['width']) ? $data['width'] : null,
+            height: isset($data['height']) ? $data['height'] : null,
+            has_preview_image: isset($data['has_preview_image']) ? $data['has_preview_image'] : null,
         );
         return $object;
     }

@@ -15,7 +15,7 @@ class KnownUsers
     ): static
     {
         $object = new static(
-            items: $data['items'] ?? null,
+            items: isset($data['items']) ? $data['items'] : null,
         );
         return $object;
     }

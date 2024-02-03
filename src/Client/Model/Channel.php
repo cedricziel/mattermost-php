@@ -33,20 +33,20 @@ class Channel
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            create_at: $data['create_at'] ?? null,
-            update_at: $data['update_at'] ?? null,
-            delete_at: $data['delete_at'] ?? null,
-            team_id: $data['team_id'] ?? null,
-            type: $data['type'] ?? null,
-            display_name: $data['display_name'] ?? null,
-            name: $data['name'] ?? null,
-            header: $data['header'] ?? null,
-            purpose: $data['purpose'] ?? null,
-            last_post_at: $data['last_post_at'] ?? null,
-            total_msg_count: $data['total_msg_count'] ?? null,
-            extra_update_at: $data['extra_update_at'] ?? null,
-            creator_id: $data['creator_id'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            type: isset($data['type']) ? $data['type'] : null,
+            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            name: isset($data['name']) ? $data['name'] : null,
+            header: isset($data['header']) ? $data['header'] : null,
+            purpose: isset($data['purpose']) ? $data['purpose'] : null,
+            last_post_at: isset($data['last_post_at']) ? $data['last_post_at'] : null,
+            total_msg_count: isset($data['total_msg_count']) ? $data['total_msg_count'] : null,
+            extra_update_at: isset($data['extra_update_at']) ? $data['extra_update_at'] : null,
+            creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
         );
         return $object;
     }

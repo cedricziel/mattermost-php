@@ -18,8 +18,8 @@ class System
     ): static
     {
         $object = new static(
-            name: $data['name'] ?? null,
-            value: $data['value'] ?? null,
+            name: isset($data['name']) ? $data['name'] : null,
+            value: isset($data['value']) ? $data['value'] : null,
         );
         return $object;
     }

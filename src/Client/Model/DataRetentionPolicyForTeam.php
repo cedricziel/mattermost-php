@@ -18,8 +18,8 @@ class DataRetentionPolicyForTeam
     ): static
     {
         $object = new static(
-            team_id: $data['team_id'] ?? null,
-            post_duration: $data['post_duration'] ?? null,
+            team_id: isset($data['team_id']) ? $data['team_id'] : null,
+            post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,
         );
         return $object;
     }

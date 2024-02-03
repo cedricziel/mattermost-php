@@ -20,12 +20,12 @@ class InvoiceLineItem
     ): static
     {
         $object = new static(
-            price_id: $data['price_id'] ?? null,
-            total: $data['total'] ?? null,
-            quantity: $data['quantity'] ?? null,
-            price_per_unit: $data['price_per_unit'] ?? null,
-            description: $data['description'] ?? null,
-            metadata: $data['metadata'] ?? null,
+            price_id: isset($data['price_id']) ? $data['price_id'] : null,
+            total: isset($data['total']) ? $data['total'] : null,
+            quantity: isset($data['quantity']) ? $data['quantity'] : null,
+            price_per_unit: isset($data['price_per_unit']) ? $data['price_per_unit'] : null,
+            description: isset($data['description']) ? $data['description'] : null,
+            metadata: isset($data['metadata']) ? $data['metadata'] : null,
         );
         return $object;
     }

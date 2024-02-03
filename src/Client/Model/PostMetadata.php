@@ -45,13 +45,13 @@ class PostMetadata
     ): static
     {
         $object = new static(
-            embeds: $data['embeds'] ?? null,
-            emojis: $data['emojis'] ?? null,
-            files: $data['files'] ?? null,
-            images: (object) $data['images'] ?? null,
-            reactions: $data['reactions'] ?? null,
-            priority: (object) $data['priority'] ?? null,
-            acknowledgements: $data['acknowledgements'] ?? null,
+            embeds: isset($data['embeds']) ? $data['embeds'] : null,
+            emojis: isset($data['emojis']) ? $data['emojis'] : null,
+            files: isset($data['files']) ? $data['files'] : null,
+            images: isset($data['images']) ? (object) $data['images'] : null,
+            reactions: isset($data['reactions']) ? $data['reactions'] : null,
+            priority: isset($data['priority']) ? (object) $data['priority'] : null,
+            acknowledgements: isset($data['acknowledgements']) ? $data['acknowledgements'] : null,
         );
         return $object;
     }

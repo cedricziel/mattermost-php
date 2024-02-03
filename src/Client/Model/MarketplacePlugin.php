@@ -29,14 +29,14 @@ class MarketplacePlugin
     ): static
     {
         $object = new static(
-            homepage_url: $data['homepage_url'] ?? null,
-            icon_data: $data['icon_data'] ?? null,
-            download_url: $data['download_url'] ?? null,
-            release_notes_url: $data['release_notes_url'] ?? null,
-            labels: $data['labels'] ?? null,
-            signature: $data['signature'] ?? null,
-            manifest: $data['manifest'] ?? null,
-            installed_version: $data['installed_version'] ?? null,
+            homepage_url: isset($data['homepage_url']) ? $data['homepage_url'] : null,
+            icon_data: isset($data['icon_data']) ? $data['icon_data'] : null,
+            download_url: isset($data['download_url']) ? $data['download_url'] : null,
+            release_notes_url: isset($data['release_notes_url']) ? $data['release_notes_url'] : null,
+            labels: isset($data['labels']) ? $data['labels'] : null,
+            signature: isset($data['signature']) ? $data['signature'] : null,
+            manifest: isset($data['manifest']) ? $data['manifest'] : null,
+            installed_version: isset($data['installed_version']) ? $data['installed_version'] : null,
         );
         return $object;
     }

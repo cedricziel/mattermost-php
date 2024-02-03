@@ -22,10 +22,10 @@ class ChannelNotifyProps
     ): static
     {
         $object = new static(
-            email: $data['email'] ?? null,
-            push: $data['push'] ?? null,
-            desktop: $data['desktop'] ?? null,
-            mark_unread: $data['mark_unread'] ?? null,
+            email: isset($data['email']) ? $data['email'] : null,
+            push: isset($data['push']) ? $data['push'] : null,
+            desktop: isset($data['desktop']) ? $data['desktop'] : null,
+            mark_unread: isset($data['mark_unread']) ? $data['mark_unread'] : null,
         );
         return $object;
     }

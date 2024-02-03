@@ -28,13 +28,13 @@ class ClusterInfo
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            version: $data['version'] ?? null,
-            config_hash: $data['config_hash'] ?? null,
-            internode_url: $data['internode_url'] ?? null,
-            hostname: $data['hostname'] ?? null,
-            last_ping: $data['last_ping'] ?? null,
-            is_alive: $data['is_alive'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            version: isset($data['version']) ? $data['version'] : null,
+            config_hash: isset($data['config_hash']) ? $data['config_hash'] : null,
+            internode_url: isset($data['internode_url']) ? $data['internode_url'] : null,
+            hostname: isset($data['hostname']) ? $data['hostname'] : null,
+            last_ping: isset($data['last_ping']) ? $data['last_ping'] : null,
+            is_alive: isset($data['is_alive']) ? $data['is_alive'] : null,
         );
         return $object;
     }

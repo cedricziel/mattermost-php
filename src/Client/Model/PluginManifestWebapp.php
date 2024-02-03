@@ -19,9 +19,9 @@ class PluginManifestWebapp
     ): static
     {
         $object = new static(
-            id: $data['id'] ?? null,
-            version: $data['version'] ?? null,
-            webapp: (object) $data['webapp'] ?? null,
+            id: isset($data['id']) ? $data['id'] : null,
+            version: isset($data['version']) ? $data['version'] : null,
+            webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
         );
         return $object;
     }
