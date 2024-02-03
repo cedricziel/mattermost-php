@@ -17,7 +17,7 @@ class PostListWithSearchMatches
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             posts: isset($data['posts']) ? (object) $data['posts'] : null,
             matches: isset($data['matches']) ? (object) $data['matches'] : null,

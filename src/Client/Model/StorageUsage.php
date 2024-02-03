@@ -15,7 +15,7 @@ class StorageUsage
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             bytes: isset($data['bytes']) ? $data['bytes'] : null,
         );
         return $object;

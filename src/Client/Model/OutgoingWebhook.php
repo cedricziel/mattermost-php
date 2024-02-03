@@ -39,7 +39,7 @@ class OutgoingWebhook
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,
             update_at: isset($data['update_at']) ? $data['update_at'] : null,

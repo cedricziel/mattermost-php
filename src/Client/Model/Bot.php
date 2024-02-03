@@ -29,7 +29,7 @@ class Bot
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,
             update_at: isset($data['update_at']) ? $data['update_at'] : null,

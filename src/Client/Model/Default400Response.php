@@ -12,7 +12,7 @@ class Default400Response extends Error
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
         );
         return $object;
     }

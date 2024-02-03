@@ -21,7 +21,7 @@ class GlobalDataRetentionPolicy
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             message_deletion_enabled: isset($data['message_deletion_enabled']) ? $data['message_deletion_enabled'] : null,
             file_deletion_enabled: isset($data['file_deletion_enabled']) ? $data['file_deletion_enabled'] : null,
             message_retention_cutoff: isset($data['message_retention_cutoff']) ? $data['message_retention_cutoff'] : null,

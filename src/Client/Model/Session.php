@@ -27,7 +27,7 @@ class Session
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             create_at: isset($data['create_at']) ? $data['create_at'] : null,
             device_id: isset($data['device_id']) ? $data['device_id'] : null,
             expires_at: isset($data['expires_at']) ? $data['expires_at'] : null,

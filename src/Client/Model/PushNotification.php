@@ -35,7 +35,7 @@ class PushNotification
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             ack_id: isset($data['ack_id']) ? $data['ack_id'] : null,
             platform: isset($data['platform']) ? $data['platform'] : null,
             server_id: isset($data['server_id']) ? $data['server_id'] : null,

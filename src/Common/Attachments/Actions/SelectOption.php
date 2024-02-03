@@ -2,7 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Common\Attachments\Actions;
 
-class SelectOption
+final class SelectOption
 {
     public function __construct(
         protected string $text,

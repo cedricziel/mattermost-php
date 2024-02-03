@@ -17,7 +17,7 @@ class System
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             name: isset($data['name']) ? $data['name'] : null,
             value: isset($data['value']) ? $data['value'] : null,
         );

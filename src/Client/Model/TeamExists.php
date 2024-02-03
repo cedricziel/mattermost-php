@@ -14,7 +14,7 @@ class TeamExists
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             exists: isset($data['exists']) ? $data['exists'] : null,
         );
         return $object;

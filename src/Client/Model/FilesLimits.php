@@ -14,7 +14,7 @@ class FilesLimits
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             total_storage: isset($data['total_storage']) ? $data['total_storage'] : null,
         );
         return $object;

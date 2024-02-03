@@ -147,7 +147,7 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
         ->setNullable()
         ->setComment('@param array<string, mixed> $data');
 
-    $hydrationMethod->addBody('$object = new static(');
+    $hydrationMethod->addBody('$object = new self(');
 
     if ($class->hasMethod('__construct')) {
         if ($class->getExtends() !== null) {
@@ -179,7 +179,7 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
 function createHydrationMethodForArrayBody(PhpNamespace $modelNamespace, ClassType $class, string $itemType): Method
 {
     $hydrationMethod = createHydrationMethod($modelNamespace, $class);
-    $hydrationMethod->setBody('$object = new static(' . PHP_EOL);
+    $hydrationMethod->setBody('$object = new self(' . PHP_EOL);
 
     $hydrationMethod->addBody('    items: array_map(function ($item) {');
     $hydrationMethod->addBody(sprintf('    return %s::hydrate($item);', $itemType));

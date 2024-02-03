@@ -21,7 +21,7 @@ class PostList
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             posts: isset($data['posts']) ? (object) $data['posts'] : null,
             next_post_id: isset($data['next_post_id']) ? $data['next_post_id'] : null,

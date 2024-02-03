@@ -15,7 +15,7 @@ class ChannelListWithTeamData implements \JsonSerializable
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             items: array_map(function ($item) {
             return \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData::hydrate($item);
             }, $data['items'] ?? []),

@@ -31,7 +31,7 @@ class ChecklistItem
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             title: isset($data['title']) ? $data['title'] : null,
             state: isset($data['state']) ? $data['state'] : null,

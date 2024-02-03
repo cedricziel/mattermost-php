@@ -23,7 +23,7 @@ class PlaybookRunMetadata
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             channel_name: isset($data['channel_name']) ? $data['channel_name'] : null,
             channel_display_name: isset($data['channel_display_name']) ? $data['channel_display_name'] : null,
             team_name: isset($data['team_name']) ? $data['team_name'] : null,

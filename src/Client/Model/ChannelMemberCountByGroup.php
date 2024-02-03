@@ -22,7 +22,7 @@ class ChannelMemberCountByGroup
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             group_id: isset($data['group_id']) ? $data['group_id'] : null,
             channel_member_count: isset($data['channel_member_count']) ? $data['channel_member_count'] : null,
             channel_member_timezones_count: isset($data['channel_member_timezones_count']) ? $data['channel_member_timezones_count'] : null,

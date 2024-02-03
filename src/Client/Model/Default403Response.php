@@ -12,7 +12,7 @@ class Default403Response extends Error
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
         );
         return $object;
     }

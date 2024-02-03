@@ -21,7 +21,7 @@ class GroupSyncableTeams
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
             team_display_name: isset($data['team_display_name']) ? $data['team_display_name'] : null,
             team_type: isset($data['team_type']) ? $data['team_type'] : null,

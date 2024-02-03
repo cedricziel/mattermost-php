@@ -6,7 +6,7 @@ namespace CedricZiel\MattermostPhp\Common\Attachments;
  * @see https://api.slack.com/docs/message-attachments
  * @see https://developers.mattermost.com/integrate/reference/message-attachments/
  */
-class Attachment implements \JsonSerializable
+final class Attachment implements \JsonSerializable
 {
     public function __construct(
         protected string $fallback,

@@ -15,7 +15,7 @@ class BoardsLimits
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             cards: isset($data['cards']) ? $data['cards'] : null,
             views: isset($data['views']) ? $data['views'] : null,
         );

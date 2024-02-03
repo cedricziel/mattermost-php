@@ -23,7 +23,7 @@ class AutocompleteSuggestion
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             Complete: isset($data['Complete']) ? $data['Complete'] : null,
             Suggestion: isset($data['Suggestion']) ? $data['Suggestion'] : null,
             Hint: isset($data['Hint']) ? $data['Hint'] : null,

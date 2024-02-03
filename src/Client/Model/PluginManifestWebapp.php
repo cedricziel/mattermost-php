@@ -18,7 +18,7 @@ class PluginManifestWebapp
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             version: isset($data['version']) ? $data['version'] : null,
             webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,

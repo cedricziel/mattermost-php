@@ -28,7 +28,7 @@ class MarketplacePlugin
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             homepage_url: isset($data['homepage_url']) ? $data['homepage_url'] : null,
             icon_data: isset($data['icon_data']) ? $data['icon_data'] : null,
             download_url: isset($data['download_url']) ? $data['download_url'] : null,

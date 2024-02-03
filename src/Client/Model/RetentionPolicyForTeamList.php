@@ -17,7 +17,7 @@ class RetentionPolicyForTeamList
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             policies: isset($data['policies']) ? $data['policies'] : null,
             total_count: isset($data['total_count']) ? $data['total_count'] : null,
         );

@@ -25,7 +25,7 @@ class Emoji
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
             name: isset($data['name']) ? $data['name'] : null,

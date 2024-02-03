@@ -17,7 +17,7 @@ class AppError
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             status_code: isset($data['status_code']) ? $data['status_code'] : null,
             id: isset($data['id']) ? $data['id'] : null,
             message: isset($data['message']) ? $data['message'] : null,

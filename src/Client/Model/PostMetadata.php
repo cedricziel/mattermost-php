@@ -44,7 +44,7 @@ class PostMetadata
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             embeds: isset($data['embeds']) ? $data['embeds'] : null,
             emojis: isset($data['emojis']) ? $data['emojis'] : null,
             files: isset($data['files']) ? $data['files'] : null,

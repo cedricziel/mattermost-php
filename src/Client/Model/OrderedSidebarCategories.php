@@ -18,7 +18,7 @@ class OrderedSidebarCategories
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             categories: isset($data['categories']) ? $data['categories'] : null,
         );

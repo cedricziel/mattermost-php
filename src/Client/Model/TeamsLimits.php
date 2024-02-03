@@ -14,7 +14,7 @@ class TeamsLimits
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             active: isset($data['active']) ? $data['active'] : null,
         );
         return $object;

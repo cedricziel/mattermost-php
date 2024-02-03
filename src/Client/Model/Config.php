@@ -34,7 +34,7 @@ class Config
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             ServiceSettings: isset($data['ServiceSettings']) ? (object) $data['ServiceSettings'] : null,
             TeamSettings: isset($data['TeamSettings']) ? (object) $data['TeamSettings'] : null,
             SqlSettings: isset($data['SqlSettings']) ? (object) $data['SqlSettings'] : null,

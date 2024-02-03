@@ -17,7 +17,7 @@ class SlackAttachmentField
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             Title: isset($data['Title']) ? $data['Title'] : null,
             Value: isset($data['Value']) ? $data['Value'] : null,
             Short: isset($data['Short']) ? $data['Short'] : null,

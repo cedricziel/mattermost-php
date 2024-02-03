@@ -18,7 +18,7 @@ class ProductLimits
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             boards: isset($data['boards']) ? $data['boards'] : null,
             files: isset($data['files']) ? $data['files'] : null,
             integrations: isset($data['integrations']) ? $data['integrations'] : null,

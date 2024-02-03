@@ -18,7 +18,7 @@ class GroupWithSchemeAdmin
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             group: isset($data['group']) ? $data['group'] : null,
             scheme_admin: isset($data['scheme_admin']) ? $data['scheme_admin'] : null,
         );

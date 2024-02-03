@@ -19,7 +19,7 @@ class GroupSyncableChannel
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
             group_id: isset($data['group_id']) ? $data['group_id'] : null,
             auto_add: isset($data['auto_add']) ? $data['auto_add'] : null,

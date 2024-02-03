@@ -23,7 +23,7 @@ class NewTeamMember
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             username: isset($data['username']) ? $data['username'] : null,
             first_name: isset($data['first_name']) ? $data['first_name'] : null,

@@ -39,7 +39,7 @@ class FileInfo
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             post_id: isset($data['post_id']) ? $data['post_id'] : null,

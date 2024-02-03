@@ -33,7 +33,7 @@ class SystemStatusResponse
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             AndroidLatestVersion: isset($data['AndroidLatestVersion']) ? $data['AndroidLatestVersion'] : null,
             AndroidMinVersion: isset($data['AndroidMinVersion']) ? $data['AndroidMinVersion'] : null,
             DesktopLatestVersion: isset($data['DesktopLatestVersion']) ? $data['DesktopLatestVersion'] : null,

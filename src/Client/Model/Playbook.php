@@ -35,7 +35,7 @@ class Playbook
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             title: isset($data['title']) ? $data['title'] : null,
             description: isset($data['description']) ? $data['description'] : null,

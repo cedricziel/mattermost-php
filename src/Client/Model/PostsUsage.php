@@ -15,7 +15,7 @@ class PostsUsage
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             count: isset($data['count']) ? $data['count'] : null,
         );
         return $object;

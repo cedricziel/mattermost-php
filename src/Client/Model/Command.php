@@ -47,7 +47,7 @@ class Command
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             token: isset($data['token']) ? $data['token'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,

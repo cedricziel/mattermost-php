@@ -13,9 +13,9 @@ class Action implements \JsonSerializable
     ) {
     }
 
-    public static function create(string $id, string $name, ActionIntegration $integration): static
+    public static function create(string $id, string $name, ActionIntegration $integration): self
     {
-        return new static($id, $name, $integration);
+        return new self($id, $name, $integration);
     }
 
     public function jsonSerialize(): \stdClass

@@ -17,7 +17,7 @@ class AllowedIPRange
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             CIDRBlock: isset($data['CIDRBlock']) ? $data['CIDRBlock'] : null,
             Description: isset($data['Description']) ? $data['Description'] : null,
         );

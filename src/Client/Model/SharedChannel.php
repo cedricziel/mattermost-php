@@ -34,7 +34,7 @@ class SharedChannel
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
             home: isset($data['home']) ? $data['home'] : null,

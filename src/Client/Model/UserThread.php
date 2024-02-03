@@ -27,7 +27,7 @@ class UserThread
         ?array $data,
     ): static
     {
-        $object = new static(
+        $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             reply_count: isset($data['reply_count']) ? $data['reply_count'] : null,
             last_reply_at: isset($data['last_reply_at']) ? $data['last_reply_at'] : null,
