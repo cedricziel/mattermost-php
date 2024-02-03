@@ -28,32 +28,23 @@ class SystemStatusResponse
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['AndroidLatestVersion'] */
-            if (isset($data['AndroidLatestVersion'])) $this->AndroidLatestVersion = $data['AndroidLatestVersion'];
-        /** @var string $data['AndroidMinVersion'] */
-            if (isset($data['AndroidMinVersion'])) $this->AndroidMinVersion = $data['AndroidMinVersion'];
-        /** @var string $data['DesktopLatestVersion'] */
-            if (isset($data['DesktopLatestVersion'])) $this->DesktopLatestVersion = $data['DesktopLatestVersion'];
-        /** @var string $data['DesktopMinVersion'] */
-            if (isset($data['DesktopMinVersion'])) $this->DesktopMinVersion = $data['DesktopMinVersion'];
-        /** @var string $data['IosLatestVersion'] */
-            if (isset($data['IosLatestVersion'])) $this->IosLatestVersion = $data['IosLatestVersion'];
-        /** @var string $data['IosMinVersion'] */
-            if (isset($data['IosMinVersion'])) $this->IosMinVersion = $data['IosMinVersion'];
-        /** @var string $data['database_status'] */
-            if (isset($data['database_status'])) $this->database_status = $data['database_status'];
-        /** @var string $data['filestore_status'] */
-            if (isset($data['filestore_status'])) $this->filestore_status = $data['filestore_status'];
-        /** @var string $data['status'] */
-            if (isset($data['status'])) $this->status = $data['status'];
-        /** @var string $data['CanReceiveNotifications'] */
-            if (isset($data['CanReceiveNotifications'])) $this->CanReceiveNotifications = $data['CanReceiveNotifications'];
-        return $this;
+        $object = new static(
+            AndroidLatestVersion: $data['AndroidLatestVersion'] ?? null,
+            AndroidMinVersion: $data['AndroidMinVersion'] ?? null,
+            DesktopLatestVersion: $data['DesktopLatestVersion'] ?? null,
+            DesktopMinVersion: $data['DesktopMinVersion'] ?? null,
+            IosLatestVersion: $data['IosLatestVersion'] ?? null,
+            IosMinVersion: $data['IosMinVersion'] ?? null,
+            database_status: $data['database_status'] ?? null,
+            filestore_status: $data['filestore_status'] ?? null,
+            status: $data['status'] ?? null,
+            CanReceiveNotifications: $data['CanReceiveNotifications'] ?? null,
+        );
+        return $object;
     }
 }

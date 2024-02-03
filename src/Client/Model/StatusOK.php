@@ -10,14 +10,14 @@ class StatusOK
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['status'] */
-            if (isset($data['status'])) $this->status = $data['status'];
-        return $this;
+        $object = new static(
+            status: $data['status'] ?? null,
+        );
+        return $object;
     }
 }

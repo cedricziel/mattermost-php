@@ -16,20 +16,17 @@ class UserAccessToken
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['token'] */
-            if (isset($data['token'])) $this->token = $data['token'];
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            token: $data['token'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            description: $data['description'] ?? null,
+        );
+        return $object;
     }
 }

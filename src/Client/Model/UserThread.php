@@ -22,24 +22,19 @@ class UserThread
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var int $data['reply_count'] */
-            if (isset($data['reply_count'])) $this->reply_count = $data['reply_count'];
-        /** @var int $data['last_reply_at'] */
-            if (isset($data['last_reply_at'])) $this->last_reply_at = $data['last_reply_at'];
-        /** @var int $data['last_viewed_at'] */
-            if (isset($data['last_viewed_at'])) $this->last_viewed_at = $data['last_viewed_at'];
-        /** @var array $data['participants'] */
-            if (isset($data['participants'])) $this->participants = $data['participants'];
-        /** @var  $data['post'] */
-            if (isset($data['post'])) $this->post = $data['post'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            reply_count: $data['reply_count'] ?? null,
+            last_reply_at: $data['last_reply_at'] ?? null,
+            last_viewed_at: $data['last_viewed_at'] ?? null,
+            participants: $data['participants'] ?? null,
+            post: $data['post'] ?? null,
+        );
+        return $object;
     }
 }

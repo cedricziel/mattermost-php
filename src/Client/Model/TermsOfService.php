@@ -16,20 +16,17 @@ class TermsOfService
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['text'] */
-            if (isset($data['text'])) $this->text = $data['text'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            text: $data['text'] ?? null,
+        );
+        return $object;
     }
 }

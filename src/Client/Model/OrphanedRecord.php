@@ -15,16 +15,15 @@ class OrphanedRecord
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['parent_id'] */
-            if (isset($data['parent_id'])) $this->parent_id = $data['parent_id'];
-        /** @var string $data['child_id'] */
-            if (isset($data['child_id'])) $this->child_id = $data['child_id'];
-        return $this;
+        $object = new static(
+            parent_id: $data['parent_id'] ?? null,
+            child_id: $data['child_id'] ?? null,
+        );
+        return $object;
     }
 }

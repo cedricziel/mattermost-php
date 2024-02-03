@@ -14,16 +14,15 @@ class DataRetentionPolicyWithoutId
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['display_name'] */
-            if (isset($data['display_name'])) $this->display_name = $data['display_name'];
-        /** @var int $data['post_duration'] */
-            if (isset($data['post_duration'])) $this->post_duration = $data['post_duration'];
-        return $this;
+        $object = new static(
+            display_name: $data['display_name'] ?? null,
+            post_duration: $data['post_duration'] ?? null,
+        );
+        return $object;
     }
 }

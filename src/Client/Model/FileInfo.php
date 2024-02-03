@@ -34,38 +34,26 @@ class FileInfo
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['post_id'] */
-            if (isset($data['post_id'])) $this->post_id = $data['post_id'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['update_at'] */
-            if (isset($data['update_at'])) $this->update_at = $data['update_at'];
-        /** @var int $data['delete_at'] */
-            if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['extension'] */
-            if (isset($data['extension'])) $this->extension = $data['extension'];
-        /** @var int $data['size'] */
-            if (isset($data['size'])) $this->size = $data['size'];
-        /** @var string $data['mime_type'] */
-            if (isset($data['mime_type'])) $this->mime_type = $data['mime_type'];
-        /** @var int $data['width'] */
-            if (isset($data['width'])) $this->width = $data['width'];
-        /** @var int $data['height'] */
-            if (isset($data['height'])) $this->height = $data['height'];
-        /** @var bool $data['has_preview_image'] */
-            if (isset($data['has_preview_image'])) $this->has_preview_image = $data['has_preview_image'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            post_id: $data['post_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            name: $data['name'] ?? null,
+            extension: $data['extension'] ?? null,
+            size: $data['size'] ?? null,
+            mime_type: $data['mime_type'] ?? null,
+            width: $data['width'] ?? null,
+            height: $data['height'] ?? null,
+            has_preview_image: $data['has_preview_image'] ?? null,
+        );
+        return $object;
     }
 }

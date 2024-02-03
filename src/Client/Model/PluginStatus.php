@@ -22,26 +22,20 @@ class PluginStatus
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['plugin_id'] */
-            if (isset($data['plugin_id'])) $this->plugin_id = $data['plugin_id'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        /** @var string $data['version'] */
-            if (isset($data['version'])) $this->version = $data['version'];
-        /** @var string $data['cluster_id'] */
-            if (isset($data['cluster_id'])) $this->cluster_id = $data['cluster_id'];
-        /** @var string $data['plugin_path'] */
-            if (isset($data['plugin_path'])) $this->plugin_path = $data['plugin_path'];
-        /** @var number $data['state'] */
-            if (isset($data['state'])) $this->state = $data['state'];
-        return $this;
+        $object = new static(
+            plugin_id: $data['plugin_id'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            version: $data['version'] ?? null,
+            cluster_id: $data['cluster_id'] ?? null,
+            plugin_path: $data['plugin_path'] ?? null,
+            state: $data['state'] ?? null,
+        );
+        return $object;
     }
 }

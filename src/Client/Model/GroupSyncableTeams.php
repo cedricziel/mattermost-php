@@ -16,28 +16,21 @@ class GroupSyncableTeams
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['team_id'] */
-            if (isset($data['team_id'])) $this->team_id = $data['team_id'];
-        /** @var string $data['team_display_name'] */
-            if (isset($data['team_display_name'])) $this->team_display_name = $data['team_display_name'];
-        /** @var string $data['team_type'] */
-            if (isset($data['team_type'])) $this->team_type = $data['team_type'];
-        /** @var string $data['group_id'] */
-            if (isset($data['group_id'])) $this->group_id = $data['group_id'];
-        /** @var bool $data['auto_add'] */
-            if (isset($data['auto_add'])) $this->auto_add = $data['auto_add'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['delete_at'] */
-            if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
-        /** @var int $data['update_at'] */
-            if (isset($data['update_at'])) $this->update_at = $data['update_at'];
-        return $this;
+        $object = new static(
+            team_id: $data['team_id'] ?? null,
+            team_display_name: $data['team_display_name'] ?? null,
+            team_type: $data['team_type'] ?? null,
+            group_id: $data['group_id'] ?? null,
+            auto_add: $data['auto_add'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+        );
+        return $object;
     }
 }

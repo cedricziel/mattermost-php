@@ -12,20 +12,17 @@ class Status
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['status'] */
-            if (isset($data['status'])) $this->status = $data['status'];
-        /** @var bool $data['manual'] */
-            if (isset($data['manual'])) $this->manual = $data['manual'];
-        /** @var int $data['last_activity_at'] */
-            if (isset($data['last_activity_at'])) $this->last_activity_at = $data['last_activity_at'];
-        return $this;
+        $object = new static(
+            user_id: $data['user_id'] ?? null,
+            status: $data['status'] ?? null,
+            manual: $data['manual'] ?? null,
+            last_activity_at: $data['last_activity_at'] ?? null,
+        );
+        return $object;
     }
 }

@@ -14,16 +14,15 @@ class LDAPGroupsPaged
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var number $data['count'] */
-            if (isset($data['count'])) $this->count = $data['count'];
-        /** @var array $data['groups'] */
-            if (isset($data['groups'])) $this->groups = $data['groups'];
-        return $this;
+        $object = new static(
+            count: $data['count'] ?? null,
+            groups: $data['groups'] ?? null,
+        );
+        return $object;
     }
 }

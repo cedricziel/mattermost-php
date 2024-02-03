@@ -28,30 +28,22 @@ class PluginManifest
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        /** @var string $data['version'] */
-            if (isset($data['version'])) $this->version = $data['version'];
-        /** @var string $data['min_server_version'] */
-            if (isset($data['min_server_version'])) $this->min_server_version = $data['min_server_version'];
-        /** @var stdClass $data['backend'] */
-            if (isset($data['backend'])) $this->backend = (object) $data['backend'];
-        /** @var stdClass $data['server'] */
-            if (isset($data['server'])) $this->server = (object) $data['server'];
-        /** @var stdClass $data['webapp'] */
-            if (isset($data['webapp'])) $this->webapp = (object) $data['webapp'];
-        /** @var stdClass $data['settings_schema'] */
-            if (isset($data['settings_schema'])) $this->settings_schema = (object) $data['settings_schema'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            version: $data['version'] ?? null,
+            min_server_version: $data['min_server_version'] ?? null,
+            backend: (object) $data['backend'] ?? null,
+            server: (object) $data['server'] ?? null,
+            webapp: (object) $data['webapp'] ?? null,
+            settings_schema: (object) $data['settings_schema'] ?? null,
+        );
+        return $object;
     }
 }

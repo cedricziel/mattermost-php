@@ -10,16 +10,15 @@ class SubscriptionStats
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['remaining_seats'] */
-            if (isset($data['remaining_seats'])) $this->remaining_seats = $data['remaining_seats'];
-        /** @var string $data['is_paid_tier'] */
-            if (isset($data['is_paid_tier'])) $this->is_paid_tier = $data['is_paid_tier'];
-        return $this;
+        $object = new static(
+            remaining_seats: $data['remaining_seats'] ?? null,
+            is_paid_tier: $data['is_paid_tier'] ?? null,
+        );
+        return $object;
     }
 }

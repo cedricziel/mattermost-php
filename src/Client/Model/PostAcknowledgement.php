@@ -14,18 +14,16 @@ class PostAcknowledgement
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['post_id'] */
-            if (isset($data['post_id'])) $this->post_id = $data['post_id'];
-        /** @var int $data['acknowledged_at'] */
-            if (isset($data['acknowledged_at'])) $this->acknowledged_at = $data['acknowledged_at'];
-        return $this;
+        $object = new static(
+            user_id: $data['user_id'] ?? null,
+            post_id: $data['post_id'] ?? null,
+            acknowledged_at: $data['acknowledged_at'] ?? null,
+        );
+        return $object;
     }
 }

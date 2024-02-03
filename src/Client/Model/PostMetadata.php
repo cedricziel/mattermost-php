@@ -39,26 +39,20 @@ class PostMetadata
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var array $data['embeds'] */
-            if (isset($data['embeds'])) $this->embeds = $data['embeds'];
-        /** @var array $data['emojis'] */
-            if (isset($data['emojis'])) $this->emojis = $data['emojis'];
-        /** @var array $data['files'] */
-            if (isset($data['files'])) $this->files = $data['files'];
-        /** @var stdClass $data['images'] */
-            if (isset($data['images'])) $this->images = (object) $data['images'];
-        /** @var array $data['reactions'] */
-            if (isset($data['reactions'])) $this->reactions = $data['reactions'];
-        /** @var stdClass $data['priority'] */
-            if (isset($data['priority'])) $this->priority = (object) $data['priority'];
-        /** @var array $data['acknowledgements'] */
-            if (isset($data['acknowledgements'])) $this->acknowledgements = $data['acknowledgements'];
-        return $this;
+        $object = new static(
+            embeds: $data['embeds'] ?? null,
+            emojis: $data['emojis'] ?? null,
+            files: $data['files'] ?? null,
+            images: (object) $data['images'] ?? null,
+            reactions: $data['reactions'] ?? null,
+            priority: (object) $data['priority'] ?? null,
+            acknowledgements: $data['acknowledgements'] ?? null,
+        );
+        return $object;
     }
 }

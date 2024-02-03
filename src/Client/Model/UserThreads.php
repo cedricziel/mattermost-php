@@ -12,16 +12,15 @@ class UserThreads
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['total'] */
-            if (isset($data['total'])) $this->total = $data['total'];
-        /** @var array $data['threads'] */
-            if (isset($data['threads'])) $this->threads = $data['threads'];
-        return $this;
+        $object = new static(
+            total: $data['total'] ?? null,
+            threads: $data['threads'] ?? null,
+        );
+        return $object;
     }
 }

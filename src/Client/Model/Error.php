@@ -12,16 +12,15 @@ class Error
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['error'] */
-            if (isset($data['error'])) $this->error = $data['error'];
-        /** @var string $data['details'] */
-            if (isset($data['details'])) $this->details = $data['details'];
-        return $this;
+        $object = new static(
+            error: $data['error'] ?? null,
+            details: $data['details'] ?? null,
+        );
+        return $object;
     }
 }

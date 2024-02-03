@@ -25,38 +25,26 @@ class Team
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['update_at'] */
-            if (isset($data['update_at'])) $this->update_at = $data['update_at'];
-        /** @var int $data['delete_at'] */
-            if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
-        /** @var string $data['display_name'] */
-            if (isset($data['display_name'])) $this->display_name = $data['display_name'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        /** @var string $data['email'] */
-            if (isset($data['email'])) $this->email = $data['email'];
-        /** @var string $data['type'] */
-            if (isset($data['type'])) $this->type = $data['type'];
-        /** @var string $data['allowed_domains'] */
-            if (isset($data['allowed_domains'])) $this->allowed_domains = $data['allowed_domains'];
-        /** @var string $data['invite_id'] */
-            if (isset($data['invite_id'])) $this->invite_id = $data['invite_id'];
-        /** @var bool $data['allow_open_invite'] */
-            if (isset($data['allow_open_invite'])) $this->allow_open_invite = $data['allow_open_invite'];
-        /** @var string $data['policy_id'] */
-            if (isset($data['policy_id'])) $this->policy_id = $data['policy_id'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            email: $data['email'] ?? null,
+            type: $data['type'] ?? null,
+            allowed_domains: $data['allowed_domains'] ?? null,
+            invite_id: $data['invite_id'] ?? null,
+            allow_open_invite: $data['allow_open_invite'] ?? null,
+            policy_id: $data['policy_id'] ?? null,
+        );
+        return $object;
     }
 }

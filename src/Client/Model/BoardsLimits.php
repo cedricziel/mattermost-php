@@ -10,16 +10,15 @@ class BoardsLimits
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['cards'] */
-            if (isset($data['cards'])) $this->cards = $data['cards'];
-        /** @var int $data['views'] */
-            if (isset($data['views'])) $this->views = $data['views'];
-        return $this;
+        $object = new static(
+            cards: $data['cards'] ?? null,
+            views: $data['views'] ?? null,
+        );
+        return $object;
     }
 }

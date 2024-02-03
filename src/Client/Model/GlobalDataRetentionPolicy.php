@@ -16,20 +16,17 @@ class GlobalDataRetentionPolicy
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var bool $data['message_deletion_enabled'] */
-            if (isset($data['message_deletion_enabled'])) $this->message_deletion_enabled = $data['message_deletion_enabled'];
-        /** @var bool $data['file_deletion_enabled'] */
-            if (isset($data['file_deletion_enabled'])) $this->file_deletion_enabled = $data['file_deletion_enabled'];
-        /** @var int $data['message_retention_cutoff'] */
-            if (isset($data['message_retention_cutoff'])) $this->message_retention_cutoff = $data['message_retention_cutoff'];
-        /** @var int $data['file_retention_cutoff'] */
-            if (isset($data['file_retention_cutoff'])) $this->file_retention_cutoff = $data['file_retention_cutoff'];
-        return $this;
+        $object = new static(
+            message_deletion_enabled: $data['message_deletion_enabled'] ?? null,
+            file_deletion_enabled: $data['file_deletion_enabled'] ?? null,
+            message_retention_cutoff: $data['message_retention_cutoff'] ?? null,
+            file_retention_cutoff: $data['file_retention_cutoff'] ?? null,
+        );
+        return $object;
     }
 }

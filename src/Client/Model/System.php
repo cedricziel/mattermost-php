@@ -12,16 +12,15 @@ class System
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['value'] */
-            if (isset($data['value'])) $this->value = $data['value'];
-        return $this;
+        $object = new static(
+            name: $data['name'] ?? null,
+            value: $data['value'] ?? null,
+        );
+        return $object;
     }
 }

@@ -10,16 +10,15 @@ class PaymentSetupIntent
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['client_secret'] */
-            if (isset($data['client_secret'])) $this->client_secret = $data['client_secret'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            client_secret: $data['client_secret'] ?? null,
+        );
+        return $object;
     }
 }

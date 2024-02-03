@@ -14,18 +14,16 @@ class RemoteClusterInfo
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['display_name'] */
-            if (isset($data['display_name'])) $this->display_name = $data['display_name'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['last_ping_at'] */
-            if (isset($data['last_ping_at'])) $this->last_ping_at = $data['last_ping_at'];
-        return $this;
+        $object = new static(
+            display_name: $data['display_name'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            last_ping_at: $data['last_ping_at'] ?? null,
+        );
+        return $object;
     }
 }

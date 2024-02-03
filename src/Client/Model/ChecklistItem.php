@@ -26,30 +26,22 @@ class ChecklistItem
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['title'] */
-            if (isset($data['title'])) $this->title = $data['title'];
-        /** @var string $data['state'] */
-            if (isset($data['state'])) $this->state = $data['state'];
-        /** @var int $data['state_modified'] */
-            if (isset($data['state_modified'])) $this->state_modified = $data['state_modified'];
-        /** @var string $data['assignee_id'] */
-            if (isset($data['assignee_id'])) $this->assignee_id = $data['assignee_id'];
-        /** @var int $data['assignee_modified'] */
-            if (isset($data['assignee_modified'])) $this->assignee_modified = $data['assignee_modified'];
-        /** @var string $data['command'] */
-            if (isset($data['command'])) $this->command = $data['command'];
-        /** @var int $data['command_last_run'] */
-            if (isset($data['command_last_run'])) $this->command_last_run = $data['command_last_run'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            title: $data['title'] ?? null,
+            state: $data['state'] ?? null,
+            state_modified: $data['state_modified'] ?? null,
+            assignee_id: $data['assignee_id'] ?? null,
+            assignee_modified: $data['assignee_modified'] ?? null,
+            command: $data['command'] ?? null,
+            command_last_run: $data['command_last_run'] ?? null,
+            description: $data['description'] ?? null,
+        );
+        return $object;
     }
 }

@@ -9,14 +9,14 @@ class IntegrationsLimits
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['enabled'] */
-            if (isset($data['enabled'])) $this->enabled = $data['enabled'];
-        return $this;
+        $object = new static(
+            enabled: $data['enabled'] ?? null,
+        );
+        return $object;
     }
 }

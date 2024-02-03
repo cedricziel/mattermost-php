@@ -13,20 +13,17 @@ class Preference
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['category'] */
-            if (isset($data['category'])) $this->category = $data['category'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['value'] */
-            if (isset($data['value'])) $this->value = $data['value'];
-        return $this;
+        $object = new static(
+            user_id: $data['user_id'] ?? null,
+            category: $data['category'] ?? null,
+            name: $data['name'] ?? null,
+            value: $data['value'] ?? null,
+        );
+        return $object;
     }
 }

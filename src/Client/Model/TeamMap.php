@@ -12,14 +12,14 @@ class TeamMap
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var  $data['team_id'] */
-            if (isset($data['team_id'])) $this->team_id = $data['team_id'];
-        return $this;
+        $object = new static(
+            team_id: $data['team_id'] ?? null,
+        );
+        return $object;
     }
 }

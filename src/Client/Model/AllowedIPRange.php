@@ -12,16 +12,15 @@ class AllowedIPRange
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['CIDRBlock'] */
-            if (isset($data['CIDRBlock'])) $this->CIDRBlock = $data['CIDRBlock'];
-        /** @var string $data['Description'] */
-            if (isset($data['Description'])) $this->Description = $data['Description'];
-        return $this;
+        $object = new static(
+            CIDRBlock: $data['CIDRBlock'] ?? null,
+            Description: $data['Description'] ?? null,
+        );
+        return $object;
     }
 }

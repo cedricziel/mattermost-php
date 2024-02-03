@@ -12,16 +12,15 @@ class OwnerInfo
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['username'] */
-            if (isset($data['username'])) $this->username = $data['username'];
-        return $this;
+        $object = new static(
+            user_id: $data['user_id'] ?? null,
+            username: $data['username'] ?? null,
+        );
+        return $object;
     }
 }

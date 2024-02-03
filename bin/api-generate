@@ -3,7 +3,6 @@
 
 use CedricZiel\MattermostPhp\Client\ClientTrait;
 use CedricZiel\MattermostPhp\Client\HttpClientTrait;
-use CedricZiel\MattermostPhp\Client\ResponseTrait;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;
@@ -133,52 +132,66 @@ function mapParameterType(mixed $type)
     return $type;
 }
 
-function createHydrationMethod(ClassType $class): Method
+function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): Method
 {
-    $hydrationMethod = $class->addMethod('hydrate')->setReturnType('static');
+    $hydrationMethod = $class->addMethod('hydrate')
+        ->setReturnType('static')
+        ->setStatic();
+
     $dataParameter = $hydrationMethod->addParameter('data')
         ->setType('array')
         ->setNullable()
         ->setComment('@param array<string, mixed> $data');
-    if ($class->getExtends() !== null) {
-        $hydrationMethod->addBody('parent::hydrate($data);');
-    }
-    $hydrationMethod->addBody('if ($data === null) return $this;');
+
     if ($class->hasMethod('__construct')) {
+        $hydrationMethod->addBody('$object = new static(');
+
+        if ($class->getExtends() !== null) {
+            $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
+                if ($property->getType() === 'stdClass') {
+                    return sprintf('    %s: (object) $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
+                }
+
+                return sprintf('    %s: $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
+            }, findClass($modelNamespace,$class->getExtends())->getMethod('__construct')?->getParameters() ?? [])));
+        }
+
         $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
             if ($property->getType() === 'stdClass') {
-                return sprintf('/** @var %s $data[\'%s\'] */
-    if (isset($data[\'%s\'])) $this->%s = (object) $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
+                return sprintf('    %s: (object) $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
             }
 
-            return sprintf('/** @var %s $data[\'%s\'] */
-    if (isset($data[\'%s\'])) $this->%s = $data[\'%s\'];', $property->getType(), $property->getName(), $property->getName(), $property->getName(), $property->getName());
+            return sprintf('    %s: $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
         }, $class->getMethod('__construct')?->getParameters())));
+
+        $hydrationMethod->addBody(');');
     }
 
-    $hydrationMethod->addBody('return $this;');
+    $hydrationMethod->addBody('return $object;');
 
     return $hydrationMethod;
 }
 
-function createHydrationMethodForArrayBody(ClassType $class, string $itemType): Method
+function createHydrationMethodForArrayBody(PhpNamespace $modelNamespace, ClassType $class, string $itemType): Method
 {
-    $hydrationMethod = createHydrationMethod($class);
-    $hydrationMethod->setBody(<<<PHP
-if (\$data === null) return \$this;
-foreach (\$data as \$item) {
-    \$this->items[] = (new $itemType())->hydrate(\$item);
-}
+    $hydrationMethod = createHydrationMethod($modelNamespace, $class);
+    $hydrationMethod->setBody('$object = new static(' . PHP_EOL);
 
-return \$this;
-PHP);
+    $hydrationMethod->addBody('    items: array_map(function ($item) {');
+    $hydrationMethod->addBody(sprintf('    return %s::hydrate($item);', $itemType));
+    $hydrationMethod->addBody('    }, $data[\'items\'] ?? []),');
+
+    $hydrationMethod->addBody(');');
+    $hydrationMethod->addBody('return $object;');
 
     return $hydrationMethod;
 }
 
-foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
-    $class = $modelNamespace->addClass($schemaName);
-    $class->addMethod('__construct');
+function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName, array $schema): ClassType {
+    $class = findClass($modelNamespace, $schemaName);
+    if ($class === null) $class = $modelNamespace->addClass($schemaName);
+
+    $constructor = $class->hasMethod('__construct') ? $class->getMethod('__construct') : $class->addMethod('__construct');
 
     if (isset($schema['description'])) {
         $class->setComment($schema['description']);
@@ -187,37 +200,46 @@ foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
     if (isset($schema['properties'])) {
         foreach ($schema['properties'] as $propertyName => $property) {
             $propertyIsNullable = !isset($property['required']) || $property['required'] === false;
-            $p = $class->getMethod('__construct')->addPromotedParameter($propertyName);
+            $p = $constructor->addPromotedParameter($propertyName);
             $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
             $p->setComment($property['description'] ?? null)->setNullable($propertyIsNullable);
+
             if (isset($property['default'])) {
                 $p->setDefaultValue($property['default']);
             } elseif ($propertyIsNullable) {
                 $p->setDefaultValue(null);
             }
         }
-        $hydrationMethod = createHydrationMethod($class);
+        $hydrationMethod = createHydrationMethod($modelNamespace, $class);
     } elseif (isset($schema['type']) && $schema['type'] === 'array' && isset($schema['items']['$ref'])) {
-        $itemType = '\\' . $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $schema['items']['$ref']);
-        $class->getMethod('__construct')->addPromotedParameter('items')
+        $itemType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $schema['items']['$ref']);
+        $constructor
+            ->addPromotedParameter('items')
             ->setType('array')
             ->setComment(sprintf('@var %s[]', $itemType))
         ;
-        $hydrationMethod = createHydrationMethodForArrayBody($class, $itemType);
+        $hydrationMethod = createHydrationMethodForArrayBody($modelNamespace, $class, $itemType);
     } elseif (isset($schema['allOf'])) {
         foreach ($schema['allOf'] as $i => $allOf) {
             // class extends another object (allOf)
             if (isset($allOf['$ref'])) {
-                $itemType = '\\' . $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $allOf['$ref']);
-                $class->setExtends($itemType);
+                $itemType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $allOf['$ref']);
+
+                $class
+                    ->setExtends($itemType);
             }
         }
     }
+
+    return $class;
+}
+
+foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
+    createClassFromSchema($modelNamespace, $schemaName, $schema);
 }
 
 foreach ($openApi['components']['responses'] as $schemaName => $schema) {
     $class = $modelNamespace->addClass('Default' . $schemaName . 'Response');
-    $class->addTrait(ResponseTrait::class);
 
     if (isset($schema['description'])) {
         $class->addComment($schema['description']);
@@ -238,7 +260,7 @@ foreach ($openApi['components']['responses'] as $schemaName => $schema) {
         $class->setExtends($itemType);
     }
 
-    $hydrationMethod = createHydrationMethod($class);
+    $hydrationMethod = createHydrationMethod($modelNamespace, $class);
 }
 
 function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, string $operationId, array $schema): ClassType

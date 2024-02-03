@@ -14,18 +14,16 @@ class Checklist
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['title'] */
-            if (isset($data['title'])) $this->title = $data['title'];
-        /** @var array $data['items'] */
-            if (isset($data['items'])) $this->items = $data['items'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            title: $data['title'] ?? null,
+            items: $data['items'] ?? null,
+        );
+        return $object;
     }
 }

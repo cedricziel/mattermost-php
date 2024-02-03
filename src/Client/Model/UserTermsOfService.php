@@ -14,18 +14,16 @@ class UserTermsOfService
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['terms_of_service_id'] */
-            if (isset($data['terms_of_service_id'])) $this->terms_of_service_id = $data['terms_of_service_id'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        return $this;
+        $object = new static(
+            user_id: $data['user_id'] ?? null,
+            terms_of_service_id: $data['terms_of_service_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+        );
+        return $object;
     }
 }

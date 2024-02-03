@@ -10,14 +10,14 @@ class TriggerIdReturn
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['trigger_id'] */
-            if (isset($data['trigger_id'])) $this->trigger_id = $data['trigger_id'];
-        return $this;
+        $object = new static(
+            trigger_id: $data['trigger_id'] ?? null,
+        );
+        return $object;
     }
 }

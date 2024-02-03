@@ -9,14 +9,14 @@ class TeamsLimits
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['active'] */
-            if (isset($data['active'])) $this->active = $data['active'];
-        return $this;
+        $object = new static(
+            active: $data['active'] ?? null,
+        );
+        return $object;
     }
 }

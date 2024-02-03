@@ -14,20 +14,17 @@ class FileInfoList
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var array $data['order'] */
-            if (isset($data['order'])) $this->order = $data['order'];
-        /** @var stdClass $data['file_infos'] */
-            if (isset($data['file_infos'])) $this->file_infos = (object) $data['file_infos'];
-        /** @var string $data['next_file_id'] */
-            if (isset($data['next_file_id'])) $this->next_file_id = $data['next_file_id'];
-        /** @var string $data['prev_file_id'] */
-            if (isset($data['prev_file_id'])) $this->prev_file_id = $data['prev_file_id'];
-        return $this;
+        $object = new static(
+            order: $data['order'] ?? null,
+            file_infos: (object) $data['file_infos'] ?? null,
+            next_file_id: $data['next_file_id'] ?? null,
+            prev_file_id: $data['prev_file_id'] ?? null,
+        );
+        return $object;
     }
 }

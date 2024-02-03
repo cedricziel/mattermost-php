@@ -10,14 +10,14 @@ class UserAutocompleteInTeam
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var array $data['in_team'] */
-            if (isset($data['in_team'])) $this->in_team = $data['in_team'];
-        return $this;
+        $object = new static(
+            in_team: $data['in_team'] ?? null,
+        );
+        return $object;
     }
 }

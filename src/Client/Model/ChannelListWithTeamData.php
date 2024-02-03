@@ -10,16 +10,16 @@ class ChannelListWithTeamData
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        foreach ($data as $item) {
-            $this->items[] = (new \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData())->hydrate($item);
-        }
-
-        return $this;
+        $object = new static(
+            items: array_map(function ($item) {
+            return \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData::hydrate($item);
+            }, $data['items'] ?? []),
+        );
+        return $object;
     }
 }

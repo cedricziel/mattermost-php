@@ -10,16 +10,15 @@ class ChannelStats
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['channel_id'] */
-            if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
-        /** @var int $data['member_count'] */
-            if (isset($data['member_count'])) $this->member_count = $data['member_count'];
-        return $this;
+        $object = new static(
+            channel_id: $data['channel_id'] ?? null,
+            member_count: $data['member_count'] ?? null,
+        );
+        return $object;
     }
 }

@@ -20,24 +20,19 @@ class Emoji
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['creator_id'] */
-            if (isset($data['creator_id'])) $this->creator_id = $data['creator_id'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['update_at'] */
-            if (isset($data['update_at'])) $this->update_at = $data['update_at'];
-        /** @var int $data['delete_at'] */
-            if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            creator_id: $data['creator_id'] ?? null,
+            name: $data['name'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+        );
+        return $object;
     }
 }

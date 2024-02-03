@@ -18,28 +18,21 @@ class ChannelMember
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['channel_id'] */
-            if (isset($data['channel_id'])) $this->channel_id = $data['channel_id'];
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['roles'] */
-            if (isset($data['roles'])) $this->roles = $data['roles'];
-        /** @var int $data['last_viewed_at'] */
-            if (isset($data['last_viewed_at'])) $this->last_viewed_at = $data['last_viewed_at'];
-        /** @var int $data['msg_count'] */
-            if (isset($data['msg_count'])) $this->msg_count = $data['msg_count'];
-        /** @var int $data['mention_count'] */
-            if (isset($data['mention_count'])) $this->mention_count = $data['mention_count'];
-        /** @var  $data['notify_props'] */
-            if (isset($data['notify_props'])) $this->notify_props = $data['notify_props'];
-        /** @var int $data['last_update_at'] */
-            if (isset($data['last_update_at'])) $this->last_update_at = $data['last_update_at'];
-        return $this;
+        $object = new static(
+            channel_id: $data['channel_id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            roles: $data['roles'] ?? null,
+            last_viewed_at: $data['last_viewed_at'] ?? null,
+            msg_count: $data['msg_count'] ?? null,
+            mention_count: $data['mention_count'] ?? null,
+            notify_props: $data['notify_props'] ?? null,
+            last_update_at: $data['last_update_at'] ?? null,
+        );
+        return $object;
     }
 }

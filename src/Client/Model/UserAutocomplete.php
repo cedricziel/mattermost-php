@@ -12,16 +12,15 @@ class UserAutocomplete
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var array $data['users'] */
-            if (isset($data['users'])) $this->users = $data['users'];
-        /** @var array $data['out_of_channel'] */
-            if (isset($data['out_of_channel'])) $this->out_of_channel = $data['out_of_channel'];
-        return $this;
+        $object = new static(
+            users: $data['users'] ?? null,
+            out_of_channel: $data['out_of_channel'] ?? null,
+        );
+        return $object;
     }
 }

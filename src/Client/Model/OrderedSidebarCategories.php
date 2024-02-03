@@ -13,16 +13,15 @@ class OrderedSidebarCategories
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var array $data['order'] */
-            if (isset($data['order'])) $this->order = $data['order'];
-        /** @var array $data['categories'] */
-            if (isset($data['categories'])) $this->categories = $data['categories'];
-        return $this;
+        $object = new static(
+            order: $data['order'] ?? null,
+            categories: $data['categories'] ?? null,
+        );
+        return $object;
     }
 }

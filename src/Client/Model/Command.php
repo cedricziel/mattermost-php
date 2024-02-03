@@ -42,46 +42,30 @@ class Command
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['token'] */
-            if (isset($data['token'])) $this->token = $data['token'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['update_at'] */
-            if (isset($data['update_at'])) $this->update_at = $data['update_at'];
-        /** @var int $data['delete_at'] */
-            if (isset($data['delete_at'])) $this->delete_at = $data['delete_at'];
-        /** @var string $data['creator_id'] */
-            if (isset($data['creator_id'])) $this->creator_id = $data['creator_id'];
-        /** @var string $data['team_id'] */
-            if (isset($data['team_id'])) $this->team_id = $data['team_id'];
-        /** @var string $data['trigger'] */
-            if (isset($data['trigger'])) $this->trigger = $data['trigger'];
-        /** @var string $data['method'] */
-            if (isset($data['method'])) $this->method = $data['method'];
-        /** @var string $data['username'] */
-            if (isset($data['username'])) $this->username = $data['username'];
-        /** @var string $data['icon_url'] */
-            if (isset($data['icon_url'])) $this->icon_url = $data['icon_url'];
-        /** @var bool $data['auto_complete'] */
-            if (isset($data['auto_complete'])) $this->auto_complete = $data['auto_complete'];
-        /** @var string $data['auto_complete_desc'] */
-            if (isset($data['auto_complete_desc'])) $this->auto_complete_desc = $data['auto_complete_desc'];
-        /** @var string $data['auto_complete_hint'] */
-            if (isset($data['auto_complete_hint'])) $this->auto_complete_hint = $data['auto_complete_hint'];
-        /** @var string $data['display_name'] */
-            if (isset($data['display_name'])) $this->display_name = $data['display_name'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        /** @var string $data['url'] */
-            if (isset($data['url'])) $this->url = $data['url'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            token: $data['token'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            creator_id: $data['creator_id'] ?? null,
+            team_id: $data['team_id'] ?? null,
+            trigger: $data['trigger'] ?? null,
+            method: $data['method'] ?? null,
+            username: $data['username'] ?? null,
+            icon_url: $data['icon_url'] ?? null,
+            auto_complete: $data['auto_complete'] ?? null,
+            auto_complete_desc: $data['auto_complete_desc'] ?? null,
+            auto_complete_hint: $data['auto_complete_hint'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            description: $data['description'] ?? null,
+            url: $data['url'] ?? null,
+        );
+        return $object;
     }
 }

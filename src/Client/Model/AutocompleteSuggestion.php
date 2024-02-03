@@ -18,22 +18,18 @@ class AutocompleteSuggestion
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['Complete'] */
-            if (isset($data['Complete'])) $this->Complete = $data['Complete'];
-        /** @var string $data['Suggestion'] */
-            if (isset($data['Suggestion'])) $this->Suggestion = $data['Suggestion'];
-        /** @var string $data['Hint'] */
-            if (isset($data['Hint'])) $this->Hint = $data['Hint'];
-        /** @var string $data['Description'] */
-            if (isset($data['Description'])) $this->Description = $data['Description'];
-        /** @var string $data['IconData'] */
-            if (isset($data['IconData'])) $this->IconData = $data['IconData'];
-        return $this;
+        $object = new static(
+            Complete: $data['Complete'] ?? null,
+            Suggestion: $data['Suggestion'] ?? null,
+            Hint: $data['Hint'] ?? null,
+            Description: $data['Description'] ?? null,
+            IconData: $data['IconData'] ?? null,
+        );
+        return $object;
     }
 }

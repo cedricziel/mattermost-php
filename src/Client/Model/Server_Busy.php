@@ -12,16 +12,15 @@ class Server_Busy
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var bool $data['busy'] */
-            if (isset($data['busy'])) $this->busy = $data['busy'];
-        /** @var int $data['expires'] */
-            if (isset($data['expires'])) $this->expires = $data['expires'];
-        return $this;
+        $object = new static(
+            busy: $data['busy'] ?? null,
+            expires: $data['expires'] ?? null,
+        );
+        return $object;
     }
 }

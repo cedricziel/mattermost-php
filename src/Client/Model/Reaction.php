@@ -16,20 +16,17 @@ class Reaction
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['user_id'] */
-            if (isset($data['user_id'])) $this->user_id = $data['user_id'];
-        /** @var string $data['post_id'] */
-            if (isset($data['post_id'])) $this->post_id = $data['post_id'];
-        /** @var string $data['emoji_name'] */
-            if (isset($data['emoji_name'])) $this->emoji_name = $data['emoji_name'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        return $this;
+        $object = new static(
+            user_id: $data['user_id'] ?? null,
+            post_id: $data['post_id'] ?? null,
+            emoji_name: $data['emoji_name'] ?? null,
+            create_at: $data['create_at'] ?? null,
+        );
+        return $object;
     }
 }

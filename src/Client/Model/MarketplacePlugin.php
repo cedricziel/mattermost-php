@@ -23,28 +23,21 @@ class MarketplacePlugin
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['homepage_url'] */
-            if (isset($data['homepage_url'])) $this->homepage_url = $data['homepage_url'];
-        /** @var string $data['icon_data'] */
-            if (isset($data['icon_data'])) $this->icon_data = $data['icon_data'];
-        /** @var string $data['download_url'] */
-            if (isset($data['download_url'])) $this->download_url = $data['download_url'];
-        /** @var string $data['release_notes_url'] */
-            if (isset($data['release_notes_url'])) $this->release_notes_url = $data['release_notes_url'];
-        /** @var array $data['labels'] */
-            if (isset($data['labels'])) $this->labels = $data['labels'];
-        /** @var string $data['signature'] */
-            if (isset($data['signature'])) $this->signature = $data['signature'];
-        /** @var  $data['manifest'] */
-            if (isset($data['manifest'])) $this->manifest = $data['manifest'];
-        /** @var string $data['installed_version'] */
-            if (isset($data['installed_version'])) $this->installed_version = $data['installed_version'];
-        return $this;
+        $object = new static(
+            homepage_url: $data['homepage_url'] ?? null,
+            icon_data: $data['icon_data'] ?? null,
+            download_url: $data['download_url'] ?? null,
+            release_notes_url: $data['release_notes_url'] ?? null,
+            labels: $data['labels'] ?? null,
+            signature: $data['signature'] ?? null,
+            manifest: $data['manifest'] ?? null,
+            installed_version: $data['installed_version'] ?? null,
+        );
+        return $object;
     }
 }

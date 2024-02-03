@@ -10,16 +10,15 @@ class ChannelModeratedRole
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var bool $data['value'] */
-            if (isset($data['value'])) $this->value = $data['value'];
-        /** @var bool $data['enabled'] */
-            if (isset($data['enabled'])) $this->enabled = $data['enabled'];
-        return $this;
+        $object = new static(
+            value: $data['value'] ?? null,
+            enabled: $data['enabled'] ?? null,
+        );
+        return $object;
     }
 }

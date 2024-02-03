@@ -54,10 +54,7 @@ trait HttpClientTrait
         }
 
         $body = json_decode($response->getBody(), true);
-        $responseObject = new $map[$responseCode];
-        $responseObject->hydrate($body);
-
-        return $responseObject;
+        return $map[$responseCode]::hydrate($body);
     }
 
     public function buildUri(string $path, array $pathParameters = [], array $queryParameters = []): string

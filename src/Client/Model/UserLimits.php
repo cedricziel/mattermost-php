@@ -12,16 +12,15 @@ class UserLimits
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['maxUsersLimit'] */
-            if (isset($data['maxUsersLimit'])) $this->maxUsersLimit = $data['maxUsersLimit'];
-        /** @var int $data['activeUserCount'] */
-            if (isset($data['activeUserCount'])) $this->activeUserCount = $data['activeUserCount'];
-        return $this;
+        $object = new static(
+            maxUsersLimit: $data['maxUsersLimit'] ?? null,
+            activeUserCount: $data['activeUserCount'] ?? null,
+        );
+        return $object;
     }
 }

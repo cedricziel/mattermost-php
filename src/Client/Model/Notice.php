@@ -29,30 +29,22 @@ class Notice
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var bool $data['sysAdminOnly'] */
-            if (isset($data['sysAdminOnly'])) $this->sysAdminOnly = $data['sysAdminOnly'];
-        /** @var bool $data['teamAdminOnly'] */
-            if (isset($data['teamAdminOnly'])) $this->teamAdminOnly = $data['teamAdminOnly'];
-        /** @var string $data['action'] */
-            if (isset($data['action'])) $this->action = $data['action'];
-        /** @var string $data['actionParam'] */
-            if (isset($data['actionParam'])) $this->actionParam = $data['actionParam'];
-        /** @var string $data['actionText'] */
-            if (isset($data['actionText'])) $this->actionText = $data['actionText'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        /** @var string $data['image'] */
-            if (isset($data['image'])) $this->image = $data['image'];
-        /** @var string $data['title'] */
-            if (isset($data['title'])) $this->title = $data['title'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            sysAdminOnly: $data['sysAdminOnly'] ?? null,
+            teamAdminOnly: $data['teamAdminOnly'] ?? null,
+            action: $data['action'] ?? null,
+            actionParam: $data['actionParam'] ?? null,
+            actionText: $data['actionText'] ?? null,
+            description: $data['description'] ?? null,
+            image: $data['image'] ?? null,
+            title: $data['title'] ?? null,
+        );
+        return $object;
     }
 }

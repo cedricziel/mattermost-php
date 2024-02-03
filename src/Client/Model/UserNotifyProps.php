@@ -22,26 +22,20 @@ class UserNotifyProps
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['email'] */
-            if (isset($data['email'])) $this->email = $data['email'];
-        /** @var string $data['push'] */
-            if (isset($data['push'])) $this->push = $data['push'];
-        /** @var string $data['desktop'] */
-            if (isset($data['desktop'])) $this->desktop = $data['desktop'];
-        /** @var string $data['desktop_sound'] */
-            if (isset($data['desktop_sound'])) $this->desktop_sound = $data['desktop_sound'];
-        /** @var string $data['mention_keys'] */
-            if (isset($data['mention_keys'])) $this->mention_keys = $data['mention_keys'];
-        /** @var string $data['channel'] */
-            if (isset($data['channel'])) $this->channel = $data['channel'];
-        /** @var string $data['first_name'] */
-            if (isset($data['first_name'])) $this->first_name = $data['first_name'];
-        return $this;
+        $object = new static(
+            email: $data['email'] ?? null,
+            push: $data['push'] ?? null,
+            desktop: $data['desktop'] ?? null,
+            desktop_sound: $data['desktop_sound'] ?? null,
+            mention_keys: $data['mention_keys'] ?? null,
+            channel: $data['channel'] ?? null,
+            first_name: $data['first_name'] ?? null,
+        );
+        return $object;
     }
 }

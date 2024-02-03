@@ -17,30 +17,22 @@ class Subscription
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['customer_id'] */
-            if (isset($data['customer_id'])) $this->customer_id = $data['customer_id'];
-        /** @var string $data['product_id'] */
-            if (isset($data['product_id'])) $this->product_id = $data['product_id'];
-        /** @var array $data['add_ons'] */
-            if (isset($data['add_ons'])) $this->add_ons = $data['add_ons'];
-        /** @var int $data['start_at'] */
-            if (isset($data['start_at'])) $this->start_at = $data['start_at'];
-        /** @var int $data['end_at'] */
-            if (isset($data['end_at'])) $this->end_at = $data['end_at'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        /** @var int $data['seats'] */
-            if (isset($data['seats'])) $this->seats = $data['seats'];
-        /** @var string $data['dns'] */
-            if (isset($data['dns'])) $this->dns = $data['dns'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            customer_id: $data['customer_id'] ?? null,
+            product_id: $data['product_id'] ?? null,
+            add_ons: $data['add_ons'] ?? null,
+            start_at: $data['start_at'] ?? null,
+            end_at: $data['end_at'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            seats: $data['seats'] ?? null,
+            dns: $data['dns'] ?? null,
+        );
+        return $object;
     }
 }

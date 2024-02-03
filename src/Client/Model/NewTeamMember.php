@@ -18,26 +18,20 @@ class NewTeamMember
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['username'] */
-            if (isset($data['username'])) $this->username = $data['username'];
-        /** @var string $data['first_name'] */
-            if (isset($data['first_name'])) $this->first_name = $data['first_name'];
-        /** @var string $data['last_name'] */
-            if (isset($data['last_name'])) $this->last_name = $data['last_name'];
-        /** @var string $data['nickname'] */
-            if (isset($data['nickname'])) $this->nickname = $data['nickname'];
-        /** @var string $data['position'] */
-            if (isset($data['position'])) $this->position = $data['position'];
-        /** @var int $data['create_at'] */
-            if (isset($data['create_at'])) $this->create_at = $data['create_at'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            username: $data['username'] ?? null,
+            first_name: $data['first_name'] ?? null,
+            last_name: $data['last_name'] ?? null,
+            nickname: $data['nickname'] ?? null,
+            position: $data['position'] ?? null,
+            create_at: $data['create_at'] ?? null,
+        );
+        return $object;
     }
 }

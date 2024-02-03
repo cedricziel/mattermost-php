@@ -10,14 +10,14 @@ class StorageUsage
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var number $data['bytes'] */
-            if (isset($data['bytes'])) $this->bytes = $data['bytes'];
-        return $this;
+        $object = new static(
+            bytes: $data['bytes'] ?? null,
+        );
+        return $object;
     }
 }

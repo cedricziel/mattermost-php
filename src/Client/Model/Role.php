@@ -20,24 +20,19 @@ class Role
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['id'] */
-            if (isset($data['id'])) $this->id = $data['id'];
-        /** @var string $data['name'] */
-            if (isset($data['name'])) $this->name = $data['name'];
-        /** @var string $data['display_name'] */
-            if (isset($data['display_name'])) $this->display_name = $data['display_name'];
-        /** @var string $data['description'] */
-            if (isset($data['description'])) $this->description = $data['description'];
-        /** @var array $data['permissions'] */
-            if (isset($data['permissions'])) $this->permissions = $data['permissions'];
-        /** @var bool $data['scheme_managed'] */
-            if (isset($data['scheme_managed'])) $this->scheme_managed = $data['scheme_managed'];
-        return $this;
+        $object = new static(
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            description: $data['description'] ?? null,
+            permissions: $data['permissions'] ?? null,
+            scheme_managed: $data['scheme_managed'] ?? null,
+        );
+        return $object;
     }
 }

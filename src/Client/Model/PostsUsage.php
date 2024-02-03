@@ -10,14 +10,14 @@ class PostsUsage
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var number $data['count'] */
-            if (isset($data['count'])) $this->count = $data['count'];
-        return $this;
+        $object = new static(
+            count: $data['count'] ?? null,
+        );
+        return $object;
     }
 }

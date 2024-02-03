@@ -14,18 +14,16 @@ class NewTeamMembersList
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var bool $data['has_next'] */
-            if (isset($data['has_next'])) $this->has_next = $data['has_next'];
-        /** @var array $data['items'] */
-            if (isset($data['items'])) $this->items = $data['items'];
-        /** @var int $data['total_count'] */
-            if (isset($data['total_count'])) $this->total_count = $data['total_count'];
-        return $this;
+        $object = new static(
+            has_next: $data['has_next'] ?? null,
+            items: $data['items'] ?? null,
+            total_count: $data['total_count'] ?? null,
+        );
+        return $object;
     }
 }

@@ -14,18 +14,16 @@ class Timezone
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var bool $data['useAutomaticTimezone'] */
-            if (isset($data['useAutomaticTimezone'])) $this->useAutomaticTimezone = $data['useAutomaticTimezone'];
-        /** @var string $data['manualTimezone'] */
-            if (isset($data['manualTimezone'])) $this->manualTimezone = $data['manualTimezone'];
-        /** @var string $data['automaticTimezone'] */
-            if (isset($data['automaticTimezone'])) $this->automaticTimezone = $data['automaticTimezone'];
-        return $this;
+        $object = new static(
+            useAutomaticTimezone: $data['useAutomaticTimezone'] ?? null,
+            manualTimezone: $data['manualTimezone'] ?? null,
+            automaticTimezone: $data['automaticTimezone'] ?? null,
+        );
+        return $object;
     }
 }

@@ -16,20 +16,17 @@ class PlaybookList
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['total_count'] */
-            if (isset($data['total_count'])) $this->total_count = $data['total_count'];
-        /** @var int $data['page_count'] */
-            if (isset($data['page_count'])) $this->page_count = $data['page_count'];
-        /** @var bool $data['has_more'] */
-            if (isset($data['has_more'])) $this->has_more = $data['has_more'];
-        /** @var array $data['items'] */
-            if (isset($data['items'])) $this->items = $data['items'];
-        return $this;
+        $object = new static(
+            total_count: $data['total_count'] ?? null,
+            page_count: $data['page_count'] ?? null,
+            has_more: $data['has_more'] ?? null,
+            items: $data['items'] ?? null,
+        );
+        return $object;
     }
 }

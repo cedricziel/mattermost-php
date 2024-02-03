@@ -12,16 +12,15 @@ class UserAutocompleteInChannel
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var array $data['in_channel'] */
-            if (isset($data['in_channel'])) $this->in_channel = $data['in_channel'];
-        /** @var array $data['out_of_channel'] */
-            if (isset($data['out_of_channel'])) $this->out_of_channel = $data['out_of_channel'];
-        return $this;
+        $object = new static(
+            in_channel: $data['in_channel'] ?? null,
+            out_of_channel: $data['out_of_channel'] ?? null,
+        );
+        return $object;
     }
 }

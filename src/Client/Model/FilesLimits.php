@@ -9,14 +9,14 @@ class FilesLimits
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var int $data['total_storage'] */
-            if (isset($data['total_storage'])) $this->total_storage = $data['total_storage'];
-        return $this;
+        $object = new static(
+            total_storage: $data['total_storage'] ?? null,
+        );
+        return $object;
     }
 }

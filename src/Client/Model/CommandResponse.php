@@ -15,24 +15,19 @@ class CommandResponse
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['ResponseType'] */
-            if (isset($data['ResponseType'])) $this->ResponseType = $data['ResponseType'];
-        /** @var string $data['Text'] */
-            if (isset($data['Text'])) $this->Text = $data['Text'];
-        /** @var string $data['Username'] */
-            if (isset($data['Username'])) $this->Username = $data['Username'];
-        /** @var string $data['IconURL'] */
-            if (isset($data['IconURL'])) $this->IconURL = $data['IconURL'];
-        /** @var string $data['GotoLocation'] */
-            if (isset($data['GotoLocation'])) $this->GotoLocation = $data['GotoLocation'];
-        /** @var array $data['Attachments'] */
-            if (isset($data['Attachments'])) $this->Attachments = $data['Attachments'];
-        return $this;
+        $object = new static(
+            ResponseType: $data['ResponseType'] ?? null,
+            Text: $data['Text'] ?? null,
+            Username: $data['Username'] ?? null,
+            IconURL: $data['IconURL'] ?? null,
+            GotoLocation: $data['GotoLocation'] ?? null,
+            Attachments: $data['Attachments'] ?? null,
+        );
+        return $object;
     }
 }

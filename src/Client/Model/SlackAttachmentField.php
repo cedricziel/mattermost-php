@@ -12,18 +12,16 @@ class SlackAttachmentField
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var string $data['Title'] */
-            if (isset($data['Title'])) $this->Title = $data['Title'];
-        /** @var string $data['Value'] */
-            if (isset($data['Value'])) $this->Value = $data['Value'];
-        /** @var bool $data['Short'] */
-            if (isset($data['Short'])) $this->Short = $data['Short'];
-        return $this;
+        $object = new static(
+            Title: $data['Title'] ?? null,
+            Value: $data['Value'] ?? null,
+            Short: $data['Short'] ?? null,
+        );
+        return $object;
     }
 }

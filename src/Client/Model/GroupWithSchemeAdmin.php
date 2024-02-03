@@ -13,16 +13,15 @@ class GroupWithSchemeAdmin
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var  $data['group'] */
-            if (isset($data['group'])) $this->group = $data['group'];
-        /** @var bool $data['scheme_admin'] */
-            if (isset($data['scheme_admin'])) $this->scheme_admin = $data['scheme_admin'];
-        return $this;
+        $object = new static(
+            group: $data['group'] ?? null,
+            scheme_admin: $data['scheme_admin'] ?? null,
+        );
+        return $object;
     }
 }

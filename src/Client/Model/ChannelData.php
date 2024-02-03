@@ -10,16 +10,15 @@ class ChannelData
     ) {
     }
 
-    public function hydrate(
+    public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
     ): static
     {
-        if ($data === null) return $this;
-        /** @var  $data['channel'] */
-            if (isset($data['channel'])) $this->channel = $data['channel'];
-        /** @var  $data['member'] */
-            if (isset($data['member'])) $this->member = $data['member'];
-        return $this;
+        $object = new static(
+            channel: $data['channel'] ?? null,
+            member: $data['member'] ?? null,
+        );
+        return $object;
     }
 }
