@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.2](https://github.com/cedricziel/mattermost-php/compare/v1.3.1...v1.3.2) (2024-02-03)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump symfony/http-client from 7.0.2 to 7.0.3 ([#63](https://github.com/cedricziel/mattermost-php/issues/63)) ([1e01420](https://github.com/cedricziel/mattermost-php/commit/1e014207060b46e8c496a839c56bcf54fe4b69fa))
+* **deps:** bump symfony/property-access from 7.0.0 to 7.0.3 ([#62](https://github.com/cedricziel/mattermost-php/issues/62)) ([3de6497](https://github.com/cedricziel/mattermost-php/commit/3de649712e05f39cfd230679b1bbd195677f8e1d))
+* **deps:** bump symfony/serializer from 7.0.2 to 7.0.3 ([#64](https://github.com/cedricziel/mattermost-php/issues/64)) ([1778b53](https://github.com/cedricziel/mattermost-php/commit/1778b532c956bf1be624a27f37ee412d4ee34aa4))
+
 ## [1.3.1](https://github.com/cedricziel/mattermost-php/compare/v1.3.0...v1.3.1) (2024-01-28)
 
 
