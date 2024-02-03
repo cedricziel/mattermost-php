@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/cedricziel/mattermost-php/compare/v1.4.2...v1.4.3) (2024-02-03)
+
+
+### Bug Fixes
+
+* JsonSerialize when possible ([#71](https://github.com/cedricziel/mattermost-php/issues/71)) ([6f7c877](https://github.com/cedricziel/mattermost-php/commit/6f7c877e40bf6f462114b761439441b4be8d9425))
+
 ## [1.4.2](https://github.com/cedricziel/mattermost-php/compare/v1.4.1...v1.4.2) (2024-02-03)
 
 
