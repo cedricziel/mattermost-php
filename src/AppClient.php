@@ -2,8 +2,11 @@
 
 namespace CedricZiel\MattermostPhp;
 
+use CedricZiel\MattermostPhp\Client\Model\CreateDirectChannelRequest;
+use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18Client;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -32,7 +35,7 @@ class AppClient
         ?StreamFactoryInterface $streamFactory = null,
     ): AppClient {
 
-        return new AppClient(
+        $client = new AppClient(
             $context->getBotAccessToken(),
             $context->getMattermostSiteUrl(),
             $serializer,
@@ -40,6 +43,10 @@ class AppClient
             $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
             $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory(),
         );
+
+        $client->setUserId($context->getBotUserId());
+
+        return $client;
     }
 
     public static function asActingUser(
@@ -112,24 +119,45 @@ class AppClient
         throw new \Exception('Not implemented yet');
     }
 
-    public function createPost(Post $post): Post
+    /**
+     * @throws ClientExceptionInterface
+     */
+    public function createPost(\CedricZiel\MattermostPhp\Client\Model\Post $post): Client\Model\DefaultBadRequestResponse|Client\Model\DefaultForbiddenResponse|Client\Model\DefaultUnauthorizedResponse|Client\Model\Post
     {
-        $request = $this->requestFactory
-            ->createRequest(
-            'POST',
-            $this->mattermostSiteUrl . '/api/v4/posts'
-            )
-            ->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->withHeader('Content-Type', 'application/json')
-            ->withBody(
-                $this->streamFactory->createStream(
-                    $this->serializer->serialize($post, 'json')
-                ),
-            );
+        return $this->api()->posts()->createPost(new CreatePostRequest(
+            $post->channel_id,
+            $post->message,
+            $post->root_id,
+            $post->file_ids,
+            $post->props,
+            $post->metadata,
+        ));
+    }
 
-        $response = $this->client->sendRequest($request);
-        $contents = $response->getBody()->getContents();
+    public function DM(string $userId, string $message)
+    {
+        return $this->createDMPost($userId, new \CedricZiel\MattermostPhp\Client\Model\Post(message: $message));
+    }
 
-        return $this->serializer->deserialize($contents, Post::class, 'json');
+    public function createDMPost(string $userId, \CedricZiel\MattermostPhp\Client\Model\Post $post): Client\Model\DefaultBadRequestResponse|Client\Model\DefaultForbiddenResponse|Client\Model\DefaultUnauthorizedResponse|Client\Model\Post
+    {
+        /** @var \CedricZiel\MattermostPhp\Client\Model\Channel $directChannel */
+        $directChannel = $this->api()->channels()->createDirectChannel(new CreateDirectChannelRequest([
+            $this->userId,
+            $userId,
+        ]));
+
+        return $this->api()->posts()->createPost(new CreatePostRequest($directChannel->id, $post->message));
+    }
+
+    public function api(): Client
+    {
+        return new Client(
+            $this->mattermostSiteUrl,
+            $this->token,
+            $this->client,
+            $this->requestFactory,
+            $this->streamFactory,
+        );
     }
 }

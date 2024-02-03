@@ -10,6 +10,35 @@ composer require cedricziel/mattermost-php
 
 ## Usage
 
+### API Client
+
+The API client is a simple wrapper around the Mattermost API. It provides a fluent interface to interact with the API.
+
+```php
+<?php
+
+use CedricZiel\MattermostPhp\Client;
+use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
+
+// create a client instance
+$client = new Client(getenv('MATTERMOST_SITE_URL'));
+// provide a token and authenticate
+$client->setToken(getenv('MATTERMOST_TOKEN'));
+$yourUser = $client->authenticate();
+
+// OR authenticate with username and password
+$client->authenticate($loginId, $password);
+
+// get the team and a specific channel
+$team = $client->teams()->getTeamByName(getenv('MATTERMOST_TEAM_NAME'));
+$client->channels()->getAllChannels(per_page: 100);
+$channel = $client->channels()->getChannelByName($team->id, 'town-square');
+
+// create a post in the channel
+$post = $client->posts()->createPost(new CreatePostRequest($channel->id, 'Hello World!'));
+var_dump($post);
+```
+
 ### Slash commands
 
 Slash commands are one of the most common ways to integrate with Mattermost. They are invoked by typing a slash followed by the command name and any arguments into the message box in Mattermost (e.g. `/weather New York`).

@@ -20,7 +20,10 @@
     "require-dev": {
         "gnello/php-mattermost-driver": "^v2.18.0",
         "phpunit/phpunit": "^10.5",
-        "symfony/http-client": "^6.4|^7.0"
+        "symfony/http-client": "^6.4|^7.0",
+        "nette/php-generator": "^4.1",
+        "nikic/php-parser": "^5.0",
+        "php-http/mock-client": "^1.6"
     },
     "license": "MIT",
     "autoload": {

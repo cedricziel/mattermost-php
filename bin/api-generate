@@ -1,0 +1,514 @@
+#!/usr/bin/env php
+<?php
+
+use CedricZiel\MattermostPhp\Client\ClientTrait;
+use CedricZiel\MattermostPhp\Client\HttpClientTrait;
+use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Method;
+use Nette\PhpGenerator\Parameter;
+use Nette\PhpGenerator\PhpNamespace;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+
+if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
+    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
+}
+
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+function prepareEndpointName(string $tag): string
+{
+    return str_replace(' ', '', ucwords(str_replace('-', ' ', $tag))) . 'Endpoint';
+}
+
+function findClass(PhpNamespace $namespace, string $tag): ?ClassType
+{
+    foreach ($namespace->getClasses() as $class) {
+        if ($class->getName() === prepareEndpointName($tag)) {
+            return $class;
+        }
+    }
+
+    return null;
+}
+
+$ymlSrc = file_get_contents(__DIR__ . '/../resources/openapi.json');
+$openApi = json_decode($ymlSrc, true);
+
+$printer = new Nette\PhpGenerator\PsrPrinter;
+
+$endpointNamespaceName = 'CedricZiel\MattermostPhp\Client\Endpoint';
+$modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
+$clientNamespaceName = 'CedricZiel\MattermostPhp';
+$endpointNamespace = new PhpNamespace($endpointNamespaceName);
+$modelNamespace = new PhpNamespace($modelNamespaceName);
+$clientNamespace = new PhpNamespace($clientNamespaceName);
+
+@mkdir(__DIR__ . '/../src/Client');
+@mkdir(__DIR__ . '/../src/Client/Endpoint');
+@mkdir(__DIR__ . '/../src/Client/Model');
+
+$clientClass = $clientNamespace->addClass('Client');
+$clientClass->addTrait(ClientTrait::class);
+$clientConstructor = $clientClass->addMethod('__construct');
+
+$clientConstructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
+$clientConstructor->addPromotedParameter('token')->setType('string')->setProtected()->setNullable()->setDefaultValue(null);
+$clientConstructor->addPromotedParameter('httpClient')->setType(ClientInterface::class)->setProtected()->setNullable()->setDefaultValue(null);
+$clientConstructor->addPromotedParameter('requestFactory')->setType(RequestFactoryInterface::class)->setProtected()->setNullable()->setDefaultValue(null);
+$clientConstructor->addPromotedParameter('streamFactory')->setType(StreamFactoryInterface::class)->setProtected()->setNullable()->setDefaultValue(null);
+
+$clientConstructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
+$clientConstructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
+$clientConstructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
+
+foreach ($openApi['x-tagGroups'] as $tagGroup) {
+    if ($tagGroup['name'] !== 'Endpoints') {
+        continue;
+    }
+
+    foreach ($tagGroup['tags'] as $tag) {
+        $class = $endpointNamespace->addClass(prepareEndpointName($tag));
+        $class->addTrait(HttpClientTrait::class);
+        $constructor = $class->addMethod('__construct');
+        $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
+        $constructor->addPromotedParameter('token')->setType('string')->setProtected();
+
+        $constructor->addParameter('httpClient')
+            ->setType(ClientInterface::class)
+            ->setNullable()
+            ->setDefaultValue(null);
+        $constructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
+
+        $constructor->addParameter('requestFactory')
+            ->setType(RequestFactoryInterface::class)
+            ->setNullable()
+            ->setDefaultValue(null);
+        $constructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
+
+        $constructor->addParameter('streamFactory')
+            ->setType(StreamFactoryInterface::class)
+            ->setNullable()
+            ->setDefaultValue(null);
+        $constructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
+
+        $baseUrlSetter = $class->addMethod('setBaseUrl');
+        $baseUrlSetter->setReturnType('static');
+        $baseUrlSetter->addParameter('baseUrl')->setType('string');
+        $baseUrlSetter->addBody('$this->baseUrl = $baseUrl;');
+        $baseUrlSetter->addBody('return $this;');
+
+        $tokenSetter = $class->addMethod('setToken');
+        $tokenSetter->setReturnType('static');
+        $tokenSetter->addParameter('token')->setType('string');
+        $tokenSetter->addBody('$this->token = $token;');
+        $tokenSetter->addBody('return $this;');
+
+        $m = $clientClass->addMethod(str_replace('Endpoint', '', lcfirst(prepareEndpointName($tag))));
+        $m->setReturnType('\\' . $endpointNamespaceName . '\\' . prepareEndpointName($tag));
+        $m->addBody(sprintf('return new \%s\%s($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);', $endpointNamespaceName, prepareEndpointName($tag)));
+    }
+}
+
+function mapParameterType(mixed $type)
+{
+    if ($type === 'integer') {
+        return 'int';
+    }
+
+    if ($type === 'boolean') {
+        return 'bool';
+    }
+
+    if ($type === 'array') {
+        return 'array';
+    }
+
+    if ($type === 'object') {
+        return stdClass::class;
+    }
+
+    return $type;
+}
+
+function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): Method
+{
+    $hydrationMethod = $class->addMethod('hydrate')
+        ->setReturnType('static')
+        ->setStatic();
+
+    $dataParameter = $hydrationMethod->addParameter('data')
+        ->setType('array')
+        ->setNullable()
+        ->setComment('@param array<string, mixed> $data');
+
+    if ($class->hasMethod('__construct')) {
+        $hydrationMethod->addBody('$object = new static(');
+
+        if ($class->getExtends() !== null) {
+            $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
+                if ($property->getType() === 'stdClass') {
+                    return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
+                }
+
+                return sprintf('    %s: isset($data[\'%s\']) ? isset($data[\'%s\']) : null,', $property->getName(), $property->getName(), $property->getName());
+            }, findClass($modelNamespace,$class->getExtends())->getMethod('__construct')?->getParameters() ?? [])));
+        }
+
+        $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
+            if ($property->getType() === 'stdClass') {
+                return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
+            }
+
+            return sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $property->getName(), $property->getName(),  $property->getName());
+        }, $class->getMethod('__construct')?->getParameters())));
+
+        $hydrationMethod->addBody(');');
+    }
+
+    $hydrationMethod->addBody('return $object;');
+
+    return $hydrationMethod;
+}
+
+function createHydrationMethodForArrayBody(PhpNamespace $modelNamespace, ClassType $class, string $itemType): Method
+{
+    $hydrationMethod = createHydrationMethod($modelNamespace, $class);
+    $hydrationMethod->setBody('$object = new static(' . PHP_EOL);
+
+    $hydrationMethod->addBody('    items: array_map(function ($item) {');
+    $hydrationMethod->addBody(sprintf('    return %s::hydrate($item);', $itemType));
+    $hydrationMethod->addBody('    }, $data[\'items\'] ?? []),');
+
+    $hydrationMethod->addBody(');');
+    $hydrationMethod->addBody('return $object;');
+
+    return $hydrationMethod;
+}
+
+function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName, array $schema): ClassType {
+    $class = findClass($modelNamespace, $schemaName);
+    if ($class === null) $class = $modelNamespace->addClass($schemaName);
+
+    $constructor = $class->hasMethod('__construct') ? $class->getMethod('__construct') : $class->addMethod('__construct');
+
+    if (isset($schema['description'])) {
+        $class->setComment($schema['description']);
+    }
+
+    if (isset($schema['properties'])) {
+        foreach ($schema['properties'] as $propertyName => $property) {
+            $propertyIsNullable = !isset($property['required']) || $property['required'] === false;
+            $p = $constructor->addPromotedParameter($propertyName);
+            $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            $p->setComment($property['description'] ?? null)->setNullable($propertyIsNullable);
+
+            if (isset($property['default'])) {
+                $p->setDefaultValue($property['default']);
+            } elseif ($propertyIsNullable) {
+                $p->setDefaultValue(null);
+            }
+        }
+        $hydrationMethod = createHydrationMethod($modelNamespace, $class);
+    } elseif (isset($schema['type']) && $schema['type'] === 'array' && isset($schema['items']['$ref'])) {
+        $itemType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $schema['items']['$ref']);
+        $constructor
+            ->addPromotedParameter('items')
+            ->setType('array')
+            ->setComment(sprintf('@var %s[]', $itemType))
+        ;
+        $hydrationMethod = createHydrationMethodForArrayBody($modelNamespace, $class, $itemType);
+    } elseif (isset($schema['allOf'])) {
+        foreach ($schema['allOf'] as $i => $allOf) {
+            // class extends another object (allOf)
+            if (isset($allOf['$ref'])) {
+                $itemType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $allOf['$ref']);
+
+                $class
+                    ->setExtends($itemType);
+            }
+        }
+    }
+
+    return $class;
+}
+
+foreach ($openApi['components']['schemas'] as $schemaName => $schema) {
+    createClassFromSchema($modelNamespace, $schemaName, $schema);
+}
+
+foreach ($openApi['components']['responses'] as $schemaName => $schema) {
+    $class = $modelNamespace->addClass('Default' . $schemaName . 'Response');
+
+    if (isset($schema['description'])) {
+        $class->addComment($schema['description']);
+    }
+    if (isset($schema['summary'])) {
+        $class->addComment($schema['summary']);
+    }
+
+    if (isset($schema['properties'])) {
+        foreach ($schema['properties'] as $propertyName => $property) {
+            $p = $class->addProperty($propertyName);
+            $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            $p->setComment($property['description'] ?? null)
+                ->setNullable(!isset($property['required']) || $property['required'] === false);
+        }
+    } elseif (isset($schema['content']['application/json']['schema']['$ref'])) {
+        $itemType = '\\' . $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $schema['content']['application/json']['schema']['$ref']);
+        $class->setExtends($itemType);
+    }
+
+    $hydrationMethod = createHydrationMethod($modelNamespace, $class);
+}
+
+function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, string $operationId, array $schema): ClassType
+{
+    $class = $modelNamespace->addClass($operationId . 'Request');
+    $constructor = $class->addMethod('__construct');
+
+    if (isset($schema['type']) && $schema['type'] === 'array') {
+        if (!isset($schema['items']) || !is_array($schema['items'])) {
+            return $class;
+        }
+
+        $itemsType = isset($schema['items']['type']) ? mapParameterType($schema['items']['type']) : null;
+        $cp = $constructor->addPromotedParameter('items')
+            ->setType('array')
+            ->setComment(sprintf('@var %s[]', $itemsType))
+            ->addComment($schema['items']['description'] ?? '')
+        ;
+    } elseif (isset($schema['type']) && $schema['type'] === 'object') {
+        if (!isset($schema['properties']) || !is_array($schema['properties'])) {
+            return $class;
+        }
+
+        foreach ($schema['properties'] as $propertyName => $property) {
+            $required = (isset($property['required']) && $property['required'] !== false)
+                || (isset($schema['required']) && in_array($propertyName, $schema['required'], true));
+
+            $cp = $constructor->addPromotedParameter($propertyName)->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            if (!$required) {
+                $cp
+                    ->setNullable()
+                    ->setDefaultValue(null);
+            }
+
+            $cp->setComment($property['description'] ?? null);
+        }
+    }
+
+    return $class;
+}
+
+foreach ($openApi['paths'] as $path => $pathSpec) {
+    foreach ($pathSpec as $httpMethod => $methodSpec) {
+        echo "$httpMethod - $path (" . $methodSpec['operationId'] . ")\n";
+
+        $class = findClass($endpointNamespace, $methodSpec['tags'][0]);
+        if (!$class) {
+            continue;
+        }
+
+        $method = $class->addMethod(lcfirst($methodSpec['operationId']))
+            ->setComment($methodSpec['summary'] ?? null)
+            ->addComment($methodSpec['description'] ?? null)
+            ->addComment('@throws \Psr\Http\Client\ClientExceptionInterface')
+            ->addBody(sprintf('$path = \'%s\';', $path))
+            ->addBody(sprintf('$method = \'%s\';', $httpMethod))
+            ->addBody('$pathParameters = [];')
+            ->addBody('$queryParameters = [];')
+            ->addBody('')
+        ;
+
+        $pathParameters = [];
+        $bodyParameters = [];
+        $queryParameters = [];
+        $optionalPathParameters = [];
+        $optionalQueryParameters = [];
+
+        if (isset($methodSpec['requestBody'])) {
+            $requestBody = $methodSpec['requestBody'];
+            $requestBodyContent = $requestBody['content'];
+
+            if (isset($requestBodyContent['application/json'])) {
+                $requestBodyContentJson = $requestBodyContent['application/json'];
+
+                $requestBodyClass = createRequestBodyModelClassFromSchema(
+                    $modelNamespace,
+                    ucfirst($methodSpec['operationId']),
+                    $requestBodyContentJson['schema'] ?? [],
+                );
+
+                $bodyParameters[] = (new Parameter('requestBody'))
+                    ->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
+            }
+        }
+
+        if (isset($methodSpec['parameters'])) {
+            foreach ($methodSpec['parameters'] as $parameter) {
+                $parameterIsNullable = !isset($parameter['required']) || $parameter['required'] === false;
+                $p = (new Parameter($parameter['name']))->setType(mapParameterType($parameter['schema']['type']));
+                $p->setComment($parameter['description'])->setNullable($parameterIsNullable);
+
+                if (isset($parameter['schema']['default'])) {
+                    $p->setDefaultValue($parameter['schema']['default']);
+                } elseif ($parameterIsNullable) {
+                    $p->setDefaultValue(null);
+                }
+
+                if ($parameter['in'] === 'path') {
+                    if ($parameterIsNullable) {
+                        $optionalPathParameters[] = $p;
+                    } else {
+                        $pathParameters[] = $p;
+                    }
+
+                    $method->addBody(sprintf('$pathParameters[\'%s\'] = $%s;', $p->getName(), $p->getName()));
+                } elseif ($parameter['in'] === 'query') {
+                    if ($parameterIsNullable) {
+                        $optionalQueryParameters[] = $p;
+                    } else {
+                        $queryParameters[] = $p;
+                    }
+
+                    $method->addBody(sprintf('$queryParameters[\'%s\'] = $%s;', $p->getName(), $p->getName()));
+                }
+            }
+        }
+
+        $method
+            ->addBody('')
+            ->addBody('// build URI through path and query parameters')
+            ->addBody('$uri = $this->buildUri($path, $pathParameters, $queryParameters);')
+            ->addBody('')
+            ->addBody('$request = $this->requestFactory->createRequest($method, $uri);')
+            ->addBody('$request = $request->withHeader(\'Authorization\', \'Bearer \' . $this->token);');
+
+        if (count($bodyParameters) > 0) {
+            $method->addBody('$request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? \'\'));');
+        }
+
+        // add parameters to method
+        $parameters = [];
+        foreach ($pathParameters as $pathParameter) {
+            $parameters[] = $pathParameter;
+        }
+        foreach ($bodyParameters as $bodyParameter) {
+            $parameters[] = $bodyParameter;
+        }
+        foreach ($queryParameters as $queryParameter) {
+            $parameters[] = $queryParameter;
+        }
+        foreach ($optionalPathParameters as $pathParameter) {
+            $parameters[] = $pathParameter;
+        }
+        foreach ($optionalQueryParameters as $queryParameter) {
+            $parameters[] = $queryParameter;
+        }
+
+        $method->setParameters($parameters);
+
+        $method
+            ->addBody('')
+            ->addBody('$response = $this->httpClient->sendRequest($request);')
+            ->addBody('')
+            ->addBody('$map = [];')
+        ;
+
+        foreach ($methodSpec['responses'] as $responseCode => $responseSpec) {
+            if (isset($responseSpec['$ref'])) {
+                $responseClass = '';
+                if (str_starts_with($responseSpec['$ref'], '#/components/responses/')) {
+                    $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/responses/', 'Default', $responseSpec['$ref']) . 'Response';
+                } elseif (str_starts_with($responseSpec['$ref'], '#/components/schemas/')) {
+                    $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['$ref']);
+                } else {
+                    $responseClass = $modelNamespaceName . '\\' . $responseSpec['$ref'];
+                }
+
+            } else {
+                // focus on json
+                if (!isset($responseSpec['content']['application/json'])) {
+                    continue;
+                }
+                if (isset($responseSpec['content']['application/json']['schema']['$ref'])) {
+                    $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['$ref']);
+                    $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+                    if ($method->getReturnType() === null) {
+                        $method->setReturnType($responseClass);
+                    } else {
+                        $returnType = $method->getReturnType();
+                        $method->setReturnType($returnType . '|' . $responseClass);
+                    }
+
+                    continue;
+                }
+
+                $responseClass = $modelNamespaceName . '\\' . $methodSpec['operationId'] . 'Response';
+            }
+            if ($method->getReturnType() === null) {
+                $method->setReturnType($responseClass);
+            } else {
+                $returnType = $method->getReturnType();
+                $method->setReturnType($returnType . '|' . $responseClass);
+            }
+            $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+        }
+
+        $method
+            ->addBody('')
+            ->addBody('return $this->mapResponse($response, $map);');
+    }
+}
+
+foreach ($modelNamespace->getClasses() as $genClass) {
+    $file = new Nette\PhpGenerator\PhpFile;
+    $file->addComment('This file is auto-generated.');
+    $file->setStrictTypes();
+
+    $class = $file->addClass($endpointNamespaceName . '\\' . $genClass->getName());
+
+    file_put_contents(__DIR__ . '/../src/Client/Model/' . $genClass->getName() . '.php', <<<PHP
+<?php
+
+namespace {$genClass->getNamespace()->getName()};
+
+{$printer->printClass($genClass, $genClass->getNamespace())}
+PHP);
+}
+
+foreach ($endpointNamespace->getClasses() as $genClass) {
+    $file = new Nette\PhpGenerator\PhpFile;
+    $file->addComment('This file is auto-generated.');
+    $file->setStrictTypes(); // adds declare(strict_types=1)
+
+    $class = $file->addClass($endpointNamespaceName . '\\' . $genClass->getName());
+
+    file_put_contents(__DIR__ . '/../src/Client/Endpoint/' . $genClass->getName() . '.php', <<<PHP
+<?php
+
+namespace {$genClass->getNamespace()->getName()};
+
+{$printer->printClass($genClass, $genClass->getNamespace())}
+PHP);
+}
+
+{
+    $clientFile = new Nette\PhpGenerator\PhpFile;
+    $clientFile->addComment('This file is auto-generated.');
+    $clientFile->setStrictTypes(); // adds declare(strict_types=1)
+
+    $class = $clientFile->addClass($clientNamespaceName . '\\' . $clientClass->getName());
+
+    file_put_contents(__DIR__ . '/../src/' . $clientClass->getName() . '.php', <<<PHP
+<?php
+
+namespace {$clientClass->getNamespace()->getName()};
+
+{$printer->printClass($clientClass, $clientClass->getNamespace())}
+PHP);
+}
+
+exit(0);
