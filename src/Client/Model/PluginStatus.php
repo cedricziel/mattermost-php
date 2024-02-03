@@ -18,7 +18,7 @@ class PluginStatus
         /** Path to the plugin on the server */
         public ?string $plugin_path = null,
         /** State of the plugin */
-        public ?\number $state = null,
+        public ?int $state = null,
     ) {
     }
 

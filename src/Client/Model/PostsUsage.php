@@ -6,7 +6,7 @@ class PostsUsage
 {
     public function __construct(
         /** Total no. of posts */
-        public ?\number $count = null,
+        public ?int $count = null,
     ) {
     }
 

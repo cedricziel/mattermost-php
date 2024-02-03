@@ -875,7 +875,7 @@ class UsersEndpoint
         /** User GUID */
         string $user_id,
         /** Not used by the server. Clients can pass in the last picture update time of the user to potentially take advantage of caching */
-        ?\number $_ = null,
+        ?int $_ = null,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
     {
         $pathParameters = [];

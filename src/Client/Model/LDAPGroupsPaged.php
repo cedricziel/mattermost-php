@@ -9,7 +9,7 @@ class LDAPGroupsPaged
 {
     public function __construct(
         /** Total number of groups */
-        public ?\number $count = null,
+        public ?int $count = null,
         public ?array $groups = null,
     ) {
     }

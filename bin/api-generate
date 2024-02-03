@@ -113,6 +113,10 @@ foreach ($openApi['x-tagGroups'] as $tagGroup) {
 
 function mapParameterType(mixed $type)
 {
+    if ($type === 'number') {
+        return 'int';
+    }
+
     if ($type === 'integer') {
         return 'int';
     }

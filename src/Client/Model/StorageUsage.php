@@ -6,7 +6,7 @@ class StorageUsage
 {
     public function __construct(
         /** Total file storage usage for the instance in bytes rounded down to the most significant digit */
-        public ?\number $bytes = null,
+        public ?int $bytes = null,
     ) {
     }
 
