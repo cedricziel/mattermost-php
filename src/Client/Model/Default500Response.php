@@ -12,6 +12,8 @@ class Default500Response extends Error
         ?array $data,
     ): static
     {
+        $object = new static(
+        );
         return $object;
     }
 }

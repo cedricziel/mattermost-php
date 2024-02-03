@@ -12,6 +12,8 @@ class DefaultForbiddenResponse extends AppError
         ?array $data,
     ): static
     {
+        $object = new static(
+        );
         return $object;
     }
 }

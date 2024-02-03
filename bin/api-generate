@@ -143,9 +143,9 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
         ->setNullable()
         ->setComment('@param array<string, mixed> $data');
 
-    if ($class->hasMethod('__construct')) {
-        $hydrationMethod->addBody('$object = new static(');
+    $hydrationMethod->addBody('$object = new static(');
 
+    if ($class->hasMethod('__construct')) {
         if ($class->getExtends() !== null) {
             $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
                 if ($property->getType() === 'stdClass') {
@@ -163,9 +163,9 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
 
             return sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $property->getName(), $property->getName(),  $property->getName());
         }, $class->getMethod('__construct')?->getParameters())));
-
-        $hydrationMethod->addBody(');');
     }
+
+    $hydrationMethod->addBody(');');
 
     $hydrationMethod->addBody('return $object;');
 
