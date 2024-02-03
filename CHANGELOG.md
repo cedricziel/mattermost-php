@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/cedricziel/mattermost-php/compare/v1.3.2...v1.4.0) (2024-02-03)
+
+
+### Features
+
+* Client Code generation ([#58](https://github.com/cedricziel/mattermost-php/issues/58)) ([76b021b](https://github.com/cedricziel/mattermost-php/commit/76b021b761518877760fc699364eaaae92cf69c2))
+
 ## [1.3.2](https://github.com/cedricziel/mattermost-php/compare/v1.3.1...v1.3.2) (2024-02-03)
 
 
