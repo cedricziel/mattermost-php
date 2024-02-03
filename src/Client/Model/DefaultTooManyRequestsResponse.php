@@ -12,6 +12,8 @@ class DefaultTooManyRequestsResponse extends AppError
         ?array $data,
     ): static
     {
+        $object = new static(
+        );
         return $object;
     }
 }
