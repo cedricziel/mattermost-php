@@ -203,6 +203,9 @@ function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName,
 
     if (isset($schema['properties'])) {
         foreach ($schema['properties'] as $propertyName => $property) {
+            if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+                continue;
+            }
             $propertyIsNullable = !isset($property['required']) || $property['required'] === false;
             $p = $constructor->addPromotedParameter($propertyName);
             $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
@@ -467,6 +470,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
 
                     continue;
                 }
+
                 if (isset($responseSpec['content']['application/json']['schema']['type']) && $responseSpec['content']['application/json']['schema']['type'] === 'array') {
                     if (isset($responseSpec['content']['application/json']['schema']['items']['$ref'])) {
                         $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['items']['$ref']);
@@ -480,6 +484,20 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         }
 
                         continue;
+                    }
+
+                    continue;
+                }
+
+                if (isset($responseSpec['content']['application/json']['schema']['type']) && $responseSpec['content']['application/json']['schema']['type'] === 'object') {
+                    $responseClass = $modelNamespaceName . '\\' . ucfirst($methodSpec['operationId']) . 'Response';
+                    $class = createClassFromSchema($modelNamespace, ucfirst($methodSpec['operationId']) . 'Response', $responseSpec['content']['application/json']['schema']);
+                    $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+                    if ($method->getReturnType() === null) {
+                        $method->setReturnType($responseClass);
+                    } else {
+                        $returnType = $method->getReturnType();
+                        $method->setReturnType($returnType . '|' . $responseClass);
                     }
 
                     continue;
