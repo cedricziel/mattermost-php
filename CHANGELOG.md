@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/cedricziel/mattermost-php/compare/v1.4.4...v1.4.5) (2024-02-04)
+
+
+### Bug Fixes
+
+* Deserialize team into struct ([#75](https://github.com/cedricziel/mattermost-php/issues/75)) ([0837572](https://github.com/cedricziel/mattermost-php/commit/0837572288342973062f23ab3b18f8a2a94d6a59))
+
 ## [1.4.4](https://github.com/cedricziel/mattermost-php/compare/v1.4.3...v1.4.4) (2024-02-03)
 
 
