@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.6](https://github.com/cedricziel/mattermost-php/compare/v1.4.5...v1.4.6) (2024-02-05)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpunit/phpunit from 10.5.9 to 11.0.2 ([#77](https://github.com/cedricziel/mattermost-php/issues/77)) ([9c544dc](https://github.com/cedricziel/mattermost-php/commit/9c544dcbd1fb0ad55008595b4b167006f508dd64))
+* remove gnello/mattermost ([#78](https://github.com/cedricziel/mattermost-php/issues/78)) ([a69f2af](https://github.com/cedricziel/mattermost-php/commit/a69f2afdc4098a550f7753cb0e210a03054f01b9))
+
 ## [1.4.5](https://github.com/cedricziel/mattermost-php/compare/v1.4.4...v1.4.5) (2024-02-04)
 
 
