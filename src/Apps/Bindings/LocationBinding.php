@@ -13,7 +13,7 @@ final class LocationBinding implements \JsonSerializable
          * comes from. It is optional. For /command bindings, Location is
          * defaulted to Label.
          */
-        protected readonly string $location,
+        protected string $location,
         protected readonly string $icon = '',
         protected readonly string $hint = '',
         protected readonly string $description = '',
@@ -115,5 +115,16 @@ final class LocationBinding implements \JsonSerializable
         }
 
         return $o;
+    }
+
+    public function withPrefix(?string $prefix): LocationBinding
+    {
+        if ($prefix === null) {
+            return $this;
+        }
+
+        $this->location = $prefix . '-' . $this->location;
+
+        return $this;
     }
 }

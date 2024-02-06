@@ -122,4 +122,32 @@ class MattermostAppTest extends TestCase
         self::assertEquals(200, $response->getStatusCode());
         self::assertJson($response->getBody()->getContents());
     }
+
+    #[Test]
+    public function canPrefixBindings()
+    {
+        $app = MattermostApp::create('test', 'Test', 'https://example.com')
+            ->withBindingsPrefix('dev')
+            ->withHttp(HttpDeploymentDescriptor::create('https://example.com'))
+            ->addBinding(
+                Location::command,
+                LocationBinding::create('test'),
+            )
+            ->requestPermission(AppPermission::act_as_bot)
+            ->withOnInstall(new Call('test'));
+
+        $request = $this->psrFactory->createServerRequest('GET', 'https://example.com/bindings');
+        $request = $request->withParsedBody(new Request('/bindings', new Context(
+            mattermost_site_url: 'https://mattermost.com',
+            bot_user_id: 'abc',
+            bot_access_token: '123'),
+        ),
+        );
+
+        $response = $app->handle($request);
+
+        $bindings = json_decode($response->getBody()->getContents());
+
+        self::assertEquals('dev-test', $bindings->data[0]->bindings[0]->location);
+    }
 }
