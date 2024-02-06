@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.7](https://github.com/cedricziel/mattermost-php/compare/v1.4.6...v1.4.7) (2024-02-06)
+
+
+### Bug Fixes
+
+* allow prefixing location bindings ([#80](https://github.com/cedricziel/mattermost-php/issues/80)) ([0087689](https://github.com/cedricziel/mattermost-php/commit/0087689b8abb37ad34871a94070bc874f8a8113c))
+
 ## [1.4.6](https://github.com/cedricziel/mattermost-php/compare/v1.4.5...v1.4.6) (2024-02-05)
 
 
