@@ -38,6 +38,7 @@ final class MattermostApp implements RequestHandlerInterface
         protected ?HttpDeploymentDescriptor $http = null,
 
         protected ?EventDispatcherInterface $eventDispatcher = null,
+        protected ?string $prefix = '',
     ) {}
 
     public static function create(string $name, string $display_name, string $homepage_url): static {
@@ -107,7 +108,11 @@ final class MattermostApp implements RequestHandlerInterface
             $this->locationBindings[$location->value] = [];
         }
 
-        $this->locationBindings[$location->value][] = $binding;
+        if ($this->prefix !== '') {
+            $this->locationBindings[$location->value][] = $binding->withPrefix($this->prefix);
+        } else {
+            $this->locationBindings[$location->value][] = $binding;
+        }
 
         return $this;
     }
@@ -242,6 +247,13 @@ final class MattermostApp implements RequestHandlerInterface
         if (!in_array($appPermission, $this->requestedPermissions, true)) {
             $this->requestedPermissions[] = $appPermission;
         }
+
+        return $this;
+    }
+
+    public function withBindingsPrefix(string $bindingsPrefix): static
+    {
+        $this->prefix = $bindingsPrefix;
 
         return $this;
     }
