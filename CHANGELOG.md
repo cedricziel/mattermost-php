@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.8](https://github.com/cedricziel/mattermost-php/compare/v1.4.7...v1.4.8) (2024-02-11)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump psr/http-message from 1.1 to 2.0 ([#82](https://github.com/cedricziel/mattermost-php/issues/82)) ([8fbbc05](https://github.com/cedricziel/mattermost-php/commit/8fbbc05af8be0712429838b8aa46893a70c347ac))
+
 ## [1.4.7](https://github.com/cedricziel/mattermost-php/compare/v1.4.6...v1.4.7) (2024-02-06)
 
 
