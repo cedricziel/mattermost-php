@@ -8,7 +8,10 @@ use CedricZiel\MattermostPhp\Client\Model\Post;
 use CedricZiel\MattermostPhp\Context;
 use CedricZiel\MattermostPhp\Timer;
 use CedricZiel\MattermostPhp\User;
+use GuzzleHttp\Psr7\HttpFactory;
+use GuzzleHttp\Psr7\Stream;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Psr\Http\Message\StreamFactoryInterface;
 use Symfony\Component\HttpClient\Psr18Client;
 use Http\Mock\Client as MockClient;
 use function PHPUnit\Framework\assertInstanceOf;
@@ -70,10 +73,12 @@ class AppClientTest extends MattermostTestCase
 
     public function testCanCreatePost()
     {
+        $httpFactory = new HttpFactory();
+
         $c = new MockClient();
         $channelResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
         $channelResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
-        $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn('{"message": "foo"}');
+        $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn($httpFactory->createStream('{"id": "foo"}'));
         $c->addResponse($channelResponse);
 
         $psr18Client = new Psr18Client();
@@ -92,15 +97,17 @@ class AppClientTest extends MattermostTestCase
 
     public function testCanCreateDM()
     {
+        $httpFactory = new HttpFactory();
+
         $c = new MockClient();
         $channelResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
         $channelResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
-        $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn('{"id": "foo"}');
+        $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn($httpFactory->createStream('{"id": "foo"}'));
         $c->addResponse($channelResponse);
 
         $postResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
         $postResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
-        $postResponse->expects(self::atLeast(1))->method('getBody')->willReturn('{"id": "foo"}');
+        $postResponse->expects(self::atLeast(1))->method('getBody')->willReturn($httpFactory->createStream('{"id": "foo"}'));
         $c->addResponse($postResponse);
 
         $client = AppClient::asBot(
