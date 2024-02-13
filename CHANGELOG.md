@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.9](https://github.com/cedricziel/mattermost-php/compare/v1.4.8...v1.4.9) (2024-02-13)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpstan/phpstan from 1.10.57 to 1.10.58 ([#85](https://github.com/cedricziel/mattermost-php/issues/85)) ([e889d57](https://github.com/cedricziel/mattermost-php/commit/e889d57e4f29b5148c46acf0a68414d08de92847))
+* **deps-dev:** bump phpunit/phpunit from 11.0.2 to 11.0.3 ([#84](https://github.com/cedricziel/mattermost-php/issues/84)) ([76938af](https://github.com/cedricziel/mattermost-php/commit/76938af4991f7b41c6e80d5269776ab29e516735))
+
 ## [1.4.8](https://github.com/cedricziel/mattermost-php/compare/v1.4.7...v1.4.8) (2024-02-11)
 
 
