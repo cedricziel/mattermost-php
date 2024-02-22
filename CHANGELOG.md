@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.10](https://github.com/cedricziel/mattermost-php/compare/v1.4.9...v1.4.10) (2024-02-22)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nikic/php-parser from 5.0.0 to 5.0.1 ([#88](https://github.com/cedricziel/mattermost-php/issues/88)) ([c520458](https://github.com/cedricziel/mattermost-php/commit/c52045834e2bcd9c130d93486c53b1628e18272e))
+* **deps-dev:** bump phpstan/phpstan from 1.10.58 to 1.10.59 ([#87](https://github.com/cedricziel/mattermost-php/issues/87)) ([2d42fa0](https://github.com/cedricziel/mattermost-php/commit/2d42fa0c046a4994fa3f744f41753ac024f5f898))
+
 ## [1.4.9](https://github.com/cedricziel/mattermost-php/compare/v1.4.8...v1.4.9) (2024-02-13)
 
 
