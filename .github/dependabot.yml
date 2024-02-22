@@ -4,7 +4,11 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    assignees:
+      - "cedricziel"
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "daily"
+    assignees:
+      - "cedricziel"
