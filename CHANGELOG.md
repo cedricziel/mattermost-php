@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.11](https://github.com/cedricziel/mattermost-php/compare/v1.4.10...v1.4.11) (2024-02-22)
+
+
+### Miscellaneous Chores
+
+* Add cedricziel as assignee to dependabot ([#90](https://github.com/cedricziel/mattermost-php/issues/90)) ([318a5e3](https://github.com/cedricziel/mattermost-php/commit/318a5e3f2b19950db208431c9c275ec6ae7adc03))
+
 ## [1.4.10](https://github.com/cedricziel/mattermost-php/compare/v1.4.9...v1.4.10) (2024-02-22)
 
 
