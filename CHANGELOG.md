@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.13](https://github.com/cedricziel/mattermost-php/compare/v1.4.12...v1.4.13) (2024-03-01)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpunit/phpunit from 11.0.3 to 11.0.4 ([#96](https://github.com/cedricziel/mattermost-php/issues/96)) ([aafc2a7](https://github.com/cedricziel/mattermost-php/commit/aafc2a7929d84edf71beba5e054c28cfc0269d04))
+
 ## [1.4.12](https://github.com/cedricziel/mattermost-php/compare/v1.4.11...v1.4.12) (2024-02-27)
 
 
