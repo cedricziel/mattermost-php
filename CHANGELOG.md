@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.14](https://github.com/cedricziel/mattermost-php/compare/v1.4.13...v1.4.14) (2024-03-05)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump symfony/http-client from 7.0.4 to 7.0.5 ([#98](https://github.com/cedricziel/mattermost-php/issues/98)) ([de9887b](https://github.com/cedricziel/mattermost-php/commit/de9887b5234ac30ccdc57778105da72d3ce50c60))
+
 ## [1.4.13](https://github.com/cedricziel/mattermost-php/compare/v1.4.12...v1.4.13) (2024-03-01)
 
 
