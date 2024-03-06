@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.15](https://github.com/cedricziel/mattermost-php/compare/v1.4.14...v1.4.15) (2024-03-06)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nikic/php-parser from 5.0.1 to 5.0.2 ([#100](https://github.com/cedricziel/mattermost-php/issues/100)) ([44c30fe](https://github.com/cedricziel/mattermost-php/commit/44c30fe5fd33eacd60288ebbca40dc4817619836))
+
 ## [1.4.14](https://github.com/cedricziel/mattermost-php/compare/v1.4.13...v1.4.14) (2024-03-05)
 
 
