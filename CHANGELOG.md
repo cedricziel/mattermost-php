@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.16](https://github.com/cedricziel/mattermost-php/compare/v1.4.15...v1.4.16) (2024-03-09)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nette/php-generator from 4.1.3 to 4.1.4 ([#102](https://github.com/cedricziel/mattermost-php/issues/102)) ([a1e7609](https://github.com/cedricziel/mattermost-php/commit/a1e7609855842a24c8d8b8da2745164d4ef07ea1))
+* **deps-dev:** bump phpstan/phpstan from 1.10.59 to 1.10.60 ([#103](https://github.com/cedricziel/mattermost-php/issues/103)) ([65007ab](https://github.com/cedricziel/mattermost-php/commit/65007ab82ad26e9a78a6383e2ddbde4fe197f95c))
+
 ## [1.4.15](https://github.com/cedricziel/mattermost-php/compare/v1.4.14...v1.4.15) (2024-03-06)
 
 
