@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.19](https://github.com/cedricziel/mattermost-php/compare/v1.4.18...v1.4.19) (2024-05-19)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpstan/phpstan from 1.10.62 to 1.11.1 ([#127](https://github.com/cedricziel/mattermost-php/issues/127)) ([81aadaf](https://github.com/cedricziel/mattermost-php/commit/81aadaf75ff75449cf9833f5c0ca99e21a6b8a57))
+* **deps-dev:** bump phpunit/phpunit from 11.0.6 to 11.1.3 ([#123](https://github.com/cedricziel/mattermost-php/issues/123)) ([d5e21a6](https://github.com/cedricziel/mattermost-php/commit/d5e21a65cea2496bea8e5e44d1d2ab825c05cc70))
+* **deps:** bump php-http/discovery from 1.19.2 to 1.19.4 ([#116](https://github.com/cedricziel/mattermost-php/issues/116)) ([2c53603](https://github.com/cedricziel/mattermost-php/commit/2c53603056f3438bdea91a1e82206649c73ada13))
+* **deps:** bump symfony/property-access from 7.0.4 to 7.0.7 ([#125](https://github.com/cedricziel/mattermost-php/issues/125)) ([3d888dc](https://github.com/cedricziel/mattermost-php/commit/3d888dcb16da5d5656eb72f2e8c1f393788b4c8c))
+* **deps:** bump symfony/serializer from 7.0.4 to 7.0.7 ([#124](https://github.com/cedricziel/mattermost-php/issues/124)) ([5ea51d3](https://github.com/cedricziel/mattermost-php/commit/5ea51d3513c94531b28f51543ee5a0da2206fb64))
+* regen code ([#128](https://github.com/cedricziel/mattermost-php/issues/128)) ([07ef07b](https://github.com/cedricziel/mattermost-php/commit/07ef07b0fe95a0d61772ac6740d82c9e348f2cf2))
+
 ## [1.4.18](https://github.com/cedricziel/mattermost-php/compare/v1.4.17...v1.4.18) (2024-03-14)
 
 
