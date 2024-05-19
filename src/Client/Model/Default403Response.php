@@ -10,7 +10,7 @@ class Default403Response extends Error
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Default403Response {
         $object = new self(
         );
         return $object;

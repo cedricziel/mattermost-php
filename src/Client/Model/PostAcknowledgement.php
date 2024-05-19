@@ -17,7 +17,7 @@ class PostAcknowledgement
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): PostAcknowledgement {
         $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             post_id: isset($data['post_id']) ? $data['post_id'] : null,

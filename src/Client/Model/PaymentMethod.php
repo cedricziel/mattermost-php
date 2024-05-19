@@ -17,7 +17,7 @@ class PaymentMethod
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): PaymentMethod {
         $object = new self(
             type: isset($data['type']) ? $data['type'] : null,
             last_four: isset($data['last_four']) ? $data['last_four'] : null,

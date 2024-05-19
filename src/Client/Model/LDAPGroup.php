@@ -18,7 +18,7 @@ class LDAPGroup
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): LDAPGroup {
         $object = new self(
             has_syncables: isset($data['has_syncables']) ? $data['has_syncables'] : null,
             mattermost_group_id: isset($data['mattermost_group_id']) ? $data['mattermost_group_id'] : null,

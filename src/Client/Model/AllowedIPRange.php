@@ -15,7 +15,7 @@ class AllowedIPRange
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): AllowedIPRange {
         $object = new self(
             CIDRBlock: isset($data['CIDRBlock']) ? $data['CIDRBlock'] : null,
             Description: isset($data['Description']) ? $data['Description'] : null,

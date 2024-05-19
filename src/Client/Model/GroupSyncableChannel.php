@@ -17,7 +17,7 @@ class GroupSyncableChannel
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): GroupSyncableChannel {
         $object = new self(
             channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
             group_id: isset($data['group_id']) ? $data['group_id'] : null,

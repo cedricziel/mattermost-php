@@ -15,7 +15,7 @@ class Server_Busy
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Server_Busy {
         $object = new self(
             busy: isset($data['busy']) ? $data['busy'] : null,
             expires: isset($data['expires']) ? $data['expires'] : null,

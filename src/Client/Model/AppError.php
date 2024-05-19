@@ -15,7 +15,7 @@ class AppError
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): AppError {
         $object = new self(
             status_code: isset($data['status_code']) ? $data['status_code'] : null,
             id: isset($data['id']) ? $data['id'] : null,

@@ -17,7 +17,7 @@ class LDAPGroupsPaged
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): LDAPGroupsPaged {
         $object = new self(
             count: isset($data['count']) ? $data['count'] : null,
             groups: isset($data['groups']) ? $data['groups'] : null,

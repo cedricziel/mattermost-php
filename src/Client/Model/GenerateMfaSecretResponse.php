@@ -15,7 +15,7 @@ class GenerateMfaSecretResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): GenerateMfaSecretResponse {
         $object = new self(
             secret: isset($data['secret']) ? $data['secret'] : null,
             qr_code: isset($data['qr_code']) ? $data['qr_code'] : null,

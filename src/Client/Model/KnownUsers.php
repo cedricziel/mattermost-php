@@ -12,7 +12,7 @@ class KnownUsers
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): KnownUsers {
         $object = new self(
             items: isset($data['items']) ? $data['items'] : null,
         );

@@ -15,7 +15,7 @@ class UserAutocomplete
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): UserAutocomplete {
         $object = new self(
             users: isset($data['users']) ? $data['users'] : null,
             out_of_channel: isset($data['out_of_channel']) ? $data['out_of_channel'] : null,

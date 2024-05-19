@@ -19,7 +19,7 @@ class GroupSyncableTeams
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): GroupSyncableTeams {
         $object = new self(
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
             team_display_name: isset($data['team_display_name']) ? $data['team_display_name'] : null,

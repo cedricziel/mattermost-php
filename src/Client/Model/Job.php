@@ -27,7 +27,7 @@ class Job
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Job {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             type: isset($data['type']) ? $data['type'] : null,

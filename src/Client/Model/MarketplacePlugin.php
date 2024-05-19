@@ -26,7 +26,7 @@ class MarketplacePlugin
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): MarketplacePlugin {
         $object = new self(
             homepage_url: isset($data['homepage_url']) ? $data['homepage_url'] : null,
             icon_data: isset($data['icon_data']) ? $data['icon_data'] : null,

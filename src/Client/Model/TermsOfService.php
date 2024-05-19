@@ -19,7 +19,7 @@ class TermsOfService
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): TermsOfService {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,

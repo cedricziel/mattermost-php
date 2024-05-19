@@ -15,7 +15,7 @@ class RetentionPolicyForChannelList
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): RetentionPolicyForChannelList {
         $object = new self(
             policies: isset($data['policies']) ? $data['policies'] : null,
             total_count: isset($data['total_count']) ? $data['total_count'] : null,

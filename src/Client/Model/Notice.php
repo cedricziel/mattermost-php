@@ -32,7 +32,7 @@ class Notice
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Notice {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             sysAdminOnly: isset($data['sysAdminOnly']) ? $data['sysAdminOnly'] : null,

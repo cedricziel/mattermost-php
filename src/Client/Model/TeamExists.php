@@ -12,7 +12,7 @@ class TeamExists
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): TeamExists {
         $object = new self(
             exists: isset($data['exists']) ? $data['exists'] : null,
         );

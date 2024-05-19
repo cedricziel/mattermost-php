@@ -19,7 +19,7 @@ class PlaybookList
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): PlaybookList {
         $object = new self(
             total_count: isset($data['total_count']) ? $data['total_count'] : null,
             page_count: isset($data['page_count']) ? $data['page_count'] : null,

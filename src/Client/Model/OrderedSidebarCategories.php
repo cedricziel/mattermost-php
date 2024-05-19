@@ -16,7 +16,7 @@ class OrderedSidebarCategories
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): OrderedSidebarCategories {
         $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             categories: isset($data['categories']) ? $data['categories'] : null,

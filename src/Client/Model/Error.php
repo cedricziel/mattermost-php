@@ -15,7 +15,7 @@ class Error
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Error {
         $object = new self(
             error: isset($data['error']) ? $data['error'] : null,
             details: isset($data['details']) ? $data['details'] : null,

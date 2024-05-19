@@ -13,7 +13,7 @@ class GetGroupStatsResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): GetGroupStatsResponse {
         $object = new self(
             group_id: isset($data['group_id']) ? $data['group_id'] : null,
             total_member_count: isset($data['total_member_count']) ? $data['total_member_count'] : null,

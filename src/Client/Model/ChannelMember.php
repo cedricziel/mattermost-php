@@ -21,7 +21,7 @@ class ChannelMember
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): ChannelMember {
         $object = new self(
             channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
             user_id: isset($data['user_id']) ? $data['user_id'] : null,

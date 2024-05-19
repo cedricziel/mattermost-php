@@ -15,7 +15,7 @@ class UploadFileResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): UploadFileResponse {
         $object = new self(
             file_infos: isset($data['file_infos']) ? $data['file_infos'] : null,
             client_ids: isset($data['client_ids']) ? $data['client_ids'] : null,

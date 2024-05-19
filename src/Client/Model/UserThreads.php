@@ -15,7 +15,7 @@ class UserThreads
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): UserThreads {
         $object = new self(
             total: isset($data['total']) ? $data['total'] : null,
             threads: isset($data['threads']) ? $data['threads'] : null,

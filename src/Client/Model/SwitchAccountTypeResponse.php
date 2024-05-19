@@ -13,7 +13,7 @@ class SwitchAccountTypeResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): SwitchAccountTypeResponse {
         $object = new self(
             follow_link: isset($data['follow_link']) ? $data['follow_link'] : null,
         );

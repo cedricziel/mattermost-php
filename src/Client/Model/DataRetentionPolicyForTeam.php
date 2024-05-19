@@ -15,7 +15,7 @@ class DataRetentionPolicyForTeam
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): DataRetentionPolicyForTeam {
         $object = new self(
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
             post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,

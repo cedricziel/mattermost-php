@@ -13,7 +13,7 @@ class ChannelModeration
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): ChannelModeration {
         $object = new self(
             name: isset($data['name']) ? $data['name'] : null,
             roles: isset($data['roles']) ? $data['roles'] : null,

@@ -30,7 +30,7 @@ class OpenGraph
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): OpenGraph {
         $object = new self(
             type: isset($data['type']) ? $data['type'] : null,
             url: isset($data['url']) ? $data['url'] : null,

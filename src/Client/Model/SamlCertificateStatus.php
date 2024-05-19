@@ -17,7 +17,7 @@ class SamlCertificateStatus
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): SamlCertificateStatus {
         $object = new self(
             idp_certificate_file: isset($data['idp_certificate_file']) ? $data['idp_certificate_file'] : null,
             public_certificate_file: isset($data['public_certificate_file']) ? $data['public_certificate_file'] : null,

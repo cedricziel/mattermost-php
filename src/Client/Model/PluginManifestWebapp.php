@@ -16,7 +16,7 @@ class PluginManifestWebapp
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): PluginManifestWebapp {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             version: isset($data['version']) ? $data['version'] : null,

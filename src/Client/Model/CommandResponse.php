@@ -18,7 +18,7 @@ class CommandResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): CommandResponse {
         $object = new self(
             ResponseType: isset($data['ResponseType']) ? $data['ResponseType'] : null,
             Text: isset($data['Text']) ? $data['Text'] : null,

@@ -23,7 +23,7 @@ class Emoji
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Emoji {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,

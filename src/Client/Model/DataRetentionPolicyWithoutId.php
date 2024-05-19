@@ -17,7 +17,7 @@ class DataRetentionPolicyWithoutId
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): DataRetentionPolicyWithoutId {
         $object = new self(
             display_name: isset($data['display_name']) ? $data['display_name'] : null,
             post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,

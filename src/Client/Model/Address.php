@@ -17,7 +17,7 @@ class Address
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): Address {
         $object = new self(
             city: isset($data['city']) ? $data['city'] : null,
             country: isset($data['country']) ? $data['country'] : null,

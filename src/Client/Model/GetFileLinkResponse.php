@@ -12,7 +12,7 @@ class GetFileLinkResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): GetFileLinkResponse {
         $object = new self(
             link: isset($data['link']) ? $data['link'] : null,
         );

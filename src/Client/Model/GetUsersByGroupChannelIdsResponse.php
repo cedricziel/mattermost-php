@@ -11,7 +11,7 @@ class GetUsersByGroupChannelIdsResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): GetUsersByGroupChannelIdsResponse {
         $object = new self(
 
         );

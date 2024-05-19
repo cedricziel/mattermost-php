@@ -13,7 +13,7 @@ class ChannelListWithTeamData implements \JsonSerializable
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): ChannelListWithTeamData {
         $object = new self(
             items: array_map(function ($item) {
             return \CedricZiel\MattermostPhp\Client\Model\ChannelWithTeamData::hydrate($item);

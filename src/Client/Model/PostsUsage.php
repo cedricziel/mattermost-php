@@ -13,7 +13,7 @@ class PostsUsage
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): PostsUsage {
         $object = new self(
             count: isset($data['count']) ? $data['count'] : null,
         );

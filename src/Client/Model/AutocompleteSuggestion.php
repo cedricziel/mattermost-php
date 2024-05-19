@@ -21,7 +21,7 @@ class AutocompleteSuggestion
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): AutocompleteSuggestion {
         $object = new self(
             Complete: isset($data['Complete']) ? $data['Complete'] : null,
             Suggestion: isset($data['Suggestion']) ? $data['Suggestion'] : null,

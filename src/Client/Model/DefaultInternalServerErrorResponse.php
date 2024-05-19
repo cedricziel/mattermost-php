@@ -10,7 +10,7 @@ class DefaultInternalServerErrorResponse extends AppError
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static {
+    ): DefaultInternalServerErrorResponse {
         $object = new self(
         );
         return $object;
