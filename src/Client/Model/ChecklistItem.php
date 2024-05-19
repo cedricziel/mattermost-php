@@ -29,8 +29,7 @@ class ChecklistItem
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): ChecklistItem {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             title: isset($data['title']) ? $data['title'] : null,

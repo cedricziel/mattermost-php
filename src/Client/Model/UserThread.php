@@ -25,8 +25,7 @@ class UserThread
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): UserThread {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             reply_count: isset($data['reply_count']) ? $data['reply_count'] : null,

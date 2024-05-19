@@ -15,8 +15,7 @@ class UserAuthData
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): UserAuthData {
         $object = new self(
             auth_data: isset($data['auth_data']) ? $data['auth_data'] : null,
             auth_service: isset($data['auth_service']) ? $data['auth_service'] : null,

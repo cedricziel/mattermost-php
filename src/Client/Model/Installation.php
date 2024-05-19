@@ -16,8 +16,7 @@ class Installation
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): Installation {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             allowed_ip_ranges: isset($data['allowed_ip_ranges']) ? $data['allowed_ip_ranges'] : null,

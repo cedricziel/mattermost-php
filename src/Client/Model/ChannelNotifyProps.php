@@ -19,8 +19,7 @@ class ChannelNotifyProps
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): ChannelNotifyProps {
         $object = new self(
             email: isset($data['email']) ? $data['email'] : null,
             push: isset($data['push']) ? $data['push'] : null,

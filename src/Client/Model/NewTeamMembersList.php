@@ -17,8 +17,7 @@ class NewTeamMembersList
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): NewTeamMembersList {
         $object = new self(
             has_next: isset($data['has_next']) ? $data['has_next'] : null,
             items: isset($data['items']) ? $data['items'] : null,

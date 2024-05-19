@@ -27,8 +27,7 @@ class Bot
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): Bot {
         $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,

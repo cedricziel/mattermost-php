@@ -15,8 +15,7 @@ class ViewChannelResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): ViewChannelResponse {
         $object = new self(
             status: isset($data['status']) ? $data['status'] : null,
             last_viewed_at_times: isset($data['last_viewed_at_times']) ? (object) $data['last_viewed_at_times'] : null,
