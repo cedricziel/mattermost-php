@@ -10,8 +10,7 @@ class Default500Response extends Error
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): Default500Response {
         $object = new self(
         );
         return $object;

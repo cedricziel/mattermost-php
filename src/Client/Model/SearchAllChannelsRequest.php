@@ -55,12 +55,12 @@ class SearchAllChannelsRequest
          * If set to true, only channels which do not have a granular retention policy assigned to them will be returned. The `sysconsole_read_compliance_data_retention` permission is required to use this parameter.
          * __Minimum server version__: 5.35
          */
-        public ?bool $exclude_policy_constrained = null,
+        public ?bool $exclude_policy_constrained = false,
         /**
          * If set to true, returns channels where given search 'term' matches channel ID.
          * __Minimum server version__: 5.35
          */
-        public ?bool $include_search_by_id = null,
+        public ?bool $include_search_by_id = false,
     ) {
     }
 }

@@ -11,12 +11,12 @@ class CreateChannelRequest
         public string $name,
         /** The non-unique UI name for the channel */
         public string $display_name,
+        /** 'O' for a public channel, 'P' for a private channel */
+        public string $type,
         /** A short description of the purpose of the channel */
         public ?string $purpose = null,
         /** Markdown-formatted text to display in the header of the channel */
         public ?string $header = null,
-        /** 'O' for a public channel, 'P' for a private channel */
-        public string $type,
     ) {
     }
 }

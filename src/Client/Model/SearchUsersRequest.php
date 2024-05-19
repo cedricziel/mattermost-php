@@ -28,7 +28,7 @@ class SearchUsersRequest
          *
          * __Available as of server version 5.6. Defaults to `100` if not provided or on an earlier server version.__
          */
-        public ?int $limit = null,
+        public ?int $limit = 100,
     ) {
     }
 }

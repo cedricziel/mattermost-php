@@ -10,8 +10,7 @@ class DefaultNotFoundResponse extends AppError
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): DefaultNotFoundResponse {
         $object = new self(
         );
         return $object;

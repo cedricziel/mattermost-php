@@ -15,8 +15,7 @@ class AddOn
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): AddOn {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             name: isset($data['name']) ? $data['name'] : null,

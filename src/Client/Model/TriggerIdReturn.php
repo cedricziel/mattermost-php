@@ -13,8 +13,7 @@ class TriggerIdReturn
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): TriggerIdReturn {
         $object = new self(
             trigger_id: isset($data['trigger_id']) ? $data['trigger_id'] : null,
         );

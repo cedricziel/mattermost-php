@@ -13,8 +13,7 @@ class ChannelModeratedRole
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): ChannelModeratedRole {
         $object = new self(
             value: isset($data['value']) ? $data['value'] : null,
             enabled: isset($data['enabled']) ? $data['enabled'] : null,

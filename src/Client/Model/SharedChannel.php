@@ -32,8 +32,7 @@ class SharedChannel
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): SharedChannel {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
