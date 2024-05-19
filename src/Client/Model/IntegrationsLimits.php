@@ -12,8 +12,7 @@ class IntegrationsLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): IntegrationsLimits {
         $object = new self(
             enabled: isset($data['enabled']) ? $data['enabled'] : null,
         );

@@ -42,8 +42,7 @@ class RolesEndpoint
      * @return \CedricZiel\MattermostPhp\Client\Model\Role[]
      */
     public function getAllRoles(
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -79,8 +78,7 @@ class RolesEndpoint
     public function getRole(
         /** Role GUID */
         string $role_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -116,8 +114,7 @@ class RolesEndpoint
     public function getRoleByName(
         /** Role Name */
         string $role_name,
-    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -154,8 +151,7 @@ class RolesEndpoint
         /** Role GUID */
         string $role_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchRoleRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Role|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -194,8 +190,7 @@ class RolesEndpoint
      */
     public function getRolesByNames(
         \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest $requestBody,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 

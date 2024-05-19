@@ -39,8 +39,7 @@ class BrandEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getBrandImage(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetBrandImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\GetBrandImageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -70,8 +69,7 @@ class BrandEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function uploadBrandImage(
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -105,8 +103,7 @@ class BrandEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function deleteBrandImage(
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 

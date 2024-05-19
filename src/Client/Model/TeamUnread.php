@@ -14,8 +14,7 @@ class TeamUnread
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): TeamUnread {
         $object = new self(
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
             msg_count: isset($data['msg_count']) ? $data['msg_count'] : null,

@@ -13,8 +13,7 @@ class GetPluginsResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): GetPluginsResponse {
         $object = new self(
             active: isset($data['active']) ? $data['active'] : null,
             inactive: isset($data['inactive']) ? $data['inactive'] : null,

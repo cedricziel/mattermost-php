@@ -40,8 +40,7 @@ class TeamsEndpoint
      */
     public function createTeam(
         \CedricZiel\MattermostPhp\Client\Model\CreateTeamRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -85,8 +84,7 @@ class TeamsEndpoint
          * __Minimum server version__: 5.35
          */
         ?bool $exclude_policy_constrained = false,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -122,8 +120,7 @@ class TeamsEndpoint
     public function getTeam(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -159,8 +156,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -200,8 +196,7 @@ class TeamsEndpoint
         string $team_id,
         /** Permanently delete the team, to be used for compliance reasons only. As of server version 5.0, `ServiceSettings.EnableAPITeamDeletion` must be set to `true` in the server's configuration. */
         ?bool $permanent = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -238,8 +233,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\PatchTeamRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -278,8 +272,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamPrivacyRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -318,8 +311,7 @@ class TeamsEndpoint
     public function restoreTeam(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -353,8 +345,7 @@ class TeamsEndpoint
     public function getTeamByName(
         /** Team Name */
         string $name,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -390,8 +381,7 @@ class TeamsEndpoint
      */
     public function searchTeams(
         \CedricZiel\MattermostPhp\Client\Model\SearchTeamsRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\SearchTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\SearchTeamsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -426,8 +416,7 @@ class TeamsEndpoint
     public function teamExists(
         /** Team Name */
         string $name,
-    ): \CedricZiel\MattermostPhp\Client\Model\TeamExists|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamExists|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -462,8 +451,7 @@ class TeamsEndpoint
     public function getTeamsForUser(
         /** User GUID */
         string $user_id,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -502,8 +490,7 @@ class TeamsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 60,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -541,8 +528,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\AddTeamMemberRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\TeamMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -578,8 +564,7 @@ class TeamsEndpoint
     public function addTeamMemberFromInvite(
         /** Token id from the invitation */
         string $token,
-    ): \CedricZiel\MattermostPhp\Client\Model\TeamMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -618,8 +603,7 @@ class TeamsEndpoint
         \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest $requestBody,
         /** Instead of aborting the operation if a user cannot be added, return an arrray that will contain both the success and added members and the ones with error, in form of `[{"member": {...}, "user_id", "...", "error": {...}}]` */
         ?bool $graceful = null,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -657,8 +641,7 @@ class TeamsEndpoint
     public function getTeamMembersForUser(
         /** User GUID */
         string $user_id,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -695,8 +678,7 @@ class TeamsEndpoint
         string $team_id,
         /** User GUID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\TeamMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamMember|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -734,8 +716,7 @@ class TeamsEndpoint
         string $team_id,
         /** User GUID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -773,8 +754,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest $requestBody,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -809,8 +789,7 @@ class TeamsEndpoint
     public function getTeamStats(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\TeamStats|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamStats|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -845,8 +824,7 @@ class TeamsEndpoint
     public function regenerateTeamInviteId(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Team|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -884,8 +862,7 @@ class TeamsEndpoint
     public function getTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -923,8 +900,7 @@ class TeamsEndpoint
     public function setTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -963,8 +939,7 @@ class TeamsEndpoint
     public function removeTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1003,8 +978,7 @@ class TeamsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberRolesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1047,8 +1021,7 @@ class TeamsEndpoint
         /** User GUID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberSchemeRolesRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1090,8 +1063,7 @@ class TeamsEndpoint
         string $exclude_team,
         /** Boolean to determine whether the collapsed threads should be included or not */
         ?bool $include_collapsed_threads = false,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1129,8 +1101,7 @@ class TeamsEndpoint
         string $user_id,
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\TeamUnread|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TeamUnread|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1169,8 +1140,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\InviteUsersToTeamRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1212,8 +1182,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1247,8 +1216,7 @@ class TeamsEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function invalidateEmailInvites(
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1281,8 +1249,7 @@ class TeamsEndpoint
     public function importTeam(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1318,8 +1285,7 @@ class TeamsEndpoint
     public function getTeamInviteInfo(
         /** Invite id for a team */
         string $invite_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamInviteInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\GetTeamInviteInfoResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1355,8 +1321,7 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateTeamSchemeRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1403,8 +1368,7 @@ class TeamsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 0,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1441,8 +1405,7 @@ class TeamsEndpoint
     public function searchFiles(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 

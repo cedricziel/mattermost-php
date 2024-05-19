@@ -20,8 +20,7 @@ class SidebarCategoryWithChannels
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): SidebarCategoryWithChannels {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
