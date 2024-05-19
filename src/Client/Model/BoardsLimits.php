@@ -13,8 +13,7 @@ class BoardsLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): BoardsLimits {
         $object = new self(
             cards: isset($data['cards']) ? $data['cards'] : null,
             views: isset($data['views']) ? $data['views'] : null,

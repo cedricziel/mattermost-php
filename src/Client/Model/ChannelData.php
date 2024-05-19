@@ -13,8 +13,7 @@ class ChannelData
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): ChannelData {
         $object = new self(
             channel: isset($data['channel']) ? $data['channel'] : null,
             member: isset($data['member']) ? $data['member'] : null,

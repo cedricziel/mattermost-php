@@ -12,8 +12,7 @@ class UsersStats
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): UsersStats {
         $object = new self(
             total_users_count: isset($data['total_users_count']) ? $data['total_users_count'] : null,
         );

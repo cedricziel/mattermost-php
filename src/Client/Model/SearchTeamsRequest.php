@@ -27,7 +27,7 @@ class SearchTeamsRequest
          * If set to true, only teams which do not have a granular retention policy assigned to them will be returned. The `sysconsole_read_compliance_data_retention` permission is required to use this parameter.
          * __Minimum server version__: 5.35
          */
-        public ?bool $exclude_policy_constrained = null,
+        public ?bool $exclude_policy_constrained = false,
     ) {
     }
 }
