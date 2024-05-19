@@ -13,8 +13,7 @@ class UserAutocompleteInTeam
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): UserAutocompleteInTeam {
         $object = new self(
             in_team: isset($data['in_team']) ? $data['in_team'] : null,
         );

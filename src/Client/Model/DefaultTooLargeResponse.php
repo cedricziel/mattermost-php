@@ -10,8 +10,7 @@ class DefaultTooLargeResponse extends AppError
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): DefaultTooLargeResponse {
         $object = new self(
         );
         return $object;

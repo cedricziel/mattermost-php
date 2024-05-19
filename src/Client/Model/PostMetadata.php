@@ -42,8 +42,7 @@ class PostMetadata
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): PostMetadata {
         $object = new self(
             embeds: isset($data['embeds']) ? $data['embeds'] : null,
             emojis: isset($data['emojis']) ? $data['emojis'] : null,

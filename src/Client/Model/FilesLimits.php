@@ -12,8 +12,7 @@ class FilesLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): FilesLimits {
         $object = new self(
             total_storage: isset($data['total_storage']) ? $data['total_storage'] : null,
         );

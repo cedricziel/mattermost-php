@@ -139,7 +139,7 @@ function mapParameterType(mixed $type)
 function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): Method
 {
     $hydrationMethod = $class->addMethod('hydrate')
-        ->setReturnType('static')
+        ->setReturnType($modelNamespace->getName() . '\\' . $class->getName())
         ->setStatic();
 
     $dataParameter = $hydrationMethod->addParameter('data')
@@ -202,21 +202,46 @@ function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName,
     }
 
     if (isset($schema['properties'])) {
+        // store properties
+        $properties = ['required' => [], 'optional' => []];
         foreach ($schema['properties'] as $propertyName => $property) {
+            $propertyIsRequired = !isset($property['required']) || in_array($propertyName, $property['required']) === false;
+            $properties[$propertyIsRequired ? 'optional' : 'required'][] = $propertyName;
+        }
+
+        // add properties
+        foreach ($properties['required'] as $propertyName) {
             if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
                 continue;
             }
-            $propertyIsNullable = !isset($property['required']) || $property['required'] === false;
+
+            $property = $schema['properties'][$propertyName];
             $p = $constructor->addPromotedParameter($propertyName);
             $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
-            $p->setComment($property['description'] ?? null)->setNullable($propertyIsNullable);
+            $p->setComment($property['description'] ?? null)->setNullable(false);
 
             if (isset($property['default'])) {
                 $p->setDefaultValue($property['default']);
-            } elseif ($propertyIsNullable) {
+            }
+        }
+
+        foreach ($properties['optional'] as $propertyName) {
+            if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+                continue;
+            }
+
+            $property = $schema['properties'][$propertyName];
+            $p = $constructor->addPromotedParameter($propertyName);
+            $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            $p->setComment($property['description'] ?? null)->setNullable(true);
+
+            if (isset($property['default'])) {
+                $p->setDefaultValue($property['default']);
+            } else {
                 $p->setDefaultValue(null);
             }
         }
+
         $hydrationMethod = createHydrationMethod($modelNamespace, $class);
     } elseif (isset($schema['type']) && $schema['type'] === 'array' && isset($schema['items']['$ref'])) {
         $itemType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $schema['items']['$ref']);
@@ -311,18 +336,44 @@ function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, str
             return $class;
         }
 
+        // store properties
+        $properties = ['required' => [], 'optional' => []];
         foreach ($schema['properties'] as $propertyName => $property) {
-            $required = (isset($property['required']) && $property['required'] !== false)
-                || (isset($schema['required']) && in_array($propertyName, $schema['required'], true));
+            $propertyIsRequired = !isset($schema['required']) || in_array($propertyName, $schema['required']) === false;
+            $properties[$propertyIsRequired ? 'optional' : 'required'][] = $propertyName;
+        }
 
-            $cp = $constructor->addPromotedParameter($propertyName)->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
-            if (!$required) {
-                $cp
-                    ->setNullable()
-                    ->setDefaultValue(null);
+        // add properties
+        foreach ($properties['required'] as $propertyName) {
+            if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+                continue;
             }
 
-            $cp->setComment($property['description'] ?? null);
+            $property = $schema['properties'][$propertyName];
+            $p = $constructor->addPromotedParameter($propertyName);
+            $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            $p->setComment($property['description'] ?? null)->setNullable(false);
+
+            if (isset($property['default'])) {
+                $p->setDefaultValue($property['default']);
+            }
+        }
+
+        foreach ($properties['optional'] as $propertyName) {
+            if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+                continue;
+            }
+
+            $property = $schema['properties'][$propertyName];
+            $p = $constructor->addPromotedParameter($propertyName);
+            $p->setType(isset($property['type']) ? mapParameterType($property['type']) : null);
+            $p->setComment($property['description'] ?? null)->setNullable(true);
+
+            if (isset($property['default'])) {
+                $p->setDefaultValue($property['default']);
+            } else {
+                $p->setDefaultValue(null);
+            }
         }
     }
 

@@ -17,8 +17,7 @@ class IntegrityCheckResult
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): IntegrityCheckResult {
         $object = new self(
             data: isset($data['data']) ? $data['data'] : null,
             err: isset($data['err']) ? $data['err'] : null,

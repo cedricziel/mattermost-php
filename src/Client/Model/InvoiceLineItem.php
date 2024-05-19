@@ -17,8 +17,7 @@ class InvoiceLineItem
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): InvoiceLineItem {
         $object = new self(
             price_id: isset($data['price_id']) ? $data['price_id'] : null,
             total: isset($data['total']) ? $data['total'] : null,

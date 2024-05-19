@@ -25,8 +25,7 @@ class Session
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): Session {
         $object = new self(
             create_at: isset($data['create_at']) ? $data['create_at'] : null,
             device_id: isset($data['device_id']) ? $data['device_id'] : null,

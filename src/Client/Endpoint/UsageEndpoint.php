@@ -40,8 +40,7 @@ class UsageEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getPostsUsage(
-    ): \CedricZiel\MattermostPhp\Client\Model\PostsUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\PostsUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -72,8 +71,7 @@ class UsageEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getStorageUsage(
-    ): \CedricZiel\MattermostPhp\Client\Model\StorageUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StorageUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
         $pathParameters = [];
         $queryParameters = [];
 
