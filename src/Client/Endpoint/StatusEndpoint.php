@@ -41,8 +41,7 @@ class StatusEndpoint
     public function getUserStatus(
         /** User ID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Status|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Status|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -76,8 +75,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserStatusRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Status|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Status|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -111,8 +109,7 @@ class StatusEndpoint
      */
     public function getUsersStatusesByIds(
         \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsRequest $requestBody,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -146,8 +143,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -180,8 +176,7 @@ class StatusEndpoint
     public function unsetUserCustomStatus(
         /** User ID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -214,8 +209,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -249,8 +243,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 

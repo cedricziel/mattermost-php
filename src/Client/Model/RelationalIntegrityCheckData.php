@@ -24,8 +24,7 @@ class RelationalIntegrityCheckData
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             parent_name: isset($data['parent_name']) ? $data['parent_name'] : null,
             child_name: isset($data['child_name']) ? $data['child_name'] : null,

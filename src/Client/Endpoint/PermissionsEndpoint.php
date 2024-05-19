@@ -43,8 +43,7 @@ class PermissionsEndpoint
          * The subsection permissions to return the ancillary permissions for. These values are comma seperated. Ex. subsection_permissions=sysconsole_read_reporting_site_statistics,sysconsole_write_reporting_site_statistics,sysconsole_write_user_management_channels
          */
         ?string $subsection_permissions = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
         $pathParameters = [];
         $queryParameters = [];
 

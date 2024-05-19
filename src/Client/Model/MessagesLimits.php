@@ -12,8 +12,7 @@ class MessagesLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             history: isset($data['history']) ? $data['history'] : null,
         );

@@ -33,8 +33,7 @@ class PushNotification
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             ack_id: isset($data['ack_id']) ? $data['ack_id'] : null,
             platform: isset($data['platform']) ? $data['platform'] : null,

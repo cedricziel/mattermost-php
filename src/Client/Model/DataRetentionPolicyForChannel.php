@@ -15,8 +15,7 @@ class DataRetentionPolicyForChannel
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
             post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,

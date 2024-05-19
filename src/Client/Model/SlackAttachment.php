@@ -28,8 +28,7 @@ class SlackAttachment
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             Id: isset($data['Id']) ? $data['Id'] : null,
             Fallback: isset($data['Fallback']) ? $data['Fallback'] : null,

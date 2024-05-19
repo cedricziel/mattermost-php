@@ -17,8 +17,7 @@ class FileInfoList
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             file_infos: isset($data['file_infos']) ? (object) $data['file_infos'] : null,

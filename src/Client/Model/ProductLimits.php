@@ -16,8 +16,7 @@ class ProductLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             boards: isset($data['boards']) ? $data['boards'] : null,
             files: isset($data['files']) ? $data['files'] : null,

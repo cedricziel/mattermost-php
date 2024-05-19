@@ -13,8 +13,7 @@ class StorageUsage
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             bytes: isset($data['bytes']) ? $data['bytes'] : null,
         );

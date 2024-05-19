@@ -13,8 +13,7 @@ class ChannelModeratedRolesPatch
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             guests: isset($data['guests']) ? $data['guests'] : null,
             members: isset($data['members']) ? $data['members'] : null,

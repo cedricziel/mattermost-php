@@ -12,8 +12,7 @@ class ImportTeamResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             results: isset($data['results']) ? $data['results'] : null,
         );

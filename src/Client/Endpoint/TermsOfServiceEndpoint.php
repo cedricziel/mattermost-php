@@ -41,8 +41,7 @@ class TermsOfServiceEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getTermsOfService(
-    ): \CedricZiel\MattermostPhp\Client\Model\TermsOfService|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TermsOfService|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -74,8 +73,7 @@ class TermsOfServiceEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createTermsOfService(
-    ): \CedricZiel\MattermostPhp\Client\Model\TermsOfService|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\TermsOfService|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
 

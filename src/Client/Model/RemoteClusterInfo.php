@@ -17,8 +17,7 @@ class RemoteClusterInfo
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             display_name: isset($data['display_name']) ? $data['display_name'] : null,
             create_at: isset($data['create_at']) ? $data['create_at'] : null,

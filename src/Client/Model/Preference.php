@@ -16,8 +16,7 @@ class Preference
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             user_id: isset($data['user_id']) ? $data['user_id'] : null,
             category: isset($data['category']) ? $data['category'] : null,

@@ -21,8 +21,7 @@ class PlaybookRunMetadata
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             channel_name: isset($data['channel_name']) ? $data['channel_name'] : null,
             channel_display_name: isset($data['channel_display_name']) ? $data['channel_display_name'] : null,

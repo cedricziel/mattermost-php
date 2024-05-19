@@ -17,8 +17,7 @@ class Timezone
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             useAutomaticTimezone: isset($data['useAutomaticTimezone']) ? $data['useAutomaticTimezone'] : null,
             manualTimezone: isset($data['manualTimezone']) ? $data['manualTimezone'] : null,

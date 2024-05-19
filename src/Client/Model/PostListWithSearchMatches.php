@@ -15,8 +15,7 @@ class PostListWithSearchMatches
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
             posts: isset($data['posts']) ? (object) $data['posts'] : null,

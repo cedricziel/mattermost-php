@@ -32,8 +32,7 @@ class EnvironmentConfig
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             ServiceSettings: isset($data['ServiceSettings']) ? (object) $data['ServiceSettings'] : null,
             TeamSettings: isset($data['TeamSettings']) ? (object) $data['TeamSettings'] : null,

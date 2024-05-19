@@ -15,8 +15,7 @@ class SlackAttachmentField
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             Title: isset($data['Title']) ? $data['Title'] : null,
             Value: isset($data['Value']) ? $data['Value'] : null,

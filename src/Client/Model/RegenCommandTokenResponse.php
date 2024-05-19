@@ -13,8 +13,7 @@ class RegenCommandTokenResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             token: isset($data['token']) ? $data['token'] : null,
         );

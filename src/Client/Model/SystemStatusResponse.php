@@ -31,8 +31,7 @@ class SystemStatusResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             AndroidLatestVersion: isset($data['AndroidLatestVersion']) ? $data['AndroidLatestVersion'] : null,
             AndroidMinVersion: isset($data['AndroidMinVersion']) ? $data['AndroidMinVersion'] : null,

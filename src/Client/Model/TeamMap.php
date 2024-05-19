@@ -15,8 +15,7 @@ class TeamMap
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
         );

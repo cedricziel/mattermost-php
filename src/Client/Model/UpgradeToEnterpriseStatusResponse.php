@@ -15,8 +15,7 @@ class UpgradeToEnterpriseStatusResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             percentage: isset($data['percentage']) ? $data['percentage'] : null,
             error: isset($data['error']) ? $data['error'] : null,

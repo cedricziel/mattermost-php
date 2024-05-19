@@ -33,8 +33,7 @@ class Scheme
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             name: isset($data['name']) ? $data['name'] : null,

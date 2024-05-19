@@ -20,8 +20,7 @@ class ChannelMemberCountByGroup
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             group_id: isset($data['group_id']) ? $data['group_id'] : null,
             channel_member_count: isset($data['channel_member_count']) ? $data['channel_member_count'] : null,

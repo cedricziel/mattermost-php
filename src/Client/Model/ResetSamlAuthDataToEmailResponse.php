@@ -13,8 +13,7 @@ class ResetSamlAuthDataToEmailResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             num_affected: isset($data['num_affected']) ? $data['num_affected'] : null,
         );

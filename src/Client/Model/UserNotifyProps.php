@@ -25,8 +25,7 @@ class UserNotifyProps
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             email: isset($data['email']) ? $data['email'] : null,
             push: isset($data['push']) ? $data['push'] : null,

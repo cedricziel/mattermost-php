@@ -21,8 +21,7 @@ class Invoice
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             number: isset($data['number']) ? $data['number'] : null,

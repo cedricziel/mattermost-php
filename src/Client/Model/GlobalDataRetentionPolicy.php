@@ -19,8 +19,7 @@ class GlobalDataRetentionPolicy
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             message_deletion_enabled: isset($data['message_deletion_enabled']) ? $data['message_deletion_enabled'] : null,
             file_deletion_enabled: isset($data['file_deletion_enabled']) ? $data['file_deletion_enabled'] : null,

@@ -12,8 +12,7 @@ class TeamsLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             active: isset($data['active']) ? $data['active'] : null,
         );

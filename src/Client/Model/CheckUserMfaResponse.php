@@ -13,8 +13,7 @@ class CheckUserMfaResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             mfa_required: isset($data['mfa_required']) ? $data['mfa_required'] : null,
         );

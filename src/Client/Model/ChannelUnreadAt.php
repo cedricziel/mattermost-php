@@ -21,8 +21,7 @@ class ChannelUnreadAt
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             team_id: isset($data['team_id']) ? $data['team_id'] : null,
             channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,

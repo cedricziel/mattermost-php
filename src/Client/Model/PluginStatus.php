@@ -25,8 +25,7 @@ class PluginStatus
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             plugin_id: isset($data['plugin_id']) ? $data['plugin_id'] : null,
             name: isset($data['name']) ? $data['name'] : null,

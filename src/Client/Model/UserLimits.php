@@ -15,8 +15,7 @@ class UserLimits
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): static {
         $object = new self(
             maxUsersLimit: isset($data['maxUsersLimit']) ? $data['maxUsersLimit'] : null,
             activeUserCount: isset($data['activeUserCount']) ? $data['activeUserCount'] : null,
