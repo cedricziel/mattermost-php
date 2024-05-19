@@ -39,8 +39,7 @@ class Integration_actionsEndpoint
      */
     public function openInteractiveDialog(
         \CedricZiel\MattermostPhp\Client\Model\OpenInteractiveDialogRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -70,8 +69,7 @@ class Integration_actionsEndpoint
      */
     public function submitInteractiveDialog(
         \CedricZiel\MattermostPhp\Client\Model\SubmitInteractiveDialogRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 

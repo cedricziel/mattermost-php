@@ -13,8 +13,7 @@ class StatusOK
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): StatusOK {
         $object = new self(
             status: isset($data['status']) ? $data['status'] : null,
         );

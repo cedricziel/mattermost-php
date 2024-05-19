@@ -15,8 +15,7 @@ class System
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): System {
         $object = new self(
             name: isset($data['name']) ? $data['name'] : null,
             value: isset($data['value']) ? $data['value'] : null,

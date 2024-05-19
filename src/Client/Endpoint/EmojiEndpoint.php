@@ -39,8 +39,7 @@ class EmojiEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createEmoji(
-    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -79,8 +78,7 @@ class EmojiEndpoint
         ?int $per_page = 60,
         /** Either blank for no sorting or "name" to sort by emoji names. Minimum server version for sorting is 4.7. */
         ?string $sort = '',
-    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -117,8 +115,7 @@ class EmojiEndpoint
     public function getEmoji(
         /** Emoji GUID */
         string $emoji_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -153,8 +150,7 @@ class EmojiEndpoint
     public function deleteEmoji(
         /** Emoji GUID */
         string $emoji_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -191,8 +187,7 @@ class EmojiEndpoint
     public function getEmojiByName(
         /** Emoji name */
         string $emoji_name,
-    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -227,8 +222,7 @@ class EmojiEndpoint
     public function getEmojiImage(
         /** Emoji GUID */
         string $emoji_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -265,8 +259,7 @@ class EmojiEndpoint
      */
     public function searchEmoji(
         \CedricZiel\MattermostPhp\Client\Model\SearchEmojiRequest $requestBody,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -303,8 +296,7 @@ class EmojiEndpoint
     public function autocompleteEmoji(
         /** The emoji name to search. */
         string $name,
-    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -340,8 +332,7 @@ class EmojiEndpoint
      */
     public function getEmojisByNames(
         \CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesRequest $requestBody,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 

@@ -42,8 +42,7 @@ class WebhooksEndpoint
      */
     public function createIncomingWebhook(
         \CedricZiel\MattermostPhp\Client\Model\CreateIncomingWebhookRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -82,8 +81,7 @@ class WebhooksEndpoint
         ?int $per_page = 60,
         /** The ID of the team to get hooks for. */
         ?string $team_id = null,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -119,8 +117,7 @@ class WebhooksEndpoint
     public function getIncomingWebhook(
         /** Incoming Webhook GUID */
         string $hook_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -155,8 +152,7 @@ class WebhooksEndpoint
     public function deleteIncomingWebhook(
         /** Incoming webhook GUID */
         string $hook_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -192,8 +188,7 @@ class WebhooksEndpoint
         /** Incoming Webhook GUID */
         string $hook_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateIncomingWebhookRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\IncomingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -230,8 +225,7 @@ class WebhooksEndpoint
      */
     public function createOutgoingWebhook(
         \CedricZiel\MattermostPhp\Client\Model\CreateOutgoingWebhookRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -273,8 +267,7 @@ class WebhooksEndpoint
         ?string $team_id = null,
         /** The ID of the channel to get hooks for. */
         ?string $channel_id = null,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -312,8 +305,7 @@ class WebhooksEndpoint
     public function getOutgoingWebhook(
         /** Outgoing webhook GUID */
         string $hook_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -348,8 +340,7 @@ class WebhooksEndpoint
     public function deleteOutgoingWebhook(
         /** Outgoing webhook GUID */
         string $hook_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -385,8 +376,7 @@ class WebhooksEndpoint
         /** outgoing Webhook GUID */
         string $hook_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateOutgoingWebhookRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -422,8 +412,7 @@ class WebhooksEndpoint
     public function regenOutgoingHookToken(
         /** Outgoing webhook GUID */
         string $hook_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 

@@ -15,8 +15,7 @@ class SearchTeamsResponse
     public static function hydrate(
         /** @param array<string, mixed> $data */
         ?array $data,
-    ): static
-    {
+    ): SearchTeamsResponse {
         $object = new self(
             teams: isset($data['teams']) ? $data['teams'] : null,
             total_count: isset($data['total_count']) ? $data['total_count'] : null,
