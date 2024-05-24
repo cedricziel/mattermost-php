@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.20](https://github.com/cedricziel/mattermost-php/compare/v1.4.19...v1.4.20) (2024-05-24)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nette/php-generator from 4.1.4 to 4.1.5 ([#133](https://github.com/cedricziel/mattermost-php/issues/133)) ([cdc8acb](https://github.com/cedricziel/mattermost-php/commit/cdc8acbc5e59701225b2dceb0edc9d03e623076d))
+* **deps-dev:** bump symfony/http-client from 7.0.5 to 7.0.7 ([#132](https://github.com/cedricziel/mattermost-php/issues/132)) ([00131a0](https://github.com/cedricziel/mattermost-php/commit/00131a007014d4958df7678a6e73fcb9480031e3))
+* **deps:** bump psr/http-factory from 1.0.2 to 1.1.0 ([#130](https://github.com/cedricziel/mattermost-php/issues/130)) ([eda5840](https://github.com/cedricziel/mattermost-php/commit/eda584099a255f7356cc754a0b27202ffa1897db))
+
 ## [1.4.19](https://github.com/cedricziel/mattermost-php/compare/v1.4.18...v1.4.19) (2024-05-19)
 
 
