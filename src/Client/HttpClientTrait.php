@@ -2,6 +2,7 @@
 
 namespace CedricZiel\MattermostPhp\Client;
 
+use Illuminate\Support\Str;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -57,6 +58,7 @@ trait HttpClientTrait
         if (str_contains($map[$responseCode], '[]')) {
             $objects = [];
             foreach ($body as $item) {
+                Str::replace('[]', '', $map[$responseCode]);
                 $objects[] = $map[$responseCode]::hydrate($item);
             }
             return $objects;
