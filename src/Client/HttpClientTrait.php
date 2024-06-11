@@ -2,7 +2,6 @@
 
 namespace CedricZiel\MattermostPhp\Client;
 
-use Illuminate\Support\Str;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
