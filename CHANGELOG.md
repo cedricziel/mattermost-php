@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.23](https://github.com/cedricziel/mattermost-php/compare/v1.4.22...v1.4.23) (2024-06-15)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpunit/phpunit from 11.2.0 to 11.2.1 ([#150](https://github.com/cedricziel/mattermost-php/issues/150)) ([ec7bca7](https://github.com/cedricziel/mattermost-php/commit/ec7bca79c2f6c3306797d1cff70d5dbc22183adf))
+* **deps-dev:** bump symfony/http-client from 7.0.7 to 7.1.1 ([#142](https://github.com/cedricziel/mattermost-php/issues/142)) ([e5db6ba](https://github.com/cedricziel/mattermost-php/commit/e5db6baeb2bed9fcb49ee7f25289be426b28af54))
+* **deps:** bump symfony/property-access from 7.0.7 to 7.1.1 ([#143](https://github.com/cedricziel/mattermost-php/issues/143)) ([3dca8ac](https://github.com/cedricziel/mattermost-php/commit/3dca8acacee9db39f6e680112df8de2f87a77984))
+* **deps:** bump symfony/serializer from 7.0.7 to 7.1.1 ([#144](https://github.com/cedricziel/mattermost-php/issues/144)) ([ad1a76b](https://github.com/cedricziel/mattermost-php/commit/ad1a76b07f292ba8670721d8cd61e7e83ac462fc))
+
 ## [1.4.22](https://github.com/cedricziel/mattermost-php/compare/v1.4.21...v1.4.22) (2024-06-08)
 
 
