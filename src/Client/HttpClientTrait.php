@@ -57,6 +57,7 @@ trait HttpClientTrait
         if (str_contains($map[$responseCode], '[]')) {
             $objects = [];
             foreach ($body as $item) {
+                $map[$responseCode] = str_replace('[]', '', $map[$responseCode]);
                 $objects[] = $map[$responseCode]::hydrate($item);
             }
             return $objects;
