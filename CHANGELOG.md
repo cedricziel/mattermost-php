@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.27](https://github.com/cedricziel/mattermost-php/compare/v1.4.26...v1.4.27) (2024-08-02)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpstan/phpstan from 1.11.7 to 1.11.8 ([#169](https://github.com/cedricziel/mattermost-php/issues/169)) ([46c47d5](https://github.com/cedricziel/mattermost-php/commit/46c47d5e7cd73d3d0f6cf2ca0f1e7fd220f5a21a))
+* **deps-dev:** bump phpstan/phpstan from 1.11.8 to 1.11.9 ([#174](https://github.com/cedricziel/mattermost-php/issues/174)) ([61f87e2](https://github.com/cedricziel/mattermost-php/commit/61f87e295310cffdab6374406f4879cbb2fac403))
+* **deps-dev:** bump phpunit/phpunit from 11.2.6 to 11.2.7 ([#165](https://github.com/cedricziel/mattermost-php/issues/165)) ([9b1e556](https://github.com/cedricziel/mattermost-php/commit/9b1e5569a12850d5a7b8f4cd1c038f98beed5154))
+* **deps-dev:** bump phpunit/phpunit from 11.2.7 to 11.2.8 ([#167](https://github.com/cedricziel/mattermost-php/issues/167)) ([2e1990a](https://github.com/cedricziel/mattermost-php/commit/2e1990ad0b3f02b538b079a3af05f2863a1e1e0b))
+* **deps-dev:** bump phpunit/phpunit from 11.2.8 to 11.3.0 ([#173](https://github.com/cedricziel/mattermost-php/issues/173)) ([268ccd7](https://github.com/cedricziel/mattermost-php/commit/268ccd7a217fae22e4cfce8dd5802b8412a61637))
+* **deps-dev:** bump symfony/http-client from 7.1.2 to 7.1.3 ([#171](https://github.com/cedricziel/mattermost-php/issues/171)) ([48e3764](https://github.com/cedricziel/mattermost-php/commit/48e376405e789c09dce7bef601e55acd201a9516))
+* **deps:** bump guzzlehttp/psr7 from 2.6.2 to 2.7.0 ([#168](https://github.com/cedricziel/mattermost-php/issues/168)) ([8c9ab05](https://github.com/cedricziel/mattermost-php/commit/8c9ab059b73c1a396c9c3866e20e037c19868af8))
+* **deps:** bump symfony/serializer from 7.1.2 to 7.1.3 ([#170](https://github.com/cedricziel/mattermost-php/issues/170)) ([b092736](https://github.com/cedricziel/mattermost-php/commit/b092736994f29c6c277931f6ac96c42083b131e5))
+
 ## [1.4.26](https://github.com/cedricziel/mattermost-php/compare/v1.4.25...v1.4.26) (2024-07-08)
 
 
