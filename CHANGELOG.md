@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.4.28](https://github.com/cedricziel/mattermost-php/compare/v1.4.27...v1.4.28) (2024-09-29)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nette/php-generator from 4.1.5 to 4.1.6 ([#189](https://github.com/cedricziel/mattermost-php/issues/189)) ([47f1dca](https://github.com/cedricziel/mattermost-php/commit/47f1dca5a02b8307ec664bc5514dd31a6859cb48))
+* **deps-dev:** bump nikic/php-parser from 5.1.0 to 5.2.0 ([#191](https://github.com/cedricziel/mattermost-php/issues/191)) ([13da8bc](https://github.com/cedricziel/mattermost-php/commit/13da8bcd7e06ee520e2ebdf87c025a30e14602fa))
+* **deps-dev:** bump phpstan/phpstan from 1.11.10 to 1.12.0 ([#179](https://github.com/cedricziel/mattermost-php/issues/179)) ([ce17b2d](https://github.com/cedricziel/mattermost-php/commit/ce17b2d6edb62e38330cb1002dc7baf8766905ce))
+* **deps-dev:** bump phpstan/phpstan from 1.11.9 to 1.11.10 ([#175](https://github.com/cedricziel/mattermost-php/issues/175)) ([1ea51ee](https://github.com/cedricziel/mattermost-php/commit/1ea51ee805f96f246370c1ff79438fc6eda0129e))
+* **deps-dev:** bump phpstan/phpstan from 1.12.0 to 1.12.1 ([#183](https://github.com/cedricziel/mattermost-php/issues/183)) ([3c00078](https://github.com/cedricziel/mattermost-php/commit/3c00078b4856d1da676880d11f025c49dc89a1d7))
+* **deps-dev:** bump phpstan/phpstan from 1.12.1 to 1.12.2 ([#186](https://github.com/cedricziel/mattermost-php/issues/186)) ([65a13d1](https://github.com/cedricziel/mattermost-php/commit/65a13d197c24823b4791f69cc14b730deaba318c))
+* **deps-dev:** bump phpstan/phpstan from 1.12.2 to 1.12.3 ([#188](https://github.com/cedricziel/mattermost-php/issues/188)) ([62a0661](https://github.com/cedricziel/mattermost-php/commit/62a06619b48baad27b2089a7f333e8211e43c2e3))
+* **deps-dev:** bump phpstan/phpstan from 1.12.3 to 1.12.4 ([#192](https://github.com/cedricziel/mattermost-php/issues/192)) ([554ed20](https://github.com/cedricziel/mattermost-php/commit/554ed20ccf5398a693de7ac2ad3d350bae4def64))
+* **deps-dev:** bump phpstan/phpstan from 1.12.4 to 1.12.5 ([#195](https://github.com/cedricziel/mattermost-php/issues/195)) ([2cef243](https://github.com/cedricziel/mattermost-php/commit/2cef24365ab2195ebfc36a647368a6e22e8a2670))
+* **deps-dev:** bump phpunit/phpunit from 11.3.0 to 11.3.1 ([#177](https://github.com/cedricziel/mattermost-php/issues/177)) ([6c0139a](https://github.com/cedricziel/mattermost-php/commit/6c0139af5bbead5397fe749e50c6a29ae23c50ef))
+* **deps-dev:** bump phpunit/phpunit from 11.3.1 to 11.3.3 ([#185](https://github.com/cedricziel/mattermost-php/issues/185)) ([921c9d4](https://github.com/cedricziel/mattermost-php/commit/921c9d45e0417785ea44eedce227d5c37340c65a))
+* **deps-dev:** bump phpunit/phpunit from 11.3.3 to 11.3.4 ([#187](https://github.com/cedricziel/mattermost-php/issues/187)) ([c263d96](https://github.com/cedricziel/mattermost-php/commit/c263d9618a8d8e18f9bc7d99e67fdfa0f692a361))
+* **deps-dev:** bump phpunit/phpunit from 11.3.4 to 11.3.6 ([#193](https://github.com/cedricziel/mattermost-php/issues/193)) ([6720510](https://github.com/cedricziel/mattermost-php/commit/6720510f88d4f84020234ba7c634e53ce0eaefcb))
+* **deps-dev:** bump symfony/http-client from 7.1.3 to 7.1.4 ([#181](https://github.com/cedricziel/mattermost-php/issues/181)) ([a2596e8](https://github.com/cedricziel/mattermost-php/commit/a2596e8512fb524bf001ebe2ee0898e6e4191539))
+* **deps-dev:** bump symfony/http-client from 7.1.4 to 7.1.5 ([#194](https://github.com/cedricziel/mattermost-php/issues/194)) ([a10a523](https://github.com/cedricziel/mattermost-php/commit/a10a52388a4352ad792ca31a5a06086e9d60d2a4))
+* **deps:** bump symfony/property-access from 7.1.1 to 7.1.4 ([#182](https://github.com/cedricziel/mattermost-php/issues/182)) ([e3881c9](https://github.com/cedricziel/mattermost-php/commit/e3881c9ffd9966759a35008229645fc32c2711e0))
+* **deps:** bump symfony/serializer from 7.1.3 to 7.1.4 ([#180](https://github.com/cedricziel/mattermost-php/issues/180)) ([3b588c5](https://github.com/cedricziel/mattermost-php/commit/3b588c595433e8448e0ff7375f830e398d508d2c))
+
 ## [1.4.27](https://github.com/cedricziel/mattermost-php/compare/v1.4.26...v1.4.27) (2024-08-02)
 
 
