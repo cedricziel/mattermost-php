@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.30](https://github.com/cedricziel/mattermost-php/compare/v1.4.29...v1.4.30) (2024-10-05)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump php-http/discovery from 1.19.4 to 1.20.0 ([#198](https://github.com/cedricziel/mattermost-php/issues/198)) ([f5b57a1](https://github.com/cedricziel/mattermost-php/commit/f5b57a13e51538b63bac50ca021eb9d58fa8f015))
+
 ## [1.4.29](https://github.com/cedricziel/mattermost-php/compare/v1.4.28...v1.4.29) (2024-09-30)
 
 
