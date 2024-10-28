@@ -12,3 +12,7 @@ updates:
       interval: "daily"
     assignees:
       - "cedricziel"
+    groups:
+      symfony:
+        patterns:
+        - "symfony/*"
