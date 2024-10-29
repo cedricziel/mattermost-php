@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.31](https://github.com/cedricziel/mattermost-php/compare/v1.4.30...v1.4.31) (2024-10-29)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nikic/php-parser from 5.3.0 to 5.3.1 ([#203](https://github.com/cedricziel/mattermost-php/issues/203)) ([a43d593](https://github.com/cedricziel/mattermost-php/commit/a43d59334b70140a23b77439132cf814b38c8509))
+* **deps-dev:** bump phpstan/phpstan from 1.12.5 to 1.12.7 ([#205](https://github.com/cedricziel/mattermost-php/issues/205)) ([10e3b9f](https://github.com/cedricziel/mattermost-php/commit/10e3b9fed663744c1b7e4fd4e7dcaf1bc7ee6599))
+* **deps-dev:** bump phpunit/phpunit from 11.3.6 to 11.4.2 ([#204](https://github.com/cedricziel/mattermost-php/issues/204)) ([39a1fac](https://github.com/cedricziel/mattermost-php/commit/39a1facb7ad31e1fd0f8a11e65269cf3b8031c40))
+* **deps-dev:** bump phpunit/phpunit from 11.4.2 to 11.4.3 ([#211](https://github.com/cedricziel/mattermost-php/issues/211)) ([76b79ed](https://github.com/cedricziel/mattermost-php/commit/76b79edf4f8175ef615184547a63189a58901905))
+* **deps-dev:** bump symfony/http-client from 7.1.5 to 7.1.6 ([#207](https://github.com/cedricziel/mattermost-php/issues/207)) ([5bb2cee](https://github.com/cedricziel/mattermost-php/commit/5bb2ceeea7baa8d1ff414603e348bd8ee1578219))
+* **deps:** bump symfony/property-access from 7.1.4 to 7.1.6 ([#206](https://github.com/cedricziel/mattermost-php/issues/206)) ([e936507](https://github.com/cedricziel/mattermost-php/commit/e936507b5c136fcd4b26a6857e844a913eabc946))
+* **deps:** bump symfony/serializer in the symfony group ([#210](https://github.com/cedricziel/mattermost-php/issues/210)) ([4b89ba5](https://github.com/cedricziel/mattermost-php/commit/4b89ba5247b2d3e7e8b002feecd6848c3163c0fa))
+* group symfony deps ([#209](https://github.com/cedricziel/mattermost-php/issues/209)) ([c7cc1e7](https://github.com/cedricziel/mattermost-php/commit/c7cc1e7672c2f32c3571c7bbe5bbf54a4c959ea1))
+
 ## [1.4.30](https://github.com/cedricziel/mattermost-php/compare/v1.4.29...v1.4.30) (2024-10-05)
 
 
