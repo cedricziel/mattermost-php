@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.32](https://github.com/cedricziel/mattermost-php/compare/v1.4.31...v1.4.32) (2024-11-14)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump php-http/mock-client from 1.6.0 to 1.6.1 ([#212](https://github.com/cedricziel/mattermost-php/issues/212)) ([6fa84b3](https://github.com/cedricziel/mattermost-php/commit/6fa84b30453990279807b7306b9d0bf8c1405608))
+* **deps-dev:** bump phpstan/phpstan from 1.12.7 to 2.0.1 ([#218](https://github.com/cedricziel/mattermost-php/issues/218)) ([2d0fff0](https://github.com/cedricziel/mattermost-php/commit/2d0fff04fb182b34a2b95adc20495705fc989d1f))
+* **deps:** bump the symfony group across 1 directory with 2 updates ([#220](https://github.com/cedricziel/mattermost-php/issues/220)) ([d629efc](https://github.com/cedricziel/mattermost-php/commit/d629efcc0e061d016669909ab14022f17dd9ea74))
+
 ## [1.4.31](https://github.com/cedricziel/mattermost-php/compare/v1.4.30...v1.4.31) (2024-10-29)
 
 
