@@ -23,7 +23,7 @@
         "nette/php-generator": "^4.1",
         "nikic/php-parser": "^5.0",
         "php-http/mock-client": "^1.6",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10 || ^2.0"
     },
     "license": "MIT",
     "autoload": {
