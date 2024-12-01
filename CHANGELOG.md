@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.33](https://github.com/cedricziel/mattermost-php/compare/v1.4.32...v1.4.33) (2024-12-01)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nette/php-generator from 4.1.6 to 4.1.7 ([#226](https://github.com/cedricziel/mattermost-php/issues/226)) ([2038eb8](https://github.com/cedricziel/mattermost-php/commit/2038eb811fa484b623cc28e31b423749dd043afb))
+* **deps-dev:** bump phpstan/phpstan from 2.0.1 to 2.0.2 ([#222](https://github.com/cedricziel/mattermost-php/issues/222)) ([91b1df3](https://github.com/cedricziel/mattermost-php/commit/91b1df3daa41d3ee870444af6d80fcd5ec99b46b))
+* **deps-dev:** bump phpstan/phpstan from 2.0.2 to 2.0.3 ([#227](https://github.com/cedricziel/mattermost-php/issues/227)) ([9efe3d3](https://github.com/cedricziel/mattermost-php/commit/9efe3d3157a6617ccd791f093601bdb2d13c66c8))
+* **deps:** bump phpdocumentor/reflection-docblock from 5.4.1 to 5.6.0 ([#219](https://github.com/cedricziel/mattermost-php/issues/219)) ([3b26067](https://github.com/cedricziel/mattermost-php/commit/3b26067575cbc7edb46b66f20069e6b4d979f2d5))
+* **deps:** bump the symfony group across 1 directory with 3 updates ([#228](https://github.com/cedricziel/mattermost-php/issues/228)) ([39434ca](https://github.com/cedricziel/mattermost-php/commit/39434ca41fe90f49bbb650cc09fa411eaabba2cd))
+
 ## [1.4.32](https://github.com/cedricziel/mattermost-php/compare/v1.4.31...v1.4.32) (2024-11-14)
 
 
