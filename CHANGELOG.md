@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.33](https://github.com/cedricziel/mattermost-php/compare/v1.4.32...v1.4.33) (2024-12-12)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nette/php-generator from 4.1.6 to 4.1.7 ([#226](https://github.com/cedricziel/mattermost-php/issues/226)) ([2038eb8](https://github.com/cedricziel/mattermost-php/commit/2038eb811fa484b623cc28e31b423749dd043afb))
+* **deps-dev:** bump phpstan/phpstan from 2.0.1 to 2.0.2 ([#222](https://github.com/cedricziel/mattermost-php/issues/222)) ([91b1df3](https://github.com/cedricziel/mattermost-php/commit/91b1df3daa41d3ee870444af6d80fcd5ec99b46b))
+* **deps-dev:** bump phpstan/phpstan from 2.0.2 to 2.0.3 ([#227](https://github.com/cedricziel/mattermost-php/issues/227)) ([9efe3d3](https://github.com/cedricziel/mattermost-php/commit/9efe3d3157a6617ccd791f093601bdb2d13c66c8))
+* **deps-dev:** bump phpunit/phpunit from 11.4.3 to 11.5.1 ([#232](https://github.com/cedricziel/mattermost-php/issues/232)) ([37fa814](https://github.com/cedricziel/mattermost-php/commit/37fa814f56ebc89a0e94b465d48854d34ee4b8a4))
+* **deps-dev:** bump symfony/http-client in the symfony group ([#231](https://github.com/cedricziel/mattermost-php/issues/231)) ([101a5e5](https://github.com/cedricziel/mattermost-php/commit/101a5e59e2f2eb19786a01a7dc8a664c83ff9737))
+* **deps:** bump phpdocumentor/reflection-docblock from 5.4.1 to 5.6.0 ([#219](https://github.com/cedricziel/mattermost-php/issues/219)) ([3b26067](https://github.com/cedricziel/mattermost-php/commit/3b26067575cbc7edb46b66f20069e6b4d979f2d5))
+* **deps:** bump phpdocumentor/reflection-docblock from 5.6.0 to 5.6.1 ([#230](https://github.com/cedricziel/mattermost-php/issues/230)) ([6257158](https://github.com/cedricziel/mattermost-php/commit/6257158a2f7622266f92210252f7efcb11e88d04))
+* **deps:** bump the symfony group across 1 directory with 3 updates ([#228](https://github.com/cedricziel/mattermost-php/issues/228)) ([39434ca](https://github.com/cedricziel/mattermost-php/commit/39434ca41fe90f49bbb650cc09fa411eaabba2cd))
+
 ## [1.4.32](https://github.com/cedricziel/mattermost-php/compare/v1.4.31...v1.4.32) (2024-11-14)
 
 
