@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.34](https://github.com/cedricziel/mattermost-php/compare/v1.4.33...v1.4.34) (2024-12-23)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpstan/phpstan from 2.0.3 to 2.0.4 ([#233](https://github.com/cedricziel/mattermost-php/issues/233)) ([4271f97](https://github.com/cedricziel/mattermost-php/commit/4271f971390dbe19fad324f9ed02598b9fa6ef3b))
+* **deps-dev:** bump phpunit/phpunit from 11.5.1 to 11.5.2 ([#234](https://github.com/cedricziel/mattermost-php/issues/234)) ([6f30006](https://github.com/cedricziel/mattermost-php/commit/6f300068891526b1f058bb874e78ebc84eab2523))
+
 ## [1.4.33](https://github.com/cedricziel/mattermost-php/compare/v1.4.32...v1.4.33) (2024-12-12)
 
 
