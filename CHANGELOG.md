@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.34](https://github.com/cedricziel/mattermost-php/compare/v1.4.33...v1.4.34) (2025-01-30)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpstan/phpstan from 2.0.3 to 2.0.4 ([#233](https://github.com/cedricziel/mattermost-php/issues/233)) ([4271f97](https://github.com/cedricziel/mattermost-php/commit/4271f971390dbe19fad324f9ed02598b9fa6ef3b))
+* **deps-dev:** bump phpstan/phpstan from 2.0.4 to 2.1.2 ([#241](https://github.com/cedricziel/mattermost-php/issues/241)) ([4648db8](https://github.com/cedricziel/mattermost-php/commit/4648db88b77d40a70c05a03dcb7a91e17cf4639f))
+* **deps-dev:** bump phpunit/phpunit from 11.5.1 to 11.5.2 ([#234](https://github.com/cedricziel/mattermost-php/issues/234)) ([6f30006](https://github.com/cedricziel/mattermost-php/commit/6f300068891526b1f058bb874e78ebc84eab2523))
+* **deps-dev:** bump phpunit/phpunit from 11.5.2 to 11.5.5 ([#243](https://github.com/cedricziel/mattermost-php/issues/243)) ([a6bfda7](https://github.com/cedricziel/mattermost-php/commit/a6bfda73e07608195d12b4b69d7b2f658cfb26a6))
+* **deps:** bump the symfony group across 1 directory with 3 updates ([#244](https://github.com/cedricziel/mattermost-php/issues/244)) ([3c90423](https://github.com/cedricziel/mattermost-php/commit/3c90423e66cf75e776aaf2c796e4261e2668155c))
+
 ## [1.4.33](https://github.com/cedricziel/mattermost-php/compare/v1.4.32...v1.4.33) (2024-12-12)
 
 
