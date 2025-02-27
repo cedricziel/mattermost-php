@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.36](https://github.com/cedricziel/mattermost-php/compare/v1.4.35...v1.4.36) (2025-02-27)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump phpstan/phpstan from 2.1.4 to 2.1.6 ([#250](https://github.com/cedricziel/mattermost-php/issues/250)) ([84d63db](https://github.com/cedricziel/mattermost-php/commit/84d63db1808d00e0fe8e0885a3e57f261819c03c))
+* **deps:** bump the symfony group with 2 updates ([#251](https://github.com/cedricziel/mattermost-php/issues/251)) ([922fe6a](https://github.com/cedricziel/mattermost-php/commit/922fe6a97628a7bea8976b2040ce915cd4c47f68))
+
 ## [1.4.35](https://github.com/cedricziel/mattermost-php/compare/v1.4.34...v1.4.35) (2025-02-11)
 
 
