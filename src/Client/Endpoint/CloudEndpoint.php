@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class CloudEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\MultipartTrait;
 
     public function __construct(
         protected string $baseUrl,
@@ -143,6 +144,7 @@ class CloudEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function confirmCustomerPayment(
+        ?string $stripe_setup_intent_id = null,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -153,6 +155,16 @@ class CloudEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($stripe_setup_intent_id !== null) {
+            $multipartFields['stripe_setup_intent_id'] = $stripe_setup_intent_id;
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 

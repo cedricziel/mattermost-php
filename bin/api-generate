@@ -38,6 +38,9 @@ $openApi = json_decode($ymlSrc, true);
 
 $printer = new Nette\PhpGenerator\PsrPrinter;
 
+// Track which endpoint classes need MultipartTrait for file uploads
+$classNeedsMultipart = [];
+
 $endpointNamespaceName = 'CedricZiel\MattermostPhp\Client\Endpoint';
 $modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
 $clientNamespaceName = 'CedricZiel\MattermostPhp';
@@ -404,6 +407,9 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $optionalPathParameters = [];
         $optionalQueryParameters = [];
 
+        $isMultipartRequest = false;
+        $multipartFields = [];
+
         if (isset($methodSpec['requestBody'])) {
             $requestBody = $methodSpec['requestBody'];
             $requestBodyContent = $requestBody['content'];
@@ -419,6 +425,52 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
 
                 $bodyParameters[] = (new Parameter('requestBody'))
                     ->setType($modelNamespaceName . '\\' . $requestBodyClass->getName());
+            }
+
+            // Handle multipart/form-data for file uploads
+            if (isset($requestBodyContent['multipart/form-data'])) {
+                $isMultipartRequest = true;
+                $multipartSchema = $requestBodyContent['multipart/form-data']['schema'] ?? [];
+                $requiredFields = $multipartSchema['required'] ?? [];
+
+                // Mark this class as needing MultipartTrait
+                $classNeedsMultipart[$class->getName()] = true;
+
+                if (isset($multipartSchema['properties'])) {
+                    foreach ($multipartSchema['properties'] as $fieldName => $fieldSpec) {
+                        if (false === \Nette\PhpGenerator\Helpers::isIdentifier($fieldName)) {
+                            continue;
+                        }
+
+                        $isRequired = in_array($fieldName, $requiredFields, true);
+                        $isBinary = isset($fieldSpec['format']) && $fieldSpec['format'] === 'binary';
+
+                        $multipartFields[] = [
+                            'name' => $fieldName,
+                            'binary' => $isBinary,
+                            'required' => $isRequired,
+                            'description' => $fieldSpec['description'] ?? null,
+                        ];
+
+                        $p = new Parameter($fieldName);
+
+                        if ($isBinary) {
+                            // Binary fields accept string (content), resource, or StreamInterface
+                            $p->setType('mixed');
+                            $p->setComment(($fieldSpec['description'] ?? 'File content') . ' (string|resource|\Psr\Http\Message\StreamInterface)');
+                        } else {
+                            $p->setType(mapParameterType($fieldSpec['type'] ?? 'string'));
+                            $p->setComment($fieldSpec['description'] ?? null);
+                        }
+
+                        $p->setNullable(!$isRequired);
+                        if (!$isRequired) {
+                            $p->setDefaultValue(null);
+                        }
+
+                        $bodyParameters[] = $p;
+                    }
+                }
             }
         }
 
@@ -462,7 +514,32 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             ->addBody('$request = $this->requestFactory->createRequest(\'' .strtoupper($httpMethod) . '\', $uri);')
             ->addBody('$request = $request->withHeader(\'Authorization\', \'Bearer \' . $this->token);');
 
-        if (count($bodyParameters) > 0) {
+        if ($isMultipartRequest && count($multipartFields) > 0) {
+            // Generate multipart form data construction
+            $method->addBody('');
+            $method->addBody('// Build multipart form data');
+            $method->addBody('$multipartFields = [];');
+
+            foreach ($multipartFields as $field) {
+                $fieldName = $field['name'];
+                $isBinary = $field['binary'];
+
+                if ($isBinary) {
+                    $method->addBody(sprintf('if ($%s !== null) {', $fieldName));
+                    $method->addBody(sprintf('    $multipartFields[\'%s\'] = [\'contents\' => $%s, \'filename\' => \'%s\'];', $fieldName, $fieldName, $fieldName));
+                    $method->addBody('}');
+                } else {
+                    $method->addBody(sprintf('if ($%s !== null) {', $fieldName));
+                    $method->addBody(sprintf('    $multipartFields[\'%s\'] = $%s;', $fieldName, $fieldName));
+                    $method->addBody('}');
+                }
+            }
+
+            $method->addBody('');
+            $method->addBody('$multipart = $this->createMultipartStream($multipartFields);');
+            $method->addBody('$request = $request->withHeader(\'Content-Type\', \'multipart/form-data; boundary=\' . $multipart[\'boundary\']);');
+            $method->addBody('$request = $request->withBody($multipart[\'stream\']);');
+        } elseif (count($bodyParameters) > 0) {
             $method->addBody('$request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? \'\'));');
         }
 
@@ -568,6 +645,13 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $method
             ->addBody('')
             ->addBody('return $this->mapResponse($response, $map);');
+    }
+}
+
+// Add MultipartTrait to endpoint classes that need it for file uploads
+foreach ($endpointNamespace->getClasses() as $genClass) {
+    if (isset($classNeedsMultipart[$genClass->getName()]) && $classNeedsMultipart[$genClass->getName()]) {
+        $genClass->addTrait(\CedricZiel\MattermostPhp\Client\MultipartTrait::class);
     }
 }
 

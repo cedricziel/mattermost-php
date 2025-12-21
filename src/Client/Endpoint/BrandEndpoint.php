@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class BrandEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\MultipartTrait;
 
     public function __construct(
         protected string $baseUrl,
@@ -69,6 +70,8 @@ class BrandEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function uploadBrandImage(
+        /** The image to be uploaded (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $image,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -79,6 +82,16 @@ class BrandEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($image !== null) {
+            $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 

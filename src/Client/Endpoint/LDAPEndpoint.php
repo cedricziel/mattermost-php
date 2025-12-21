@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class LDAPEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\MultipartTrait;
 
     public function __construct(
         protected string $baseUrl,
@@ -134,6 +135,8 @@ class LDAPEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function uploadLdapPublicCertificate(
+        /** The public certificate file (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $certificate,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -144,6 +147,16 @@ class LDAPEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($certificate !== null) {
+            $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -197,6 +210,8 @@ class LDAPEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function uploadLdapPrivateCertificate(
+        /** The private key file (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $certificate,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -207,6 +222,16 @@ class LDAPEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($certificate !== null) {
+            $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 

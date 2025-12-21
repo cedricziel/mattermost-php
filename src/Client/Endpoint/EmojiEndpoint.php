@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class EmojiEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\MultipartTrait;
 
     public function __construct(
         protected string $baseUrl,
@@ -39,6 +40,10 @@ class EmojiEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function createEmoji(
+        /** A file to be uploaded (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $image,
+        /** A JSON object containing a `name` field with the name of the emoji and a `creator_id` field with the id of the authenticated user. */
+        string $emoji,
     ): \CedricZiel\MattermostPhp\Client\Model\Emoji|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -49,6 +54,19 @@ class EmojiEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($image !== null) {
+            $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
+        }
+        if ($emoji !== null) {
+            $multipartFields['emoji'] = $emoji;
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 

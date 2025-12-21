@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class TeamsEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\MultipartTrait;
 
     public function __construct(
         protected string $baseUrl,
@@ -900,6 +901,8 @@ class TeamsEndpoint
     public function setTeamIcon(
         /** Team GUID */
         string $team_id,
+        /** The image to be uploaded (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $image,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -911,6 +914,16 @@ class TeamsEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($image !== null) {
+            $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1249,6 +1262,12 @@ class TeamsEndpoint
     public function importTeam(
         /** Team GUID */
         string $team_id,
+        /** A file to be uploaded in zip format. (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $file,
+        /** The size of the zip file to be imported. */
+        int $filesize,
+        /** String that defines from which application the team was exported to be imported into Mattermost. */
+        string $importFrom,
     ): \CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -1260,6 +1279,22 @@ class TeamsEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($file !== null) {
+            $multipartFields['file'] = ['contents' => $file, 'filename' => 'file'];
+        }
+        if ($filesize !== null) {
+            $multipartFields['filesize'] = $filesize;
+        }
+        if ($importFrom !== null) {
+            $multipartFields['importFrom'] = $importFrom;
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -1405,6 +1440,18 @@ class TeamsEndpoint
     public function searchFiles(
         /** Team GUID */
         string $team_id,
+        /** The search terms as inputed by the user. To search for files from a user include `from:someusername`, using a user's username. To search in a specific channel include `in:somechannel`, using the channel name (not the display name). To search for specific extensions included `ext:extension`. */
+        string $terms,
+        /** Set to true if an Or search should be performed vs an And search. */
+        bool $is_or_search,
+        /** Offset from UTC of user timezone for date searches. */
+        ?int $time_zone_offset = null,
+        /** Set to true if deleted channels should be included in the search. (archived channels) */
+        ?bool $include_deleted_channels = null,
+        /** The page to select. (Only works with Elasticsearch) */
+        ?int $page = null,
+        /** The number of posts per page. (Only works with Elasticsearch) */
+        ?int $per_page = null,
     ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -1416,6 +1463,31 @@ class TeamsEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($terms !== null) {
+            $multipartFields['terms'] = $terms;
+        }
+        if ($is_or_search !== null) {
+            $multipartFields['is_or_search'] = $is_or_search;
+        }
+        if ($time_zone_offset !== null) {
+            $multipartFields['time_zone_offset'] = $time_zone_offset;
+        }
+        if ($include_deleted_channels !== null) {
+            $multipartFields['include_deleted_channels'] = $include_deleted_channels;
+        }
+        if ($page !== null) {
+            $multipartFields['page'] = $page;
+        }
+        if ($per_page !== null) {
+            $multipartFields['per_page'] = $per_page;
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 

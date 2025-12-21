@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class FilesEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\MultipartTrait;
 
     public function __construct(
         protected string $baseUrl,
@@ -47,8 +48,12 @@ class FilesEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function uploadFile(
+        /** A file to be uploaded (string|resource|\Psr\Http\Message\StreamInterface) */
+        mixed $files = null,
         /** The ID of the channel that this file will be uploaded to */
         ?string $channel_id = null,
+        /** A unique identifier for the file that will be returned in the response */
+        ?string $client_ids = null,
         /** The name of the file to be uploaded */
         ?string $filename = null,
     ): \CedricZiel\MattermostPhp\Client\Model\UploadFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
@@ -63,6 +68,22 @@ class FilesEndpoint
 
         $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($files !== null) {
+            $multipartFields['files'] = ['contents' => $files, 'filename' => 'files'];
+        }
+        if ($channel_id !== null) {
+            $multipartFields['channel_id'] = $channel_id;
+        }
+        if ($client_ids !== null) {
+            $multipartFields['client_ids'] = $client_ids;
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
 
         $response = $this->httpClient->sendRequest($request);
 
