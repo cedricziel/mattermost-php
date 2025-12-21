@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/cedricziel/mattermost-php/compare/v1.5.0...v1.6.0) (2025-12-21)
+
+
+### Features
+
+* add multipart/form-data support for file uploads ([#297](https://github.com/cedricziel/mattermost-php/issues/297)) ([1abcc9c](https://github.com/cedricziel/mattermost-php/commit/1abcc9cefbf898cec0273f4be51775b53d730e00))
+
 ## [1.5.0](https://github.com/cedricziel/mattermost-php/compare/v1.4.36...v1.5.0) (2025-12-21)
 
 
