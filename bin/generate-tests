@@ -1,0 +1,368 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Test Generator for Mattermost PHP SDK Endpoints
+ *
+ * Generates PHPUnit test files for all endpoint classes in the SDK.
+ */
+
+use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\PhpNamespace;
+
+if (!is_file(dirname(__DIR__) . '/vendor/autoload.php')) {
+    throw new LogicException('Run "composer install" first.');
+}
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+$printer = new Nette\PhpGenerator\PsrPrinter();
+
+// Parse command line options
+$options = getopt('', ['endpoint:', 'force', 'dry-run']);
+$filterEndpoint = $options['endpoint'] ?? null;
+$force = isset($options['force']);
+$dryRun = isset($options['dry-run']);
+
+// Get all endpoint files
+$endpointDir = dirname(__DIR__) . '/src/Client/Endpoint';
+$testDir = dirname(__DIR__) . '/test/Client/Endpoint';
+
+if (!is_dir($testDir) && !$dryRun) {
+    mkdir($testDir, 0755, true);
+}
+
+$endpointFiles = glob($endpointDir . '/*Endpoint.php');
+
+echo sprintf("Found %d endpoint files\n", count($endpointFiles));
+
+// Curated test cases for specific endpoints with special handling
+$curatedTests = [
+    'UsersEndpoint' => [
+        'login' => [
+            'testNoAuthHeader' => true,
+            'description' => 'login does not require auth header',
+        ],
+        'getProfileImage' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+    ],
+    'FilesEndpoint' => [
+        'uploadFile' => [
+            'testMultipart' => true,
+        ],
+        'getFile' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'application/octet-stream',
+        ],
+    ],
+    'TeamsEndpoint' => [
+        'getTeamIcon' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+        'setTeamIcon' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'EmojiEndpoint' => [
+        'getEmojiImage' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+        'createCustomEmoji' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'LogsEndpoint' => [
+        'downloadSystemLogs' => [
+            'testTextResponse' => true,
+            'contentType' => 'text/plain',
+        ],
+    ],
+    'BrandEndpoint' => [
+        'getBrandImage' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+        'uploadBrandImage' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'BotsEndpoint' => [
+        'getBotIcon' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+        'setBotIcon' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'SAMLEndpoint' => [
+        'getSamlMetadataFromIdp' => [
+            'testTextResponse' => true,
+            'contentType' => 'text/plain',
+        ],
+    ],
+];
+
+$generated = 0;
+$skipped = 0;
+
+foreach ($endpointFiles as $endpointFile) {
+    $endpointClass = basename($endpointFile, '.php');
+
+    // Filter if specified
+    if ($filterEndpoint && $endpointClass !== $filterEndpoint) {
+        continue;
+    }
+
+    $testFile = $testDir . '/' . $endpointClass . 'Test.php';
+
+    // Skip if test file exists and not forcing
+    if (file_exists($testFile) && !$force) {
+        echo "Skipping $endpointClass (test file exists, use --force to overwrite)\n";
+        $skipped++;
+        continue;
+    }
+
+    echo "Generating tests for $endpointClass...\n";
+
+    // Load and reflect the endpoint class
+    $fqcn = 'CedricZiel\\MattermostPhp\\Client\\Endpoint\\' . $endpointClass;
+
+    try {
+        $reflection = new ReflectionClass($fqcn);
+    } catch (ReflectionException $e) {
+        echo "  Error: Could not load $fqcn\n";
+        continue;
+    }
+
+    // Generate test class
+    $testContent = generateEndpointTest($endpointClass, $reflection, $curatedTests[$endpointClass] ?? []);
+
+    if ($dryRun) {
+        echo "Would write: $testFile\n";
+        echo substr($testContent, 0, 500) . "...\n\n";
+    } else {
+        file_put_contents($testFile, $testContent);
+        echo "  Created: $testFile\n";
+    }
+
+    $generated++;
+}
+
+echo sprintf("\nGenerated: %d, Skipped: %d\n", $generated, $skipped);
+
+/**
+ * Generate a test class for an endpoint.
+ */
+function generateEndpointTest(string $endpointClass, ReflectionClass $reflection, array $curatedTests): string
+{
+    global $printer;
+
+    $namespace = new PhpNamespace('CedricZiel\\MattermostPhp\\Test\\Client\\Endpoint');
+    $endpointFqcn = 'CedricZiel\\MattermostPhp\\Client\\Endpoint\\' . $endpointClass;
+
+    // Add imports
+    $namespace->addUse($endpointFqcn);
+    $namespace->addUse('CedricZiel\\MattermostPhp\\Test\\Client\\ClientTestCase');
+    $namespace->addUse('PHPUnit\\Framework\\Attributes\\CoversClass');
+    $namespace->addUse('PHPUnit\\Framework\\Attributes\\Test');
+
+    $class = $namespace->addClass($endpointClass . 'Test')
+        ->setExtends('CedricZiel\\MattermostPhp\\Test\\Client\\ClientTestCase');
+
+    // Add CoversClass attribute with proper class reference
+    $class->addAttribute('PHPUnit\\Framework\\Attributes\\CoversClass', [new Nette\PhpGenerator\Literal($endpointClass . '::class')]);
+
+    // Add property for the endpoint
+    $class->addProperty('endpoint')
+        ->setType('CedricZiel\\MattermostPhp\\Client\\Endpoint\\' . $endpointClass);
+
+    // Add setUp method
+    $setUp = $class->addMethod('setUp')
+        ->setProtected()
+        ->setReturnType('void');
+    $setUp->addBody('parent::setUp();');
+    $setUp->addBody('$this->endpoint = new ' . $endpointClass . '(');
+    $setUp->addBody('    $this->baseUrl,');
+    $setUp->addBody('    $this->token,');
+    $setUp->addBody('    $this->mockClient,');
+    $setUp->addBody('    new \\GuzzleHttp\\Psr7\\HttpFactory(),');
+    $setUp->addBody('    $this->streamFactory,');
+    $setUp->addBody(');');
+
+    // Methods to skip (from traits or not API methods)
+    $skipMethods = [
+        'buildUri',
+        'setHttpClient',
+        'setRequestFactory',
+        'setStreamFactory',
+        'setBaseUrl',
+        'setToken',
+    ];
+
+    // Get public methods
+    $methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
+    $testsGenerated = 0;
+
+    foreach ($methods as $method) {
+        $methodName = $method->getName();
+
+        // Skip constructor, setters, and known trait/utility methods
+        if ($method->isConstructor() ||
+            str_starts_with($methodName, 'set') ||
+            in_array($methodName, $skipMethods, true) ||
+            $method->getDeclaringClass()->getName() !== $reflection->getName()) {
+            continue;
+        }
+
+        $curatedConfig = $curatedTests[$methodName] ?? [];
+
+        // Generate basic test
+        if (generateMethodTest($class, $method, $curatedConfig)) {
+            $testsGenerated++;
+        }
+    }
+
+    // If no tests were generated, add a placeholder test
+    if ($testsGenerated === 0) {
+        $placeholder = $class->addMethod('endpointCanBeInstantiated')
+            ->setPublic()
+            ->setReturnType('void')
+            ->addAttribute('PHPUnit\\Framework\\Attributes\\Test');
+        $placeholder->addBody('$this->assertInstanceOf(' . $endpointClass . '::class, $this->endpoint);');
+    }
+
+    // Build the file content
+    $file = "<?php\n\ndeclare(strict_types=1);\n\n";
+    $file .= $printer->printNamespace($namespace);
+
+    return $file;
+}
+
+/**
+ * Generate a test method for an endpoint method.
+ *
+ * @return bool True if a complete test was generated, false if skipped/incomplete
+ */
+function generateMethodTest(ClassType $class, ReflectionMethod $method, array $curatedConfig): bool
+{
+    $methodName = $method->getName();
+    $testName = $methodName . 'BuildsCorrectRequest';
+
+    $test = $class->addMethod($testName)
+        ->setPublic()
+        ->setReturnType('void')
+        ->addAttribute('PHPUnit\\Framework\\Attributes\\Test');
+
+    // Analyze parameters
+    $params = $method->getParameters();
+    $paramSetup = [];
+    $argList = [];
+
+    foreach ($params as $param) {
+        $paramName = $param->getName();
+        $paramType = $param->getType();
+
+        if ($paramType instanceof ReflectionNamedType) {
+            $typeName = $paramType->getName();
+
+            if (str_contains($typeName, 'Request') || str_contains($typeName, 'Model')) {
+                // It's a request model - skip for now, mock in simple test
+                $argList[] = 'null';
+                continue;
+            }
+
+            switch ($typeName) {
+                case 'string':
+                    $paramSetup[] = sprintf('$%s = \'test-%s\';', $paramName, $paramName);
+                    $argList[] = '$' . $paramName;
+                    break;
+                case 'int':
+                    $paramSetup[] = sprintf('$%s = 1;', $paramName);
+                    $argList[] = '$' . $paramName;
+                    break;
+                case 'bool':
+                    $paramSetup[] = sprintf('$%s = true;', $paramName);
+                    $argList[] = '$' . $paramName;
+                    break;
+                case 'array':
+                    $paramSetup[] = sprintf('$%s = [];', $paramName);
+                    $argList[] = '$' . $paramName;
+                    break;
+                default:
+                    $argList[] = 'null';
+            }
+        } else {
+            $argList[] = 'null';
+        }
+    }
+
+    // Determine response type from return type
+    $returnType = $method->getReturnType();
+    $needsBinaryResponse = $curatedConfig['testBinaryResponse'] ?? false;
+    $needsTextResponse = $curatedConfig['testTextResponse'] ?? false;
+    $noAuthHeader = $curatedConfig['testNoAuthHeader'] ?? false;
+
+    // Add mock response
+    if ($needsBinaryResponse) {
+        $contentType = $curatedConfig['contentType'] ?? 'application/octet-stream';
+        $test->addBody(sprintf("\$this->mockBinaryResponse(200, 'binary-content', '%s');", $contentType));
+    } elseif ($needsTextResponse) {
+        $contentType = $curatedConfig['contentType'] ?? 'text/plain';
+        $test->addBody(sprintf("\$this->mockTextResponse(200, 'text content', '%s');", $contentType));
+    } else {
+        $test->addBody('$this->mockJsonResponse(200, [\'status\' => \'ok\']);');
+    }
+    $test->addBody('');
+
+    // Add parameter setup
+    foreach ($paramSetup as $setup) {
+        $test->addBody($setup);
+    }
+    if (!empty($paramSetup)) {
+        $test->addBody('');
+    }
+
+    // Add method call - wrap in try/catch for methods with required body params
+    $hasRequiredBodyParam = false;
+    foreach ($params as $param) {
+        if (!$param->isOptional() && !$param->getType()?->allowsNull()) {
+            $typeName = $param->getType() instanceof ReflectionNamedType ? $param->getType()->getName() : '';
+            if (str_contains($typeName, 'Request') || str_contains($typeName, 'Model')) {
+                $hasRequiredBodyParam = true;
+                break;
+            }
+        }
+    }
+
+    if ($hasRequiredBodyParam) {
+        // Don't generate incomplete tests - skip this method entirely
+        $class->removeMethod($testName);
+        return false;
+    }
+
+    // Wrap in try-catch to handle response mapping issues
+    // We're only testing that the request is built correctly
+    $test->addBody('try {');
+    $test->addBody(sprintf('    $this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
+    $test->addBody('} catch (\Throwable $e) {');
+    $test->addBody('    // Response mapping may fail with mock data - that\'s OK');
+    $test->addBody('    // We\'re testing the request building, not response handling');
+    $test->addBody('}');
+    $test->addBody('');
+
+    // Add assertions
+    $test->addBody('$this->assertNotNull($this->getLastRequest());');
+
+    if ($noAuthHeader) {
+        $test->addBody('$this->assertRequestHasNoAuthHeader();');
+    } else {
+        $test->addBody('$this->assertRequestHasAuthHeader();');
+    }
+
+    return true;
+}

@@ -1,2 +1,11 @@
 parameters:
 	ignoreErrors:
+		# PHPUnit 11+ attributes ARE repeatable, but PHPStan may not recognize this
+		-
+			message: '#Attribute class PHPUnit\\Framework\\Attributes\\CoversClass is not repeatable but is already present above the class#'
+			paths:
+				- test/
+		-
+			message: '#Attribute class PHPUnit\\Framework\\Attributes\\UsesClass is not repeatable but is already present above the class#'
+			paths:
+				- test/

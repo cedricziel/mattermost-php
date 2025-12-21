@@ -163,7 +163,7 @@ class UsersEndpoint
      */
     public function loginIntune(
         \CedricZiel\MattermostPhp\Client\Model\LoginIntuneRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError {
+    ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\AppError {
         $pathParameters = [];
         $queryParameters = [];
 
