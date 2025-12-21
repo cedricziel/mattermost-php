@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\TermsOfServiceEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\TermsOfService;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(TermsOfServiceEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(TermsOfService::class)]
 class TermsOfServiceEndpointTest extends ClientTestCase
 {
     public TermsOfServiceEndpoint $endpoint;
@@ -29,32 +31,24 @@ class TermsOfServiceEndpointTest extends ClientTestCase
     #[Test]
     public function getTermsOfServiceBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'text' => 'test-text']);
 
-        try {
-            $this->endpoint->getTermsOfService();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getTermsOfService();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TermsOfService::class, $result);
     }
 
     #[Test]
     public function createTermsOfServiceBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'text' => 'test-text']);
 
-        try {
-            $this->endpoint->createTermsOfService();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->createTermsOfService();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TermsOfService::class, $result);
     }
 }

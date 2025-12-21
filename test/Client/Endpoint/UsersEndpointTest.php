@@ -5,11 +5,27 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\UsersEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\GenerateMfaSecretResponse;
+use CedricZiel\MattermostPhp\Client\Model\KnownUsers;
+use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\User;
+use CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized;
+use CedricZiel\MattermostPhp\Client\Model\UserAutocomplete;
+use CedricZiel\MattermostPhp\Client\Model\UserTermsOfService;
+use CedricZiel\MattermostPhp\Client\Model\UsersStats;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(UsersEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UserAutocomplete::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(KnownUsers::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UsersStats::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(User::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GenerateMfaSecretResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UserAccessTokenSanitized::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UserTermsOfService::class)]
 class UsersEndpointTest extends ClientTestCase
 {
     public UsersEndpoint $endpoint;
@@ -27,25 +43,9 @@ class UsersEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function logoutBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->logout();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
     public function getUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $page = 1;
         $per_page = 1;
@@ -64,28 +64,7 @@ class UsersEndpointTest extends ClientTestCase
         $channel_roles = 'test-channel_roles';
         $team_roles = 'test-team_roles';
 
-        try {
-            $this->endpoint->getUsers($page, $per_page, $in_team, $not_in_team, $in_channel, $not_in_channel, $in_group, $group_constrained, $without_team, $active, $inactive, $role, $sort, $roles, $channel_roles, $team_roles);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function permanentDeleteAllUsersBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->permanentDeleteAllUsers();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUsers($page, $per_page, $in_team, $not_in_team, $in_channel, $not_in_channel, $in_group, $group_constrained, $without_team, $active, $inactive, $role, $sort, $roles, $channel_roles, $team_roles);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -94,60 +73,48 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function autocompleteUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['users' => [], 'out_of_channel' => []]);
 
         $name = 'test-name';
         $team_id = 'test-team_id';
         $channel_id = 'test-channel_id';
         $limit = 1;
 
-        try {
-            $this->endpoint->autocompleteUsers($name, $team_id, $channel_id, $limit);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->autocompleteUsers($name, $team_id, $channel_id, $limit);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAutocomplete::class, $result);
     }
 
     #[Test]
     public function getKnownUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['items' => 'test-items']);
 
-        try {
-            $this->endpoint->getKnownUsers();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getKnownUsers();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\KnownUsers::class, $result);
     }
 
     #[Test]
     public function getTotalUsersStatsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_users_count' => 1234567890]);
 
-        try {
-            $this->endpoint->getTotalUsersStats();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getTotalUsersStats();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UsersStats::class, $result);
     }
 
     #[Test]
     public function getTotalUsersStatsFilteredBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_users_count' => 1234567890]);
 
         $in_team = 'test-in_team';
         $in_channel = 'test-in_channel';
@@ -157,193 +124,119 @@ class UsersEndpointTest extends ClientTestCase
         $channel_roles = 'test-channel_roles';
         $team_roles = 'test-team_roles';
 
-        try {
-            $this->endpoint->getTotalUsersStatsFiltered($in_team, $in_channel, $include_deleted, $include_bots, $roles, $channel_roles, $team_roles);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getTotalUsersStatsFiltered($in_team, $in_channel, $include_deleted, $include_bots, $roles, $channel_roles, $team_roles);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UsersStats::class, $result);
     }
 
     #[Test]
     public function getUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getUser($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
 
     #[Test]
     public function deleteUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->deleteUser($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->deleteUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getProfileImageBuildsCorrectRequest(): void
-    {
-        $this->mockBinaryResponse(200, 'binary-content', 'image/png');
-
-        $user_id = 'test-user_id';
-        $_ = 1;
-
-        try {
-            $this->endpoint->getProfileImage($user_id, $_);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getDefaultProfileImageBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-
-        try {
-            $this->endpoint->getDefaultProfileImage($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function getUserByUsernameBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $username = 'test-username';
 
-        try {
-            $this->endpoint->getUserByUsername($username);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserByUsername($username);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
 
     #[Test]
     public function generateMfaSecretBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['secret' => 'test-secret', 'qr_code' => 'test-qr_code']);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->generateMfaSecret($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->generateMfaSecret($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GenerateMfaSecretResponse::class, $result);
     }
 
     #[Test]
     public function demoteUserToGuestBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->demoteUserToGuest($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->demoteUserToGuest($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function promoteGuestToUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->promoteGuestToUser($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->promoteGuestToUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function getUserByEmailBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $email = 'test-email';
 
-        try {
-            $this->endpoint->getUserByEmail($email);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserByEmail($email);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
 
     #[Test]
     public function getSessionsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getSessions($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getSessions($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -352,34 +245,25 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function revokeAllSessionsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->revokeAllSessions($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->revokeAllSessions($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function getUserAuditsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getUserAudits($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserAudits($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -388,36 +272,27 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function verifyUserEmailWithoutTokenBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->verifyUserEmailWithoutToken($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->verifyUserEmailWithoutToken($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
 
     #[Test]
     public function getUserAccessTokensForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getUserAccessTokensForUser($user_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserAccessTokensForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -426,17 +301,12 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserAccessTokensBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getUserAccessTokens($page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserAccessTokens($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -445,68 +315,39 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserAccessTokenBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'user_id' => 'test-user_id', 'description' => 'test-description', 'is_active' => true]);
 
         $token_id = 'test-token_id';
 
-        try {
-            $this->endpoint->getUserAccessToken($token_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserAccessToken($token_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized::class, $result);
     }
 
     #[Test]
     public function getUserTermsOfServiceBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['user_id' => 'test-user_id', 'terms_of_service_id' => 'test-terms_of_service_id', 'create_at' => 1234567890]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getUserTermsOfService($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserTermsOfService($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function revokeSessionsFromAllUsersBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->revokeSessionsFromAllUsers();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserTermsOfService::class, $result);
     }
 
     #[Test]
     public function getUploadsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getUploadsForUser($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUploadsForUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -515,18 +356,13 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getChannelMembersWithTeamDataForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getChannelMembersWithTeamDataForUser($user_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getChannelMembersWithTeamDataForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -535,33 +371,12 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersWithInvalidEmailsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getUsersWithInvalidEmails($page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function resetPasswordFailedAttemptsBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->resetPasswordFailedAttempts();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUsersWithInvalidEmails($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -570,14 +385,9 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getServerLimitsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getServerLimits();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getServerLimits();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();

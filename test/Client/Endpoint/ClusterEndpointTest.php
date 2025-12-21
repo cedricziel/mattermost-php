@@ -29,14 +29,9 @@ class ClusterEndpointTest extends ClientTestCase
     #[Test]
     public function getClusterStatusBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getClusterStatus();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getClusterStatus();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();

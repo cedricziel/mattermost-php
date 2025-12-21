@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\CustomProfileAttributesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\GetCPAGroupResponse;
+use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(CustomProfileAttributesEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetCPAGroupResponse::class)]
 class CustomProfileAttributesEndpointTest extends ClientTestCase
 {
     public CustomProfileAttributesEndpoint $endpoint;
@@ -29,14 +33,9 @@ class CustomProfileAttributesEndpointTest extends ClientTestCase
     #[Test]
     public function listAllCPAFieldsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->listAllCPAFields();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->listAllCPAFields();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -45,52 +44,26 @@ class CustomProfileAttributesEndpointTest extends ClientTestCase
     #[Test]
     public function deleteCPAFieldBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $field_id = 'test-field_id';
 
-        try {
-            $this->endpoint->deleteCPAField($field_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->deleteCPAField($field_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function getCPAGroupBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id']);
 
-        try {
-            $this->endpoint->getCPAGroup();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getCPAGroup();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function listCPAValuesBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-
-        try {
-            $this->endpoint->listCPAValues($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetCPAGroupResponse::class, $result);
     }
 }

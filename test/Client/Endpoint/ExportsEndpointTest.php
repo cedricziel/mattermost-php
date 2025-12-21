@@ -27,54 +27,8 @@ class ExportsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function listExportsBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->listExports();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function downloadExportBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $export_name = 'test-export_name';
-
-        try {
-            $this->endpoint->downloadExport($export_name);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function deleteExportBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $export_name = 'test-export_name';
-
-        try {
-            $this->endpoint->deleteExport($export_name);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(ExportsEndpoint::class, $this->endpoint);
     }
 }

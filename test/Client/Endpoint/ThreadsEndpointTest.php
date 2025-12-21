@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ThreadsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\UserThreads;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(ThreadsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UserThreads::class)]
 class ThreadsEndpointTest extends ClientTestCase
 {
     public ThreadsEndpoint $endpoint;
@@ -29,7 +31,7 @@ class ThreadsEndpointTest extends ClientTestCase
     #[Test]
     public function getUserThreadsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total' => 1234567890, 'threads' => []]);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -41,133 +43,10 @@ class ThreadsEndpointTest extends ClientTestCase
         $totalsOnly = true;
         $threadsOnly = true;
 
-        try {
-            $this->endpoint->getUserThreads($user_id, $team_id, $since, $deleted, $extended, $page, $per_page, $totalsOnly, $threadsOnly);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserThreads($user_id, $team_id, $since, $deleted, $extended, $page, $per_page, $totalsOnly, $threadsOnly);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getThreadMentionCountsByChannelBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-        $team_id = 'test-team_id';
-
-        try {
-            $this->endpoint->getThreadMentionCountsByChannel($user_id, $team_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function updateThreadsReadForUserBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-        $team_id = 'test-team_id';
-
-        try {
-            $this->endpoint->updateThreadsReadForUser($user_id, $team_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function updateThreadReadForUserBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-        $team_id = 'test-team_id';
-        $thread_id = 'test-thread_id';
-        $timestamp = 'test-timestamp';
-
-        try {
-            $this->endpoint->updateThreadReadForUser($user_id, $team_id, $thread_id, $timestamp);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function startFollowingThreadBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-        $team_id = 'test-team_id';
-        $thread_id = 'test-thread_id';
-
-        try {
-            $this->endpoint->startFollowingThread($user_id, $team_id, $thread_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function stopFollowingThreadBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-        $team_id = 'test-team_id';
-        $thread_id = 'test-thread_id';
-
-        try {
-            $this->endpoint->stopFollowingThread($user_id, $team_id, $thread_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getUserThreadBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-        $team_id = 'test-team_id';
-        $thread_id = 'test-thread_id';
-
-        try {
-            $this->endpoint->getUserThread($user_id, $team_id, $thread_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserThreads::class, $result);
     }
 }

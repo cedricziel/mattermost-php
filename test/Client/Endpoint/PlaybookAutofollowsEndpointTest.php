@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PlaybookAutofollowsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\PlaybookAutofollows;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PlaybookAutofollowsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PlaybookAutofollows::class)]
 class PlaybookAutofollowsEndpointTest extends ClientTestCase
 {
     public PlaybookAutofollowsEndpoint $endpoint;
@@ -29,18 +31,14 @@ class PlaybookAutofollowsEndpointTest extends ClientTestCase
     #[Test]
     public function getAutoFollowsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_count' => 1234567890, 'items' => []]);
 
         $id = 'test-id';
 
-        try {
-            $this->endpoint->getAutoFollows($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getAutoFollows($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookAutofollows::class, $result);
     }
 }

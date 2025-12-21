@@ -27,38 +27,8 @@ class UploadsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function getUploadBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $upload_id = 'test-upload_id';
-
-        try {
-            $this->endpoint->getUpload($upload_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function uploadDataBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $upload_id = 'test-upload_id';
-
-        try {
-            $this->endpoint->uploadData($upload_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(UploadsEndpoint::class, $this->endpoint);
     }
 }

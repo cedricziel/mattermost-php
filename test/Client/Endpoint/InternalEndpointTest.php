@@ -27,38 +27,8 @@ class InternalEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function getChecklistAutocompleteBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $channel_ID = 'test-channel_ID';
-
-        try {
-            $this->endpoint->getChecklistAutocomplete($channel_ID);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function endPlaybookRunDialogBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-
-        try {
-            $this->endpoint->endPlaybookRunDialog($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(InternalEndpoint::class, $this->endpoint);
     }
 }

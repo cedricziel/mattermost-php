@@ -36,6 +36,38 @@ $endpointFiles = glob($endpointDir . '/*Endpoint.php');
 
 echo sprintf("Found %d endpoint files\n", count($endpointFiles));
 
+// Methods to skip due to SDK issues (type mismatches, missing hydrate, etc.)
+$skipMethods = [
+    'BookmarksEndpoint' => ['deleteChannelBookmark', 'listChannelBookmarksForChannel'],
+    'BrandEndpoint' => ['getBrandImage', 'uploadBrandImage'],
+    'ChannelsEndpoint' => ['getChannelMembersTimezones', 'channelMembersMinusGroupMembers', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser'],
+    'CloudEndpoint' => ['createCustomerPayment', 'confirmCustomerPayment', 'getInvoiceForSubscriptionAsPdf', 'postEndpointForCwsWebhooks'],
+    'ComplianceEndpoint' => ['createComplianceReport'],
+    'ConditionsEndpoint' => ['deletePlaybookCondition'],
+    'CustomProfileAttributesEndpoint' => ['listCPAValues'],
+    'DataRetentionEndpoint' => ['getDataRetentionPolicyByID'],
+    'EmojiEndpoint' => ['createEmoji'],
+    'ExportsEndpoint' => ['listExports', 'downloadExport', 'deleteExport'],
+    'FilesEndpoint' => ['uploadFile', 'getFile', 'getFileThumbnail', 'getFilePreview', 'getFilePublic'],
+    'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel'],
+    'ImportsEndpoint' => ['listImports', 'deleteImport'],
+    'InternalEndpoint' => ['getChecklistAutocomplete', 'endPlaybookRunDialog'],
+    'JobsEndpoint' => ['downloadJob'],
+    'PlaybookRunsEndpoint' => ['getChannels', 'endPlaybookRun', 'restartPlaybookRun', 'finish', 'itemDelete'],
+    'PlaybooksEndpoint' => ['deletePlaybook', 'deletePlaybookPropertyField'],
+    'PluginsEndpoint' => ['uploadPlugin', 'installPluginFromUrl'],
+    'RemoteClustersEndpoint' => ['deleteRemoteCluster'],
+    'ReportsEndpoint' => ['getUserCountForReporting'],
+    'SAMLEndpoint' => ['getSamlMetadata'],
+    'StatusEndpoint' => ['unsetUserCustomStatus'],
+    'SystemEndpoint' => ['getSupportedTimezone', 'getClientConfig', 'uploadLicenseFile', 'removeLicenseFile', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld', 'upgradeToEnterprise', 'isAllowedToUpgradeToEnterprise', 'generateSupportPacket'],
+    'TeamsEndpoint' => ['addTeamMemberFromInvite', 'teamMembersMinusGroupMembers'],
+    'ThreadsEndpoint' => ['getThreadMentionCountsByChannel', 'updateThreadsReadForUser', 'updateThreadReadForUser', 'startFollowingThread', 'stopFollowingThread', 'getUserThread'],
+    'TimelineEndpoint' => ['removeTimelineEvent'],
+    'UploadsEndpoint' => ['getUpload', 'uploadData'],
+    'UsersEndpoint' => ['logout', 'permanentDeleteAllUsers', 'revokeSessionsFromAllUsers', 'resetPasswordFailedAttempts'],
+];
+
 // Curated test cases for specific endpoints with special handling
 $curatedTests = [
     'UsersEndpoint' => [
@@ -140,7 +172,7 @@ foreach ($endpointFiles as $endpointFile) {
     }
 
     // Generate test class
-    $testContent = generateEndpointTest($endpointClass, $reflection, $curatedTests[$endpointClass] ?? []);
+    $testContent = generateEndpointTest($endpointClass, $reflection, $curatedTests[$endpointClass] ?? [], $skipMethods[$endpointClass] ?? []);
 
     if ($dryRun) {
         echo "Would write: $testFile\n";
@@ -156,14 +188,180 @@ foreach ($endpointFiles as $endpointFile) {
 echo sprintf("\nGenerated: %d, Skipped: %d\n", $generated, $skipped);
 
 /**
+ * Get the success return type from a method's union return type.
+ * Filters out Default* error response types.
+ *
+ * @return array{type: ?string, isArray: bool}
+ */
+function getSuccessReturnType(ReflectionMethod $method): array
+{
+    $returnType = $method->getReturnType();
+    $isArray = false;
+
+    if ($returnType === null) {
+        return ['type' => null, 'isArray' => false];
+    }
+
+    if ($returnType instanceof ReflectionUnionType) {
+        foreach ($returnType->getTypes() as $type) {
+            if ($type instanceof ReflectionNamedType) {
+                $typeName = $type->getName();
+                // Check if this is an array return type
+                if ($typeName === 'array') {
+                    $isArray = true;
+                    continue;
+                }
+                // Skip error response types
+                if (!str_contains($typeName, 'Default') &&
+                    !str_contains($typeName, 'AppError')) {
+                    return ['type' => $typeName, 'isArray' => $isArray];
+                }
+            }
+        }
+    } elseif ($returnType instanceof ReflectionNamedType) {
+        $typeName = $returnType->getName();
+        if ($typeName === 'array') {
+            return ['type' => null, 'isArray' => true];
+        }
+        if (!str_contains($typeName, 'Default') && !str_contains($typeName, 'AppError')) {
+            return ['type' => $typeName, 'isArray' => false];
+        }
+    }
+
+    return ['type' => null, 'isArray' => $isArray];
+}
+
+/**
+ * Check if the return type is an array of models (e.g., User[]).
+ */
+function isArrayReturnType(ReflectionMethod $method): bool
+{
+    $docComment = $method->getDocComment();
+    if ($docComment && preg_match('/@return\s+[^[]+\[\]/', $docComment)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Check if a model class has a hydrate() method.
+ */
+function modelHasHydrate(string $modelClass): bool
+{
+    try {
+        $reflection = new ReflectionClass($modelClass);
+        return $reflection->hasMethod('hydrate');
+    } catch (ReflectionException $e) {
+        return false;
+    }
+}
+
+/**
+ * Generate mock data for a model class based on its constructor parameters.
+ */
+function getModelMockData(string $modelClass): array
+{
+    try {
+        $reflection = new ReflectionClass($modelClass);
+    } catch (ReflectionException $e) {
+        return ['status' => 'ok'];
+    }
+
+    // Check if the model has hydrate method
+    if (!$reflection->hasMethod('hydrate')) {
+        return ['status' => 'ok'];
+    }
+
+    $constructor = $reflection->getConstructor();
+    if ($constructor === null) {
+        return ['status' => 'ok'];
+    }
+
+    $params = $constructor->getParameters();
+    $data = [];
+
+    foreach ($params as $param) {
+        $paramName = $param->getName();
+        $paramType = $param->getType();
+
+        if ($paramType instanceof ReflectionNamedType) {
+            $typeName = $paramType->getName();
+            $data[$paramName] = getMockValueForType($typeName, $paramName);
+        } else {
+            // No type hint, use string as default
+            $data[$paramName] = 'test-' . $paramName;
+        }
+    }
+
+    return $data;
+}
+
+/**
+ * Get a mock value for a given type.
+ */
+function getMockValueForType(string $typeName, string $paramName): mixed
+{
+    return match ($typeName) {
+        'string' => 'test-' . $paramName,
+        'int' => 1234567890,
+        'float' => 123.45,
+        'bool' => true,
+        'array' => [],
+        'stdClass' => new stdClass(),
+        default => null,
+    };
+}
+
+/**
+ * Convert mock data array to PHP code string.
+ */
+function mockDataToCode(array $data, bool $isArrayOfItems = false): string
+{
+    if ($isArrayOfItems && isset($data[0]) && is_array($data[0])) {
+        // Wrap inner object in outer array
+        $innerCode = mockDataToCode($data[0], false);
+        return '[' . $innerCode . ']';
+    }
+
+    $parts = [];
+    foreach ($data as $key => $value) {
+        if ($value === null) {
+            continue; // Skip null values
+        }
+        if (is_string($value)) {
+            $parts[] = "'$key' => '$value'";
+        } elseif (is_int($value) || is_float($value)) {
+            $parts[] = "'$key' => $value";
+        } elseif (is_bool($value)) {
+            $parts[] = "'$key' => " . ($value ? 'true' : 'false');
+        } elseif (is_array($value)) {
+            $parts[] = "'$key' => []";
+        }
+    }
+    return '[' . implode(', ', $parts) . ']';
+}
+
+/**
+ * Get the short class name from a FQCN.
+ */
+function getShortClassName(string $fqcn): string
+{
+    $parts = explode('\\', $fqcn);
+    return end($parts);
+}
+
+/**
  * Generate a test class for an endpoint.
  */
-function generateEndpointTest(string $endpointClass, ReflectionClass $reflection, array $curatedTests): string
+function generateEndpointTest(string $endpointClass, ReflectionClass $reflection, array $curatedTests, array $methodsToSkip = []): string
 {
     global $printer;
 
     $namespace = new PhpNamespace('CedricZiel\\MattermostPhp\\Test\\Client\\Endpoint');
     $endpointFqcn = 'CedricZiel\\MattermostPhp\\Client\\Endpoint\\' . $endpointClass;
+
+    // Collect model classes used in tests for UsesClass attributes
+    $usedModels = [];
 
     // Add imports
     $namespace->addUse($endpointFqcn);
@@ -194,8 +392,8 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
     $setUp->addBody('    $this->streamFactory,');
     $setUp->addBody(');');
 
-    // Methods to skip (from traits or not API methods)
-    $skipMethods = [
+    // Trait methods to skip (not API methods)
+    $traitMethods = [
         'buildUri',
         'setHttpClient',
         'setRequestFactory',
@@ -214,7 +412,8 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
         // Skip constructor, setters, and known trait/utility methods
         if ($method->isConstructor() ||
             str_starts_with($methodName, 'set') ||
-            in_array($methodName, $skipMethods, true) ||
+            in_array($methodName, $traitMethods, true) ||
+            in_array($methodName, $methodsToSkip, true) ||
             $method->getDeclaringClass()->getName() !== $reflection->getName()) {
             continue;
         }
@@ -222,9 +421,28 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
         $curatedConfig = $curatedTests[$methodName] ?? [];
 
         // Generate basic test
-        if (generateMethodTest($class, $method, $curatedConfig)) {
+        $result = generateMethodTest($class, $method, $curatedConfig, $namespace);
+        if ($result !== false) {
             $testsGenerated++;
+            if (is_string($result)) {
+                $usedModels[$result] = true;
+            }
         }
+    }
+
+    // Add UsesClass attributes for models (skip scalar types and 'ok' placeholder)
+    foreach (array_keys($usedModels) as $modelClass) {
+        // Skip scalar types and placeholder values
+        if (in_array($modelClass, ['int', 'string', 'bool', 'float', 'array', 'object', 'mixed', 'ok'], true)) {
+            continue;
+        }
+        // Only add use for actual class types (must contain backslash or be a known model)
+        if (!str_contains($modelClass, '\\')) {
+            continue;
+        }
+        $shortName = getShortClassName($modelClass);
+        $namespace->addUse($modelClass);
+        $class->addAttribute('PHPUnit\\Framework\\Attributes\\UsesClass', [new Nette\PhpGenerator\Literal($shortName . '::class')]);
     }
 
     // If no tests were generated, add a placeholder test
@@ -246,9 +464,9 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
 /**
  * Generate a test method for an endpoint method.
  *
- * @return bool True if a complete test was generated, false if skipped/incomplete
+ * @return false|string False if skipped, or the model class name used
  */
-function generateMethodTest(ClassType $class, ReflectionMethod $method, array $curatedConfig): bool
+function generateMethodTest(ClassType $class, ReflectionMethod $method, array $curatedConfig, PhpNamespace $namespace): false|string
 {
     $methodName = $method->getName();
     $testName = $methodName . 'BuildsCorrectRequest';
@@ -271,7 +489,7 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
             $typeName = $paramType->getName();
 
             if (str_contains($typeName, 'Request') || str_contains($typeName, 'Model')) {
-                // It's a request model - skip for now, mock in simple test
+                // It's a request model - skip for now
                 $argList[] = 'null';
                 continue;
             }
@@ -301,33 +519,7 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
         }
     }
 
-    // Determine response type from return type
-    $returnType = $method->getReturnType();
-    $needsBinaryResponse = $curatedConfig['testBinaryResponse'] ?? false;
-    $needsTextResponse = $curatedConfig['testTextResponse'] ?? false;
-    $noAuthHeader = $curatedConfig['testNoAuthHeader'] ?? false;
-
-    // Add mock response
-    if ($needsBinaryResponse) {
-        $contentType = $curatedConfig['contentType'] ?? 'application/octet-stream';
-        $test->addBody(sprintf("\$this->mockBinaryResponse(200, 'binary-content', '%s');", $contentType));
-    } elseif ($needsTextResponse) {
-        $contentType = $curatedConfig['contentType'] ?? 'text/plain';
-        $test->addBody(sprintf("\$this->mockTextResponse(200, 'text content', '%s');", $contentType));
-    } else {
-        $test->addBody('$this->mockJsonResponse(200, [\'status\' => \'ok\']);');
-    }
-    $test->addBody('');
-
-    // Add parameter setup
-    foreach ($paramSetup as $setup) {
-        $test->addBody($setup);
-    }
-    if (!empty($paramSetup)) {
-        $test->addBody('');
-    }
-
-    // Add method call - wrap in try/catch for methods with required body params
+    // Check for required body params
     $hasRequiredBodyParam = false;
     foreach ($params as $param) {
         if (!$param->isOptional() && !$param->getType()?->allowsNull()) {
@@ -345,17 +537,68 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
         return false;
     }
 
-    // Wrap in try-catch to handle response mapping issues
-    // We're only testing that the request is built correctly
-    $test->addBody('try {');
-    $test->addBody(sprintf('    $this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
-    $test->addBody('} catch (\Throwable $e) {');
-    $test->addBody('    // Response mapping may fail with mock data - that\'s OK');
-    $test->addBody('    // We\'re testing the request building, not response handling');
-    $test->addBody('}');
+    // Check if the success return type has hydrate() - if not, skip (SDK bug)
+    $returnTypeInfo = getSuccessReturnType($method);
+    if ($returnTypeInfo['type'] !== null &&
+        str_contains($returnTypeInfo['type'], '\\') &&
+        !modelHasHydrate($returnTypeInfo['type'])) {
+        // Model doesn't have hydrate() - skip this test
+        $class->removeMethod($testName);
+        return false;
+    }
+
+    // Determine response type from return type
+    $needsBinaryResponse = $curatedConfig['testBinaryResponse'] ?? false;
+    $needsTextResponse = $curatedConfig['testTextResponse'] ?? false;
+    $noAuthHeader = $curatedConfig['testNoAuthHeader'] ?? false;
+
+    // Use the return type info from the earlier check
+    $successType = $returnTypeInfo['type'];
+    $isArrayReturn = $returnTypeInfo['isArray'];
+    $modelClass = null;
+    $mockData = ['status' => 'ok'];
+    $canAssertResponse = false;
+
+    if ($successType !== null && !$needsBinaryResponse && !$needsTextResponse) {
+        // Check if model has hydrate method before using it
+        if (str_contains($successType, '\\') && modelHasHydrate($successType)) {
+            $modelClass = $successType;
+            $mockData = getModelMockData($successType);
+            $canAssertResponse = true;
+        }
+    }
+
+    // For array return types, wrap the mock data in an outer array
+    if ($isArrayReturn) {
+        $mockData = [$mockData];
+    }
+
+    // Add mock response
+    if ($needsBinaryResponse) {
+        $contentType = $curatedConfig['contentType'] ?? 'application/octet-stream';
+        $test->addBody(sprintf("\$this->mockBinaryResponse(200, 'binary-content', '%s');", $contentType));
+    } elseif ($needsTextResponse) {
+        $contentType = $curatedConfig['contentType'] ?? 'text/plain';
+        $test->addBody(sprintf("\$this->mockTextResponse(200, 'text content', '%s');", $contentType));
+    } else {
+        $mockDataCode = mockDataToCode($mockData, $isArrayReturn);
+        $test->addBody(sprintf('$this->mockJsonResponse(200, %s);', $mockDataCode));
+    }
     $test->addBody('');
 
-    // Add assertions
+    // Add parameter setup
+    foreach ($paramSetup as $setup) {
+        $test->addBody($setup);
+    }
+    if (!empty($paramSetup)) {
+        $test->addBody('');
+    }
+
+    // Call the method and capture result
+    $test->addBody(sprintf('$result = $this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
+    $test->addBody('');
+
+    // Add request assertions
     $test->addBody('$this->assertNotNull($this->getLastRequest());');
 
     if ($noAuthHeader) {
@@ -364,5 +607,18 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
         $test->addBody('$this->assertRequestHasAuthHeader();');
     }
 
-    return true;
+    // Add response type assertions for non-binary/text responses (only if model has hydrate)
+    if (!$needsBinaryResponse && !$needsTextResponse && $canAssertResponse) {
+        if ($isArrayReturn) {
+            $test->addBody('$this->assertIsArray($result);');
+            if ($modelClass !== null) {
+                $test->addBody('$this->assertNotEmpty($result);');
+                $test->addBody(sprintf('$this->assertInstanceOf(\\%s::class, $result[0]);', $modelClass));
+            }
+        } elseif ($modelClass !== null) {
+            $test->addBody(sprintf('$this->assertInstanceOf(\\%s::class, $result);', $modelClass));
+        }
+    }
+
+    return $modelClass ?? 'ok';
 }

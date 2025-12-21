@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\RolesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\Role;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(RolesEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Role::class)]
 class RolesEndpointTest extends ClientTestCase
 {
     public RolesEndpoint $endpoint;
@@ -29,14 +31,9 @@ class RolesEndpointTest extends ClientTestCase
     #[Test]
     public function getAllRolesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getAllRoles();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getAllRoles();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -45,36 +42,28 @@ class RolesEndpointTest extends ClientTestCase
     #[Test]
     public function getRoleBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'permissions' => [], 'scheme_managed' => true]);
 
         $role_id = 'test-role_id';
 
-        try {
-            $this->endpoint->getRole($role_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getRole($role_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Role::class, $result);
     }
 
     #[Test]
     public function getRoleByNameBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'permissions' => [], 'scheme_managed' => true]);
 
         $role_name = 'test-role_name';
 
-        try {
-            $this->endpoint->getRoleByName($role_name);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getRoleByName($role_name);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Role::class, $result);
     }
 }

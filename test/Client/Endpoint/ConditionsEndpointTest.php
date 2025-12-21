@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ConditionsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\ConditionList;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(ConditionsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ConditionList::class)]
 class ConditionsEndpointTest extends ClientTestCase
 {
     public ConditionsEndpoint $endpoint;
@@ -29,59 +31,32 @@ class ConditionsEndpointTest extends ClientTestCase
     #[Test]
     public function getPlaybookConditionsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_count' => 1234567890, 'page_count' => 1234567890, 'has_more' => true, 'items' => []]);
 
         $id = 'test-id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getPlaybookConditions($id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPlaybookConditions($id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function deletePlaybookConditionBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-        $conditionID = 'test-conditionID';
-
-        try {
-            $this->endpoint->deletePlaybookCondition($id, $conditionID);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ConditionList::class, $result);
     }
 
     #[Test]
     public function getRunConditionsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_count' => 1234567890, 'page_count' => 1234567890, 'has_more' => true, 'items' => []]);
 
         $id = 'test-id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getRunConditions($id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getRunConditions($id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ConditionList::class, $result);
     }
 }

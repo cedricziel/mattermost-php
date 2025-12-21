@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\IpEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\MyIPResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(IpEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(MyIPResponse::class)]
 class IpEndpointTest extends ClientTestCase
 {
     public IpEndpoint $endpoint;
@@ -29,14 +31,9 @@ class IpEndpointTest extends ClientTestCase
     #[Test]
     public function getIPFiltersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getIPFilters();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getIPFilters();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -45,16 +42,12 @@ class IpEndpointTest extends ClientTestCase
     #[Test]
     public function myIPBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['ip' => 'test-ip']);
 
-        try {
-            $this->endpoint->myIP();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->myIP();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\MyIPResponse::class, $result);
     }
 }

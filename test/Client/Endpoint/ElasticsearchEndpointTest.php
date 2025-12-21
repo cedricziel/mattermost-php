@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ElasticsearchEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(ElasticsearchEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 class ElasticsearchEndpointTest extends ClientTestCase
 {
     public ElasticsearchEndpoint $endpoint;
@@ -29,32 +31,24 @@ class ElasticsearchEndpointTest extends ClientTestCase
     #[Test]
     public function testElasticsearchBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
-        try {
-            $this->endpoint->testElasticsearch();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->testElasticsearch();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function purgeElasticsearchIndexesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
-        try {
-            $this->endpoint->purgeElasticsearchIndexes();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->purgeElasticsearchIndexes();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 }

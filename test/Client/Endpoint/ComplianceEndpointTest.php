@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ComplianceEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\Compliance;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(ComplianceEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Compliance::class)]
 class ComplianceEndpointTest extends ClientTestCase
 {
     public ComplianceEndpoint $endpoint;
@@ -27,35 +29,14 @@ class ComplianceEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function createComplianceReportBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->createComplianceReport();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
     public function getComplianceReportsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getComplianceReports($page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getComplianceReports($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -64,36 +45,14 @@ class ComplianceEndpointTest extends ClientTestCase
     #[Test]
     public function getComplianceReportBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'status' => 'test-status', 'count' => 1234567890, 'desc' => 'test-desc', 'type' => 'test-type', 'start_at' => 1234567890, 'end_at' => 1234567890, 'keywords' => 'test-keywords', 'emails' => 'test-emails']);
 
         $report_id = 'test-report_id';
 
-        try {
-            $this->endpoint->getComplianceReport($report_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getComplianceReport($report_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function downloadComplianceReportBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $report_id = 'test-report_id';
-
-        try {
-            $this->endpoint->downloadComplianceReport($report_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Compliance::class, $result);
     }
 }

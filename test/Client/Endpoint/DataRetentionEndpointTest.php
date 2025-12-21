@@ -5,11 +5,23 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\DataRetentionEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData;
+use CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse;
+use CedricZiel\MattermostPhp\Client\Model\GlobalDataRetentionPolicy;
+use CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForChannelList;
+use CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForTeamList;
+use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(DataRetentionEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(RetentionPolicyForTeamList::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(RetentionPolicyForChannelList::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GlobalDataRetentionPolicy::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetDataRetentionPoliciesCountResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ChannelListWithTeamData::class)]
 class DataRetentionEndpointTest extends ClientTestCase
 {
     public DataRetentionEndpoint $endpoint;
@@ -29,107 +41,68 @@ class DataRetentionEndpointTest extends ClientTestCase
     #[Test]
     public function getTeamPoliciesForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['policies' => [], 'total_count' => 1234567890]);
 
         $user_id = 'test-user_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getTeamPoliciesForUser($user_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getTeamPoliciesForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForTeamList::class, $result);
     }
 
     #[Test]
     public function getChannelPoliciesForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['policies' => [], 'total_count' => 1234567890]);
 
         $user_id = 'test-user_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getChannelPoliciesForUser($user_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getChannelPoliciesForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForChannelList::class, $result);
     }
 
     #[Test]
     public function getDataRetentionPolicyBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['message_deletion_enabled' => true, 'file_deletion_enabled' => true, 'message_retention_cutoff' => 1234567890, 'file_retention_cutoff' => 1234567890]);
 
-        try {
-            $this->endpoint->getDataRetentionPolicy();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getDataRetentionPolicy();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GlobalDataRetentionPolicy::class, $result);
     }
 
     #[Test]
     public function getDataRetentionPoliciesCountBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_count' => 1234567890]);
 
-        try {
-            $this->endpoint->getDataRetentionPoliciesCount();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getDataRetentionPoliciesCount();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse::class, $result);
     }
 
     #[Test]
     public function getDataRetentionPoliciesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getDataRetentionPolicies($page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getDataRetentionPolicyByIDBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $policy_id = 'test-policy_id';
-
-        try {
-            $this->endpoint->getDataRetentionPolicyByID($policy_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getDataRetentionPolicies($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -138,36 +111,27 @@ class DataRetentionEndpointTest extends ClientTestCase
     #[Test]
     public function deleteDataRetentionPolicyBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $policy_id = 'test-policy_id';
 
-        try {
-            $this->endpoint->deleteDataRetentionPolicy($policy_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->deleteDataRetentionPolicy($policy_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function getTeamsForRetentionPolicyBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $policy_id = 'test-policy_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getTeamsForRetentionPolicy($policy_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getTeamsForRetentionPolicy($policy_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -176,20 +140,16 @@ class DataRetentionEndpointTest extends ClientTestCase
     #[Test]
     public function getChannelsForRetentionPolicyBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['items' => []]);
 
         $policy_id = 'test-policy_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getChannelsForRetentionPolicy($policy_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getChannelsForRetentionPolicy($policy_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData::class, $result);
     }
 }

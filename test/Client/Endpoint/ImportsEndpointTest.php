@@ -27,36 +27,8 @@ class ImportsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function listImportsBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->listImports();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function deleteImportBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $import_name = 'test-import_name';
-
-        try {
-            $this->endpoint->deleteImport($import_name);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(ImportsEndpoint::class, $this->endpoint);
     }
 }

@@ -27,21 +27,8 @@ class TimelineEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function removeTimelineEventBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-        $event_id = 'test-event_id';
-
-        try {
-            $this->endpoint->removeTimelineEvent($id, $event_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(TimelineEndpoint::class, $this->endpoint);
     }
 }

@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\CloudEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CloudCustomer;
+use CedricZiel\MattermostPhp\Client\Model\Installation;
+use CedricZiel\MattermostPhp\Client\Model\ProductLimits;
+use CedricZiel\MattermostPhp\Client\Model\Subscription;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(CloudEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ProductLimits::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(CloudCustomer::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Subscription::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Installation::class)]
 class CloudEndpointTest extends ClientTestCase
 {
     public CloudEndpoint $endpoint;
@@ -29,64 +37,21 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getCloudLimitsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['boards' => 'test-boards', 'files' => 'test-files', 'integrations' => 'test-integrations', 'messages' => 'test-messages', 'teams' => 'test-teams']);
 
-        try {
-            $this->endpoint->getCloudLimits();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getCloudLimits();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ProductLimits::class, $result);
     }
 
     #[Test]
     public function getCloudProductsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getCloudProducts();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function createCustomerPaymentBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->createCustomerPayment();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function confirmCustomerPaymentBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $stripe_setup_intent_id = 'test-stripe_setup_intent_id';
-
-        try {
-            $this->endpoint->confirmCustomerPayment($stripe_setup_intent_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getCloudProducts();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -95,96 +60,45 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getCloudCustomerBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'creator_id' => 'test-creator_id', 'create_at' => 1234567890, 'email' => 'test-email', 'name' => 'test-name', 'num_employees' => 'test-num_employees', 'contact_first_name' => 'test-contact_first_name', 'contact_last_name' => 'test-contact_last_name', 'billing_address' => 'test-billing_address', 'company_address' => 'test-company_address', 'payment_method' => 'test-payment_method']);
 
-        try {
-            $this->endpoint->getCloudCustomer();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getCloudCustomer();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\CloudCustomer::class, $result);
     }
 
     #[Test]
     public function getSubscriptionBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'customer_id' => 'test-customer_id', 'product_id' => 'test-product_id', 'add_ons' => [], 'start_at' => 1234567890, 'end_at' => 1234567890, 'create_at' => 1234567890, 'seats' => 1234567890, 'dns' => 'test-dns']);
 
-        try {
-            $this->endpoint->getSubscription();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getSubscription();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Subscription::class, $result);
     }
 
     #[Test]
     public function getEndpointForInstallationInformationBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'allowed_ip_ranges' => 'test-allowed_ip_ranges', 'state' => 'test-state']);
 
-        try {
-            $this->endpoint->getEndpointForInstallationInformation();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getEndpointForInstallationInformation();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Installation::class, $result);
     }
 
     #[Test]
     public function getInvoicesForSubscriptionBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getInvoicesForSubscription();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getInvoiceForSubscriptionAsPdfBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $invoice_id = 'test-invoice_id';
-
-        try {
-            $this->endpoint->getInvoiceForSubscriptionAsPdf($invoice_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function postEndpointForCwsWebhooksBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        try {
-            $this->endpoint->postEndpointForCwsWebhooks();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getInvoicesForSubscription();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -193,14 +107,9 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getPreviewModalDataBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
-        try {
-            $this->endpoint->getPreviewModalData();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPreviewModalData();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();

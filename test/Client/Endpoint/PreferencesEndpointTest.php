@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PreferencesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\Preference;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PreferencesEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Preference::class)]
 class PreferencesEndpointTest extends ClientTestCase
 {
     public PreferencesEndpoint $endpoint;
@@ -29,16 +31,11 @@ class PreferencesEndpointTest extends ClientTestCase
     #[Test]
     public function getPreferencesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getPreferences($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPreferences($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -47,17 +44,12 @@ class PreferencesEndpointTest extends ClientTestCase
     #[Test]
     public function getPreferencesByCategoryBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
         $category = 'test-category';
 
-        try {
-            $this->endpoint->getPreferencesByCategory($user_id, $category);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPreferencesByCategory($user_id, $category);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -66,20 +58,16 @@ class PreferencesEndpointTest extends ClientTestCase
     #[Test]
     public function getPreferencesByCategoryByNameBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['user_id' => 'test-user_id', 'category' => 'test-category', 'name' => 'test-name', 'value' => 'test-value']);
 
         $user_id = 'test-user_id';
         $category = 'test-category';
         $preference_name = 'test-preference_name';
 
-        try {
-            $this->endpoint->getPreferencesByCategoryByName($user_id, $category, $preference_name);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPreferencesByCategoryByName($user_id, $category, $preference_name);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Preference::class, $result);
     }
 }

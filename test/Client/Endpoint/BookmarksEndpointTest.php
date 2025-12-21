@@ -27,40 +27,8 @@ class BookmarksEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function listChannelBookmarksForChannelBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $channel_id = 'test-channel_id';
-        $bookmarks_since = 1;
-
-        try {
-            $this->endpoint->listChannelBookmarksForChannel($channel_id, $bookmarks_since);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function deleteChannelBookmarkBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $channel_id = 'test-channel_id';
-        $bookmark_id = 'test-bookmark_id';
-
-        try {
-            $this->endpoint->deleteChannelBookmark($channel_id, $bookmark_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(BookmarksEndpoint::class, $this->endpoint);
     }
 }

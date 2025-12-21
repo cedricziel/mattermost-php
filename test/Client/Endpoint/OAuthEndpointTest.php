@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\OAuthEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\AuthorizationServerMetadata;
+use CedricZiel\MattermostPhp\Client\Model\OAuthApp;
+use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(OAuthEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(OAuthApp::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(AuthorizationServerMetadata::class)]
 class OAuthEndpointTest extends ClientTestCase
 {
     public OAuthEndpoint $endpoint;
@@ -29,17 +35,12 @@ class OAuthEndpointTest extends ClientTestCase
     #[Test]
     public function getOAuthAppsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getOAuthApps($page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getOAuthApps($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -48,106 +49,81 @@ class OAuthEndpointTest extends ClientTestCase
     #[Test]
     public function getOAuthAppBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]);
 
         $app_id = 'test-app_id';
 
-        try {
-            $this->endpoint->getOAuthApp($app_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getOAuthApp($app_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
     }
 
     #[Test]
     public function deleteOAuthAppBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
 
         $app_id = 'test-app_id';
 
-        try {
-            $this->endpoint->deleteOAuthApp($app_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->deleteOAuthApp($app_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
     public function regenerateOAuthAppSecretBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]);
 
         $app_id = 'test-app_id';
 
-        try {
-            $this->endpoint->regenerateOAuthAppSecret($app_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->regenerateOAuthAppSecret($app_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
     }
 
     #[Test]
     public function getOAuthAppInfoBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]);
 
         $app_id = 'test-app_id';
 
-        try {
-            $this->endpoint->getOAuthAppInfo($app_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getOAuthAppInfo($app_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
     }
 
     #[Test]
     public function getAuthorizationServerMetadataBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['issuer' => 'test-issuer', 'authorization_endpoint' => 'test-authorization_endpoint', 'token_endpoint' => 'test-token_endpoint', 'response_types_supported' => [], 'registration_endpoint' => 'test-registration_endpoint', 'scopes_supported' => [], 'grant_types_supported' => [], 'token_endpoint_auth_methods_supported' => [], 'code_challenge_methods_supported' => []]);
 
-        try {
-            $this->endpoint->getAuthorizationServerMetadata();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getAuthorizationServerMetadata();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\AuthorizationServerMetadata::class, $result);
     }
 
     #[Test]
     public function getAuthorizedOAuthAppsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $user_id = 'test-user_id';
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->getAuthorizedOAuthAppsForUser($user_id, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getAuthorizedOAuthAppsForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();

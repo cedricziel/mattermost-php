@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\FilesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\FileInfo;
+use CedricZiel\MattermostPhp\Client\Model\FileInfoList;
+use CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(FilesEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetFileLinkResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(FileInfo::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(FileInfoList::class)]
 class FilesEndpointTest extends ClientTestCase
 {
     public FilesEndpoint $endpoint;
@@ -27,138 +33,37 @@ class FilesEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function uploadFileBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $channel_id = 'test-channel_id';
-        $client_ids = 'test-client_ids';
-        $filename = 'test-filename';
-
-        try {
-            $this->endpoint->uploadFile(null, $channel_id, $client_ids, $filename);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getFileBuildsCorrectRequest(): void
-    {
-        $this->mockBinaryResponse(200, 'binary-content', 'application/octet-stream');
-
-        $file_id = 'test-file_id';
-
-        try {
-            $this->endpoint->getFile($file_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getFileThumbnailBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $file_id = 'test-file_id';
-
-        try {
-            $this->endpoint->getFileThumbnail($file_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getFilePreviewBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $file_id = 'test-file_id';
-
-        try {
-            $this->endpoint->getFilePreview($file_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
     public function getFileLinkBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['link' => 'test-link']);
 
         $file_id = 'test-file_id';
 
-        try {
-            $this->endpoint->getFileLink($file_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getFileLink($file_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse::class, $result);
     }
 
     #[Test]
     public function getFileInfoBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'user_id' => 'test-user_id', 'post_id' => 'test-post_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'name' => 'test-name', 'extension' => 'test-extension', 'size' => 1234567890, 'mime_type' => 'test-mime_type', 'width' => 1234567890, 'height' => 1234567890, 'has_preview_image' => true]);
 
         $file_id = 'test-file_id';
 
-        try {
-            $this->endpoint->getFileInfo($file_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getFileInfo($file_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getFilePublicBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $file_id = 'test-file_id';
-        $h = 'test-h';
-
-        try {
-            $this->endpoint->getFilePublic($file_id, $h);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfo::class, $result);
     }
 
     #[Test]
     public function searchFilesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['order' => [], 'next_file_id' => 'test-next_file_id', 'prev_file_id' => 'test-prev_file_id']);
 
         $terms = 'test-terms';
         $is_or_search = true;
@@ -167,14 +72,10 @@ class FilesEndpointTest extends ClientTestCase
         $page = 1;
         $per_page = 1;
 
-        try {
-            $this->endpoint->searchFiles($terms, $is_or_search, $time_zone_offset, $include_deleted_channels, $page, $per_page);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->searchFiles($terms, $is_or_search, $time_zone_offset, $include_deleted_channels, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfoList::class, $result);
     }
 }

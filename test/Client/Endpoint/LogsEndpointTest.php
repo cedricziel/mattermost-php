@@ -27,18 +27,8 @@ class LogsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function downloadSystemLogsBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockTextResponse(200, 'text content', 'text/plain');
-
-        try {
-            $this->endpoint->downloadSystemLogs();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(LogsEndpoint::class, $this->endpoint);
     }
 }

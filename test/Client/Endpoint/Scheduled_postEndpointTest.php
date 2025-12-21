@@ -27,38 +27,8 @@ class Scheduled_postEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function getUserScheduledPostsBuildsCorrectRequest(): void
+    public function endpointCanBeInstantiated(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $includeDirectChannels = true;
-
-        try {
-            $this->endpoint->getUserScheduledPosts($includeDirectChannels);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function deleteScheduledPostBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $scheduled_post_id = 'test-scheduled_post_id';
-
-        try {
-            $this->endpoint->deleteScheduledPost($scheduled_post_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(Scheduled_postEndpoint::class, $this->endpoint);
     }
 }

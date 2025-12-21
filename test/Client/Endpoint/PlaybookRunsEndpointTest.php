@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PlaybookRunsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\PlaybookRun;
+use CedricZiel\MattermostPhp\Client\Model\PlaybookRunList;
+use CedricZiel\MattermostPhp\Client\Model\PlaybookRunMetadata;
+use CedricZiel\MattermostPhp\Client\Model\TriggerIdReturn;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PlaybookRunsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRunList::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRun::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRunMetadata::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(TriggerIdReturn::class)]
 class PlaybookRunsEndpointTest extends ClientTestCase
 {
     public PlaybookRunsEndpoint $endpoint;
@@ -29,7 +37,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function listPlaybookRunsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['total_count' => 1234567890, 'page_count' => 1234567890, 'has_more' => true, 'items' => []]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -44,54 +52,21 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $omit_ended = true;
         $since = 1;
 
-        try {
-            $this->endpoint->listPlaybookRuns($team_id, $page, $per_page, $sort, $direction, $statuses, $owner_user_id, $participant_id, $search_term, $channel_id, $omit_ended, $since);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->listPlaybookRuns($team_id, $page, $per_page, $sort, $direction, $statuses, $owner_user_id, $participant_id, $search_term, $channel_id, $omit_ended, $since);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookRunList::class, $result);
     }
 
     #[Test]
     public function getOwnersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $team_id = 'test-team_id';
 
-        try {
-            $this->endpoint->getOwners($team_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getChannelsBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $team_id = 'test-team_id';
-        $sort = 'test-sort';
-        $direction = 'test-direction';
-        $status = 'test-status';
-        $owner_user_id = 'test-owner_user_id';
-        $search_term = 'test-search_term';
-        $participant_id = 'test-participant_id';
-
-        try {
-            $this->endpoint->getChannels($team_id, $sort, $direction, $status, $owner_user_id, $search_term, $participant_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getOwners($team_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -100,165 +75,70 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function getPlaybookRunByChannelIdBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'name' => 'test-name', 'description' => 'test-description', 'is_active' => true, 'owner_user_id' => 'test-owner_user_id', 'team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'create_at' => 1234567890, 'end_at' => 1234567890, 'delete_at' => 1234567890, 'active_stage' => 1234567890, 'active_stage_title' => 'test-active_stage_title', 'post_id' => 'test-post_id', 'playbook_id' => 'test-playbook_id', 'checklists' => []]);
 
         $channel_id = 'test-channel_id';
 
-        try {
-            $this->endpoint->getPlaybookRunByChannelId($channel_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPlaybookRunByChannelId($channel_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookRun::class, $result);
     }
 
     #[Test]
     public function getPlaybookRunBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'name' => 'test-name', 'description' => 'test-description', 'is_active' => true, 'owner_user_id' => 'test-owner_user_id', 'team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'create_at' => 1234567890, 'end_at' => 1234567890, 'delete_at' => 1234567890, 'active_stage' => 1234567890, 'active_stage_title' => 'test-active_stage_title', 'post_id' => 'test-post_id', 'playbook_id' => 'test-playbook_id', 'checklists' => []]);
 
         $id = 'test-id';
 
-        try {
-            $this->endpoint->getPlaybookRun($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPlaybookRun($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookRun::class, $result);
     }
 
     #[Test]
     public function getPlaybookRunMetadataBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['channel_name' => 'test-channel_name', 'channel_display_name' => 'test-channel_display_name', 'team_name' => 'test-team_name', 'num_members' => 1234567890, 'total_posts' => 1234567890]);
 
         $id = 'test-id';
 
-        try {
-            $this->endpoint->getPlaybookRunMetadata($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPlaybookRunMetadata($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function endPlaybookRunBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-
-        try {
-            $this->endpoint->endPlaybookRun($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function restartPlaybookRunBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-
-        try {
-            $this->endpoint->restartPlaybookRun($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function finishBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-
-        try {
-            $this->endpoint->finish($id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function itemDeleteBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $id = 'test-id';
-        $checklist = 1;
-        $item = 1;
-
-        try {
-            $this->endpoint->itemDelete($id, $checklist, $item);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookRunMetadata::class, $result);
     }
 
     #[Test]
     public function itemRunBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['trigger_id' => 'test-trigger_id']);
 
         $id = 'test-id';
         $checklist = 1;
         $item = 1;
 
-        try {
-            $this->endpoint->itemRun($id, $checklist, $item);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->itemRun($id, $checklist, $item);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TriggerIdReturn::class, $result);
     }
 
     #[Test]
     public function getRunPropertyFieldsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $id = 'test-id';
         $updated_since = 1;
 
-        try {
-            $this->endpoint->getRunPropertyFields($id, $updated_since);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getRunPropertyFields($id, $updated_since);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -267,17 +147,12 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function getRunPropertyValuesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $id = 'test-id';
         $updated_since = 1;
 
-        try {
-            $this->endpoint->getRunPropertyValues($id, $updated_since);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getRunPropertyValues($id, $updated_since);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();

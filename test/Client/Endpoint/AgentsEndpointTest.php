@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\AgentsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\AgentsResponse;
+use CedricZiel\MattermostPhp\Client\Model\ServicesResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(AgentsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(AgentsResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ServicesResponse::class)]
 class AgentsEndpointTest extends ClientTestCase
 {
     public AgentsEndpoint $endpoint;
@@ -29,32 +33,24 @@ class AgentsEndpointTest extends ClientTestCase
     #[Test]
     public function getAgentsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['agents' => []]);
 
-        try {
-            $this->endpoint->getAgents();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getAgents();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\AgentsResponse::class, $result);
     }
 
     #[Test]
     public function getLLMServicesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['services' => []]);
 
-        try {
-            $this->endpoint->getLLMServices();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getLLMServices();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ServicesResponse::class, $result);
     }
 }

@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\UsageEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\PostsUsage;
+use CedricZiel\MattermostPhp\Client\Model\StorageUsage;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(UsageEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PostsUsage::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StorageUsage::class)]
 class UsageEndpointTest extends ClientTestCase
 {
     public UsageEndpoint $endpoint;
@@ -29,32 +33,24 @@ class UsageEndpointTest extends ClientTestCase
     #[Test]
     public function getPostsUsageBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['count' => 1234567890]);
 
-        try {
-            $this->endpoint->getPostsUsage();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getPostsUsage();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostsUsage::class, $result);
     }
 
     #[Test]
     public function getStorageUsageBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['bytes' => 1234567890]);
 
-        try {
-            $this->endpoint->getStorageUsage();
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getStorageUsage();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StorageUsage::class, $result);
     }
 }

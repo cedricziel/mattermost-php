@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\StatusEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\Status;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(StatusEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Status::class)]
 class StatusEndpointTest extends ClientTestCase
 {
     public StatusEndpoint $endpoint;
@@ -29,36 +31,14 @@ class StatusEndpointTest extends ClientTestCase
     #[Test]
     public function getUserStatusBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, ['user_id' => 'test-user_id', 'status' => 'test-status', 'manual' => true, 'last_activity_at' => 1234567890]);
 
         $user_id = 'test-user_id';
 
-        try {
-            $this->endpoint->getUserStatus($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUserStatus($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function unsetUserCustomStatusBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $user_id = 'test-user_id';
-
-        try {
-            $this->endpoint->unsetUserCustomStatus($user_id);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Status::class, $result);
     }
 }

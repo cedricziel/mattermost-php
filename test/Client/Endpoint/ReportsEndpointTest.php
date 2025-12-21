@@ -29,7 +29,7 @@ class ReportsEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersForReportingBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $sort_column = 'test-sort_column';
         $direction = 'test-direction';
@@ -45,35 +45,7 @@ class ReportsEndpointTest extends ClientTestCase
         $hide_inactive = true;
         $search_term = 'test-search_term';
 
-        try {
-            $this->endpoint->getUsersForReporting($sort_column, $direction, $sort_direction, $page_size, $from_column_value, $from_id, $date_range, $role_filter, $team_filter, $has_no_team, $hide_active, $hide_inactive, $search_term);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-    }
-
-    #[Test]
-    public function getUserCountForReportingBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
-
-        $role_filter = 'test-role_filter';
-        $team_filter = 'test-team_filter';
-        $has_no_team = true;
-        $hide_active = true;
-        $hide_inactive = true;
-        $search_term = 'test-search_term';
-
-        try {
-            $this->endpoint->getUserCountForReporting($role_filter, $team_filter, $has_no_team, $hide_active, $hide_inactive, $search_term);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->getUsersForReporting($sort_column, $direction, $sort_direction, $page_size, $from_column_value, $from_id, $date_range, $role_filter, $team_filter, $has_no_team, $hide_active, $hide_inactive, $search_term);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
@@ -82,16 +54,11 @@ class ReportsEndpointTest extends ClientTestCase
     #[Test]
     public function startBatchUsersExportBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
 
         $date_range = 'test-date_range';
 
-        try {
-            $this->endpoint->startBatchUsersExport($date_range);
-        } catch (\Throwable $e) {
-            // Response mapping may fail with mock data - that's OK
-            // We're testing the request building, not response handling
-        }
+        $result = $this->endpoint->startBatchUsersExport($date_range);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestHasAuthHeader();
