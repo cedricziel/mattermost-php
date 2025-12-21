@@ -3,8 +3,10 @@
 namespace CedricZiel\MattermostPhp\Test\Client;
 
 use CedricZiel\MattermostPhp\Client\MultipartTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(MultipartTrait::class)]
 class MultipartTraitTest extends TestCase
 {
     use MultipartTrait;
