@@ -19,6 +19,8 @@ use CedricZiel\MattermostPhp\Client\Model\GetUsersByUsernamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\KnownUsers;
 use CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeRequest;
 use CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeResponse;
+use CedricZiel\MattermostPhp\Client\Model\MigrateAuthToLdapRequest;
+use CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest;
 use CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionRequest;
 use CedricZiel\MattermostPhp\Client\Model\ResetPasswordRequest;
 use CedricZiel\MattermostPhp\Client\Model\RevokeSessionRequest;
@@ -48,12 +50,12 @@ use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(UsersEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(LoginSSOCodeExchangeResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(User::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetUsersByGroupChannelIdsResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserAutocomplete::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(KnownUsers::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UsersStats::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GenerateMfaSecretResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(CheckUserMfaResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(SwitchAccountTypeResponse::class)]
@@ -90,6 +92,20 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/login/sso/code-exchange');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeResponse::class, $result);
+    }
+
+    #[Test]
+    public function logoutBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['status' => 'test-status']);
+
+        $result = $this->endpoint->logout();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/logout');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -140,6 +156,19 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_team' => 'test-in_team', 'not_in_team' => 'test-not_in_team', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel', 'in_group' => 'test-in_group', 'role' => 'test-role', 'sort' => 'test-sort', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
+    }
+
+    #[Test]
+    public function permanentDeleteAllUsersBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $result = $this->endpoint->permanentDeleteAllUsers();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/users');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]
@@ -813,6 +842,35 @@ class UsersEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function revokeSessionsFromAllUsersBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $result = $this->endpoint->revokeSessionsFromAllUsers();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/sessions/revoke/all');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function publishUserTypingBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest(channel_id: 'test-channel_id');
+
+        $result = $this->endpoint->publishUserTyping($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/typing');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
     public function getUploadsForUserBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['status' => 'ok']]);
@@ -843,6 +901,21 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/channel_members');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+    }
+
+    #[Test]
+    public function migrateAuthToLdapBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToLdapRequest(from: 'test-from', match_field: 'test-match_field', force: true);
+
+        $result = $this->endpoint->migrateAuthToLdap($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/migrate_auth/ldap');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]

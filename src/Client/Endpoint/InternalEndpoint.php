@@ -96,7 +96,7 @@ class InternalEndpoint
     public function endPlaybookRunDialog(
         /** ID of the playbook run to end. */
         string $id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -111,9 +111,10 @@ class InternalEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -125,7 +126,7 @@ class InternalEndpoint
         /** The PlaybookRun ID */
         string $id,
         \CedricZiel\MattermostPhp\Client\Model\NextStageDialogRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -141,9 +142,10 @@ class InternalEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 }

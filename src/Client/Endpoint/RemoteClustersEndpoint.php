@@ -207,7 +207,7 @@ class RemoteClustersEndpoint
     public function deleteRemoteCluster(
         /** Remote Cluster GUID */
         string $remote_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -222,11 +222,12 @@ class RemoteClustersEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[204] = null; // Void response
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**

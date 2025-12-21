@@ -142,7 +142,7 @@ class PlaybooksEndpoint
         /** ID of the playbook to update. */
         string $id,
         \CedricZiel\MattermostPhp\Client\Model\UpdatePlaybookRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -158,11 +158,12 @@ class PlaybooksEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\Default403Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -172,7 +173,7 @@ class PlaybooksEndpoint
     public function deletePlaybook(
         /** ID of the playbook to delete. */
         string $id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -187,10 +188,11 @@ class PlaybooksEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[204] = null; // Void response
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\Default403Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -303,7 +305,7 @@ class PlaybooksEndpoint
         string $id,
         /** ID of the property field to delete. */
         string $field_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -319,10 +321,11 @@ class PlaybooksEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[204] = null; // Void response
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\Default403Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**

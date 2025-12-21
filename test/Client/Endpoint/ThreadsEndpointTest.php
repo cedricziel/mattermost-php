@@ -52,4 +52,89 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestQueryParams(['since' => '1', 'page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserThreads::class, $result);
     }
+
+    #[Test]
+    public function updateThreadsReadForUserBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $user_id = 'test-user_id';
+        $team_id = 'test-team_id';
+
+        $result = $this->endpoint->updateThreadsReadForUser($user_id, $team_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/read');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function updateThreadReadForUserBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $user_id = 'test-user_id';
+        $team_id = 'test-team_id';
+        $thread_id = 'test-thread_id';
+        $timestamp = 'test-timestamp';
+
+        $result = $this->endpoint->updateThreadReadForUser($user_id, $team_id, $thread_id, $timestamp);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/read/test-timestamp');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function startFollowingThreadBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $user_id = 'test-user_id';
+        $team_id = 'test-team_id';
+        $thread_id = 'test-thread_id';
+
+        $result = $this->endpoint->startFollowingThread($user_id, $team_id, $thread_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/following');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function stopFollowingThreadBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $user_id = 'test-user_id';
+        $team_id = 'test-team_id';
+        $thread_id = 'test-thread_id';
+
+        $result = $this->endpoint->stopFollowingThread($user_id, $team_id, $thread_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/following');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function getUserThreadBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $user_id = 'test-user_id';
+        $team_id = 'test-team_id';
+        $thread_id = 'test-thread_id';
+
+        $result = $this->endpoint->getUserThread($user_id, $team_id, $thread_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id');
+        $this->assertRequestHasAuthHeader();
+    }
 }

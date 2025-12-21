@@ -1571,7 +1571,7 @@ class ChannelsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 0,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1589,11 +1589,12 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -1610,7 +1611,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** Defines if member timezone counts should be returned or not */
         ?bool $include_timezones = false,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1626,11 +1627,12 @@ class ChannelsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**

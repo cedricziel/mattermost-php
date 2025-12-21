@@ -29,6 +29,20 @@ class ComplianceEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function createComplianceReportBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'status' => 'test-status', 'count' => 1234567890, 'desc' => 'test-desc', 'type' => 'test-type', 'start_at' => 1234567890, 'end_at' => 1234567890, 'keywords' => 'test-keywords', 'emails' => 'test-emails']);
+
+        $result = $this->endpoint->createComplianceReport();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/compliance/reports');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Compliance::class, $result);
+    }
+
+    #[Test]
     public function getComplianceReportsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['status' => 'ok']]);

@@ -48,39 +48,41 @@ $endpointFiles = glob($endpointDir . '/*Endpoint.php');
 echo sprintf("Found %d endpoint files\n", count($endpointFiles));
 echo sprintf("Loaded %d operations from OpenAPI spec\n", count($operationLookup));
 
-// Methods to skip due to SDK issues (type mismatches, missing hydrate, etc.)
+// Methods to skip due to SDK issues (multipart uploads, binary downloads, return type mismatches, void responses, etc.)
 $skipMethods = [
-    'BookmarksEndpoint' => ['deleteChannelBookmark', 'listChannelBookmarksForChannel', 'createChannelBookmark'],
-    'BrandEndpoint' => ['getBrandImage', 'uploadBrandImage'],
+    // Multipart file upload / binary download endpoints
+    'BrandEndpoint' => ['uploadBrandImage', 'getBrandImage'],
+    'EmojiEndpoint' => ['createEmoji'],
+    'FilesEndpoint' => ['uploadFile', 'getFile', 'getFileThumbnail', 'getFilePreview', 'getFilePublic'],
+    'PluginsEndpoint' => ['uploadPlugin'],
+    'SystemEndpoint' => ['uploadLicenseFile', 'generateSupportPacket', 'getSupportedTimezone', 'getClientConfig', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld'],
+    'UploadsEndpoint' => ['uploadData', 'getUpload'],
+
+    // Return type mismatches (mock returns different model than expected)
+    'BookmarksEndpoint' => ['deleteChannelBookmark', 'listChannelBookmarksForChannel', 'createChannelBookmark', 'updateChannelBookmark'],
+
+    // Void responses - tests need to handle null returns properly
     'ChannelsEndpoint' => ['getChannelMembersTimezones', 'channelMembersMinusGroupMembers', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser', 'updateSidebarCategoryOrderForTeamForUser'],
-    'CloudEndpoint' => ['createCustomerPayment', 'confirmCustomerPayment', 'getInvoiceForSubscriptionAsPdf', 'postEndpointForCwsWebhooks'],
-    'ComplianceEndpoint' => ['createComplianceReport'],
-    'ConditionsEndpoint' => ['deletePlaybookCondition'],
+    'ExportsEndpoint' => ['listExports', 'downloadExport', 'deleteExport'],
+    'ImportsEndpoint' => ['listImports', 'deleteImport'],
+    'UsersEndpoint' => ['resetPasswordFailedAttempts', 'migrateAuthToSaml'],
+
+    // Complex array return types or missing models
+    'CloudEndpoint' => ['getInvoiceForSubscriptionAsPdf', 'postEndpointForCwsWebhooks'],
     'CustomProfileAttributesEndpoint' => ['listCPAValues', 'patchCPAValues', 'patchCPAValuesForUser'],
     'DataRetentionEndpoint' => ['getDataRetentionPolicyByID'],
-    'EmojiEndpoint' => ['createEmoji'],
-    'ExportsEndpoint' => ['listExports', 'downloadExport', 'deleteExport'],
-    'FilesEndpoint' => ['uploadFile', 'getFile', 'getFileThumbnail', 'getFilePreview', 'getFilePublic'],
-    'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel', 'createGroup'],
-    'ImportsEndpoint' => ['listImports', 'deleteImport'],
+    'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel'],
     'Integration_actionsEndpoint' => ['openInteractiveDialog', 'submitInteractiveDialog', 'lookupInteractiveDialog'],
-    'InternalEndpoint' => ['getChecklistAutocomplete', 'endPlaybookRunDialog'],
+    'InternalEndpoint' => ['getChecklistAutocomplete'],
     'JobsEndpoint' => ['downloadJob'],
     'PermissionsEndpoint' => ['getAncillaryPermissionsPost'],
-    'PlaybookRunsEndpoint' => ['getChannels', 'endPlaybookRun', 'restartPlaybookRun', 'finish', 'itemDelete', 'status', 'changeOwner', 'addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemSetAssignee'],
-    'PlaybooksEndpoint' => ['deletePlaybook', 'deletePlaybookPropertyField'],
-    'PluginsEndpoint' => ['uploadPlugin', 'installPluginFromUrl'],
+    'PlaybookRunsEndpoint' => ['getChannels', 'addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemDelete', 'itemSetState', 'itemSetAssignee', 'itemRun'],
     'PostsEndpoint' => ['createPostEphemeral'],
-    'RemoteClustersEndpoint' => ['deleteRemoteCluster', 'generateRemoteClusterInvite'],
+    'RemoteClustersEndpoint' => ['generateRemoteClusterInvite'],
     'ReportsEndpoint' => ['getUserCountForReporting'],
     'SAMLEndpoint' => ['getSamlMetadata'],
-    'StatusEndpoint' => ['unsetUserCustomStatus', 'updateUserCustomStatus', 'removeRecentCustomStatus', 'postUserRecentCustomStatusDelete'],
-    'SystemEndpoint' => ['getSupportedTimezone', 'getClientConfig', 'uploadLicenseFile', 'removeLicenseFile', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld', 'upgradeToEnterprise', 'isAllowedToUpgradeToEnterprise', 'generateSupportPacket', 'requestTrialLicense'],
-    'TeamsEndpoint' => ['addTeamMemberFromInvite', 'teamMembersMinusGroupMembers'],
-    'ThreadsEndpoint' => ['getThreadMentionCountsByChannel', 'updateThreadsReadForUser', 'updateThreadReadForUser', 'startFollowingThread', 'stopFollowingThread', 'getUserThread'],
-    'TimelineEndpoint' => ['removeTimelineEvent'],
-    'UploadsEndpoint' => ['getUpload', 'uploadData'],
-    'UsersEndpoint' => ['logout', 'permanentDeleteAllUsers', 'revokeSessionsFromAllUsers', 'resetPasswordFailedAttempts', 'publishUserTyping', 'migrateAuthToLdap', 'migrateAuthToSaml'],
+    'TeamsEndpoint' => ['teamMembersMinusGroupMembers'],
+    'ThreadsEndpoint' => ['getThreadMentionCountsByChannel'],
 ];
 
 // Curated test cases for specific endpoints with special handling

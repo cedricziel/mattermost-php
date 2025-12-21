@@ -48,6 +48,22 @@ class ConditionsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function deletePlaybookConditionBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(204, ['status' => 'ok']);
+
+        $id = 'test-id';
+        $conditionID = 'test-conditionID';
+
+        $result = $this->endpoint->deletePlaybookCondition($id, $conditionID);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/conditions/test-conditionID');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
     public function getRunConditionsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['total_count' => 1234567890, 'page_count' => 1234567890, 'has_more' => true, 'items' => []]);

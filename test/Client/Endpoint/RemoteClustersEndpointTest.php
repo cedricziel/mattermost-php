@@ -89,6 +89,21 @@ class RemoteClustersEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function deleteRemoteClusterBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(204, ['status' => 'ok']);
+
+        $remote_id = 'test-remote_id';
+
+        $result = $this->endpoint->deleteRemoteCluster($remote_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/remotecluster/test-remote_id');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
     public function acceptRemoteClusterInviteBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(201, ['remote_id' => 'test-remote_id', 'remote_team_id' => 'test-remote_team_id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'site_url' => 'test-site_url', 'default_team_id' => 'test-default_team_id', 'create_at' => 1234567890, 'delete_at' => 1234567890, 'last_ping_at' => 1234567890, 'token' => 'test-token', 'remote_token' => 'test-remote_token', 'topics' => 'test-topics', 'creator_id' => 'test-creator_id', 'plugin_id' => 'test-plugin_id', 'options' => 1234567890]);

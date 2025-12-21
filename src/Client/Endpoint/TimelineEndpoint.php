@@ -39,7 +39,7 @@ class TimelineEndpoint
         string $id,
         /** ID of the timeline event to be deleted */
         string $event_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -55,9 +55,10 @@ class TimelineEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[204] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 }

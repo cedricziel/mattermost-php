@@ -238,6 +238,23 @@ class TeamsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function addTeamMemberFromInviteBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['team_id' => 'test-team_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'delete_at' => 1234567890, 'scheme_user' => true, 'scheme_admin' => true, 'explicit_roles' => 'test-explicit_roles']);
+
+        $token = 'test-token';
+
+        $result = $this->endpoint->addTeamMemberFromInvite($token);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/members/invite');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['token' => 'test-token']);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result);
+    }
+
+    #[Test]
     public function addTeamMembersBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(201, [['status' => 'ok']]);

@@ -11,6 +11,8 @@ use CedricZiel\MattermostPhp\Client\Model\GetLicenseLoadMetricResponse;
 use CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink;
 use CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedRequest;
 use CedricZiel\MattermostPhp\Client\Model\PostLogRequest;
+use CedricZiel\MattermostPhp\Client\Model\PushNotification;
+use CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest;
 use CedricZiel\MattermostPhp\Client\Model\Server_Busy;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse;
@@ -28,6 +30,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(GetLicenseLoadMetricResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(LicenseRenewalLink::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Server_Busy::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PushNotification::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UpgradeToEnterpriseStatusResponse::class)]
 class SystemEndpointTest extends ClientTestCase
 {
@@ -190,6 +193,19 @@ class SystemEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function removeLicenseFileBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $result = $this->endpoint->removeLicenseFile();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/license');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
     public function getLicenseLoadMetricBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['load' => 1234567890]);
@@ -215,6 +231,21 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/license/renewal');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink::class, $result);
+    }
+
+    #[Test]
+    public function requestTrialLicenseBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest(users: 1234567890);
+
+        $result = $this->endpoint->requestTrialLicense($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/trial-license');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]
@@ -277,6 +308,20 @@ class SystemEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function upgradeToEnterpriseBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(202, ['ack_id' => 'test-ack_id', 'platform' => 'test-platform', 'server_id' => 'test-server_id', 'device_id' => 'test-device_id', 'post_id' => 'test-post_id', 'category' => 'test-category', 'sound' => 'test-sound', 'message' => 'test-message', 'badge' => 1234567890, 'cont_ava' => 1234567890, 'team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'channel_name' => 'test-channel_name', 'type' => 'test-type', 'sender_id' => 'test-sender_id', 'sender_name' => 'test-sender_name', 'override_username' => 'test-override_username', 'override_icon_url' => 'test-override_icon_url', 'from_webhook' => 'test-from_webhook', 'version' => 'test-version', 'is_id_loaded' => true]);
+
+        $result = $this->endpoint->upgradeToEnterprise();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/upgrade_to_enterprise');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PushNotification::class, $result);
+    }
+
+    #[Test]
     public function upgradeToEnterpriseStatusBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['percentage' => 1234567890, 'error' => 'test-error']);
@@ -288,6 +333,19 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/upgrade_to_enterprise/status');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UpgradeToEnterpriseStatusResponse::class, $result);
+    }
+
+    #[Test]
+    public function isAllowedToUpgradeToEnterpriseBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $result = $this->endpoint->isAllowedToUpgradeToEnterprise();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/upgrade_to_enterprise/allowed');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]

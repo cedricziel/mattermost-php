@@ -472,7 +472,7 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getClientConfig()
+    public function getClientConfig(): null
     {
         $pathParameters = [];
         $queryParameters = [];
@@ -487,8 +487,9 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -621,7 +622,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function removeLicenseFile(
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -635,10 +636,11 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -652,7 +654,7 @@ class SystemEndpoint
     public function getClientLicense(
         /** Must be `old`, other formats not implemented yet */
         string $format,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -667,10 +669,11 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -748,7 +751,7 @@ class SystemEndpoint
      */
     public function requestTrialLicense(
         \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -763,11 +766,12 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -780,7 +784,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getPrevTrialLicense(
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -794,11 +798,12 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -951,7 +956,7 @@ class SystemEndpoint
         ?string $name = 'standard',
         /** The team ID to filter the data by */
         ?string $team_id = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -967,11 +972,12 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -1205,8 +1211,8 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function isAllowedToUpgradeToEnterprise(): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
-    {
+    public function isAllowedToUpgradeToEnterprise(
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1220,9 +1226,10 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**

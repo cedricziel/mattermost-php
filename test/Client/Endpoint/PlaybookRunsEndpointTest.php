@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PlaybookRunsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\ChangeOwnerRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreatePlaybookRunFromPostRequest;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookRun;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookRunList;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookRunMetadata;
-use CedricZiel\MattermostPhp\Client\Model\TriggerIdReturn;
+use CedricZiel\MattermostPhp\Client\Model\StatusRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -18,7 +19,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRunList::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRun::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRunMetadata::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(TriggerIdReturn::class)]
 class PlaybookRunsEndpointTest extends ClientTestCase
 {
     public PlaybookRunsEndpoint $endpoint;
@@ -144,21 +144,80 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function itemRunBuildsCorrectRequest(): void
+    public function endPlaybookRunBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['trigger_id' => 'test-trigger_id']);
+        $this->mockJsonResponse(200, ['status' => 'ok']);
 
         $id = 'test-id';
-        $checklist = 1;
-        $item = 1;
 
-        $result = $this->endpoint->itemRun($id, $checklist, $item);
+        $result = $this->endpoint->endPlaybookRun($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
-        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/checklists/1/item/1/run');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/end');
         $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TriggerIdReturn::class, $result);
+    }
+
+    #[Test]
+    public function restartPlaybookRunBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $id = 'test-id';
+
+        $result = $this->endpoint->restartPlaybookRun($id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/restart');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function statusBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $id = 'test-id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\StatusRequest(message: 'test-message');
+
+        $result = $this->endpoint->status($id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/status');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function finishBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $id = 'test-id';
+
+        $result = $this->endpoint->finish($id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/finish');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function changeOwnerBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $id = 'test-id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ChangeOwnerRequest(owner_id: 'test-owner_id');
+
+        $result = $this->endpoint->changeOwner($id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/owner');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]

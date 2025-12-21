@@ -143,7 +143,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -159,10 +159,11 @@ class StatusEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -176,7 +177,7 @@ class StatusEndpoint
     public function unsetUserCustomStatus(
         /** User ID */
         string $user_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -191,10 +192,11 @@ class StatusEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -209,7 +211,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -225,10 +227,11 @@ class StatusEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -243,7 +246,7 @@ class StatusEndpoint
         /** User ID */
         string $user_id,
         \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -259,9 +262,10 @@ class StatusEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 }

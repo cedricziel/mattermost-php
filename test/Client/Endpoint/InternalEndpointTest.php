@@ -27,8 +27,17 @@ class InternalEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function endpointCanBeInstantiated(): void
+    public function endPlaybookRunDialogBuildsCorrectRequest(): void
     {
-        $this->assertInstanceOf(InternalEndpoint::class, $this->endpoint);
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $id = 'test-id';
+
+        $result = $this->endpoint->endPlaybookRunDialog($id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/end');
+        $this->assertRequestHasAuthHeader();
     }
 }

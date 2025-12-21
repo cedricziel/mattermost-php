@@ -53,6 +53,34 @@ $methodNeedsBinaryResponse = [];
  * @param array $responseSpec The response specification from OpenAPI
  * @return array{type: string, mediaType: ?string, schema?: array}
  */
+/**
+ * Add a type to a union return type, avoiding duplicates.
+ *
+ * @param Method $method The method to update
+ * @param string $newType The type to add
+ */
+function addReturnType(Method $method, string $newType): void
+{
+    $currentReturnType = $method->getReturnType();
+    if ($currentReturnType === null) {
+        $method->setReturnType($newType);
+        return;
+    }
+
+    // Split existing types and check for duplicates
+    $existingTypes = array_map('trim', explode('|', $currentReturnType));
+    $normalizedNew = ltrim($newType, '\\');
+
+    foreach ($existingTypes as $existingType) {
+        $normalizedExisting = ltrim($existingType, '\\');
+        if ($normalizedExisting === $normalizedNew) {
+            return; // Already exists
+        }
+    }
+
+    $method->setReturnType($currentReturnType . '|' . $newType);
+}
+
 function detectResponseMediaType(array $responseSpec): array
 {
     if (!isset($responseSpec['content'])) {
@@ -751,9 +779,12 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $hasModelResponse = false;
         $hasBinaryResponse = false;
         $hasTextResponse = false;
+        $hasVoidResponse = false;
+        $voidStatusCodes = [];
         $binaryMediaTypes = [];
 
         foreach ($methodSpec['responses'] as $responseCode => $responseSpec) {
+            $responseCode = (int) $responseCode;
             // Handle $ref responses (reference to components)
             if (isset($responseSpec['$ref'])) {
                 $hasModelResponse = true;
@@ -766,12 +797,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $responseClass = $modelNamespaceName . '\\' . $responseSpec['$ref'];
                 }
 
-                if ($method->getReturnType() === null) {
-                    $method->setReturnType($responseClass);
-                } else {
-                    $returnType = $method->getReturnType();
-                    $method->setReturnType($returnType . '|' . $responseClass);
-                }
+                addReturnType($method, $responseClass);
                 $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
                 continue;
             }
@@ -785,28 +811,22 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 if ($mediaTypeInfo['mediaType'] !== null) {
                     $binaryMediaTypes[] = $mediaTypeInfo['mediaType'];
                 }
-                // Add BinaryResponse to return type if not already added
-                $binaryResponseClass = '\\CedricZiel\\MattermostPhp\\Client\\Response\\BinaryResponse';
-                $currentReturnType = $method->getReturnType();
-                if ($currentReturnType === null) {
-                    $method->setReturnType($binaryResponseClass);
-                } elseif (!str_contains($currentReturnType, 'BinaryResponse')) {
-                    $method->setReturnType($currentReturnType . '|' . $binaryResponseClass);
-                }
+                addReturnType($method, '\\CedricZiel\\MattermostPhp\\Client\\Response\\BinaryResponse');
                 continue;
             }
 
             // Handle text responses
             if ($mediaTypeInfo['type'] === 'text') {
                 $hasTextResponse = true;
-                // Add TextResponse to return type if not already added
-                $textResponseClass = '\\CedricZiel\\MattermostPhp\\Client\\Response\\TextResponse';
-                $currentReturnType = $method->getReturnType();
-                if ($currentReturnType === null) {
-                    $method->setReturnType($textResponseClass);
-                } elseif (!str_contains($currentReturnType, 'TextResponse')) {
-                    $method->setReturnType($currentReturnType . '|' . $textResponseClass);
-                }
+                addReturnType($method, '\\CedricZiel\\MattermostPhp\\Client\\Response\\TextResponse');
+                continue;
+            }
+
+            // Handle void/empty responses (success with no body)
+            if ($mediaTypeInfo['type'] === 'void' && $responseCode < 400) {
+                $hasVoidResponse = true;
+                $voidStatusCodes[] = $responseCode;
+                $method->addBody(sprintf('$map[%d] = null; // Void response', $responseCode));
                 continue;
             }
 
@@ -816,12 +836,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $hasModelResponse = true;
                     $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['$ref']);
                     $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
-                    if ($method->getReturnType() === null) {
-                        $method->setReturnType($responseClass);
-                    } else {
-                        $returnType = $method->getReturnType();
-                        $method->setReturnType($returnType . '|' . $responseClass);
-                    }
+                    addReturnType($method, $responseClass);
                     continue;
                 }
 
@@ -831,12 +846,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['items']['$ref']);
                         $method->addBody(sprintf('$map[%d] = \\%s::class . \'[]\';', $responseCode, $responseClass));
                         $method->addComment('@return \\' . $responseClass . '[]');
-                        if ($method->getReturnType() === null) {
-                            $method->setReturnType('array');
-                        } else {
-                            $returnType = $method->getReturnType();
-                            $method->setReturnType($returnType . '|' . 'array');
-                        }
+                        addReturnType($method, 'array');
                         continue;
                     }
                     continue;
@@ -847,12 +857,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $responseClass = $modelNamespaceName . '\\' . ucfirst($methodSpec['operationId']) . 'Response';
                     $class = createClassFromSchema($modelNamespace, ucfirst($methodSpec['operationId']) . 'Response', $responseSpec['content']['application/json']['schema']);
                     $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
-                    if ($method->getReturnType() === null) {
-                        $method->setReturnType($responseClass);
-                    } else {
-                        $returnType = $method->getReturnType();
-                        $method->setReturnType($returnType . '|' . $responseClass);
-                    }
+                    addReturnType($method, $responseClass);
                     continue;
                 }
 
@@ -861,12 +866,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 if (in_array($schemaType, ['string', 'integer', 'number', 'boolean'], true)) {
                     $hasPrimitiveOnlyResponse = true;
                     $primitiveType = mapParameterType($schemaType);
-                    if ($method->getReturnType() === null) {
-                        $method->setReturnType($primitiveType);
-                    } else {
-                        $returnType = $method->getReturnType();
-                        $method->setReturnType($returnType . '|' . $primitiveType);
-                    }
+                    addReturnType($method, $primitiveType);
                     continue;
                 }
 
@@ -877,12 +877,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 }
 
                 $responseClass = $modelNamespaceName . '\\' . $methodSpec['operationId'] . 'Response';
-                if ($method->getReturnType() === null) {
-                    $method->setReturnType($responseClass);
-                } else {
-                    $returnType = $method->getReturnType();
-                    $method->setReturnType($returnType . '|' . $responseClass);
-                }
+                addReturnType($method, $responseClass);
                 $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
             }
         }
@@ -892,8 +887,13 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             $methodNeedsBinaryResponse[$class->getName() . '::' . $method->getName()] = array_unique($binaryMediaTypes);
         }
 
+        // Add null to return type if method has void responses
+        if ($hasVoidResponse) {
+            addReturnType($method, 'null');
+        }
+
         // Generate appropriate return statement based on response types
-        if ($hasPrimitiveOnlyResponse && !$hasModelResponse && !$hasBinaryResponse && !$hasTextResponse) {
+        if ($hasPrimitiveOnlyResponse && !$hasModelResponse && !$hasBinaryResponse && !$hasTextResponse && !$hasVoidResponse) {
             // For primitive-only responses, decode JSON directly
             $method
                 ->addBody('')
@@ -909,6 +909,11 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             } else {
                 $method->addBody('return $this->mapResponseWithMediaTypes($response, $map);');
             }
+        } elseif ($hasVoidResponse) {
+            // For methods with void responses, use mapResponseAllowingVoid
+            $method
+                ->addBody('')
+                ->addBody('return $this->mapResponseAllowingVoid($response, $map);');
         } else {
             $method
                 ->addBody('')

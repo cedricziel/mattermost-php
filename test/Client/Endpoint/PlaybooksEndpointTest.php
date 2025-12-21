@@ -89,6 +89,21 @@ class PlaybooksEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function deletePlaybookBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(204, ['status' => 'ok']);
+
+        $id = 'test-id';
+
+        $result = $this->endpoint->deletePlaybook($id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
     public function getPlaybookPropertyFieldsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['status' => 'ok']]);
@@ -103,6 +118,22 @@ class PlaybooksEndpointTest extends ClientTestCase
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['updated_since' => '1']);
+    }
+
+    #[Test]
+    public function deletePlaybookPropertyFieldBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(204, ['status' => 'ok']);
+
+        $id = 'test-id';
+        $field_id = 'test-field_id';
+
+        $result = $this->endpoint->deletePlaybookPropertyField($id, $field_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields/test-field_id');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]

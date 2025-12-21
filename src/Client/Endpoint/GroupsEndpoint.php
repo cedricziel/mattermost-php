@@ -141,7 +141,7 @@ class GroupsEndpoint
      */
     public function createGroup(
         \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -157,9 +157,10 @@ class GroupsEndpoint
 
         $map = [];
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[201] = null; // Void response
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**

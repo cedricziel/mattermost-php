@@ -182,6 +182,50 @@ trait HttpClientTrait
     }
 
     /**
+     * Map a response that may be void (empty body) on success.
+     *
+     * This method handles endpoints that return 200/204 with no response body.
+     * Use null in the map to indicate a void response for that status code.
+     *
+     * @param ResponseInterface $response The HTTP response
+     * @param array<int, class-string|null> $map Status code to class mapping (null = void)
+     * @return object|array|null Returns null for void responses
+     */
+    protected function mapResponseAllowingVoid(ResponseInterface $response, array $map): object|array|null
+    {
+        $responseCode = $response->getStatusCode();
+
+        if (!array_key_exists($responseCode, $map)) {
+            throw new \RuntimeException(sprintf(
+                'Expected one of %s, got %d',
+                implode(', ', array_keys($map)),
+                $responseCode
+            ));
+        }
+
+        $class = $map[$responseCode];
+
+        // Void response - return null
+        if ($class === null) {
+            return null;
+        }
+
+        // Otherwise hydrate normally
+        $body = json_decode($response->getBody(), true);
+        if (str_contains($class, '[]')) {
+            $objects = [];
+            $itemClass = str_replace('[]', '', $class);
+            foreach ($body as $item) {
+                $objects[] = $itemClass::hydrate($item);
+            }
+
+            return $objects;
+        }
+
+        return $class::hydrate($body);
+    }
+
+    /**
      * Parse the Content-Type header to extract the media type.
      *
      * @param string $header The full Content-Type header value

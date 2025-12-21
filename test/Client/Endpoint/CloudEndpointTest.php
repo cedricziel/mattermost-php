@@ -7,6 +7,7 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 use CedricZiel\MattermostPhp\Client\Endpoint\CloudEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CloudCustomer;
 use CedricZiel\MattermostPhp\Client\Model\Installation;
+use CedricZiel\MattermostPhp\Client\Model\PaymentSetupIntent;
 use CedricZiel\MattermostPhp\Client\Model\ProductLimits;
 use CedricZiel\MattermostPhp\Client\Model\Subscription;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(CloudEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(ProductLimits::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PaymentSetupIntent::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(CloudCustomer::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Subscription::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Installation::class)]
@@ -58,6 +60,35 @@ class CloudEndpointTest extends ClientTestCase
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/cloud/products');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function createCustomerPaymentBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'client_secret' => 'test-client_secret']);
+
+        $result = $this->endpoint->createCustomerPayment();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/cloud/payment');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PaymentSetupIntent::class, $result);
+    }
+
+    #[Test]
+    public function confirmCustomerPaymentBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $stripe_setup_intent_id = 'test-stripe_setup_intent_id';
+
+        $result = $this->endpoint->confirmCustomerPayment($stripe_setup_intent_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/cloud/payment/confirm');
         $this->assertRequestHasAuthHeader();
     }
 

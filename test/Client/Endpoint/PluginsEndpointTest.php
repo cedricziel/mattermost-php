@@ -50,6 +50,24 @@ class PluginsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function installPluginFromUrlBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['status' => 'test-status']);
+
+        $plugin_download_url = 'test-plugin_download_url';
+        $force = 'test-force';
+
+        $result = $this->endpoint->installPluginFromUrl($plugin_download_url, $force);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/plugins/install_from_url');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['plugin_download_url' => 'test-plugin_download_url', 'force' => 'test-force']);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function removePluginBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);

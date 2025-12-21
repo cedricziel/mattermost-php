@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\GroupsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupStatsResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest;
@@ -76,6 +77,21 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/groups');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'q' => 'test-q', 'not_associated_to_team' => 'test-not_associated_to_team', 'not_associated_to_channel' => 'test-not_associated_to_channel', 'since' => '1']);
+    }
+
+    #[Test]
+    public function createGroupBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['status' => 'ok']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest(name: 'test-name', display_name: 'test-display_name', source: 'test-source', allow_reference: true, user_ids: []);
+
+        $result = $this->endpoint->createGroup($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/groups');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]

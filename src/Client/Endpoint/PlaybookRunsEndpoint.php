@@ -270,7 +270,7 @@ class PlaybookRunsEndpoint
         /** ID of the playbook run to retrieve. */
         string $id,
         \CedricZiel\MattermostPhp\Client\Model\UpdatePlaybookRunRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -286,10 +286,11 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -328,7 +329,7 @@ class PlaybookRunsEndpoint
     public function endPlaybookRun(
         /** ID of the playbook run to end. */
         string $id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -343,9 +344,10 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -355,7 +357,7 @@ class PlaybookRunsEndpoint
     public function restartPlaybookRun(
         /** ID of the playbook run to restart. */
         string $id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -370,9 +372,10 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -383,7 +386,7 @@ class PlaybookRunsEndpoint
         /** ID of the playbook run to update. */
         string $id,
         \CedricZiel\MattermostPhp\Client\Model\StatusRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -399,11 +402,12 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\Default403Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -413,7 +417,7 @@ class PlaybookRunsEndpoint
     public function finish(
         /** ID of the playbook run to finish. */
         string $id,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -428,9 +432,10 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -441,7 +446,7 @@ class PlaybookRunsEndpoint
         /** ID of the playbook run whose owner will be changed. */
         string $id,
         \CedricZiel\MattermostPhp\Client\Model\ChangeOwnerRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -457,11 +462,12 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\Default403Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -475,7 +481,7 @@ class PlaybookRunsEndpoint
         /** Zero-based index of the checklist to modify. */
         int $checklist,
         \CedricZiel\MattermostPhp\Client\Model\AddChecklistItemRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Error {
+    ): \CedricZiel\MattermostPhp\Client\Model\Error|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -493,8 +499,9 @@ class PlaybookRunsEndpoint
 
         $map = [];
         $map[0] = \CedricZiel\MattermostPhp\Client\Model\Error::class;
+        $map[200] = null; // Void response
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -507,7 +514,7 @@ class PlaybookRunsEndpoint
         /** Zero-based index of the checklist to modify. */
         int $checklist,
         \CedricZiel\MattermostPhp\Client\Model\ReoderChecklistItemRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -524,10 +531,11 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -543,7 +551,7 @@ class PlaybookRunsEndpoint
         /** Zero-based index of the item to modify. */
         int $item,
         \CedricZiel\MattermostPhp\Client\Model\ItemRenameRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -561,10 +569,11 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -578,7 +587,7 @@ class PlaybookRunsEndpoint
         int $checklist,
         /** Zero-based index of the item to modify. */
         int $item,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -595,10 +604,11 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[204] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -613,7 +623,7 @@ class PlaybookRunsEndpoint
         /** Zero-based index of the item to modify. */
         int $item,
         \CedricZiel\MattermostPhp\Client\Model\ItemSetStateRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -631,10 +641,11 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
@@ -649,7 +660,7 @@ class PlaybookRunsEndpoint
         /** Zero-based index of the item that will get a new assignee. */
         int $item,
         \CedricZiel\MattermostPhp\Client\Model\ItemSetAssigneeRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response|null {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -667,10 +678,11 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = null; // Void response
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;
 
-        return $this->mapResponse($response, $map);
+        return $this->mapResponseAllowingVoid($response, $map);
     }
 
     /**
