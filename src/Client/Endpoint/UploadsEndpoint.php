@@ -5,6 +5,7 @@ namespace CedricZiel\MattermostPhp\Client\Endpoint;
 class UploadsEndpoint
 {
     use \CedricZiel\MattermostPhp\Client\HttpClientTrait;
+    use \CedricZiel\MattermostPhp\Client\FormEncodedTrait;
 
     public function __construct(
         protected string $baseUrl,

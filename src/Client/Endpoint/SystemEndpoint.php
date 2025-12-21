@@ -1085,7 +1085,7 @@ class SystemEndpoint
     public function getRedirectLocation(
         /** Url to check */
         string $url,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
+    ): \CedricZiel\MattermostPhp\Client\Response\BinaryResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1102,7 +1102,9 @@ class SystemEndpoint
         $map = [];
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['image/*'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -1114,8 +1116,8 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getImageByUrl(): \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse
-    {
+    public function getImageByUrl(
+    ): \CedricZiel\MattermostPhp\Client\Response\BinaryResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1131,7 +1133,9 @@ class SystemEndpoint
         $map = [];
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['image/*'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**

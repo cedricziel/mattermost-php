@@ -36,8 +36,8 @@ class LogsEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function downloadSystemLogs(): \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
-    {
+    public function downloadSystemLogs(
+    ): \CedricZiel\MattermostPhp\Client\Response\BinaryResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -53,6 +53,8 @@ class LogsEndpoint
         $map = [];
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['text/plain'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 }

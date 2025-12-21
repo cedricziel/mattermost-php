@@ -2,6 +2,8 @@
 
 Built for building apps and integrations for Mattermost.
 
+Documentation: [https://cedricziel.github.io/mattermost-php/](https://cedricziel.github.io/mattermost-php/)
+
 ## Installation
 
 ```shell

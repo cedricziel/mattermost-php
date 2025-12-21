@@ -41,6 +41,70 @@ $printer = new Nette\PhpGenerator\PsrPrinter;
 // Track which endpoint classes need MultipartTrait for file uploads
 $classNeedsMultipart = [];
 
+// Track which endpoint classes need FormEncodedTrait for form-urlencoded requests
+$classNeedsFormEncoded = [];
+
+// Track which methods need binary response handling
+$methodNeedsBinaryResponse = [];
+
+/**
+ * Detect the response media type from a response specification.
+ *
+ * @param array $responseSpec The response specification from OpenAPI
+ * @return array{type: string, mediaType: ?string, schema?: array}
+ */
+function detectResponseMediaType(array $responseSpec): array
+{
+    if (!isset($responseSpec['content'])) {
+        // Check description for hints about binary content
+        $desc = strtolower($responseSpec['description'] ?? '');
+        if (str_contains($desc, 'image') || str_contains($desc, 'file') ||
+            str_contains($desc, 'icon') || str_contains($desc, 'thumbnail') ||
+            str_contains($desc, 'preview') || str_contains($desc, 'download') ||
+            str_contains($desc, 'binary')) {
+            return ['type' => 'binary', 'mediaType' => 'application/octet-stream'];
+        }
+        return ['type' => 'void', 'mediaType' => null];
+    }
+
+    $contentTypes = array_keys($responseSpec['content']);
+    if (empty($contentTypes)) {
+        return ['type' => 'void', 'mediaType' => null];
+    }
+
+    $primaryType = $contentTypes[0];
+
+    // Image types
+    if (str_starts_with($primaryType, 'image/')) {
+        return ['type' => 'binary', 'mediaType' => $primaryType];
+    }
+
+    // Text/plain - check if it's binary format
+    if ($primaryType === 'text/plain') {
+        $schema = $responseSpec['content'][$primaryType]['schema'] ?? [];
+        if (($schema['format'] ?? '') === 'binary') {
+            return ['type' => 'binary', 'mediaType' => $primaryType];
+        }
+        return ['type' => 'text', 'mediaType' => $primaryType];
+    }
+
+    // JSON
+    if ($primaryType === 'application/json') {
+        return [
+            'type' => 'json',
+            'mediaType' => $primaryType,
+            'schema' => $responseSpec['content'][$primaryType]['schema'] ?? [],
+        ];
+    }
+
+    // Binary/octet-stream
+    if ($primaryType === 'application/octet-stream' || $primaryType === 'application/zip') {
+        return ['type' => 'binary', 'mediaType' => $primaryType];
+    }
+
+    return ['type' => 'unknown', 'mediaType' => $primaryType];
+}
+
 $endpointNamespaceName = 'CedricZiel\MattermostPhp\Client\Endpoint';
 $modelNamespaceName = 'CedricZiel\MattermostPhp\Client\Model';
 $clientNamespaceName = 'CedricZiel\MattermostPhp';
@@ -453,6 +517,9 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         $isMultipartRequest = false;
         $multipartFields = [];
 
+        $isFormEncodedRequest = false;
+        $formEncodedFields = [];
+
         if (isset($methodSpec['requestBody'])) {
             $requestBody = $methodSpec['requestBody'];
             $requestBodyContent = $requestBody['content'];
@@ -506,6 +573,42 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                             $p->setComment($fieldSpec['description'] ?? null);
                         }
 
+                        $p->setNullable(!$isRequired);
+                        if (!$isRequired) {
+                            $p->setDefaultValue(null);
+                        }
+
+                        $bodyParameters[] = $p;
+                    }
+                }
+            }
+
+            // Handle application/x-www-form-urlencoded requests
+            if (isset($requestBodyContent['application/x-www-form-urlencoded'])) {
+                $isFormEncodedRequest = true;
+                $formEncodedSchema = $requestBodyContent['application/x-www-form-urlencoded']['schema'] ?? [];
+                $requiredFields = $formEncodedSchema['required'] ?? [];
+
+                // Mark this class as needing FormEncodedTrait
+                $classNeedsFormEncoded[$class->getName()] = true;
+
+                if (isset($formEncodedSchema['properties'])) {
+                    foreach ($formEncodedSchema['properties'] as $fieldName => $fieldSpec) {
+                        if (false === \Nette\PhpGenerator\Helpers::isIdentifier($fieldName)) {
+                            continue;
+                        }
+
+                        $isRequired = in_array($fieldName, $requiredFields, true);
+
+                        $formEncodedFields[] = [
+                            'name' => $fieldName,
+                            'required' => $isRequired,
+                            'description' => $fieldSpec['description'] ?? null,
+                        ];
+
+                        $p = new Parameter($fieldName);
+                        $p->setType(mapParameterType($fieldSpec['type'] ?? 'string'));
+                        $p->setComment($fieldSpec['description'] ?? null);
                         $p->setNullable(!$isRequired);
                         if (!$isRequired) {
                             $p->setDefaultValue(null);
@@ -596,6 +699,23 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             $method->addBody('$multipart = $this->createMultipartStream($multipartFields);');
             $method->addBody('$request = $request->withHeader(\'Content-Type\', \'multipart/form-data; boundary=\' . $multipart[\'boundary\']);');
             $method->addBody('$request = $request->withBody($multipart[\'stream\']);');
+        } elseif ($isFormEncodedRequest && count($formEncodedFields) > 0) {
+            // Generate form-urlencoded data construction
+            $method->addBody('');
+            $method->addBody('// Build form-urlencoded data');
+            $method->addBody('$formFields = [];');
+
+            foreach ($formEncodedFields as $field) {
+                $fieldName = $field['name'];
+                $method->addBody(sprintf('if ($%s !== null) {', $fieldName));
+                $method->addBody(sprintf('    $formFields[\'%s\'] = $%s;', $fieldName, $fieldName));
+                $method->addBody('}');
+            }
+
+            $method->addBody('');
+            $method->addBody('$formEncoded = $this->createFormEncodedBody($formFields);');
+            $method->addBody('$request = $request->withHeader(\'Content-Type\', $formEncoded[\'contentType\']);');
+            $method->addBody('$request = $request->withBody($formEncoded[\'body\']);');
         } elseif (count($bodyParameters) > 0) {
             $method->addBody('$request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? \'\'));');
         }
@@ -629,8 +749,12 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
 
         $hasPrimitiveOnlyResponse = false;
         $hasModelResponse = false;
+        $hasBinaryResponse = false;
+        $hasTextResponse = false;
+        $binaryMediaTypes = [];
 
         foreach ($methodSpec['responses'] as $responseCode => $responseSpec) {
+            // Handle $ref responses (reference to components)
             if (isset($responseSpec['$ref'])) {
                 $hasModelResponse = true;
                 $responseClass = '';
@@ -642,11 +766,52 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $responseClass = $modelNamespaceName . '\\' . $responseSpec['$ref'];
                 }
 
-            } else {
-                // focus on json
-                if (!isset($responseSpec['content']['application/json'])) {
-                    continue;
+                if ($method->getReturnType() === null) {
+                    $method->setReturnType($responseClass);
+                } else {
+                    $returnType = $method->getReturnType();
+                    $method->setReturnType($returnType . '|' . $responseClass);
                 }
+                $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+                continue;
+            }
+
+            // Detect media type for this response
+            $mediaTypeInfo = detectResponseMediaType($responseSpec);
+
+            // Handle binary responses
+            if ($mediaTypeInfo['type'] === 'binary') {
+                $hasBinaryResponse = true;
+                if ($mediaTypeInfo['mediaType'] !== null) {
+                    $binaryMediaTypes[] = $mediaTypeInfo['mediaType'];
+                }
+                // Add BinaryResponse to return type if not already added
+                $binaryResponseClass = '\\CedricZiel\\MattermostPhp\\Client\\Response\\BinaryResponse';
+                $currentReturnType = $method->getReturnType();
+                if ($currentReturnType === null) {
+                    $method->setReturnType($binaryResponseClass);
+                } elseif (!str_contains($currentReturnType, 'BinaryResponse')) {
+                    $method->setReturnType($currentReturnType . '|' . $binaryResponseClass);
+                }
+                continue;
+            }
+
+            // Handle text responses
+            if ($mediaTypeInfo['type'] === 'text') {
+                $hasTextResponse = true;
+                // Add TextResponse to return type if not already added
+                $textResponseClass = '\\CedricZiel\\MattermostPhp\\Client\\Response\\TextResponse';
+                $currentReturnType = $method->getReturnType();
+                if ($currentReturnType === null) {
+                    $method->setReturnType($textResponseClass);
+                } elseif (!str_contains($currentReturnType, 'TextResponse')) {
+                    $method->setReturnType($currentReturnType . '|' . $textResponseClass);
+                }
+                continue;
+            }
+
+            // Handle JSON responses
+            if ($mediaTypeInfo['type'] === 'json' || isset($responseSpec['content']['application/json'])) {
                 if (isset($responseSpec['content']['application/json']['schema']['$ref'])) {
                     $hasModelResponse = true;
                     $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['$ref']);
@@ -657,7 +822,6 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         $returnType = $method->getReturnType();
                         $method->setReturnType($returnType . '|' . $responseClass);
                     }
-
                     continue;
                 }
 
@@ -673,10 +837,8 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                             $returnType = $method->getReturnType();
                             $method->setReturnType($returnType . '|' . 'array');
                         }
-
                         continue;
                     }
-
                     continue;
                 }
 
@@ -691,7 +853,6 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         $returnType = $method->getReturnType();
                         $method->setReturnType($returnType . '|' . $responseClass);
                     }
-
                     continue;
                 }
 
@@ -706,33 +867,48 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         $returnType = $method->getReturnType();
                         $method->setReturnType($returnType . '|' . $primitiveType);
                     }
-                    // No response mapping needed for primitives - just return decoded JSON
                     continue;
                 }
 
-                // Skip responses with empty or undefined schemas (incomplete spec definitions)
+                // Skip responses with empty or undefined schemas
                 if (!isset($responseSpec['content']['application/json']['schema'])
                     || empty($responseSpec['content']['application/json']['schema'])) {
                     continue;
                 }
 
                 $responseClass = $modelNamespaceName . '\\' . $methodSpec['operationId'] . 'Response';
+                if ($method->getReturnType() === null) {
+                    $method->setReturnType($responseClass);
+                } else {
+                    $returnType = $method->getReturnType();
+                    $method->setReturnType($returnType . '|' . $responseClass);
+                }
+                $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
             }
-            if ($method->getReturnType() === null) {
-                $method->setReturnType($responseClass);
-            } else {
-                $returnType = $method->getReturnType();
-                $method->setReturnType($returnType . '|' . $responseClass);
-            }
-            $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
+        }
+
+        // Track if this method needs binary response handling
+        if ($hasBinaryResponse || $hasTextResponse) {
+            $methodNeedsBinaryResponse[$class->getName() . '::' . $method->getName()] = array_unique($binaryMediaTypes);
         }
 
         // Generate appropriate return statement based on response types
-        if ($hasPrimitiveOnlyResponse && !$hasModelResponse) {
+        if ($hasPrimitiveOnlyResponse && !$hasModelResponse && !$hasBinaryResponse && !$hasTextResponse) {
             // For primitive-only responses, decode JSON directly
             $method
                 ->addBody('')
                 ->addBody('return json_decode($response->getBody()->getContents(), true);');
+        } elseif ($hasBinaryResponse || $hasTextResponse) {
+            // For methods with binary/text responses, use mapResponseWithMediaTypes
+            $method->addBody('');
+            if (!empty($binaryMediaTypes)) {
+                $binaryTypesStr = "['" . implode("', '", array_unique($binaryMediaTypes)) . "']";
+                $method->addBody(sprintf('$binaryMediaTypes = %s;', $binaryTypesStr));
+                $method->addBody('');
+                $method->addBody('return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);');
+            } else {
+                $method->addBody('return $this->mapResponseWithMediaTypes($response, $map);');
+            }
         } else {
             $method
                 ->addBody('')
@@ -745,6 +921,13 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
 foreach ($endpointNamespace->getClasses() as $genClass) {
     if (isset($classNeedsMultipart[$genClass->getName()]) && $classNeedsMultipart[$genClass->getName()]) {
         $genClass->addTrait(\CedricZiel\MattermostPhp\Client\MultipartTrait::class);
+    }
+}
+
+// Add FormEncodedTrait to endpoint classes that need it for form-urlencoded requests
+foreach ($endpointNamespace->getClasses() as $genClass) {
+    if (isset($classNeedsFormEncoded[$genClass->getName()]) && $classNeedsFormEncoded[$genClass->getName()]) {
+        $genClass->addTrait(\CedricZiel\MattermostPhp\Client\FormEncodedTrait::class);
     }
 }
 
