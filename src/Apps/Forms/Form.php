@@ -76,10 +76,6 @@ class Form implements \JsonSerializable
             throw new \InvalidArgumentException('Form title must not be empty');
         }
 
-        if (empty($this->submit)) {
-            throw new \InvalidArgumentException('Form submit must not be empty');
-        }
-
         if ($this->fields === null && $this->source === null) {
             throw new \InvalidArgumentException('At least one of fields or source must be defined.');
         }
