@@ -91,4 +91,36 @@ class Integration_actionsEndpoint
 
         return $this->mapResponse($response, $map);
     }
+
+    /**
+     * Lookup dialog elements
+     * Endpoint used by the Mattermost clients to lookup dynamic dialog elements. See https://docs.mattermost.com/developer/interactive-dialogs.html for more information on interactive dialogs.
+     * __Minimum server version: 11.0__
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function lookupInteractiveDialog(
+        \CedricZiel\MattermostPhp\Client\Model\LookupInteractiveDialogRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\LookupInteractiveDialogResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/actions/dialogs/lookup', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\LookupInteractiveDialogResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
 }

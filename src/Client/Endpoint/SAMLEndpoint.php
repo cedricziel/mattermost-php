@@ -39,8 +39,8 @@ class SAMLEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getSamlMetadata(
-    ): \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    public function getSamlMetadata(): string|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse
+    {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -54,7 +54,6 @@ class SAMLEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -70,7 +69,7 @@ class SAMLEndpoint
      */
     public function getSamlMetadataFromIdp(
         \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataFromIdpRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataFromIdpResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): string|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -85,7 +84,6 @@ class SAMLEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetSamlMetadataFromIdpResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
         return $this->mapResponse($response, $map);

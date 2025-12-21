@@ -36,7 +36,7 @@ class Job
             last_activity_at: isset($data['last_activity_at']) ? $data['last_activity_at'] : null,
             status: isset($data['status']) ? $data['status'] : null,
             progress: isset($data['progress']) ? $data['progress'] : null,
-            data: isset($data['data']) ? (object) $data['data'] : null,
+            data: isset($data['data']) ? $data['data'] : null,
         );
         return $object;
     }

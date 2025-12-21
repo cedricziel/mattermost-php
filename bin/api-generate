@@ -66,52 +66,84 @@ $clientConstructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\
 $clientConstructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
 $clientConstructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
 
-foreach ($openApi['x-tagGroups'] as $tagGroup) {
-    if ($tagGroup['name'] !== 'Endpoints') {
-        continue;
+// Collect endpoint tags - prefer x-tagGroups if available, otherwise scan operations
+$endpointTags = [];
+
+if (isset($openApi['x-tagGroups']) && is_array($openApi['x-tagGroups'])) {
+    foreach ($openApi['x-tagGroups'] as $tagGroup) {
+        if ($tagGroup['name'] === 'Endpoints') {
+            $endpointTags = $tagGroup['tags'];
+            break;
+        }
     }
+}
 
-    foreach ($tagGroup['tags'] as $tag) {
-        $class = $endpointNamespace->addClass(prepareEndpointName($tag));
-        $class->addTrait(HttpClientTrait::class);
-        $constructor = $class->addMethod('__construct');
-        $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
-        $constructor->addPromotedParameter('token')->setType('string')->setProtected();
-
-        $constructor->addParameter('httpClient')
-            ->setType(ClientInterface::class)
-            ->setNullable()
-            ->setDefaultValue(null);
-        $constructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
-
-        $constructor->addParameter('requestFactory')
-            ->setType(RequestFactoryInterface::class)
-            ->setNullable()
-            ->setDefaultValue(null);
-        $constructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
-
-        $constructor->addParameter('streamFactory')
-            ->setType(StreamFactoryInterface::class)
-            ->setNullable()
-            ->setDefaultValue(null);
-        $constructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
-
-        $baseUrlSetter = $class->addMethod('setBaseUrl');
-        $baseUrlSetter->setReturnType('static');
-        $baseUrlSetter->addParameter('baseUrl')->setType('string');
-        $baseUrlSetter->addBody('$this->baseUrl = $baseUrl;');
-        $baseUrlSetter->addBody('return $this;');
-
-        $tokenSetter = $class->addMethod('setToken');
-        $tokenSetter->setReturnType('static');
-        $tokenSetter->addParameter('token')->setType('string');
-        $tokenSetter->addBody('$this->token = $token;');
-        $tokenSetter->addBody('return $this;');
-
-        $m = $clientClass->addMethod(str_replace('Endpoint', '', lcfirst(prepareEndpointName($tag))));
-        $m->setReturnType('\\' . $endpointNamespaceName . '\\' . prepareEndpointName($tag));
-        $m->addBody(sprintf('return new \%s\%s($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);', $endpointNamespaceName, prepareEndpointName($tag)));
+// Fallback: collect unique first tags from all operations if x-tagGroups not available
+if (empty($endpointTags)) {
+    echo "Note: x-tagGroups not found, collecting tags from operations...\n";
+    $seenEndpointNames = [];
+    foreach ($openApi['paths'] as $path => $pathSpec) {
+        foreach ($pathSpec as $httpMethod => $methodSpec) {
+            // Skip non-HTTP method keys like 'parameters'
+            if (!in_array($httpMethod, ['get', 'post', 'put', 'patch', 'delete', 'head', 'options'], true)) {
+                continue;
+            }
+            if (isset($methodSpec['tags'][0])) {
+                $tag = $methodSpec['tags'][0];
+                // PHP class names are case-insensitive, so we need to normalize
+                // (e.g., 'LDAP' → 'LDAPEndpoint' and 'ldap' → 'LdapEndpoint' are the same in PHP)
+                $endpointName = strtolower(prepareEndpointName($tag));
+                if (!isset($seenEndpointNames[$endpointName])) {
+                    $seenEndpointNames[$endpointName] = $tag;
+                    $endpointTags[] = $tag;
+                }
+            }
+        }
     }
+    sort($endpointTags);
+    echo "Found " . count($endpointTags) . " unique endpoint tags\n";
+}
+
+foreach ($endpointTags as $tag) {
+    $class = $endpointNamespace->addClass(prepareEndpointName($tag));
+    $class->addTrait(HttpClientTrait::class);
+    $constructor = $class->addMethod('__construct');
+    $constructor->addPromotedParameter('baseUrl')->setType('string')->setProtected();
+    $constructor->addPromotedParameter('token')->setType('string')->setProtected();
+
+    $constructor->addParameter('httpClient')
+        ->setType(ClientInterface::class)
+        ->setNullable()
+        ->setDefaultValue(null);
+    $constructor->addBody('$this->httpClient = $httpClient ?? \Http\Discovery\Psr18ClientDiscovery::find();');
+
+    $constructor->addParameter('requestFactory')
+        ->setType(RequestFactoryInterface::class)
+        ->setNullable()
+        ->setDefaultValue(null);
+    $constructor->addBody('$this->requestFactory = $requestFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();');
+
+    $constructor->addParameter('streamFactory')
+        ->setType(StreamFactoryInterface::class)
+        ->setNullable()
+        ->setDefaultValue(null);
+    $constructor->addBody('$this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();');
+
+    $baseUrlSetter = $class->addMethod('setBaseUrl');
+    $baseUrlSetter->setReturnType('static');
+    $baseUrlSetter->addParameter('baseUrl')->setType('string');
+    $baseUrlSetter->addBody('$this->baseUrl = $baseUrl;');
+    $baseUrlSetter->addBody('return $this;');
+
+    $tokenSetter = $class->addMethod('setToken');
+    $tokenSetter->setReturnType('static');
+    $tokenSetter->addParameter('token')->setType('string');
+    $tokenSetter->addBody('$this->token = $token;');
+    $tokenSetter->addBody('return $this;');
+
+    $m = $clientClass->addMethod(str_replace('Endpoint', '', lcfirst(prepareEndpointName($tag))));
+    $m->setReturnType('\\' . $endpointNamespaceName . '\\' . prepareEndpointName($tag));
+    $m->addBody(sprintf('return new \%s\%s($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);', $endpointNamespaceName, prepareEndpointName($tag)));
 }
 
 function mapParameterType(mixed $type)
@@ -133,7 +165,7 @@ function mapParameterType(mixed $type)
     }
 
     if ($type === 'object') {
-        return stdClass::class;
+        return '\\stdClass';
     }
 
     return $type;
@@ -385,6 +417,14 @@ function createRequestBodyModelClassFromSchema(PhpNamespace $modelNamespace, str
 
 foreach ($openApi['paths'] as $path => $pathSpec) {
     foreach ($pathSpec as $httpMethod => $methodSpec) {
+        // Skip non-HTTP method entries (like 'parameters') and entries without operationId
+        if (!is_array($methodSpec) || !isset($methodSpec['operationId']) || !isset($methodSpec['tags'][0])) {
+            if (is_array($methodSpec) && isset($methodSpec['tags'][0])) {
+                echo "SKIPPING (no operationId): $httpMethod - $path\n";
+            }
+            continue;
+        }
+
         echo "$httpMethod - $path (" . $methodSpec['operationId'] . ")\n";
 
         $class = findClass($endpointNamespace, $methodSpec['tags'][0]);
@@ -393,8 +433,11 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
         }
 
         $method = $class->addMethod(lcfirst($methodSpec['operationId']))
-            ->setComment($methodSpec['summary'] ?? null)
-            ->addComment($methodSpec['description'] ?? null)
+            ->setComment($methodSpec['summary'] ?? '');
+        if (isset($methodSpec['description']) && $methodSpec['description'] !== null) {
+            $method->addComment($methodSpec['description']);
+        }
+        $method
             ->addComment('@throws \Psr\Http\Client\ClientExceptionInterface')
             ->addBody('$pathParameters = [];')
             ->addBody('$queryParameters = [];')
@@ -481,7 +524,21 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 $p->setComment($parameter['description'])->setNullable($parameterIsNullable);
 
                 if (isset($parameter['schema']['default'])) {
-                    $p->setDefaultValue($parameter['schema']['default']);
+                    $defaultValue = $parameter['schema']['default'];
+                    $paramType = $parameter['schema']['type'] ?? null;
+                    // Skip incompatible defaults (e.g., boolean default for string type)
+                    $isCompatible = match ($paramType) {
+                        'string' => is_string($defaultValue),
+                        'integer', 'number' => is_int($defaultValue) || is_float($defaultValue),
+                        'boolean' => is_bool($defaultValue),
+                        'array' => is_array($defaultValue),
+                        default => true,
+                    };
+                    if ($isCompatible) {
+                        $p->setDefaultValue($defaultValue);
+                    } elseif ($parameterIsNullable) {
+                        $p->setDefaultValue(null);
+                    }
                 } elseif ($parameterIsNullable) {
                     $p->setDefaultValue(null);
                 }
@@ -570,8 +627,12 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             ->addBody('$map = [];')
         ;
 
+        $hasPrimitiveOnlyResponse = false;
+        $hasModelResponse = false;
+
         foreach ($methodSpec['responses'] as $responseCode => $responseSpec) {
             if (isset($responseSpec['$ref'])) {
+                $hasModelResponse = true;
                 $responseClass = '';
                 if (str_starts_with($responseSpec['$ref'], '#/components/responses/')) {
                     $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/responses/', 'Default', $responseSpec['$ref']) . 'Response';
@@ -587,6 +648,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     continue;
                 }
                 if (isset($responseSpec['content']['application/json']['schema']['$ref'])) {
+                    $hasModelResponse = true;
                     $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['$ref']);
                     $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
                     if ($method->getReturnType() === null) {
@@ -601,6 +663,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
 
                 if (isset($responseSpec['content']['application/json']['schema']['type']) && $responseSpec['content']['application/json']['schema']['type'] === 'array') {
                     if (isset($responseSpec['content']['application/json']['schema']['items']['$ref'])) {
+                        $hasModelResponse = true;
                         $responseClass = $modelNamespaceName . '\\' . str_replace('#/components/schemas/', '', $responseSpec['content']['application/json']['schema']['items']['$ref']);
                         $method->addBody(sprintf('$map[%d] = \\%s::class . \'[]\';', $responseCode, $responseClass));
                         $method->addComment('@return \\' . $responseClass . '[]');
@@ -618,6 +681,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                 }
 
                 if (isset($responseSpec['content']['application/json']['schema']['type']) && $responseSpec['content']['application/json']['schema']['type'] === 'object') {
+                    $hasModelResponse = true;
                     $responseClass = $modelNamespaceName . '\\' . ucfirst($methodSpec['operationId']) . 'Response';
                     $class = createClassFromSchema($modelNamespace, ucfirst($methodSpec['operationId']) . 'Response', $responseSpec['content']['application/json']['schema']);
                     $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
@@ -628,6 +692,27 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         $method->setReturnType($returnType . '|' . $responseClass);
                     }
 
+                    continue;
+                }
+
+                // Handle primitive response types (string, integer, number, boolean)
+                $schemaType = $responseSpec['content']['application/json']['schema']['type'] ?? null;
+                if (in_array($schemaType, ['string', 'integer', 'number', 'boolean'], true)) {
+                    $hasPrimitiveOnlyResponse = true;
+                    $primitiveType = mapParameterType($schemaType);
+                    if ($method->getReturnType() === null) {
+                        $method->setReturnType($primitiveType);
+                    } else {
+                        $returnType = $method->getReturnType();
+                        $method->setReturnType($returnType . '|' . $primitiveType);
+                    }
+                    // No response mapping needed for primitives - just return decoded JSON
+                    continue;
+                }
+
+                // Skip responses with empty or undefined schemas (incomplete spec definitions)
+                if (!isset($responseSpec['content']['application/json']['schema'])
+                    || empty($responseSpec['content']['application/json']['schema'])) {
                     continue;
                 }
 
@@ -642,9 +727,17 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             $method->addBody(sprintf('$map[%d] = \\%s::class;', $responseCode, $responseClass));
         }
 
-        $method
-            ->addBody('')
-            ->addBody('return $this->mapResponse($response, $map);');
+        // Generate appropriate return statement based on response types
+        if ($hasPrimitiveOnlyResponse && !$hasModelResponse) {
+            // For primitive-only responses, decode JSON directly
+            $method
+                ->addBody('')
+                ->addBody('return json_decode($response->getBody()->getContents(), true);');
+        } else {
+            $method
+                ->addBody('')
+                ->addBody('return $this->mapResponse($response, $map);');
+        }
     }
 }
 

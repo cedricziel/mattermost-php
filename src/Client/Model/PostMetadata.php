@@ -47,9 +47,9 @@ class PostMetadata
             embeds: isset($data['embeds']) ? $data['embeds'] : null,
             emojis: isset($data['emojis']) ? $data['emojis'] : null,
             files: isset($data['files']) ? $data['files'] : null,
-            images: isset($data['images']) ? (object) $data['images'] : null,
+            images: isset($data['images']) ? $data['images'] : null,
             reactions: isset($data['reactions']) ? $data['reactions'] : null,
-            priority: isset($data['priority']) ? (object) $data['priority'] : null,
+            priority: isset($data['priority']) ? $data['priority'] : null,
             acknowledgements: isset($data['acknowledgements']) ? $data['acknowledgements'] : null,
         );
         return $object;

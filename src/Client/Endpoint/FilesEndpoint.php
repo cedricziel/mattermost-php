@@ -42,6 +42,9 @@ class FilesEndpoint
      * Only multipart/form-data requests are supported by server versions up to and including 4.7.
      * Server versions 4.8 and higher support both types of requests.
      *
+     * __Minimum server version__: 9.4
+     * Starting with server version 9.4 when uploading a file for a channel bookmark, the bookmark=true query parameter should be included in the query string
+     *
      * ##### Permissions
      * Must have `upload_file` permission.
      *
@@ -308,6 +311,75 @@ class FilesEndpoint
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Search files across the teams of the current user
+     * Search for files in the teams of the current user based on file name, extention and file content (if file content extraction is enabled and supported for the files).
+     * __Minimum server version__: 10.2
+     * ##### Permissions
+     * Must be authenticated and have the `view_team` permission.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function searchFiles(
+        /** The search terms as entered by the user. To search for files from a user include `from:someusername`, using a user's username. To search in a specific channel include `in:somechannel`, using the channel name (not the display name). To search for specific extensions include `ext:extension`. */
+        string $terms,
+        /** Set to true if an Or search should be performed vs an And search. */
+        bool $is_or_search,
+        /** Offset from UTC of user timezone for date searches. */
+        ?int $time_zone_offset = null,
+        /** Set to true if deleted channels should be included in the search. (archived channels) */
+        ?bool $include_deleted_channels = null,
+        /** The page to select. (Only works with Elasticsearch) */
+        ?int $page = null,
+        /** The number of posts per page. (Only works with Elasticsearch) */
+        ?int $per_page = null,
+    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/files/search', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        // Build multipart form data
+        $multipartFields = [];
+        if ($terms !== null) {
+            $multipartFields['terms'] = $terms;
+        }
+        if ($is_or_search !== null) {
+            $multipartFields['is_or_search'] = $is_or_search;
+        }
+        if ($time_zone_offset !== null) {
+            $multipartFields['time_zone_offset'] = $time_zone_offset;
+        }
+        if ($include_deleted_channels !== null) {
+            $multipartFields['include_deleted_channels'] = $include_deleted_channels;
+        }
+        if ($page !== null) {
+            $multipartFields['page'] = $page;
+        }
+        if ($per_page !== null) {
+            $multipartFields['per_page'] = $per_page;
+        }
+
+        $multipart = $this->createMultipartStream($multipartFields);
+        $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
+        $request = $request->withBody($multipart['stream']);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\FileInfoList::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
     }

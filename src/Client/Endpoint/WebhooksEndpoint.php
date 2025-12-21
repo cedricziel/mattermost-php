@@ -81,6 +81,8 @@ class WebhooksEndpoint
         ?int $per_page = 60,
         /** The ID of the team to get hooks for. */
         ?string $team_id = null,
+        /** Appends a total count of returned hooks inside the response object - ex: `{ "incoming_webhooks": [], "total_count": 0 }`. */
+        ?bool $include_total_count = false,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -88,6 +90,7 @@ class WebhooksEndpoint
         $queryParameters['page'] = $page;
         $queryParameters['per_page'] = $per_page;
         $queryParameters['team_id'] = $team_id;
+        $queryParameters['include_total_count'] = $include_total_count;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/hooks/incoming', $pathParameters, $queryParameters);

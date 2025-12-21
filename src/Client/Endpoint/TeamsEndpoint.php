@@ -491,6 +491,10 @@ class TeamsEndpoint
         ?int $page = 0,
         /** The number of users per page. */
         ?int $per_page = 60,
+        /** To sort by Username, set to 'Username', otherwise sort is by 'UserID' */
+        ?string $sort = '',
+        /** Excludes deleted users from the results */
+        ?bool $exclude_deleted_users = false,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -498,6 +502,8 @@ class TeamsEndpoint
         $pathParameters['team_id'] = $team_id;
         $queryParameters['page'] = $page;
         $queryParameters['per_page'] = $per_page;
+        $queryParameters['sort'] = $sort;
+        $queryParameters['exclude_deleted_users'] = $exclude_deleted_users;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/teams/{team_id}/members', $pathParameters, $queryParameters);
@@ -1195,11 +1201,17 @@ class TeamsEndpoint
         /** Team GUID */
         string $team_id,
         \CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamRequest $requestBody,
+        /** If true, returns an array with both successful invites and errors instead of aborting on first error. */
+        ?bool $graceful = null,
+        /** If true, invites guests with magic link (passwordless) authentication. Requires guest magic link feature to be enabled. */
+        ?bool $guest_magic_link = null,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse {
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['team_id'] = $team_id;
+        $queryParameters['graceful'] = $graceful;
+        $queryParameters['guest_magic_link'] = $guest_magic_link;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/teams/{team_id}/invite-guests/email', $pathParameters, $queryParameters);
@@ -1440,7 +1452,7 @@ class TeamsEndpoint
     public function searchFiles(
         /** Team GUID */
         string $team_id,
-        /** The search terms as inputed by the user. To search for files from a user include `from:someusername`, using a user's username. To search in a specific channel include `in:somechannel`, using the channel name (not the display name). To search for specific extensions included `ext:extension`. */
+        /** The search terms as inputed by the user. To search for files from a user include `from:someusername`, using a user's username. To search in a specific channel include `in:somechannel`, using the channel name (not the display name). To search for specific extensions include `ext:extension`. */
         string $terms,
         /** Set to true if an Or search should be performed vs an And search. */
         bool $is_or_search,

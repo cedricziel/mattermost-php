@@ -49,7 +49,7 @@ class DataRetentionEndpoint
         string $user_id,
         /** The page to select. */
         ?int $page = 0,
-        /** The number of policies per page. There is a maximum limit of 200 per page. */
+        /** The number of policies per page. */
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForTeamList|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
@@ -96,7 +96,7 @@ class DataRetentionEndpoint
         string $user_id,
         /** The page to select. */
         ?int $page = 0,
-        /** The number of policies per page. There is a maximum limit of 200 per page. */
+        /** The number of policies per page. */
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForChannelList|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
@@ -222,7 +222,7 @@ class DataRetentionEndpoint
     public function getDataRetentionPolicies(
         /** The page to select. */
         ?int $page = 0,
-        /** The number of policies per page. There is a maximum limit of 200 per page. */
+        /** The number of policies per page. */
         ?int $per_page = 60,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
@@ -436,7 +436,7 @@ class DataRetentionEndpoint
         string $policy_id,
         /** The page to select. */
         ?int $page = 0,
-        /** The number of teams per page. There is a maximum limit of 200 per page. */
+        /** The number of teams per page. */
         ?int $per_page = 60,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
@@ -613,7 +613,7 @@ class DataRetentionEndpoint
         string $policy_id,
         /** The page to select. */
         ?int $page = 0,
-        /** The number of channels per page. There is a maximum limit of 200 per page. */
+        /** The number of channels per page. */
         ?int $per_page = 60,
     ): \CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];

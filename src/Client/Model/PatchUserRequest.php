@@ -12,6 +12,7 @@ class PatchUserRequest
         public ?string $nickname = null,
         public ?string $locale = null,
         public ?string $position = null,
+        public $timezone = null,
         public ?\stdClass $props = null,
         public $notify_props = null,
     ) {

@@ -68,22 +68,44 @@ class SystemEndpoint
      *   receive notifications.
      *
      * __Minimum server version__: 6.5
+     * If "use_rest_semantics" is set to true in the query, the endpoint will not return an error status code in the header if the request is somehow completed successfully.
+     * __Minimum server version__: 9.6
      * ##### Permissions
-     * None.
+     * None. Authentication is not required for this endpoint.
+     * ##### Response Details
+     * The response varies based on query parameters and authentication:
+     * - **Basic response** (no parameters): Returns basic server information including
+     *
+     *   `status`, mobile app versions, and active search backend.
+     *
+     * - **Enhanced response** (`get_server_status=true`): Additionally returns
+     *
+     *   `database_status` and `filestore_status` to verify backend connectivity.
+     *   Authentication is not required.
+     *
+     * - **Admin response** (`get_server_status=true` with `manage_system` permission):
+     *
+     *   Additionally returns `root_status` indicating whether the server is running as root.
+     *   Requires authentication with `manage_system` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getPing(
-        /** Check the status of the database and file storage as well */
+        /**
+         * Check the status of the database and file storage as well. When true, adds `database_status` and `filestore_status` to the response. If authenticated with `manage_system` permission, also adds `root_status`.
+         */
         ?bool $get_server_status = null,
         /** Check whether this device id can receive push notifications */
         ?string $device_id = null,
+        /** Returns 200 status code even if the server status is unhealthy. */
+        ?bool $use_rest_semantics = null,
     ): \CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
         $pathParameters = [];
         $queryParameters = [];
 
         $queryParameters['get_server_status'] = $get_server_status;
         $queryParameters['device_id'] = $device_id;
+        $queryParameters['use_rest_semantics'] = $use_rest_semantics;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/system/ping', $pathParameters, $queryParameters);
@@ -237,6 +259,36 @@ class SystemEndpoint
     }
 
     /**
+     * Send a test notification
+     * Send a test notification to make sure you have your notification settings configured correctly.
+     * ##### Permissions
+     * Must be logged in.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function testNotification(
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/notifications/test', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
      * Checks the validity of a Site URL
      * Sends a Ping request to the mattermost server using the specified Site URL.
      *
@@ -314,10 +366,24 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getConfig(
+        /**
+         * Remove masked values from the exported configuration.
+         *
+         * __Minimum server version__: 10.4.0
+         */
+        ?bool $remove_masked = false,
+        /**
+         * Remove default values from the exported configuration.
+         *
+         * __Minimum server version__: 10.4.0
+         */
+        ?string $remove_defaults = null,
     ): \CedricZiel\MattermostPhp\Client\Model\Config|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
+        $queryParameters['remove_masked'] = $remove_masked;
+        $queryParameters['remove_defaults'] = $remove_defaults;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/config', $pathParameters, $queryParameters);
@@ -406,14 +472,11 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getClientConfig(
-        /** Must be `old`, other formats not implemented yet */
-        string $format,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    public function getClientConfig()
+    {
         $pathParameters = [];
         $queryParameters = [];
 
-        $queryParameters['format'] = $format;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/config/client', $pathParameters, $queryParameters);
@@ -424,8 +487,6 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
-        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -608,6 +669,37 @@ class SystemEndpoint
         $map = [];
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Get license load metric
+     * Get the current license load metric, calculated based on monthly active users against the licensed user count. Returns a value of 0 when there is no license loaded or the license doesn't have a user count.
+     * __Minimum server version__: 10.8
+     * ##### Permissions
+     * Must be logged in.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function getLicenseLoadMetric(
+    ): \CedricZiel\MattermostPhp\Client\Model\GetLicenseLoadMetricResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/license/load_metric', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetLicenseLoadMetricResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -1104,6 +1196,32 @@ class SystemEndpoint
     }
 
     /**
+     * Check if the user is allowed to upgrade to Enterprise Edition
+     * Check if the user is allowed to upgrade to Enterprise Edition
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function isAllowedToUpgradeToEnterprise(): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse
+    {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/upgrade_to_enterprise/allowed', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
      * Restart the system after an upgrade from Team Edition to Enterprise Edition
      * It restarts the current running mattermost instance to execute the new Enterprise binary.
      * __Minimum server version__: 5.27
@@ -1128,127 +1246,6 @@ class SystemEndpoint
 
         $map = [];
         $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
-        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-
-        return $this->mapResponse($response, $map);
-    }
-
-    /**
-     * Get the warn metrics status (enabled or disabled)
-     * Get the status of a set of metrics (enabled or disabled) from the Systems table.
-     *
-     * The returned JSON contains the metrics that we need to warn the admin on with regard
-     * to their status (we return the ones whose status is "true", which means that they are
-     * in a "warnable" state - e.g. a threshold has been crossed or some other condition has
-     * been fulfilled).
-     *
-     * __Minimum server version__: 5.26
-     *
-     * ##### Permissions
-     *
-     * Must have `manage_system` permission.
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     */
-    public function getWarnMetricsStatus(
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
-        $pathParameters = [];
-        $queryParameters = [];
-
-
-        // build URI through path and query parameters
-        $uri = $this->buildUri('/api/v4/warn_metrics/status', $pathParameters, $queryParameters);
-
-        $request = $this->requestFactory->createRequest('GET', $uri);
-        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
-        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
-        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
-        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-
-        return $this->mapResponse($response, $map);
-    }
-
-    /**
-     * Acknowledge a warning of a metric status
-     * Acknowledge a warning for the warn_metric_id metric crossing a threshold (or some
-     * similar condition being fulfilled) - attempts to send an ack email to
-     * acknowledge@mattermost.com and sets the "ack" status for all the warn metrics in the system.
-     *
-     * __Minimum server version__: 5.26
-     *
-     * ##### Permissions
-     *
-     * Must have `manage_system` permission.
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     */
-    public function sendWarnMetricAck(
-        /** Warn Metric Id. */
-        string $warn_metric_id,
-        \CedricZiel\MattermostPhp\Client\Model\SendWarnMetricAckRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
-        $pathParameters = [];
-        $queryParameters = [];
-
-        $pathParameters['warn_metric_id'] = $warn_metric_id;
-
-        // build URI through path and query parameters
-        $uri = $this->buildUri('/api/v4/warn_metrics/ack/{warn_metric_id}', $pathParameters, $queryParameters);
-
-        $request = $this->requestFactory->createRequest('POST', $uri);
-        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
-        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
-        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
-        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-
-        return $this->mapResponse($response, $map);
-    }
-
-    /**
-     * Request trial license and acknowledge a warning of a metric status
-     * Request a trial license and acknowledge a warning for the warn_metric_id metric crossing a threshold (or some
-     * similar condition being fulfilled) - sets the "ack" status for all the warn metrics in the system.
-     *
-     * __Minimum server version__: 5.28
-     *
-     * ##### Permissions
-     *
-     * Must have `manage_system` permission.
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     */
-    public function sendTrialLicenseWarnMetricAck(
-        /** Warn Metric Id. */
-        string $warn_metric_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
-        $pathParameters = [];
-        $queryParameters = [];
-
-        $pathParameters['warn_metric_id'] = $warn_metric_id;
-
-        // build URI through path and query parameters
-        $uri = $this->buildUri('/api/v4/warn_metrics/trial-license-ack/{warn_metric_id}', $pathParameters, $queryParameters);
-
-        $request = $this->requestFactory->createRequest('POST', $uri);
-        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
-        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
-        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -1302,10 +1299,24 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function generateSupportPacket(
+        /**
+         * Specifies whether the server should include or exclude log files. Default value is true.
+         *
+         * __Minimum server version__: 9.8.0
+         */
+        ?bool $basic_server_logs = null,
+        /**
+         * Specifies plugin identifiers whose content should be included in the Support Packet.
+         *
+         * __Minimum server version__: 9.8.0
+         */
+        ?string $plugin_packets = null,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
+        $queryParameters['basic_server_logs'] = $basic_server_logs;
+        $queryParameters['plugin_packets'] = $plugin_packets;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/system/support_packet', $pathParameters, $queryParameters);

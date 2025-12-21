@@ -38,10 +38,10 @@ class PluginManifest
             description: isset($data['description']) ? $data['description'] : null,
             version: isset($data['version']) ? $data['version'] : null,
             min_server_version: isset($data['min_server_version']) ? $data['min_server_version'] : null,
-            backend: isset($data['backend']) ? (object) $data['backend'] : null,
-            server: isset($data['server']) ? (object) $data['server'] : null,
-            webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
-            settings_schema: isset($data['settings_schema']) ? (object) $data['settings_schema'] : null,
+            backend: isset($data['backend']) ? $data['backend'] : null,
+            server: isset($data['server']) ? $data['server'] : null,
+            webapp: isset($data['webapp']) ? $data['webapp'] : null,
+            settings_schema: isset($data['settings_schema']) ? $data['settings_schema'] : null,
         );
         return $object;
     }

@@ -116,11 +116,11 @@ class BotsEndpoint
     public function getBots(
         /** The page to select. */
         ?int $page = 0,
-        /** The number of users per page. There is a maximum limit of 200 users per page. */
+        /** The number of users per page. */
         ?int $per_page = 60,
         /** If deleted bots should be returned. */
         ?bool $include_deleted = null,
-        /** When true, only orphaned bots will be returned. A bot is consitered orphaned if it's owner has been deactivated. */
+        /** When true, only orphaned bots will be returned. A bot is considered orphaned if its owner has been deactivated. */
         ?bool $only_orphaned = null,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];

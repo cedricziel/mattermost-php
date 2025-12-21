@@ -19,6 +19,16 @@ class UserNotifyProps
         public ?string $channel = null,
         /** Set to "true" to enable mentions for first name. Defaults to "true" if a first name is set, "false" otherwise. */
         public ?string $first_name = null,
+        /** The message sent to users when they are auto-responded to. Defaults to "". */
+        public ?string $auto_responder_message = null,
+        /** Set to "all" to enable mobile push notifications for followed threads and "none" to disable. Defaults to "all". */
+        public ?string $push_threads = null,
+        /** Set to "any" to enable notifications for comments to any post you have replied to, "root" for comments on your posts, and "never" to disable. Only affects users with collapsed reply threads disabled. Defaults to "never". */
+        public ?string $comments = null,
+        /** Set to "all" to enable desktop notifications for followed threads and "none" to disable. Defaults to "all". */
+        public ?string $desktop_threads = null,
+        /** Set to "all" to enable email notifications for followed threads and "none" to disable. Defaults to "all". */
+        public ?string $email_threads = null,
     ) {
     }
 
@@ -34,6 +44,11 @@ class UserNotifyProps
             mention_keys: isset($data['mention_keys']) ? $data['mention_keys'] : null,
             channel: isset($data['channel']) ? $data['channel'] : null,
             first_name: isset($data['first_name']) ? $data['first_name'] : null,
+            auto_responder_message: isset($data['auto_responder_message']) ? $data['auto_responder_message'] : null,
+            push_threads: isset($data['push_threads']) ? $data['push_threads'] : null,
+            comments: isset($data['comments']) ? $data['comments'] : null,
+            desktop_threads: isset($data['desktop_threads']) ? $data['desktop_threads'] : null,
+            email_threads: isset($data['email_threads']) ? $data['email_threads'] : null,
         );
         return $object;
     }

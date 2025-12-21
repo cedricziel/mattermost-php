@@ -13,6 +13,7 @@ class PatchChannelRequest
         public ?string $purpose = null,
         /** Markdown-formatted text to display in the header of the channel */
         public ?string $header = null,
+        public $banner_info = null,
     ) {
     }
 }

@@ -91,6 +91,80 @@ class LDAPEndpoint
     }
 
     /**
+     * Test LDAP connection with specific settings
+     * Test the LDAP connection using the provided settings without modifying the current server configuration.
+     * ##### Permissions
+     * Must have `sysconsole_read_authentication_ldap` or `manage_system` permission.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function testLdapConnection(
+        \CedricZiel\MattermostPhp\Client\Model\TestLdapConnectionRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/ldap/test_connection', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Test LDAP diagnostics with specific settings
+     * Test LDAP diagnostics using the provided settings to validate configuration and see sample results without modifying the current server configuration. Use the `test` query parameter to specify which diagnostic to run.
+     * ##### Permissions
+     * Must have `sysconsole_read_authentication_ldap` or `manage_system` permission.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\LdapDiagnosticResult[]
+     */
+    public function testLdapDiagnostics(
+        \CedricZiel\MattermostPhp\Client\Model\TestLdapDiagnosticsRequest $requestBody,
+        /** Type of LDAP diagnostic test to run */
+        string $test,
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+        $queryParameters['test'] = $test;
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/ldap/test_diagnostics', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\LdapDiagnosticResult::class . '[]';
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
      * Migrate Id LDAP
      * Migrate LDAP IdAttribute to new value.
      * ##### Permissions

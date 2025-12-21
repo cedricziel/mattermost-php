@@ -95,6 +95,102 @@ class UsersEndpoint
     }
 
     /**
+     * Exchange SSO login code for session tokens
+     * Exchange a short-lived login_code for session tokens using SAML code exchange (mobile SSO flow). This endpoint is part of the mobile SSO code-exchange flow to prevent tokens  from appearing in deep links.
+     * ##### Permissions
+     * No permission required.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function loginSSOCodeExchange(
+        \CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/users/login/sso/code-exchange', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Login with Microsoft Intune MAM
+     * Authenticate a mobile user using a Microsoft Entra ID (Azure AD) access token for Intune Mobile Application Management (MAM) protected apps.
+     *
+     * This endpoint enables authentication for mobile apps protected by Microsoft Intune MAM policies. The access token is obtained via the Microsoft Authentication Library (MSAL) and validated against the configured Azure AD tenant and Intune MAM app registration.
+     *
+     * **Authentication Flow:**
+     * 1. Mobile app acquires an Entra ID access token via MSAL with the Intune MAM scope
+     * 2. Token is sent to this endpoint for validation
+     * 3. Server validates the token signature, claims, and tenant configuration
+     * 4. User is authenticated or created based on the token claims
+     * 5. Session token is returned for subsequent API requests
+     *
+     * **User Provisioning:**
+     * - **Office365 AuthService**: Users are automatically created on first login using the `oid` (Azure AD object ID) claim as the unique identifier
+     * - **SAML AuthService**: Users must first login via web/desktop to establish their account with the `oid` (Azure AD object ID) as AuthData. Intune MAM  always uses objectId for SAML users. For Entra ID Domain Services LDAP sync, configure LdapSettings.IdAttribute to `msDS-aadObjectId` to ensure consistency.
+     *
+     * **Error Handling:**
+     * This endpoint returns specific HTTP status codes to help mobile apps handle different error scenarios:
+     * - `428 Precondition Required`: SAML user needs to login via web/desktop first
+     * - `403 Forbidden`: Configuration issues or bot accounts
+     * - `409 Conflict`: User account is deactivated
+     * - `401 Unauthorized`: Token has expired
+     * - `400 Bad Request`: Invalid token format, claims, or configuration
+     *
+     * ##### Permissions
+     *
+     * No permission required. Authentication is performed via the Entra ID access token.
+     *
+     * ##### Enterprise Feature
+     *
+     * Requires Mattermost Enterprise Advanced license and proper Intune MAM configuration (tenant ID, client ID, and auth service).
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function loginIntune(
+        \CedricZiel\MattermostPhp\Client\Model\LoginIntuneRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\User|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\AppError {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/oauth/intune', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\User::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+        $map[409] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+        $map[428] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
      * Logout from the Mattermost server
      * ##### Permissions
      * An active session is required
@@ -164,8 +260,8 @@ class UsersEndpoint
     /**
      * Get users
      * Get a page of a list of users. Based on query string parameters, select users from a team, channel, or select users not in a specific channel.
-     *
      * Since server version 4.0, some basic sorting is available using the `sort` query parameter. Sorting is currently only supported when selecting users on a team.
+     * Some fields, like `email_verified` and `notify_props`, are only visible for the authorized user or if the authorized user has the `manage_system` permission.
      * ##### Permissions
      * Requires an active session and (if specified) membership to the channel or team being selected from.
      *
@@ -175,7 +271,7 @@ class UsersEndpoint
     public function getUsers(
         /** The page to select. */
         ?int $page = 0,
-        /** The number of users per page. There is a maximum limit of 200 users per page. */
+        /** The number of users per page. */
         ?int $per_page = 60,
         /** The ID of the team to get users for. */
         ?string $in_team = null,
@@ -203,6 +299,7 @@ class UsersEndpoint
          * ##### `in_team`
          * Can be "", "last_activity_at" or "create_at".
          * When left blank, sorting is done by username.
+         * Note that when "last_activity_at" is specified, an additional "last_activity_at" field will be returned in the response packet.
          * __Minimum server version__: 4.0
          * ##### `in_channel`
          * Can be "", "status".
@@ -811,8 +908,8 @@ class UsersEndpoint
     }
 
     /**
-     * Update user active status
-     * Update user active or inactive status.
+     * Activate or deactivate a user
+     * Activate or deactivate a user's account. A deactivated user can't log into Mattermost or use it without being reactivated.
      *
      * __Since server version 4.6, users using a SSO provider to login can be activated or deactivated with this endpoint. However, if their activation status in Mattermost does not reflect their status in the SSO provider, the next synchronization or login by that user will reset the activation status to that of their account in the SSO provider. Server versions 4.5 and before do not allow activation or deactivation of SSO users from this endpoint.__
      * ##### Permissions
@@ -1472,15 +1569,17 @@ class UsersEndpoint
     }
 
     /**
-     * Attach mobile device
-     * Attach a mobile device id to the currently logged in session. This will enable push notifications for a user, if configured by the server.
+     * Attach mobile device and extra props to the session object
+     * Attach extra props to the session object of the currently logged in session.
+     * Adding a mobile device id will enable push notifications for a user, if configured by the server.
+     * Other props are also available, like whether the device has notifications disabled and the mobile version.
      * ##### Permissions
      * Must be authenticated.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function attachDeviceId(
-        \CedricZiel\MattermostPhp\Client\Model\AttachDeviceIdRequest $requestBody,
+    public function attachDeviceExtraProps(
+        \CedricZiel\MattermostPhp\Client\Model\AttachDeviceExtraPropsRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -1680,6 +1779,39 @@ class UsersEndpoint
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Get login authentication type
+     * Get the authentication service type (auth_service) for a user to determine how they should authenticate. This endpoint is typically used in the login flow to determine which authentication method to use.
+     *
+     * For this version, the endpoint only returns a non-empty `auth_service` if the user has magic_link enabled. For all other authentication methods (email/password, OAuth, SAML, LDAP), an empty string is returned.
+     * ##### Permissions
+     * No permission required
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function getLoginType(
+        \CedricZiel\MattermostPhp\Client\Model\GetLoginTypeRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\GetLoginTypeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/users/login/type', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GetLoginTypeResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -2225,17 +2357,17 @@ class UsersEndpoint
     public function getChannelMembersWithTeamDataForUser(
         /** The ID of the user. This can also be "me" which will point to the current user. */
         string $user_id,
-        /** Page specifies which part of the results to return, by PageSize. */
+        /** Page specifies which part of the results to return, by perPage. */
         ?int $page = null,
-        /** PageSize specifies the size of the returned chunk of results. */
-        ?int $pageSize = null,
+        /** The size of the returned chunk of results. */
+        ?int $per_page = 60,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
         $pathParameters['user_id'] = $user_id;
         $queryParameters['page'] = $page;
-        $queryParameters['pageSize'] = $pageSize;
+        $queryParameters['per_page'] = $per_page;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/users/{user_id}/channel_members', $pathParameters, $queryParameters);
@@ -2335,7 +2467,7 @@ class UsersEndpoint
     public function getUsersWithInvalidEmails(
         /** The page to select. */
         ?int $page = 0,
-        /** The number of users per page. There is a maximum limit of 200 users per page. */
+        /** The number of users per page. */
         ?int $per_page = 60,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
@@ -2362,92 +2494,54 @@ class UsersEndpoint
     }
 
     /**
-     * Get a list of paged and sorted users for admin reporting purposes
-     * Get a list of paged users for admin reporting purposes, based on provided parameters.
-     * Must be a system admin to invoke this API.
+     * Reset the failed password attempts for a user
+     * Reset the FailedAttempts field for a user to 0. This will only work for ldap and email/password users.
+     *
      * ##### Permissions
-     * Requires `sysconsole_read_user_management_users`.
+     *
+     * Requires `sysconsole_write_user_management_users` permission.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     * @return \CedricZiel\MattermostPhp\Client\Model\UserReport[]
      */
-    public function getUsersForReporting(
-        /** The column to sort the users by. Must be one of ("CreateAt", "Username", "FirstName", "LastName", "Nickname", "Email") or the API will return an error. */
-        ?string $sort_column = 'Username',
-        /** The direction in which to accept paging values from. Will return values ahead of the cursor if "up", and below the cursor if "down". Default is "down". */
-        ?string $direction = 'down',
-        /** The sorting direction. Must be one of ("asc", "desc"). Will default to 'asc' if not specified or the input is invalid. */
-        ?string $sort_direction = 'asc',
-        /** The maximum number of users to return. */
-        ?int $page_size = 50,
-        /** The value of the sorted column corresponding to the cursor to read from. Should be blank for the first page asked for. */
-        ?string $from_column_value = null,
-        /** The value of the user id corresponding to the cursor to read from. Should be blank for the first page asked for. */
-        ?string $from_id = null,
-        /** The date range of the post statistics to display. Must be one of ("last30days", "previousmonth", "last6months", "alltime"). Will default to 'alltime' if the input is not valid. */
-        ?string $date_range = 'alltime',
-        /** Filter users by their role. */
-        ?string $role_filter = null,
-        /** Filter users by a specified team ID. */
-        ?string $team_filter = null,
-        /** If true, show only users that have no team. Will ignore provided "team_filter" if true. */
-        ?bool $has_no_team = null,
-        /** If true, show only users that are inactive. Cannot be used at the same time as "hide_inactive" */
-        ?bool $hide_active = null,
-        /** If true, show only users that are active. Cannot be used at the same time as "hide_active" */
-        ?bool $hide_inactive = null,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+    public function resetPasswordFailedAttempts(
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
         $pathParameters = [];
         $queryParameters = [];
 
-        $queryParameters['sort_column'] = $sort_column;
-        $queryParameters['direction'] = $direction;
-        $queryParameters['sort_direction'] = $sort_direction;
-        $queryParameters['page_size'] = $page_size;
-        $queryParameters['from_column_value'] = $from_column_value;
-        $queryParameters['from_id'] = $from_id;
-        $queryParameters['date_range'] = $date_range;
-        $queryParameters['role_filter'] = $role_filter;
-        $queryParameters['team_filter'] = $team_filter;
-        $queryParameters['has_no_team'] = $has_no_team;
-        $queryParameters['hide_active'] = $hide_active;
-        $queryParameters['hide_inactive'] = $hide_inactive;
 
         // build URI through path and query parameters
-        $uri = $this->buildUri('/api/v4/reports/users', $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/users/{user_id}/reset_failed_attempts', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
 
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UserReport::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
-        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
         return $this->mapResponse($response, $map);
     }
 
     /**
-     * Gets the user limits for the server
-     * Gets the user limits for the server
+     * Gets the server limits for the server
+     * Gets the server limits for the server
      * ##### Permissions
      * Requires `sysconsole_read_user_management_users`.
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     * @return \CedricZiel\MattermostPhp\Client\Model\UserLimits[]
+     * @return \CedricZiel\MattermostPhp\Client\Model\ServerLimits[]
      */
-    public function getUserLimits(
+    public function getServerLimits(
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
         $pathParameters = [];
         $queryParameters = [];
 
 
         // build URI through path and query parameters
-        $uri = $this->buildUri('/api/v4/limits/users', $pathParameters, $queryParameters);
+        $uri = $this->buildUri('/api/v4/limits/server', $pathParameters, $queryParameters);
 
         $request = $this->requestFactory->createRequest('GET', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
@@ -2455,7 +2549,7 @@ class UsersEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\UserLimits::class . '[]';
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\ServerLimits::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

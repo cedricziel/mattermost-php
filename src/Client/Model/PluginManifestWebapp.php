@@ -20,7 +20,7 @@ class PluginManifestWebapp
         $object = new self(
             id: isset($data['id']) ? $data['id'] : null,
             version: isset($data['version']) ? $data['version'] : null,
-            webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
+            webapp: isset($data['webapp']) ? $data['webapp'] : null,
         );
         return $object;
     }

@@ -446,4 +446,37 @@ class CloudEndpoint
 
         return $this->mapResponse($response, $map);
     }
+
+    /**
+     * Get cloud preview modal data
+     * Retrieves modal content data from the configured S3 bucket for displaying cloud product preview modals.
+     * ##### Permissions
+     * Must be authenticated. Must be in a Cloud Preview environment.
+     * __Minimum server version__: 10.0 __Note:__ This is intended for internal use and is subject to change.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData[]
+     */
+    public function getPreviewModalData(
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/cloud/preview/modal_data', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData::class . '[]';
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
 }

@@ -32,28 +32,23 @@ class PermissionsEndpoint
 
     /**
      * Return all system console subsection ancillary permissions
-     * Returns all the ancillary permissions for the corresponding system console subsection permissions appended to the requested permission subsections.
-     *
-     * __Minimum server version__: 5.35
+     * Returns all the ancillary permissions for the corresponding system console subsection permissions appended to the requested permission subsections. __Minimum server version__: 9.10
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getAncillaryPermissions(
-        /**
-         * The subsection permissions to return the ancillary permissions for. These values are comma seperated. Ex. subsection_permissions=sysconsole_read_reporting_site_statistics,sysconsole_write_reporting_site_statistics,sysconsole_write_user_management_channels
-         */
-        ?string $subsection_permissions = null,
+    public function getAncillaryPermissionsPost(
+        \CedricZiel\MattermostPhp\Client\Model\GetAncillaryPermissionsPostRequest $requestBody,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
         $pathParameters = [];
         $queryParameters = [];
 
-        $queryParameters['subsection_permissions'] = $subsection_permissions;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/permissions/ancillary', $pathParameters, $queryParameters);
 
-        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $this->requestFactory->createRequest('POST', $uri);
         $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
 
         $response = $this->httpClient->sendRequest($request);
 

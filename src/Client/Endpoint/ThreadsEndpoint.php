@@ -52,10 +52,10 @@ class ThreadsEndpoint
         ?bool $deleted = false,
         /** Extended will enrich the response with participant details. */
         ?bool $extended = false,
-        /** Page specifies which part of the results to return, by PageSize. */
+        /** Page specifies which part of the results to return, by per_page. */
         ?int $page = 0,
-        /** PageSize specifies the size of the returned chunk of results. */
-        ?int $pageSize = 30,
+        /** The size of the returned chunk of results. */
+        ?int $per_page = 60,
         /** Setting this to true will only return the total counts. */
         ?bool $totalsOnly = false,
         /** Setting this to true will only return threads. */
@@ -70,7 +70,7 @@ class ThreadsEndpoint
         $queryParameters['deleted'] = $deleted;
         $queryParameters['extended'] = $extended;
         $queryParameters['page'] = $page;
-        $queryParameters['pageSize'] = $pageSize;
+        $queryParameters['per_page'] = $per_page;
         $queryParameters['totalsOnly'] = $totalsOnly;
         $queryParameters['threadsOnly'] = $threadsOnly;
 

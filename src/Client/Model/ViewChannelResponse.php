@@ -18,7 +18,7 @@ class ViewChannelResponse
     ): ViewChannelResponse {
         $object = new self(
             status: isset($data['status']) ? $data['status'] : null,
-            last_viewed_at_times: isset($data['last_viewed_at_times']) ? (object) $data['last_viewed_at_times'] : null,
+            last_viewed_at_times: isset($data['last_viewed_at_times']) ? $data['last_viewed_at_times'] : null,
         );
         return $object;
     }

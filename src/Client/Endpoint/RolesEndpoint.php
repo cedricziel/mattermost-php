@@ -141,7 +141,7 @@ class RolesEndpoint
      * Partially update a role by providing only the fields you want to update. Omitted fields will not be updated. The fields that can be updated are defined in the request body, all other provided fields will be ignored.
      *
      * ##### Permissions
-     * `manage_system` permission is required.
+     * Must have `sysconsole_write_user_management_permissions` or `manage_system` permission. When updating the role of a system admin, the `manage_system` permission is mandatory.
      *
      * __Minimum server version__: 4.9
      *

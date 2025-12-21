@@ -18,94 +18,19 @@ class Client
         $this->streamFactory = $streamFactory ?? \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();
     }
 
-    public function users(): Client\Endpoint\UsersEndpoint
+    public function conditions(): Client\Endpoint\ConditionsEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\UsersEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ConditionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function bots(): Client\Endpoint\BotsEndpoint
+    public function contentFlagging(): Client\Endpoint\ContentFlaggingEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\BotsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ContentFlaggingEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function teams(): Client\Endpoint\TeamsEndpoint
+    public function internal(): Client\Endpoint\InternalEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\TeamsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function channels(): Client\Endpoint\ChannelsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ChannelsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function posts(): Client\Endpoint\PostsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function threads(): Client\Endpoint\ThreadsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ThreadsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function files(): Client\Endpoint\FilesEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\FilesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function uploads(): Client\Endpoint\UploadsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\UploadsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function preferences(): Client\Endpoint\PreferencesEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\PreferencesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function status(): Client\Endpoint\StatusEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\StatusEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function emoji(): Client\Endpoint\EmojiEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\EmojiEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function reactions(): Client\Endpoint\ReactionsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ReactionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function webhooks(): Client\Endpoint\WebhooksEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\WebhooksEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function commands(): Client\Endpoint\CommandsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\CommandsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function system(): Client\Endpoint\SystemEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\SystemEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function brand(): Client\Endpoint\BrandEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\BrandEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function oAuth(): Client\Endpoint\OAuthEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\OAuthEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function sAML(): Client\Endpoint\SAMLEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\SAMLEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\InternalEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
     public function lDAP(): Client\Endpoint\LDAPEndpoint
@@ -113,29 +38,49 @@ class Client
         return new \CedricZiel\MattermostPhp\Client\Endpoint\LDAPEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function groups(): Client\Endpoint\GroupsEndpoint
+    public function oAuth(): Client\Endpoint\OAuthEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\GroupsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\OAuthEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function compliance(): Client\Endpoint\ComplianceEndpoint
+    public function playbookAutofollows(): Client\Endpoint\PlaybookAutofollowsEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ComplianceEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PlaybookAutofollowsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function cluster(): Client\Endpoint\ClusterEndpoint
+    public function playbookRuns(): Client\Endpoint\PlaybookRunsEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ClusterEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PlaybookRunsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function cloud(): Client\Endpoint\CloudEndpoint
+    public function playbooks(): Client\Endpoint\PlaybooksEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\CloudEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PlaybooksEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function elasticsearch(): Client\Endpoint\ElasticsearchEndpoint
+    public function sAML(): Client\Endpoint\SAMLEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ElasticsearchEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\SAMLEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function timeline(): Client\Endpoint\TimelineEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\TimelineEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function accessControl(): Client\Endpoint\AccessControlEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\AccessControlEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function agents(): Client\Endpoint\AgentsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\AgentsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function audit_logs(): Client\Endpoint\Audit_logsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\Audit_logsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
     public function bleve(): Client\Endpoint\BleveEndpoint
@@ -143,54 +88,64 @@ class Client
         return new \CedricZiel\MattermostPhp\Client\Endpoint\BleveEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
+    public function bookmarks(): Client\Endpoint\BookmarksEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\BookmarksEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function bots(): Client\Endpoint\BotsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\BotsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function brand(): Client\Endpoint\BrandEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\BrandEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function channels(): Client\Endpoint\ChannelsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ChannelsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function cloud(): Client\Endpoint\CloudEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\CloudEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function cluster(): Client\Endpoint\ClusterEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ClusterEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function commands(): Client\Endpoint\CommandsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\CommandsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function compliance(): Client\Endpoint\ComplianceEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ComplianceEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function customProfileAttributes(): Client\Endpoint\CustomProfileAttributesEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\CustomProfileAttributesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
     public function dataRetention(): Client\Endpoint\DataRetentionEndpoint
     {
         return new \CedricZiel\MattermostPhp\Client\Endpoint\DataRetentionEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function jobs(): Client\Endpoint\JobsEndpoint
+    public function elasticsearch(): Client\Endpoint\ElasticsearchEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\JobsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ElasticsearchEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
-    public function plugins(): Client\Endpoint\PluginsEndpoint
+    public function emoji(): Client\Endpoint\EmojiEndpoint
     {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\PluginsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function roles(): Client\Endpoint\RolesEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\RolesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function schemes(): Client\Endpoint\SchemesEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\SchemesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function integration_actions(): Client\Endpoint\Integration_actionsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\Integration_actionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function sharedChannels(): Client\Endpoint\SharedChannelsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\SharedChannelsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function termsOfService(): Client\Endpoint\TermsOfServiceEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\TermsOfServiceEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function imports(): Client\Endpoint\ImportsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\ImportsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
-    }
-
-    public function permissions(): Client\Endpoint\PermissionsEndpoint
-    {
-        return new \CedricZiel\MattermostPhp\Client\Endpoint\PermissionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\EmojiEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
     public function exports(): Client\Endpoint\ExportsEndpoint
@@ -198,8 +153,148 @@ class Client
         return new \CedricZiel\MattermostPhp\Client\Endpoint\ExportsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 
+    public function files(): Client\Endpoint\FilesEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\FilesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function groups(): Client\Endpoint\GroupsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\GroupsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function imports(): Client\Endpoint\ImportsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ImportsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function integration_actions(): Client\Endpoint\Integration_actionsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\Integration_actionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function ip(): Client\Endpoint\IpEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\IpEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function jobs(): Client\Endpoint\JobsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\JobsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function logs(): Client\Endpoint\LogsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\LogsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function metrics(): Client\Endpoint\MetricsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\MetricsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function permissions(): Client\Endpoint\PermissionsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PermissionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function plugins(): Client\Endpoint\PluginsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PluginsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function posts(): Client\Endpoint\PostsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function preferences(): Client\Endpoint\PreferencesEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\PreferencesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function reactions(): Client\Endpoint\ReactionsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ReactionsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function remoteClusters(): Client\Endpoint\RemoteClustersEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\RemoteClustersEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function reports(): Client\Endpoint\ReportsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ReportsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function roles(): Client\Endpoint\RolesEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\RolesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function root(): Client\Endpoint\RootEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\RootEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function scheduled_post(): Client\Endpoint\Scheduled_postEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\Scheduled_postEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function schemes(): Client\Endpoint\SchemesEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\SchemesEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function sharedChannels(): Client\Endpoint\SharedChannelsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\SharedChannelsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function status(): Client\Endpoint\StatusEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\StatusEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function system(): Client\Endpoint\SystemEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\SystemEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function teams(): Client\Endpoint\TeamsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\TeamsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function termsOfService(): Client\Endpoint\TermsOfServiceEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\TermsOfServiceEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function threads(): Client\Endpoint\ThreadsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\ThreadsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function uploads(): Client\Endpoint\UploadsEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\UploadsEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
     public function usage(): Client\Endpoint\UsageEndpoint
     {
         return new \CedricZiel\MattermostPhp\Client\Endpoint\UsageEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function users(): Client\Endpoint\UsersEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\UsersEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
+    }
+
+    public function webhooks(): Client\Endpoint\WebhooksEndpoint
+    {
+        return new \CedricZiel\MattermostPhp\Client\Endpoint\WebhooksEndpoint($this->baseUrl, $this->token, $this->httpClient, $this->requestFactory, $this->streamFactory);
     }
 }

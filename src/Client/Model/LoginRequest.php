@@ -12,6 +12,8 @@ class LoginRequest
         public ?bool $ldap_only = null,
         /** The password used for email authentication. */
         public ?string $password = null,
+        /** Magic link token for passwordless guest authentication. When provided, authenticates the user using the magic link token instead of password. Requires guest magic link feature to be enabled. */
+        public ?string $magic_link_token = null,
     ) {
     }
 }

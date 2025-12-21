@@ -54,7 +54,7 @@ class User
             roles: isset($data['roles']) ? $data['roles'] : null,
             locale: isset($data['locale']) ? $data['locale'] : null,
             notify_props: isset($data['notify_props']) ? $data['notify_props'] : null,
-            props: isset($data['props']) ? (object) $data['props'] : null,
+            props: isset($data['props']) ? $data['props'] : null,
             last_password_update: isset($data['last_password_update']) ? $data['last_password_update'] : null,
             last_picture_update: isset($data['last_picture_update']) ? $data['last_picture_update'] : null,
             failed_attempts: isset($data['failed_attempts']) ? $data['failed_attempts'] : null,

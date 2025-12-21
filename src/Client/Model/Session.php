@@ -33,7 +33,7 @@ class Session
             id: isset($data['id']) ? $data['id'] : null,
             is_oauth: isset($data['is_oauth']) ? $data['is_oauth'] : null,
             last_activity_at: isset($data['last_activity_at']) ? $data['last_activity_at'] : null,
-            props: isset($data['props']) ? (object) $data['props'] : null,
+            props: isset($data['props']) ? $data['props'] : null,
             roles: isset($data['roles']) ? $data['roles'] : null,
             team_members: isset($data['team_members']) ? $data['team_members'] : null,
             token: isset($data['token']) ? $data['token'] : null,

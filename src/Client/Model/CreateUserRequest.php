@@ -10,6 +10,8 @@ class CreateUserRequest
         public ?string $first_name = null,
         public ?string $last_name = null,
         public ?string $nickname = null,
+        public ?string $position = null,
+        public $timezone = null,
         /** Service-specific authentication data, such as email address. */
         public ?string $auth_data = null,
         /** The authentication service, one of "email", "gitlab", "ldap", "saml", "office365", "google", and "". */

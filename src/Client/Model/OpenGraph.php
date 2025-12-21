@@ -43,9 +43,9 @@ class OpenGraph
             images: isset($data['images']) ? $data['images'] : null,
             videos: isset($data['videos']) ? $data['videos'] : null,
             audios: isset($data['audios']) ? $data['audios'] : null,
-            article: isset($data['article']) ? (object) $data['article'] : null,
-            book: isset($data['book']) ? (object) $data['book'] : null,
-            profile: isset($data['profile']) ? (object) $data['profile'] : null,
+            article: isset($data['article']) ? $data['article'] : null,
+            book: isset($data['book']) ? $data['book'] : null,
+            profile: isset($data['profile']) ? $data['profile'] : null,
         );
         return $object;
     }

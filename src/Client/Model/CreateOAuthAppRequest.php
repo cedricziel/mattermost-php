@@ -17,6 +17,8 @@ class CreateOAuthAppRequest
         public ?string $icon_url = null,
         /** Set this to `true` to skip asking users for permission */
         public ?bool $is_trusted = null,
+        /** Set this to `true` to create a public client (no client secret). Public clients must use PKCE for authorization. */
+        public ?bool $is_public = null,
     ) {
     }
 }

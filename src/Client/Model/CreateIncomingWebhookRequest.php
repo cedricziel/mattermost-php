@@ -17,6 +17,8 @@ class CreateIncomingWebhookRequest
         public ?string $username = null,
         /** The profile picture this incoming webhook will use when posting. */
         public ?string $icon_url = null,
+        /** Whether the webhook is locked to the channel. */
+        public ?bool $channel_locked = null,
     ) {
     }
 }

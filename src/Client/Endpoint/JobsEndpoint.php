@@ -44,13 +44,19 @@ class JobsEndpoint
         /** The page to select. */
         ?int $page = 0,
         /** The number of jobs per page. */
-        ?int $per_page = 60,
+        ?int $per_page = 5,
+        /** The type of jobs to fetch. */
+        ?string $job_type = null,
+        /** The status of jobs to fetch. */
+        ?string $status = null,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
         $queryParameters['page'] = $page;
         $queryParameters['per_page'] = $per_page;
+        $queryParameters['job_type'] = $job_type;
+        $queryParameters['status'] = $status;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/jobs', $pathParameters, $queryParameters);
@@ -245,6 +251,41 @@ class JobsEndpoint
 
         $map = [];
         $map[200] = \CedricZiel\MattermostPhp\Client\Model\Job::class . '[]';
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Update the status of a job
+     * Update the status of a job. Valid status updates: - 'in_progress' -> 'pending' - 'in_progress' | 'pending' -> 'cancel_requested' - 'cancel_requested' -> 'canceled'
+     * Add force to the body of the PATCH request to bypass the given rules, the only statuses you can go to are: pending, cancel_requested and canceled. This can have unexpected consequences and should be used with caution.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function updateJobStatus(
+        /** Job GUID */
+        string $job_id,
+        \CedricZiel\MattermostPhp\Client\Model\UpdateJobStatusRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+        $pathParameters['job_id'] = $job_id;
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/jobs/{job_id}/status', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('PATCH', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

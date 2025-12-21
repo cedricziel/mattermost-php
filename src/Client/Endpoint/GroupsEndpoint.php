@@ -68,8 +68,6 @@ class GroupsEndpoint
      * Get groups
      * Retrieve a list of all groups not associated to a particular channel or team.
      *
-     * `not_associated_to_team` **OR** `not_associated_to_channel` is required.
-     *
      * If you use `not_associated_to_team`, you must be a team admin for that particular team (permission to manage that team).
      *
      * If you use `not_associated_to_channel`, you must be a channel admin for that particular channel (permission to manage that channel).
@@ -80,10 +78,6 @@ class GroupsEndpoint
      * @return \CedricZiel\MattermostPhp\Client\Model\Group[]
      */
     public function getGroups(
-        /** Team GUID which is used to return all the groups not associated to this team */
-        string $not_associated_to_team,
-        /** Group GUID which is used to return all the groups not associated to this channel */
-        string $not_associated_to_channel,
         /** The page to select. */
         ?int $page = 0,
         /** The number of groups per page. */
@@ -92,6 +86,10 @@ class GroupsEndpoint
         ?string $q = null,
         /** Boolean which adds the `member_count` attribute to each group JSON object */
         ?bool $include_member_count = null,
+        /** Team GUID which is used to return all the groups not associated to this team */
+        ?string $not_associated_to_team = null,
+        /** Group GUID which is used to return all the groups not associated to this channel */
+        ?string $not_associated_to_channel = null,
         /**
          * Only return groups that have been modified since the given Unix timestamp (in milliseconds). All modified groups, including deleted and created groups, will be returned.
          * __Minimum server version__: 5.24
@@ -216,7 +214,7 @@ class GroupsEndpoint
     public function deleteGroup(
         /** The ID of the group. */
         string $group_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\StatusOK {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -231,8 +229,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
 
         return $this->mapResponse($response, $map);
     }
@@ -776,12 +774,13 @@ class GroupsEndpoint
      * __Minimum server version__: 6.3
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\GroupMember[]
      */
     public function deleteGroupMembers(
         /** The ID of the group to delete. */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\DeleteGroupMembersRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|array {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -797,8 +796,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GroupMember::class . '[]';
 
         return $this->mapResponse($response, $map);
     }
@@ -813,12 +812,13 @@ class GroupsEndpoint
      * __Minimum server version__: 6.3
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\GroupMember[]
      */
     public function addGroupMembers(
         /** The ID of the group. */
         string $group_id,
         \CedricZiel\MattermostPhp\Client\Model\AddGroupMembersRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|array {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -834,8 +834,8 @@ class GroupsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
-        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\GroupMember::class . '[]';
 
         return $this->mapResponse($response, $map);
     }
@@ -932,6 +932,9 @@ class GroupsEndpoint
      * Get team groups
      * Retrieve the list of groups associated with a given team.
      *
+     * ##### Permissions
+     * Must have the `list_team_channels` permission.
+     *
      * __Minimum server version__: 5.11
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
@@ -946,6 +949,24 @@ class GroupsEndpoint
         ?int $per_page = 60,
         /** Boolean which filters in the group entries with the `allow_reference` attribute set. */
         ?bool $filter_allow_reference = false,
+        /** Boolean which adds a `member_count` field to each group object. */
+        ?bool $include_member_count = false,
+        /** Boolean which adds timezone information for group members. */
+        ?bool $include_timezones = false,
+        /** Boolean which adds total count of groups in the response. */
+        ?bool $include_total_count = false,
+        /** Boolean which includes archived groups in the response. */
+        ?bool $include_archived = false,
+        /** Boolean which filters out archived groups from the response. */
+        ?bool $filter_archived = false,
+        /** Boolean which filters groups based on parent team permissions. */
+        ?bool $filter_parent_team_permitted = false,
+        /** User ID to filter groups that have this member. */
+        ?string $filter_has_member = null,
+        /** Boolean which adds member IDs to the group objects. */
+        ?bool $include_member_ids = false,
+        /** Boolean which includes groups from syncable sources. */
+        ?bool $only_syncable_sources = false,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -954,6 +975,15 @@ class GroupsEndpoint
         $queryParameters['page'] = $page;
         $queryParameters['per_page'] = $per_page;
         $queryParameters['filter_allow_reference'] = $filter_allow_reference;
+        $queryParameters['include_member_count'] = $include_member_count;
+        $queryParameters['include_timezones'] = $include_timezones;
+        $queryParameters['include_total_count'] = $include_total_count;
+        $queryParameters['include_archived'] = $include_archived;
+        $queryParameters['filter_archived'] = $filter_archived;
+        $queryParameters['filter_parent_team_permitted'] = $filter_parent_team_permitted;
+        $queryParameters['filter_has_member'] = $filter_has_member;
+        $queryParameters['include_member_ids'] = $include_member_ids;
+        $queryParameters['only_syncable_sources'] = $only_syncable_sources;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/teams/{team_id}/groups', $pathParameters, $queryParameters);
@@ -979,7 +1009,7 @@ class GroupsEndpoint
      * Retrieve the set of groups associated with the channels in the given team grouped by channel.
      *
      * ##### Permissions
-     * Must have `manage_system` permission or can access only for current user
+     * Must have the `list_team_channels` permission.
      *
      * __Minimum server version__: 5.11
      *
@@ -1054,6 +1084,43 @@ class GroupsEndpoint
         $map = [];
         $map[200] = \CedricZiel\MattermostPhp\Client\Model\Group::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Get groups by name
+     * Get a list of groups based on a provided list of names.
+     *
+     * ##### Permissions
+     * Requires an active session but no other permissions.
+     *
+     * __Minimum server version__: 11.0
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Group[]
+     */
+    public function getGroupsByNames(
+        \CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest $requestBody,
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/groups/names', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Group::class . '[]';
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
         return $this->mapResponse($response, $map);

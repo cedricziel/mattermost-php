@@ -61,6 +61,11 @@ class SearchAllChannelsRequest
          * __Minimum server version__: 5.35
          */
         public ?bool $include_search_by_id = false,
+        /**
+         * If set to true, only returns channels that are local to this server.
+         * __Minimum server version__: 10.2
+         */
+        public ?bool $exclude_remote = false,
     ) {
     }
 }

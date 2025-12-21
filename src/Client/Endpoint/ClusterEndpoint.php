@@ -32,7 +32,7 @@ class ClusterEndpoint
 
     /**
      * Get cluster status
-     * Get a set of information for each node in the cluster, useful for checking the status and health of each node.
+     * Get a list of all healthy nodes, including local information and status of each one. If a node is not present, it means it is not healthy.
      * ##### Permissions
      * Must have `manage_system` permission.
      *

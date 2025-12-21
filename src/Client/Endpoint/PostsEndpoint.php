@@ -300,6 +300,8 @@ class PostsEndpoint
         ?string $fromPost = '',
         /** The create_at timestamp to return the next page of posts from */
         ?int $fromCreateAt = 0,
+        /** The update_at timestamp to return the next page of posts from. You cannot set this flag with direction=down. */
+        ?int $fromUpdateAt = 0,
         /** The direction to return the posts. Either up or down. */
         ?string $direction = '',
         /** Whether to skip fetching threads or not */
@@ -308,6 +310,8 @@ class PostsEndpoint
         ?bool $collapsedThreads = false,
         /** Whether to return the associated users as part of the response or not */
         ?bool $collapsedThreadsExtended = false,
+        /** This flag is used to make the API work with the updateAt value. If you set this flag, you must set a value for fromUpdateAt. */
+        ?bool $updatesOnly = false,
     ): \CedricZiel\MattermostPhp\Client\Model\PostList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
@@ -316,10 +320,12 @@ class PostsEndpoint
         $queryParameters['perPage'] = $perPage;
         $queryParameters['fromPost'] = $fromPost;
         $queryParameters['fromCreateAt'] = $fromCreateAt;
+        $queryParameters['fromUpdateAt'] = $fromUpdateAt;
         $queryParameters['direction'] = $direction;
         $queryParameters['skipFetchThreads'] = $skipFetchThreads;
         $queryParameters['collapsedThreads'] = $collapsedThreads;
         $queryParameters['collapsedThreadsExtended'] = $collapsedThreadsExtended;
+        $queryParameters['updatesOnly'] = $updatesOnly;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/posts/{post_id}/thread', $pathParameters, $queryParameters);
@@ -863,6 +869,157 @@ class PostsEndpoint
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Restores a past version of a post
+     * Restores the post with `post_id` to its past version having the ID `restore_version_id`.
+     * ##### Permissions
+     * Must have `read_channel` permission for the channel the post is in. Must have `edit_post` permission for the channel the post is being moved to. Must be the author of the post being restored.
+     *
+     * __Minimum server version__: 10.5
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function restorePostVersion(
+        /** The identifier of the post to restore */
+        string $post_id,
+        /** The identifier of the past version of post to restore to */
+        string $restore_version_id,
+    ): \CedricZiel\MattermostPhp\Client\Model\Post|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+        $pathParameters['post_id'] = $post_id;
+        $pathParameters['restore_version_id'] = $restore_version_id;
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/posts/{post_id}/restore/{restore_version_id}', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Post::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Reveal a burn-on-read post
+     * Reveal a burn-on-read post. This endpoint allows a user to reveal a post that was created with burn-on-read functionality. Once revealed, the post content becomes visible to the user. If the post is already revealed and not expired, this is a no-op. If the post has expired, an error will be returned.
+     * ##### Permissions
+     * Must have `read_channel` permission for the channel the post is in.<br/> Must be a member of the channel the post is in.<br/> Cannot reveal your own post.
+     * ##### Feature Flag
+     * Requires `BurnOnRead` feature flag and Enterprise Advanced license.
+     * __Minimum server version__: 11.2
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function revealPost(
+        /** The identifier of the post to reveal */
+        string $post_id,
+    ): \CedricZiel\MattermostPhp\Client\Model\Post|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+        $pathParameters['post_id'] = $post_id;
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/posts/{post_id}/reveal', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Post::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Burn a burn-on-read post
+     * Burn a burn-on-read post. This endpoint allows a user to burn a post that was created with burn-on-read functionality. If the user is the author of the post, the post will be permanently deleted. If the user is not the author, the post will be expired for that user by updating their read receipt expiration time. If the user has not revealed the post yet, an error will be returned. If the post is already expired for the user, this is a no-op.
+     * ##### Permissions
+     * Must have `read_channel` permission for the channel the post is in.<br/> Must be a member of the channel the post is in.
+     * ##### Feature Flag
+     * Requires `BurnOnRead` feature flag and Enterprise Advanced license.
+     * __Minimum server version__: 11.2
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function burnPost(
+        /** The identifier of the post to burn */
+        string $post_id,
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+        $pathParameters['post_id'] = $post_id;
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/posts/{post_id}/burn', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('DELETE', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Rewrite a message using AI
+     * Rewrite a message using AI based on the specified action. The message will be processed by an AI agent and returned in a rewritten form.
+     * ##### Permissions
+     * Must be authenticated.
+     * __Minimum server version__: 11.2
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function rewriteMessage(
+        \CedricZiel\MattermostPhp\Client\Model\RewriteMessageRequest $requestBody,
+    ): \CedricZiel\MattermostPhp\Client\Model\RewriteMessageResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError {
+        $pathParameters = [];
+        $queryParameters = [];
+
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/posts/rewrite', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('POST', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\RewriteMessageResponse::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[500] = \CedricZiel\MattermostPhp\Client\Model\AppError::class;
 
         return $this->mapResponse($response, $map);
     }

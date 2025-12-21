@@ -916,49 +916,6 @@ class ChannelsEndpoint
     }
 
     /**
-     * Search archived channels
-     * Search archived channels on a team based on the search term provided in the request body.
-     *
-     * __Minimum server version__: 5.18
-     *
-     * ##### Permissions
-     * Must have the `list_team_channels` permission.
-     *
-     * In server version 5.18 and later, a user without the `list_team_channels` permission will be able to use this endpoint, with the search results limited to the channels that the user is a member of.
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     * @return \CedricZiel\MattermostPhp\Client\Model\Channel[]
-     */
-    public function searchArchivedChannels(
-        /** Team GUID */
-        string $team_id,
-        \CedricZiel\MattermostPhp\Client\Model\SearchArchivedChannelsRequest $requestBody,
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
-        $pathParameters = [];
-        $queryParameters = [];
-
-        $pathParameters['team_id'] = $team_id;
-
-        // build URI through path and query parameters
-        $uri = $this->buildUri('/api/v4/teams/{team_id}/channels/search_archived', $pathParameters, $queryParameters);
-
-        $request = $this->requestFactory->createRequest('POST', $uri);
-        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
-        $request = $request->withBody($this->streamFactory->createStream(json_encode($requestBody) ?? ''));
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $map = [];
-        $map[201] = \CedricZiel\MattermostPhp\Client\Model\Channel::class . '[]';
-        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
-        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
-        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
-        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
-
-        return $this->mapResponse($response, $map);
-    }
-
-    /**
      * Get a channel by name
      * Gets channel from the provided team id and channel name strings.
      * ##### Permissions
@@ -1052,7 +1009,7 @@ class ChannelsEndpoint
         string $channel_id,
         /** The page to select. */
         ?int $page = 0,
-        /** The number of members per page. There is a maximum limit of 200 members. */
+        /** The number of members per page. */
         ?int $per_page = 60,
     ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
@@ -1080,8 +1037,8 @@ class ChannelsEndpoint
     }
 
     /**
-     * Add user to channel
-     * Add a user to a channel by creating a channel member object.
+     * Add user(s) to channel
+     * Add a user(s) to a channel by creating a channel member object(s).
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function addChannelMember(
@@ -2070,6 +2027,46 @@ class ChannelsEndpoint
 
         $map = [];
         $map[200] = \CedricZiel\MattermostPhp\Client\Model\SidebarCategory::class;
+        $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
+        $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
+        $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
+        $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
+
+        return $this->mapResponse($response, $map);
+    }
+
+    /**
+     * Get common teams for members of a Group Message.
+     * Gets all the common teams for all active members of a Group Message channel.
+     * Returns empty list of no common teams are found.
+     *
+     * __Minimum server version__: 9.1
+     *
+     * ##### Permissions
+     * Must be authenticated and have the `read_channel` permission for the channel.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @return \CedricZiel\MattermostPhp\Client\Model\Team[]
+     */
+    public function getGroupMessageMembersCommonTeams(
+        /** Channel GUID */
+        string $channel_id,
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
+        $pathParameters = [];
+        $queryParameters = [];
+
+        $pathParameters['channel_id'] = $channel_id;
+
+        // build URI through path and query parameters
+        $uri = $this->buildUri('/api/v4/channels/{channel_id}/common_teams', $pathParameters, $queryParameters);
+
+        $request = $this->requestFactory->createRequest('GET', $uri);
+        $request = $request->withHeader('Authorization', 'Bearer ' . $this->token);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $map = [];
+        $map[200] = \CedricZiel\MattermostPhp\Client\Model\Team::class . '[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;

@@ -43,7 +43,7 @@ class Post
             original_id: isset($data['original_id']) ? $data['original_id'] : null,
             message: isset($data['message']) ? $data['message'] : null,
             type: isset($data['type']) ? $data['type'] : null,
-            props: isset($data['props']) ? (object) $data['props'] : null,
+            props: isset($data['props']) ? $data['props'] : null,
             hashtag: isset($data['hashtag']) ? $data['hashtag'] : null,
             file_ids: isset($data['file_ids']) ? $data['file_ids'] : null,
             pending_post_id: isset($data['pending_post_id']) ? $data['pending_post_id'] : null,

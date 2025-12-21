@@ -18,8 +18,8 @@ class PostListWithSearchMatches
     ): PostListWithSearchMatches {
         $object = new self(
             order: isset($data['order']) ? $data['order'] : null,
-            posts: isset($data['posts']) ? (object) $data['posts'] : null,
-            matches: isset($data['matches']) ? (object) $data['matches'] : null,
+            posts: isset($data['posts']) ? $data['posts'] : null,
+            matches: isset($data['matches']) ? $data['matches'] : null,
         );
         return $object;
     }
