@@ -5,9 +5,10 @@ namespace CedricZiel\MattermostPhp\Test;
 use CedricZiel\MattermostPhp\Apps\Manifest;
 use CedricZiel\MattermostPhp\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
 #[CoversClass(Manifest::class)]
-#[CoversClass(Request::class)]
+#[UsesClass(Request::class)]
 class ManifestTest extends MattermostTestCase
 {
 
