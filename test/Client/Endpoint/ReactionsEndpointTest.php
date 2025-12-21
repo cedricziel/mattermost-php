@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ReactionsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsRequest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -38,6 +39,8 @@ class ReactionsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getReactions($post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/reactions');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -53,6 +56,8 @@ class ReactionsEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteReaction($user_id, $post_id, $emoji_name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/users/test-user_id/posts/test-post_id/reactions/test-emoji_name');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }

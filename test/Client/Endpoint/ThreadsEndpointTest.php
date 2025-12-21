@@ -46,7 +46,10 @@ class ThreadsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserThreads($user_id, $team_id, $since, $deleted, $extended, $page, $per_page, $totalsOnly, $threadsOnly);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['since' => '1', 'page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserThreads::class, $result);
     }
 }

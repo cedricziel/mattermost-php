@@ -42,6 +42,8 @@ class FilesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getFileLink($file_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/files/test-file_id/link');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse::class, $result);
     }
@@ -56,6 +58,8 @@ class FilesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getFileInfo($file_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/files/test-file_id/info');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfo::class, $result);
     }
@@ -75,6 +79,8 @@ class FilesEndpointTest extends ClientTestCase
         $result = $this->endpoint->searchFiles($terms, $is_or_search, $time_zone_offset, $include_deleted_channels, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/files/search');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfoList::class, $result);
     }

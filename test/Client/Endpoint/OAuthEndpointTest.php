@@ -6,8 +6,10 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\OAuthEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\AuthorizationServerMetadata;
+use CedricZiel\MattermostPhp\Client\Model\CreateOAuthAppRequest;
 use CedricZiel\MattermostPhp\Client\Model\OAuthApp;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\UpdateOAuthAppRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -33,6 +35,22 @@ class OAuthEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function createOAuthAppBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateOAuthAppRequest(name: 'test-name', description: 'test-description', callback_urls: [], homepage: 'test-homepage');
+
+        $result = $this->endpoint->createOAuthApp($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/oauth/apps');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
+    }
+
+    #[Test]
     public function getOAuthAppsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['status' => 'ok']]);
@@ -43,7 +61,10 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->getOAuthApps($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/oauth/apps');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -56,6 +77,25 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->getOAuthApp($app_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/oauth/apps/test-app_id');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
+    }
+
+    #[Test]
+    public function updateOAuthAppBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]);
+
+        $app_id = 'test-app_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateOAuthAppRequest(id: 'test-id', name: 'test-name', description: 'test-description', callback_urls: [], homepage: 'test-homepage');
+
+        $result = $this->endpoint->updateOAuthApp($app_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/oauth/apps/test-app_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
     }
@@ -70,6 +110,8 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteOAuthApp($app_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/oauth/apps/test-app_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -84,6 +126,8 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->regenerateOAuthAppSecret($app_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/oauth/apps/test-app_id/regen_secret');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
     }
@@ -98,6 +142,8 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->getOAuthAppInfo($app_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/oauth/apps/test-app_id/info');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result);
     }
@@ -110,6 +156,8 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAuthorizationServerMetadata();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/.well-known/oauth-authorization-server');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\AuthorizationServerMetadata::class, $result);
     }
@@ -126,6 +174,9 @@ class OAuthEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAuthorizedOAuthAppsForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/oauth/apps/authorized');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 }

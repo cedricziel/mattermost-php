@@ -34,6 +34,8 @@ class ClusterEndpointTest extends ClientTestCase
         $result = $this->endpoint->getClusterStatus();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cluster/status');
         $this->assertRequestHasAuthHeader();
     }
 }

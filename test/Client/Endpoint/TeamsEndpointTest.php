@@ -5,15 +5,24 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\TeamsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest;
+use CedricZiel\MattermostPhp\Client\Model\CreateTeamRequest;
 use CedricZiel\MattermostPhp\Client\Model\FileInfoList;
 use CedricZiel\MattermostPhp\Client\Model\GetTeamInviteInfoResponse;
-use CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse;
+use CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest;
+use CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamRequest;
+use CedricZiel\MattermostPhp\Client\Model\InviteUsersToTeamRequest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\Team;
 use CedricZiel\MattermostPhp\Client\Model\TeamExists;
 use CedricZiel\MattermostPhp\Client\Model\TeamMember;
 use CedricZiel\MattermostPhp\Client\Model\TeamStats;
 use CedricZiel\MattermostPhp\Client\Model\TeamUnread;
+use CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberRolesRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberSchemeRolesRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateTeamPrivacyRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateTeamRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateTeamSchemeRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -25,7 +34,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(TeamMember::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(TeamStats::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(TeamUnread::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(ImportTeamResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetTeamInviteInfoResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(FileInfoList::class)]
 class TeamsEndpointTest extends ClientTestCase
@@ -45,6 +53,22 @@ class TeamsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function createTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateTeamRequest(name: 'test-name', display_name: 'test-display_name', type: 'test-type');
+
+        $result = $this->endpoint->createTeam($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
+    }
+
+    #[Test]
     public function getAllTeamsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['status' => 'ok']]);
@@ -57,7 +81,10 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAllTeams($page, $per_page, $include_total_count, $exclude_policy_constrained);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -70,6 +97,25 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeam($team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/test-team_id');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
+    }
+
+    #[Test]
+    public function updateTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateTeamRequest(id: 'test-id', display_name: 'test-display_name', description: 'test-description', company_name: 'test-company_name', allowed_domains: 'test-allowed_domains', invite_id: 'test-invite_id', allow_open_invite: 'test-allow_open_invite');
+
+        $result = $this->endpoint->updateTeam($team_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/teams/test-team_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
     }
@@ -85,8 +131,27 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->softDeleteTeam($team_id, $permanent);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/teams/test-team_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updateTeamPrivacyBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateTeamPrivacyRequest(privacy: 'test-privacy');
+
+        $result = $this->endpoint->updateTeamPrivacy($team_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/privacy');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
     }
 
     #[Test]
@@ -99,6 +164,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->restoreTeam($team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/restore');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
     }
@@ -113,6 +180,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamByName($name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/name/test-name');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
     }
@@ -127,6 +196,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->teamExists($name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/name/test-name/exists');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamExists::class, $result);
     }
@@ -141,6 +212,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamsForUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -158,6 +231,26 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamMembers($team_id, $page, $per_page, $sort, $exclude_deleted_users);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'sort' => 'test-sort']);
+    }
+
+    #[Test]
+    public function addTeamMembersBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, [['status' => 'ok']]);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest(items: []);
+        $graceful = true;
+
+        $result = $this->endpoint->addTeamMembers($team_id, $requestBody, $graceful);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members/batch');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -171,6 +264,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamMembersForUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/members');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -185,6 +280,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamMember($team_id, $user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members/test-user_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result);
     }
@@ -200,8 +297,26 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->removeTeamMember($team_id, $user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members/test-user_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function getTeamMembersByIdsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest(items: []);
+
+        $result = $this->endpoint->getTeamMembersByIds($team_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members/ids');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]
@@ -214,6 +329,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamStats($team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/stats');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamStats::class, $result);
     }
@@ -228,6 +345,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->regenerateTeamInviteId($team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/regenerate_invite_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result);
     }
@@ -242,6 +361,44 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->removeTeamIcon($team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/image');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updateTeamMemberRolesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $team_id = 'test-team_id';
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberRolesRequest(roles: 'test-roles');
+
+        $result = $this->endpoint->updateTeamMemberRoles($team_id, $user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members/test-user_id/roles');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updateTeamMemberSchemeRolesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $team_id = 'test-team_id';
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateTeamMemberSchemeRolesRequest(scheme_admin: true, scheme_user: true);
+
+        $result = $this->endpoint->updateTeamMemberSchemeRoles($team_id, $user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/members/test-user_id/schemeRoles');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -258,7 +415,10 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamsUnreadForUser($user_id, $exclude_team, $include_collapsed_threads);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/unread');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['exclude_team' => 'test-exclude_team']);
     }
 
     #[Test]
@@ -272,8 +432,46 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamUnread($user_id, $team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/unread');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamUnread::class, $result);
+    }
+
+    #[Test]
+    public function inviteUsersToTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\InviteUsersToTeamRequest(items: []);
+
+        $result = $this->endpoint->inviteUsersToTeam($team_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/invite/email');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function inviteGuestsToTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamRequest(emails: [], channels: []);
+        $graceful = true;
+        $guest_magic_link = true;
+
+        $result = $this->endpoint->inviteGuestsToTeam($team_id, $requestBody, $graceful, $guest_magic_link);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/invite-guests/email');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -284,24 +482,10 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->invalidateEmailInvites();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/teams/invites/email');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
-    }
-
-    #[Test]
-    public function importTeamBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['results' => 'test-results']);
-
-        $team_id = 'test-team_id';
-        $filesize = 1;
-        $importFrom = 'test-importFrom';
-
-        $result = $this->endpoint->importTeam($team_id, null, $filesize, $importFrom);
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse::class, $result);
     }
 
     #[Test]
@@ -314,8 +498,27 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamInviteInfo($invite_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/invite/test-invite_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetTeamInviteInfoResponse::class, $result);
+    }
+
+    #[Test]
+    public function updateTeamSchemeBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateTeamSchemeRequest(scheme_id: 'test-scheme_id');
+
+        $result = $this->endpoint->updateTeamScheme($team_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/scheme');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -334,6 +537,8 @@ class TeamsEndpointTest extends ClientTestCase
         $result = $this->endpoint->searchFiles($team_id, $terms, $is_or_search, $time_zone_offset, $include_deleted_channels, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/files/search');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfoList::class, $result);
     }

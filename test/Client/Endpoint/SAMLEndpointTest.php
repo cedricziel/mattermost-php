@@ -31,18 +31,6 @@ class SAMLEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function uploadSamlIdpCertificateBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'test-status']);
-
-        $result = $this->endpoint->uploadSamlIdpCertificate(null);
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
-    }
-
-    #[Test]
     public function deleteSamlIdpCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
@@ -50,18 +38,8 @@ class SAMLEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteSamlIdpCertificate();
 
         $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
-    }
-
-    #[Test]
-    public function uploadSamlPublicCertificateBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'test-status']);
-
-        $result = $this->endpoint->uploadSamlPublicCertificate(null);
-
-        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/saml/certificate/idp');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -74,18 +52,8 @@ class SAMLEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteSamlPublicCertificate();
 
         $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
-    }
-
-    #[Test]
-    public function uploadSamlPrivateCertificateBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'test-status']);
-
-        $result = $this->endpoint->uploadSamlPrivateCertificate(null);
-
-        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/saml/certificate/public');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -98,6 +66,8 @@ class SAMLEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteSamlPrivateCertificate();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/saml/certificate/private');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -110,6 +80,8 @@ class SAMLEndpointTest extends ClientTestCase
         $result = $this->endpoint->getSamlCertificateStatus();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/saml/certificate/status');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SamlCertificateStatus::class, $result);
     }

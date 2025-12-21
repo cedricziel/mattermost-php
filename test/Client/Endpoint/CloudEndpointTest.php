@@ -42,6 +42,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getCloudLimits();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/limits');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ProductLimits::class, $result);
     }
@@ -54,6 +56,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getCloudProducts();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/products');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -65,6 +69,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getCloudCustomer();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/customer');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\CloudCustomer::class, $result);
     }
@@ -77,6 +83,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getSubscription();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/subscription');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Subscription::class, $result);
     }
@@ -89,6 +97,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getEndpointForInstallationInformation();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/installation');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Installation::class, $result);
     }
@@ -101,6 +111,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getInvoicesForSubscription();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/subscription/invoices');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -112,6 +124,8 @@ class CloudEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPreviewModalData();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/cloud/preview/modal_data');
         $this->assertRequestHasAuthHeader();
     }
 }

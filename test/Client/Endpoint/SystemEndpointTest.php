@@ -9,9 +9,12 @@ use CedricZiel\MattermostPhp\Client\Model\Config;
 use CedricZiel\MattermostPhp\Client\Model\EnvironmentConfig;
 use CedricZiel\MattermostPhp\Client\Model\GetLicenseLoadMetricResponse;
 use CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink;
+use CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedRequest;
+use CedricZiel\MattermostPhp\Client\Model\PostLogRequest;
 use CedricZiel\MattermostPhp\Client\Model\Server_Busy;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse;
+use CedricZiel\MattermostPhp\Client\Model\TestSiteURLRequest;
 use CedricZiel\MattermostPhp\Client\Model\UpgradeToEnterpriseStatusResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -54,7 +57,10 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPing($get_server_status, $device_id, $use_rest_semantics);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/system/ping');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['device_id' => 'test-device_id']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse::class, $result);
     }
 
@@ -71,7 +77,26 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getNotices($teamId, $clientVersion, $client, $locale);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/system/notices/test-teamId');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['clientVersion' => 'test-clientVersion', 'locale' => 'test-locale', 'client' => 'test-client']);
+    }
+
+    #[Test]
+    public function markNoticesViewedBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedRequest(items: []);
+
+        $result = $this->endpoint->markNoticesViewed($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/system/notices/view');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -82,6 +107,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->databaseRecycle();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/database/recycle');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -94,6 +121,24 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->testNotification();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/notifications/test');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function testSiteURLBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\TestSiteURLRequest(site_url: 'test-site_url');
+
+        $result = $this->endpoint->testSiteURL($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/site_url/test');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -109,7 +154,10 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getConfig($remove_masked, $remove_defaults);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/config');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['remove_defaults' => 'test-remove_defaults']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Config::class, $result);
     }
 
@@ -121,6 +169,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->reloadConfig();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/config/reload');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -133,6 +183,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getEnvironmentConfig();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/config/environment');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\EnvironmentConfig::class, $result);
     }
@@ -145,6 +197,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getLicenseLoadMetric();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/license/load_metric');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetLicenseLoadMetricResponse::class, $result);
     }
@@ -157,6 +211,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->requestLicenseRenewalLink();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/license/renewal');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink::class, $result);
     }
@@ -172,7 +228,10 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAudits($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/audits');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -183,6 +242,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->invalidateCaches();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/caches/invalidate');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -195,6 +256,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->getServerBusyExpires();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/server_busy');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Server_Busy::class, $result);
     }
@@ -207,6 +270,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->clearServerBusy();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/server_busy');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -219,6 +284,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->upgradeToEnterpriseStatus();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/upgrade_to_enterprise/status');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UpgradeToEnterpriseStatusResponse::class, $result);
     }
@@ -231,6 +298,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->restartServer();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/restart');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -243,6 +312,8 @@ class SystemEndpointTest extends ClientTestCase
         $result = $this->endpoint->checkIntegrity();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/integrity');
         $this->assertRequestHasAuthHeader();
     }
 }

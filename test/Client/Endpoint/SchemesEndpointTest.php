@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\SchemesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreateSchemeRequest;
 use CedricZiel\MattermostPhp\Client\Model\Scheme;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
@@ -42,7 +43,26 @@ class SchemesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getSchemes($scope, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/schemes');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['scope' => 'test-scope', 'page' => '1', 'per_page' => '1']);
+    }
+
+    #[Test]
+    public function createSchemeBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'name' => 'test-name', 'description' => 'test-description', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'scope' => 'test-scope', 'default_team_admin_role' => 'test-default_team_admin_role', 'default_team_user_role' => 'test-default_team_user_role', 'default_channel_admin_role' => 'test-default_channel_admin_role', 'default_channel_user_role' => 'test-default_channel_user_role']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateSchemeRequest(display_name: 'test-display_name', scope: 'test-scope');
+
+        $result = $this->endpoint->createScheme($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/schemes');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Scheme::class, $result);
     }
 
     #[Test]
@@ -55,6 +75,8 @@ class SchemesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getScheme($scheme_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/schemes/test-scheme_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Scheme::class, $result);
     }
@@ -69,6 +91,8 @@ class SchemesEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteScheme($scheme_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/schemes/test-scheme_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -85,7 +109,10 @@ class SchemesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamsForScheme($scheme_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/schemes/test-scheme_id/teams');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -100,6 +127,9 @@ class SchemesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getChannelsForScheme($scheme_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/schemes/test-scheme_id/channels');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 }

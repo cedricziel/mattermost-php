@@ -38,6 +38,8 @@ class AgentsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAgents();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/agents');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\AgentsResponse::class, $result);
     }
@@ -50,6 +52,8 @@ class AgentsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getLLMServices();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/llmservices');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ServicesResponse::class, $result);
     }

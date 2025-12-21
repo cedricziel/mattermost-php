@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PlaybooksEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreatePlaybookRequest;
+use CedricZiel\MattermostPhp\Client\Model\CreatePlaybookResponse;
 use CedricZiel\MattermostPhp\Client\Model\Playbook;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookList;
+use CedricZiel\MattermostPhp\Client\Model\ReorderPlaybookPropertyFieldsRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PlaybooksEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookList::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(CreatePlaybookResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Playbook::class)]
 class PlaybooksEndpointTest extends ClientTestCase
 {
@@ -45,8 +49,27 @@ class PlaybooksEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPlaybooks($team_id, $page, $per_page, $sort, $direction, $with_archived);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'page' => '1', 'per_page' => '1', 'sort' => 'test-sort', 'direction' => 'test-direction']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookList::class, $result);
+    }
+
+    #[Test]
+    public function createPlaybookBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreatePlaybookRequest(title: 'test-title', team_id: 'test-team_id', create_public_playbook_run: true, checklists: [], member_ids: []);
+
+        $result = $this->endpoint->createPlaybook($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\CreatePlaybookResponse::class, $result);
     }
 
     #[Test]
@@ -59,6 +82,8 @@ class PlaybooksEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPlaybook($id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Playbook::class, $result);
     }
@@ -74,6 +99,25 @@ class PlaybooksEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPlaybookPropertyFields($id, $updated_since);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['updated_since' => '1']);
+    }
+
+    #[Test]
+    public function reorderPlaybookPropertyFieldsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $id = 'test-id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ReorderPlaybookPropertyFieldsRequest(field_id: 'test-field_id', target_position: 1234567890);
+
+        $result = $this->endpoint->reorderPlaybookPropertyFields($id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields/reorder');
         $this->assertRequestHasAuthHeader();
     }
 }

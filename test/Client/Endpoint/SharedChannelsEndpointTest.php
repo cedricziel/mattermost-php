@@ -44,7 +44,10 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAllSharedChannels($team_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/sharedchannels/test-team_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -64,7 +67,10 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getSharedChannelRemotesByRemoteCluster($remote_id, $include_unconfirmed, $exclude_confirmed, $exclude_home, $exclude_remote, $include_deleted, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/remotecluster/test-remote_id/sharedchannelremotes');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -77,6 +83,8 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getRemoteClusterInfo($remote_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/sharedchannels/remote_info/test-remote_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RemoteClusterInfo::class, $result);
     }
@@ -92,6 +100,8 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->inviteRemoteClusterToChannel($remote_id, $channel_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/remotecluster/test-remote_id/channels/test-channel_id/invite');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -107,6 +117,8 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->uninviteRemoteClusterToChannel($remote_id, $channel_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/remotecluster/test-remote_id/channels/test-channel_id/uninvite');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -121,6 +133,8 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getSharedChannelRemotes($channel_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/sharedchannels/test-channel_id/remotes');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -135,6 +149,8 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $result = $this->endpoint->canUserDirectMessage($user_id, $other_user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/sharedchannels/users/test-user_id/can_dm/test-other_user_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\CanUserDirectMessageResponse::class, $result);
     }

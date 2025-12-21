@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\DataRetentionEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest;
+use CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest;
 use CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData;
 use CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse;
 use CedricZiel\MattermostPhp\Client\Model\GlobalDataRetentionPolicy;
+use CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest;
+use CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest;
 use CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForChannelList;
 use CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForTeamList;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
@@ -50,7 +54,10 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamPoliciesForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/data_retention/team_policies');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForTeamList::class, $result);
     }
 
@@ -66,7 +73,10 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getChannelPoliciesForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/data_retention/channel_policies');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForChannelList::class, $result);
     }
 
@@ -78,6 +88,8 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getDataRetentionPolicy();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/data_retention/policy');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GlobalDataRetentionPolicy::class, $result);
     }
@@ -90,6 +102,8 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getDataRetentionPoliciesCount();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/data_retention/policies_count');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse::class, $result);
     }
@@ -105,7 +119,10 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getDataRetentionPolicies($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/data_retention/policies');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -118,6 +135,8 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteDataRetentionPolicy($policy_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -134,7 +153,44 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTeamsForRetentionPolicy($policy_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/teams');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+    }
+
+    #[Test]
+    public function addTeamsToRetentionPolicyBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $policy_id = 'test-policy_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest(items: []);
+
+        $result = $this->endpoint->addTeamsToRetentionPolicy($policy_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/teams');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function removeTeamsFromRetentionPolicyBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $policy_id = 'test-policy_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest(items: []);
+
+        $result = $this->endpoint->removeTeamsFromRetentionPolicy($policy_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/teams');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -149,7 +205,44 @@ class DataRetentionEndpointTest extends ClientTestCase
         $result = $this->endpoint->getChannelsForRetentionPolicy($policy_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/channels');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData::class, $result);
+    }
+
+    #[Test]
+    public function addChannelsToRetentionPolicyBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $policy_id = 'test-policy_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest(items: []);
+
+        $result = $this->endpoint->addChannelsToRetentionPolicy($policy_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/channels');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function removeChannelsFromRetentionPolicyBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $policy_id = 'test-policy_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest(items: []);
+
+        $result = $this->endpoint->removeChannelsFromRetentionPolicy($policy_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/channels');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 }

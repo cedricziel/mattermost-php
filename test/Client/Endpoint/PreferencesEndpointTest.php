@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PreferencesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\DeletePreferencesRequest;
 use CedricZiel\MattermostPhp\Client\Model\Preference;
+use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PreferencesEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Preference::class)]
 class PreferencesEndpointTest extends ClientTestCase
 {
@@ -38,7 +42,43 @@ class PreferencesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPreferences($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/preferences');
         $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function updatePreferencesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdatePreferencesRequest(items: []);
+
+        $result = $this->endpoint->updatePreferences($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/preferences');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function deletePreferencesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\DeletePreferencesRequest(items: []);
+
+        $result = $this->endpoint->deletePreferences($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/preferences/delete');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -52,6 +92,8 @@ class PreferencesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPreferencesByCategory($user_id, $category);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/preferences/test-category');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -67,6 +109,8 @@ class PreferencesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPreferencesByCategoryByName($user_id, $category, $preference_name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/preferences/test-category/name/test-preference_name');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Preference::class, $result);
     }

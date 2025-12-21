@@ -38,6 +38,8 @@ class PlaybookAutofollowsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAutoFollows($id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/autofollows');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookAutofollows::class, $result);
     }

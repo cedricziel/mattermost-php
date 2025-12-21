@@ -40,7 +40,10 @@ class ConditionsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPlaybookConditions($id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/conditions');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ConditionList::class, $result);
     }
 
@@ -56,7 +59,10 @@ class ConditionsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getRunConditions($id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/conditions');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ConditionList::class, $result);
     }
 }

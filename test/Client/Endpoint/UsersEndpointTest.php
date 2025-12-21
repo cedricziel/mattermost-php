@@ -5,25 +5,59 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\UsersEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CheckUserMfaRequest;
+use CedricZiel\MattermostPhp\Client\Model\CheckUserMfaResponse;
+use CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenRequest;
+use CedricZiel\MattermostPhp\Client\Model\CreateUserRequest;
+use CedricZiel\MattermostPhp\Client\Model\DisableUserAccessTokenRequest;
+use CedricZiel\MattermostPhp\Client\Model\EnableUserAccessTokenRequest;
 use CedricZiel\MattermostPhp\Client\Model\GenerateMfaSecretResponse;
+use CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsRequest;
+use CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsResponse;
+use CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest;
+use CedricZiel\MattermostPhp\Client\Model\GetUsersByUsernamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\KnownUsers;
+use CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeRequest;
+use CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeResponse;
+use CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionRequest;
+use CedricZiel\MattermostPhp\Client\Model\ResetPasswordRequest;
+use CedricZiel\MattermostPhp\Client\Model\RevokeSessionRequest;
+use CedricZiel\MattermostPhp\Client\Model\RevokeUserAccessTokenRequest;
+use CedricZiel\MattermostPhp\Client\Model\SearchUserAccessTokensRequest;
+use CedricZiel\MattermostPhp\Client\Model\SearchUsersRequest;
+use CedricZiel\MattermostPhp\Client\Model\SendPasswordResetEmailRequest;
+use CedricZiel\MattermostPhp\Client\Model\SendVerificationEmailRequest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeRequest;
+use CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeResponse;
+use CedricZiel\MattermostPhp\Client\Model\UpdateUserActiveRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesRequest;
 use CedricZiel\MattermostPhp\Client\Model\User;
+use CedricZiel\MattermostPhp\Client\Model\UserAccessToken;
 use CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized;
 use CedricZiel\MattermostPhp\Client\Model\UserAutocomplete;
 use CedricZiel\MattermostPhp\Client\Model\UserTermsOfService;
 use CedricZiel\MattermostPhp\Client\Model\UsersStats;
+use CedricZiel\MattermostPhp\Client\Model\VerifyUserEmailRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(UsersEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(LoginSSOCodeExchangeResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(User::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetUsersByGroupChannelIdsResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserAutocomplete::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(KnownUsers::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UsersStats::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(User::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GenerateMfaSecretResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(CheckUserMfaResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(SwitchAccountTypeResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UserAccessToken::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserAccessTokenSanitized::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserTermsOfService::class)]
 class UsersEndpointTest extends ClientTestCase
@@ -40,6 +74,41 @@ class UsersEndpointTest extends ClientTestCase
             new \GuzzleHttp\Psr7\HttpFactory(),
             $this->streamFactory,
         );
+    }
+
+    #[Test]
+    public function loginSSOCodeExchangeBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['token' => 'test-token', 'csrf' => 'test-csrf']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeRequest(login_code: 'test-login_code', code_verifier: 'test-code_verifier', state: 'test-state');
+
+        $result = $this->endpoint->loginSSOCodeExchange($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/login/sso/code-exchange');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\LoginSSOCodeExchangeResponse::class, $result);
+    }
+
+    #[Test]
+    public function createUserBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateUserRequest(email: 'test-email', username: 'test-username');
+        $t = 'test-t';
+        $iid = 'test-iid';
+
+        $result = $this->endpoint->createUser($requestBody, $t, $iid);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['t' => 'test-t', 'iid' => 'test-iid']);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
 
     #[Test]
@@ -67,6 +136,72 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUsers($page, $per_page, $in_team, $not_in_team, $in_channel, $not_in_channel, $in_group, $group_constrained, $without_team, $active, $inactive, $role, $sort, $roles, $channel_roles, $team_roles);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_team' => 'test-in_team', 'not_in_team' => 'test-not_in_team', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel', 'in_group' => 'test-in_group', 'role' => 'test-role', 'sort' => 'test-sort', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
+    }
+
+    #[Test]
+    public function getUsersByIdsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest(items: []);
+        $since = 1;
+
+        $result = $this->endpoint->getUsersByIds($requestBody, $since);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/ids');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['since' => '1']);
+    }
+
+    #[Test]
+    public function getUsersByGroupChannelIdsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, []);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsRequest(items: []);
+
+        $result = $this->endpoint->getUsersByGroupChannelIds($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/group_channels');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsResponse::class, $result);
+    }
+
+    #[Test]
+    public function getUsersByUsernamesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersByUsernamesRequest(items: []);
+
+        $result = $this->endpoint->getUsersByUsernames($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/usernames');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function searchUsersBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchUsersRequest(term: 'test-term');
+
+        $result = $this->endpoint->searchUsers($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/search');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -83,7 +218,10 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->autocompleteUsers($name, $team_id, $channel_id, $limit);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/autocomplete');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'name' => 'test-name', 'limit' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAutocomplete::class, $result);
     }
 
@@ -95,6 +233,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getKnownUsers();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/known');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\KnownUsers::class, $result);
     }
@@ -107,6 +247,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTotalUsersStats();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/stats');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UsersStats::class, $result);
     }
@@ -127,7 +269,10 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTotalUsersStatsFiltered($in_team, $in_channel, $include_deleted, $include_bots, $roles, $channel_roles, $team_roles);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/stats/filtered');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['in_team' => 'test-in_team', 'in_channel' => 'test-in_channel', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UsersStats::class, $result);
     }
 
@@ -141,6 +286,25 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
+    }
+
+    #[Test]
+    public function updateUserBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest(id: 'test-id', email: 'test-email', username: 'test-username');
+
+        $result = $this->endpoint->updateUser($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
@@ -155,6 +319,42 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/users/test-user_id');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updateUserRolesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesRequest(roles: 'test-roles');
+
+        $result = $this->endpoint->updateUserRoles($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/roles');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updateUserActiveBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserActiveRequest(active: true);
+
+        $result = $this->endpoint->updateUserActive($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/active');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -169,8 +369,43 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserByUsername($username);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/username/test-username');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
+    }
+
+    #[Test]
+    public function resetPasswordBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ResetPasswordRequest(code: 'test-code', new_password: 'test-new_password');
+
+        $result = $this->endpoint->resetPassword($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/password/reset');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updateUserMfaBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaRequest(activate: true);
+
+        $result = $this->endpoint->updateUserMfa($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/mfa');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -183,6 +418,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->generateMfaSecret($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/mfa/generate');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GenerateMfaSecretResponse::class, $result);
     }
@@ -197,6 +434,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->demoteUserToGuest($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/demote');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -211,6 +450,57 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->promoteGuestToUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/promote');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function checkUserMfaBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['mfa_required' => true]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CheckUserMfaRequest(login_id: 'test-login_id');
+
+        $result = $this->endpoint->checkUserMfa($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/mfa');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\CheckUserMfaResponse::class, $result);
+    }
+
+    #[Test]
+    public function updateUserPasswordBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordRequest(new_password: 'test-new_password');
+
+        $result = $this->endpoint->updateUserPassword($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/users/test-user_id/password');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function sendPasswordResetEmailBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SendPasswordResetEmailRequest(email: 'test-email');
+
+        $result = $this->endpoint->sendPasswordResetEmail($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/password/reset/send');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -225,6 +515,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserByEmail($email);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/email/test-email');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
     }
@@ -239,7 +531,26 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getSessions($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/sessions');
         $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function revokeSessionBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RevokeSessionRequest(session_id: 'test-session_id');
+
+        $result = $this->endpoint->revokeSession($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/sessions/revoke');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -252,6 +563,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->revokeAllSessions($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/sessions/revoke/all');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -266,6 +579,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserAudits($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/audits');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -279,8 +594,75 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->verifyUserEmailWithoutToken($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/email/verify/member');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result);
+    }
+
+    #[Test]
+    public function verifyUserEmailBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\VerifyUserEmailRequest(token: 'test-token');
+
+        $result = $this->endpoint->verifyUserEmail($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/email/verify');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function sendVerificationEmailBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SendVerificationEmailRequest(email: 'test-email');
+
+        $result = $this->endpoint->sendVerificationEmail($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/email/verify/send');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function switchAccountTypeBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['follow_link' => 'test-follow_link']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeRequest(current_service: 'test-current_service', new_service: 'test-new_service');
+
+        $result = $this->endpoint->switchAccountType($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/login/switch');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeResponse::class, $result);
+    }
+
+    #[Test]
+    public function createUserAccessTokenBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'token' => 'test-token', 'user_id' => 'test-user_id', 'description' => 'test-description']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenRequest(description: 'test-description');
+
+        $result = $this->endpoint->createUserAccessToken($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/tokens');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAccessToken::class, $result);
     }
 
     #[Test]
@@ -295,7 +677,10 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserAccessTokensForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/tokens');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -309,7 +694,26 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserAccessTokens($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/tokens');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+    }
+
+    #[Test]
+    public function revokeUserAccessTokenBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RevokeUserAccessTokenRequest(token_id: 'test-token_id');
+
+        $result = $this->endpoint->revokeUserAccessToken($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/tokens/revoke');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -322,8 +726,74 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserAccessToken($token_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/tokens/test-token_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized::class, $result);
+    }
+
+    #[Test]
+    public function disableUserAccessTokenBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\DisableUserAccessTokenRequest(token_id: 'test-token_id');
+
+        $result = $this->endpoint->disableUserAccessToken($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/tokens/disable');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function enableUserAccessTokenBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\EnableUserAccessTokenRequest(token_id: 'test-token_id');
+
+        $result = $this->endpoint->enableUserAccessToken($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/tokens/enable');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function searchUserAccessTokensBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchUserAccessTokensRequest(term: 'test-term');
+
+        $result = $this->endpoint->searchUserAccessTokens($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/tokens/search');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function registerTermsOfServiceActionBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $user_id = 'test-user_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RegisterTermsOfServiceActionRequest(serviceTermsId: 'test-serviceTermsId', accepted: 'test-accepted');
+
+        $result = $this->endpoint->registerTermsOfServiceAction($user_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/terms_of_service');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -336,6 +806,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUserTermsOfService($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/terms_of_service');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserTermsOfService::class, $result);
     }
@@ -350,6 +822,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUploadsForUser($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/uploads');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -365,7 +839,10 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getChannelMembersWithTeamDataForUser($user_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/channel_members');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -379,7 +856,10 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUsersWithInvalidEmails($page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/invalid_emails');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -390,6 +870,8 @@ class UsersEndpointTest extends ClientTestCase
         $result = $this->endpoint->getServerLimits();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/limits/server');
         $this->assertRequestHasAuthHeader();
     }
 }

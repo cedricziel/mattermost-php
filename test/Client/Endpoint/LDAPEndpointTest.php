@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\LDAPEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\MigrateIdLdapRequest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -36,6 +37,8 @@ class LDAPEndpointTest extends ClientTestCase
         $result = $this->endpoint->syncLdap();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ldap/sync');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -48,18 +51,24 @@ class LDAPEndpointTest extends ClientTestCase
         $result = $this->endpoint->testLdap();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ldap/test');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
-    public function uploadLdapPublicCertificateBuildsCorrectRequest(): void
+    public function migrateIdLdapBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
 
-        $result = $this->endpoint->uploadLdapPublicCertificate(null);
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\MigrateIdLdapRequest(toAttribute: 'test-toAttribute');
+
+        $result = $this->endpoint->migrateIdLdap($requestBody);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ldap/migrateid');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -72,18 +81,8 @@ class LDAPEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteLdapPublicCertificate();
 
         $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
-    }
-
-    #[Test]
-    public function uploadLdapPrivateCertificateBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'test-status']);
-
-        $result = $this->endpoint->uploadLdapPrivateCertificate(null);
-
-        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/ldap/certificate/public');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -96,6 +95,8 @@ class LDAPEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteLdapPrivateCertificate();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/ldap/certificate/private');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -110,6 +111,8 @@ class LDAPEndpointTest extends ClientTestCase
         $result = $this->endpoint->addUserToGroupSyncables($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ldap/users/test-user_id/group_sync_memberships');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }

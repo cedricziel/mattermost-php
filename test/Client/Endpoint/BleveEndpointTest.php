@@ -36,6 +36,8 @@ class BleveEndpointTest extends ClientTestCase
         $result = $this->endpoint->purgeBleveIndexes();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/bleve/purge_indexes');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }

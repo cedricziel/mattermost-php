@@ -36,6 +36,8 @@ class ElasticsearchEndpointTest extends ClientTestCase
         $result = $this->endpoint->testElasticsearch();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/elasticsearch/test');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -48,6 +50,8 @@ class ElasticsearchEndpointTest extends ClientTestCase
         $result = $this->endpoint->purgeElasticsearchIndexes();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/elasticsearch/purge_indexes');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }

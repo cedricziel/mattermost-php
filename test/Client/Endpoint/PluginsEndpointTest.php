@@ -6,6 +6,8 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PluginsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\GetPluginsResponse;
+use CedricZiel\MattermostPhp\Client\Model\InstallMarketplacePluginRequest;
+use CedricZiel\MattermostPhp\Client\Model\PluginManifest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\System;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
@@ -15,6 +17,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversClass(PluginsEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetPluginsResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PluginManifest::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(System::class)]
 class PluginsEndpointTest extends ClientTestCase
 {
@@ -40,6 +43,8 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPlugins();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/plugins');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetPluginsResponse::class, $result);
     }
@@ -54,6 +59,8 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->removePlugin($plugin_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/plugins/test-plugin_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -68,6 +75,8 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->enablePlugin($plugin_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/plugins/test-plugin_id/enable');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -82,6 +91,8 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->disablePlugin($plugin_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/plugins/test-plugin_id/disable');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -94,6 +105,8 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getWebappPlugins();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/plugins/webapp');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -105,7 +118,25 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPluginStatuses();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/plugins/statuses');
         $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function installMarketplacePluginBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'name' => 'test-name', 'description' => 'test-description', 'version' => 'test-version', 'min_server_version' => 'test-min_server_version']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\InstallMarketplacePluginRequest(id: 'test-id', version: 'test-version');
+
+        $result = $this->endpoint->installMarketplacePlugin($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/plugins/marketplace');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PluginManifest::class, $result);
     }
 
     #[Test]
@@ -122,7 +153,10 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getMarketplacePlugins($page, $per_page, $filter, $server_version, $local_only);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/plugins/marketplace');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter' => 'test-filter', 'server_version' => 'test-server_version']);
     }
 
     #[Test]
@@ -133,6 +167,8 @@ class PluginsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getMarketplaceVisitedByAdmin();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/plugins/marketplace/first_admin_visit');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\System::class, $result);
     }

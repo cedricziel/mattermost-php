@@ -5,10 +5,18 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
+use CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest;
+use CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest;
 use CedricZiel\MattermostPhp\Client\Model\Post;
 use CedricZiel\MattermostPhp\Client\Model\PostAcknowledgement;
 use CedricZiel\MattermostPhp\Client\Model\PostList;
+use CedricZiel\MattermostPhp\Client\Model\PostListWithSearchMatches;
+use CedricZiel\MattermostPhp\Client\Model\RewriteMessageRequest;
+use CedricZiel\MattermostPhp\Client\Model\RewriteMessageResponse;
+use CedricZiel\MattermostPhp\Client\Model\SearchPostsRequest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\UpdatePostRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -17,7 +25,9 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(Post::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostList::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PostListWithSearchMatches::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostAcknowledgement::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(RewriteMessageResponse::class)]
 class PostsEndpointTest extends ClientTestCase
 {
     public PostsEndpoint $endpoint;
@@ -35,6 +45,23 @@ class PostsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function createPostBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreatePostRequest(channel_id: 'test-channel_id', message: 'test-message');
+        $set_online = true;
+
+        $result = $this->endpoint->createPost($requestBody, $set_online);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
+    }
+
+    #[Test]
     public function getPostBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
@@ -45,6 +72,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPost($post_id, $include_deleted);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/posts/test-post_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }
@@ -59,8 +88,27 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->deletePost($post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/posts/test-post_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function updatePostBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+
+        $post_id = 'test-post_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdatePostRequest(id: 'test-id');
+
+        $result = $this->endpoint->updatePost($post_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('PUT');
+        $this->assertRequestPath('/api/v4/posts/test-post_id');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }
 
     #[Test]
@@ -82,7 +130,10 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPostThread($post_id, $perPage, $fromPost, $fromCreateAt, $fromUpdateAt, $direction, $skipFetchThreads, $collapsedThreads, $collapsedThreadsExtended, $updatesOnly);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/thread');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['perPage' => '1', 'fromPost' => 'test-fromPost', 'fromCreateAt' => '1', 'fromUpdateAt' => '1', 'direction' => 'test-direction']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result);
     }
 
@@ -100,7 +151,10 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getFlaggedPostsForUser($user_id, $team_id, $channel_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/posts/flagged');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -114,6 +168,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getFileInfosForPost($post_id, $include_deleted);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/files/info');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -133,7 +189,10 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPostsForChannel($channel_id, $page, $per_page, $since, $before, $after, $include_deleted);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/channels/test-channel_id/posts');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'since' => '1', 'before' => 'test-before', 'after' => 'test-after']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result);
     }
 
@@ -153,8 +212,28 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPostsAroundLastUnread($user_id, $channel_id, $limit_before, $limit_after, $skipFetchThreads, $collapsedThreads, $collapsedThreadsExtended);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/channels/test-channel_id/posts/unread');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['limit_before' => '1', 'limit_after' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result);
+    }
+
+    #[Test]
+    public function searchPostsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['order' => []]);
+
+        $team_id = 'test-team_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchPostsRequest(terms: 'test-terms', is_or_search: true);
+
+        $result = $this->endpoint->searchPosts($team_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/posts/search');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostListWithSearchMatches::class, $result);
     }
 
     #[Test]
@@ -167,6 +246,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->pinPost($post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/pin');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -181,6 +262,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->unpinPost($post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/unpin');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -196,8 +279,25 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->doPostAction($post_id, $action_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/actions/test-action_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function getPostsByIdsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest(items: []);
+
+        $result = $this->endpoint->getPostsByIds($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/ids');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]
@@ -211,6 +311,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->saveAcknowledgementForPost($user_id, $post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/posts/test-post_id/ack');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostAcknowledgement::class, $result);
     }
@@ -226,6 +328,25 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteAcknowledgementForPost($user_id, $post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/users/test-user_id/posts/test-post_id/ack');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function moveThreadBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $post_id = 'test-post_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest(channel_id: 'test-channel_id');
+
+        $result = $this->endpoint->moveThread($post_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/move');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -241,6 +362,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->restorePostVersion($post_id, $restore_version_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/restore/test-restore_version_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }
@@ -255,6 +378,8 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->revealPost($post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/reveal');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }
@@ -269,7 +394,25 @@ class PostsEndpointTest extends ClientTestCase
         $result = $this->endpoint->burnPost($post_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/posts/test-post_id/burn');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function rewriteMessageBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['rewritten_text' => 'test-rewritten_text']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RewriteMessageRequest(agent_id: 'test-agent_id', message: 'test-message', action: 'test-action');
+
+        $result = $this->endpoint->rewriteMessage($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/rewrite');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RewriteMessageResponse::class, $result);
     }
 }

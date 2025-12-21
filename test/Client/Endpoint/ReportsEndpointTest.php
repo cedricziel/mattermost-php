@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ReportsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\GetPostsForReportingRequest;
+use CedricZiel\MattermostPhp\Client\Model\GetPostsForReportingResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(ReportsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetPostsForReportingResponse::class)]
 class ReportsEndpointTest extends ClientTestCase
 {
     public ReportsEndpoint $endpoint;
@@ -48,7 +51,10 @@ class ReportsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getUsersForReporting($sort_column, $direction, $sort_direction, $page_size, $from_column_value, $from_id, $date_range, $role_filter, $team_filter, $has_no_team, $hide_active, $hide_inactive, $search_term);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/reports/users');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['sort_column' => 'test-sort_column', 'direction' => 'test-direction', 'sort_direction' => 'test-sort_direction', 'page_size' => '1', 'from_column_value' => 'test-from_column_value', 'from_id' => 'test-from_id', 'date_range' => 'test-date_range', 'role_filter' => 'test-role_filter', 'team_filter' => 'test-team_filter', 'search_term' => 'test-search_term']);
     }
 
     #[Test]
@@ -61,6 +67,25 @@ class ReportsEndpointTest extends ClientTestCase
         $result = $this->endpoint->startBatchUsersExport($date_range);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/reports/users/export');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['date_range' => 'test-date_range']);
+    }
+
+    #[Test]
+    public function getPostsForReportingBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, []);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetPostsForReportingRequest(channel_id: 'test-channel_id');
+
+        $result = $this->endpoint->getPostsForReporting($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/reports/posts');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetPostsForReportingResponse::class, $result);
     }
 }

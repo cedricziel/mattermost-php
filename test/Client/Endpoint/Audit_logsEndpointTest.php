@@ -29,18 +29,6 @@ class Audit_logsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function addAuditLogCertificateBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, ['status' => 'test-status']);
-
-        $result = $this->endpoint->addAuditLogCertificate(null);
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestHasAuthHeader();
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
-    }
-
-    #[Test]
     public function removeAuditLogCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
@@ -48,6 +36,8 @@ class Audit_logsEndpointTest extends ClientTestCase
         $result = $this->endpoint->removeAuditLogCertificate();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/audit_logs/certificate');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }

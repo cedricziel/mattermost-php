@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\RolesEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\Role;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -36,6 +37,8 @@ class RolesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getAllRoles();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/roles');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -49,6 +52,8 @@ class RolesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getRole($role_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/roles/test-role_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Role::class, $result);
     }
@@ -63,7 +68,24 @@ class RolesEndpointTest extends ClientTestCase
         $result = $this->endpoint->getRoleByName($role_name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/roles/name/test-role_name');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Role::class, $result);
+    }
+
+    #[Test]
+    public function getRolesByNamesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest(items: []);
+
+        $result = $this->endpoint->getRolesByNames($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/roles/names');
+        $this->assertRequestHasAuthHeader();
     }
 }

@@ -7,6 +7,7 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 use CedricZiel\MattermostPhp\Client\Endpoint\GroupsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupStatsResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse;
+use CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\Group;
 use CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel;
 use CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam;
@@ -48,6 +49,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->unlinkLdapGroup($remote_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/ldap/groups/test-remote_id/link');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -69,7 +72,10 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroups($page, $per_page, $q, $include_member_count, $not_associated_to_team, $not_associated_to_channel, $since, $filter_allow_reference);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'q' => 'test-q', 'not_associated_to_team' => 'test-not_associated_to_team', 'not_associated_to_channel' => 'test-not_associated_to_channel', 'since' => '1']);
     }
 
     #[Test]
@@ -82,6 +88,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroup($group_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result);
     }
@@ -96,6 +104,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteGroup($group_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/groups/test-group_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -110,6 +120,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->restoreGroup($group_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/restore');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -125,6 +137,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->unlinkGroupSyncableForTeam($group_id, $team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/teams/test-team_id/link');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -140,6 +154,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->unlinkGroupSyncableForChannel($group_id, $channel_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/channels/test-channel_id/link');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
@@ -155,6 +171,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupSyncableForTeamId($group_id, $team_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/teams/test-team_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam::class, $result);
     }
@@ -170,6 +188,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupSyncableForChannelId($group_id, $channel_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/channels/test-channel_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel::class, $result);
     }
@@ -184,6 +204,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupSyncablesTeams($group_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/teams');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -197,6 +219,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupSyncablesChannels($group_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/channels');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -212,7 +236,10 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupUsers($group_id, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/members');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse::class, $result);
     }
 
@@ -226,6 +253,8 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupStats($group_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/stats');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetGroupStatsResponse::class, $result);
     }
@@ -243,7 +272,10 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupsByChannel($channel_id, $page, $per_page, $filter_allow_reference);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/channels/test-channel_id/groups');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
     }
 
     #[Test]
@@ -268,7 +300,10 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupsByTeam($team_id, $page, $per_page, $filter_allow_reference, $include_member_count, $include_timezones, $include_total_count, $include_archived, $filter_archived, $filter_parent_team_permitted, $filter_has_member, $include_member_ids, $only_syncable_sources);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/groups');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter_has_member' => 'test-filter_has_member']);
     }
 
     #[Test]
@@ -281,6 +316,23 @@ class GroupsEndpointTest extends ClientTestCase
         $result = $this->endpoint->getGroupsByUserId($user_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/groups');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function getGroupsByNamesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest(items: []);
+
+        $result = $this->endpoint->getGroupsByNames($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/groups/names');
         $this->assertRequestHasAuthHeader();
     }
 }

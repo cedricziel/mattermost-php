@@ -36,6 +36,8 @@ class BrandEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteBrandImage();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/brand/image');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }

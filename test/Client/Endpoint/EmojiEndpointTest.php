@@ -6,6 +6,8 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\EmojiEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\Emoji;
+use CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesRequest;
+use CedricZiel\MattermostPhp\Client\Model\SearchEmojiRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -40,7 +42,10 @@ class EmojiEndpointTest extends ClientTestCase
         $result = $this->endpoint->getEmojiList($page, $per_page, $sort);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/emoji');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'sort' => 'test-sort']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result);
     }
 
@@ -54,6 +59,8 @@ class EmojiEndpointTest extends ClientTestCase
         $result = $this->endpoint->getEmoji($emoji_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/emoji/test-emoji_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result);
     }
@@ -68,6 +75,8 @@ class EmojiEndpointTest extends ClientTestCase
         $result = $this->endpoint->deleteEmoji($emoji_id);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('DELETE');
+        $this->assertRequestPath('/api/v4/emoji/test-emoji_id');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result);
     }
@@ -82,8 +91,25 @@ class EmojiEndpointTest extends ClientTestCase
         $result = $this->endpoint->getEmojiByName($emoji_name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/emoji/name/test-emoji_name');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result);
+    }
+
+    #[Test]
+    public function searchEmojiBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchEmojiRequest(term: 'test-term');
+
+        $result = $this->endpoint->searchEmoji($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/emoji/search');
+        $this->assertRequestHasAuthHeader();
     }
 
     #[Test]
@@ -96,7 +122,25 @@ class EmojiEndpointTest extends ClientTestCase
         $result = $this->endpoint->autocompleteEmoji($name);
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/emoji/autocomplete');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['name' => 'test-name']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result);
+    }
+
+    #[Test]
+    public function getEmojisByNamesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesRequest(items: []);
+
+        $result = $this->endpoint->getEmojisByNames($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/emoji/names');
+        $this->assertRequestHasAuthHeader();
     }
 }

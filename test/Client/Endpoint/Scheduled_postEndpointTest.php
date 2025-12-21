@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\Scheduled_postEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreateScheduledPostRequest;
+use CedricZiel\MattermostPhp\Client\Model\UpdateScheduledPostRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;

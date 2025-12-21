@@ -36,6 +36,8 @@ class TermsOfServiceEndpointTest extends ClientTestCase
         $result = $this->endpoint->getTermsOfService();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/terms_of_service');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TermsOfService::class, $result);
     }
@@ -48,6 +50,8 @@ class TermsOfServiceEndpointTest extends ClientTestCase
         $result = $this->endpoint->createTermsOfService();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/terms_of_service');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TermsOfService::class, $result);
     }

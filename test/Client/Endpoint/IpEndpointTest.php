@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\IpEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\ApplyIPFiltersRequest;
 use CedricZiel\MattermostPhp\Client\Model\MyIPResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -36,6 +37,23 @@ class IpEndpointTest extends ClientTestCase
         $result = $this->endpoint->getIPFilters();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/ip_filtering');
+        $this->assertRequestHasAuthHeader();
+    }
+
+    #[Test]
+    public function applyIPFiltersBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, [['status' => 'ok']]);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ApplyIPFiltersRequest(items: []);
+
+        $result = $this->endpoint->applyIPFilters($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ip_filtering');
         $this->assertRequestHasAuthHeader();
     }
 
@@ -47,6 +65,8 @@ class IpEndpointTest extends ClientTestCase
         $result = $this->endpoint->myIP();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/ip_filtering/my_ip');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\MyIPResponse::class, $result);
     }

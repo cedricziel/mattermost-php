@@ -36,6 +36,8 @@ class RootEndpointTest extends ClientTestCase
         $result = $this->endpoint->acknowledgeNotification();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/notifications/ack');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PushNotification::class, $result);
     }

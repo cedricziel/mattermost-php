@@ -38,6 +38,8 @@ class UsageEndpointTest extends ClientTestCase
         $result = $this->endpoint->getPostsUsage();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/usage/posts');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostsUsage::class, $result);
     }
@@ -50,6 +52,8 @@ class UsageEndpointTest extends ClientTestCase
         $result = $this->endpoint->getStorageUsage();
 
         $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/usage/storage');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StorageUsage::class, $result);
     }

@@ -5,6 +5,7 @@
  * Test Generator for Mattermost PHP SDK Endpoints
  *
  * Generates PHPUnit test files for all endpoint classes in the SDK.
+ * Uses OpenAPI spec to generate accurate HTTP method, path, and parameter assertions.
  */
 
 use Nette\PhpGenerator\ClassType;
@@ -24,6 +25,16 @@ $filterEndpoint = $options['endpoint'] ?? null;
 $force = isset($options['force']);
 $dryRun = isset($options['dry-run']);
 
+// Load OpenAPI spec for method/path mapping
+$openApiPath = dirname(__DIR__) . '/resources/openapi.json';
+if (!file_exists($openApiPath)) {
+    throw new RuntimeException('OpenAPI spec not found at: ' . $openApiPath);
+}
+$openApi = json_decode(file_get_contents($openApiPath), true);
+
+// Build operation lookup: endpointClass::methodName => {httpMethod, path, pathParams, queryParams}
+$operationLookup = buildOperationLookup($openApi);
+
 // Get all endpoint files
 $endpointDir = dirname(__DIR__) . '/src/Client/Endpoint';
 $testDir = dirname(__DIR__) . '/test/Client/Endpoint';
@@ -35,37 +46,41 @@ if (!is_dir($testDir) && !$dryRun) {
 $endpointFiles = glob($endpointDir . '/*Endpoint.php');
 
 echo sprintf("Found %d endpoint files\n", count($endpointFiles));
+echo sprintf("Loaded %d operations from OpenAPI spec\n", count($operationLookup));
 
 // Methods to skip due to SDK issues (type mismatches, missing hydrate, etc.)
 $skipMethods = [
-    'BookmarksEndpoint' => ['deleteChannelBookmark', 'listChannelBookmarksForChannel'],
+    'BookmarksEndpoint' => ['deleteChannelBookmark', 'listChannelBookmarksForChannel', 'createChannelBookmark'],
     'BrandEndpoint' => ['getBrandImage', 'uploadBrandImage'],
-    'ChannelsEndpoint' => ['getChannelMembersTimezones', 'channelMembersMinusGroupMembers', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser'],
+    'ChannelsEndpoint' => ['getChannelMembersTimezones', 'channelMembersMinusGroupMembers', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser', 'updateSidebarCategoryOrderForTeamForUser'],
     'CloudEndpoint' => ['createCustomerPayment', 'confirmCustomerPayment', 'getInvoiceForSubscriptionAsPdf', 'postEndpointForCwsWebhooks'],
     'ComplianceEndpoint' => ['createComplianceReport'],
     'ConditionsEndpoint' => ['deletePlaybookCondition'],
-    'CustomProfileAttributesEndpoint' => ['listCPAValues'],
+    'CustomProfileAttributesEndpoint' => ['listCPAValues', 'patchCPAValues', 'patchCPAValuesForUser'],
     'DataRetentionEndpoint' => ['getDataRetentionPolicyByID'],
     'EmojiEndpoint' => ['createEmoji'],
     'ExportsEndpoint' => ['listExports', 'downloadExport', 'deleteExport'],
     'FilesEndpoint' => ['uploadFile', 'getFile', 'getFileThumbnail', 'getFilePreview', 'getFilePublic'],
-    'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel'],
+    'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel', 'createGroup'],
     'ImportsEndpoint' => ['listImports', 'deleteImport'],
+    'Integration_actionsEndpoint' => ['openInteractiveDialog', 'submitInteractiveDialog', 'lookupInteractiveDialog'],
     'InternalEndpoint' => ['getChecklistAutocomplete', 'endPlaybookRunDialog'],
     'JobsEndpoint' => ['downloadJob'],
-    'PlaybookRunsEndpoint' => ['getChannels', 'endPlaybookRun', 'restartPlaybookRun', 'finish', 'itemDelete'],
+    'PermissionsEndpoint' => ['getAncillaryPermissionsPost'],
+    'PlaybookRunsEndpoint' => ['getChannels', 'endPlaybookRun', 'restartPlaybookRun', 'finish', 'itemDelete', 'status', 'changeOwner', 'addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemSetAssignee'],
     'PlaybooksEndpoint' => ['deletePlaybook', 'deletePlaybookPropertyField'],
     'PluginsEndpoint' => ['uploadPlugin', 'installPluginFromUrl'],
-    'RemoteClustersEndpoint' => ['deleteRemoteCluster'],
+    'PostsEndpoint' => ['createPostEphemeral'],
+    'RemoteClustersEndpoint' => ['deleteRemoteCluster', 'generateRemoteClusterInvite'],
     'ReportsEndpoint' => ['getUserCountForReporting'],
     'SAMLEndpoint' => ['getSamlMetadata'],
-    'StatusEndpoint' => ['unsetUserCustomStatus'],
-    'SystemEndpoint' => ['getSupportedTimezone', 'getClientConfig', 'uploadLicenseFile', 'removeLicenseFile', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld', 'upgradeToEnterprise', 'isAllowedToUpgradeToEnterprise', 'generateSupportPacket'],
+    'StatusEndpoint' => ['unsetUserCustomStatus', 'updateUserCustomStatus', 'removeRecentCustomStatus', 'postUserRecentCustomStatusDelete'],
+    'SystemEndpoint' => ['getSupportedTimezone', 'getClientConfig', 'uploadLicenseFile', 'removeLicenseFile', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld', 'upgradeToEnterprise', 'isAllowedToUpgradeToEnterprise', 'generateSupportPacket', 'requestTrialLicense'],
     'TeamsEndpoint' => ['addTeamMemberFromInvite', 'teamMembersMinusGroupMembers'],
     'ThreadsEndpoint' => ['getThreadMentionCountsByChannel', 'updateThreadsReadForUser', 'updateThreadReadForUser', 'startFollowingThread', 'stopFollowingThread', 'getUserThread'],
     'TimelineEndpoint' => ['removeTimelineEvent'],
     'UploadsEndpoint' => ['getUpload', 'uploadData'],
-    'UsersEndpoint' => ['logout', 'permanentDeleteAllUsers', 'revokeSessionsFromAllUsers', 'resetPasswordFailedAttempts'],
+    'UsersEndpoint' => ['logout', 'permanentDeleteAllUsers', 'revokeSessionsFromAllUsers', 'resetPasswordFailedAttempts', 'publishUserTyping', 'migrateAuthToLdap', 'migrateAuthToSaml'],
 ];
 
 // Curated test cases for specific endpoints with special handling
@@ -172,7 +187,13 @@ foreach ($endpointFiles as $endpointFile) {
     }
 
     // Generate test class
-    $testContent = generateEndpointTest($endpointClass, $reflection, $curatedTests[$endpointClass] ?? [], $skipMethods[$endpointClass] ?? []);
+    $testContent = generateEndpointTest(
+        $endpointClass,
+        $reflection,
+        $curatedTests[$endpointClass] ?? [],
+        $skipMethods[$endpointClass] ?? [],
+        $operationLookup
+    );
 
     if ($dryRun) {
         echo "Would write: $testFile\n";
@@ -186,6 +207,87 @@ foreach ($endpointFiles as $endpointFile) {
 }
 
 echo sprintf("\nGenerated: %d, Skipped: %d\n", $generated, $skipped);
+
+/**
+ * Build operation lookup from OpenAPI spec.
+ *
+ * @return array<string, array{httpMethod: string, path: string, pathParams: array, queryParams: array, successStatus: int}>
+ */
+function buildOperationLookup(array $openApi): array
+{
+    $lookup = [];
+
+    foreach ($openApi['paths'] as $path => $pathSpec) {
+        foreach ($pathSpec as $httpMethod => $methodSpec) {
+            // Skip non-HTTP method entries
+            if (!in_array($httpMethod, ['get', 'post', 'put', 'patch', 'delete', 'head', 'options'], true)) {
+                continue;
+            }
+
+            if (!is_array($methodSpec) || !isset($methodSpec['operationId']) || !isset($methodSpec['tags'][0])) {
+                continue;
+            }
+
+            $tag = $methodSpec['tags'][0];
+            $endpointClass = str_replace(' ', '', ucwords(str_replace('-', ' ', $tag))) . 'Endpoint';
+            $methodName = lcfirst($methodSpec['operationId']);
+
+            $pathParams = [];
+            $queryParams = [];
+            $bodySchema = null;
+            $successStatus = 200;
+
+            // Extract parameters
+            if (isset($methodSpec['parameters'])) {
+                foreach ($methodSpec['parameters'] as $param) {
+                    $paramName = $param['name'];
+                    $paramType = $param['schema']['type'] ?? 'string';
+                    $isRequired = $param['required'] ?? false;
+
+                    if ($param['in'] === 'path') {
+                        $pathParams[$paramName] = [
+                            'type' => $paramType,
+                            'required' => true, // path params are always required
+                        ];
+                    } elseif ($param['in'] === 'query') {
+                        $queryParams[$paramName] = [
+                            'type' => $paramType,
+                            'required' => $isRequired,
+                        ];
+                    }
+                }
+            }
+
+            // Extract request body schema
+            if (isset($methodSpec['requestBody']['content']['application/json']['schema'])) {
+                $bodySchema = $methodSpec['requestBody']['content']['application/json']['schema'];
+            }
+
+            // Extract success status code from responses
+            if (isset($methodSpec['responses'])) {
+                foreach ($methodSpec['responses'] as $statusCode => $response) {
+                    $code = (int) $statusCode;
+                    if ($code >= 200 && $code < 300) {
+                        $successStatus = $code;
+                        break;
+                    }
+                }
+            }
+
+            $key = $endpointClass . '::' . $methodName;
+            $lookup[$key] = [
+                'httpMethod' => strtoupper($httpMethod),
+                'path' => $path,
+                'pathParams' => $pathParams,
+                'queryParams' => $queryParams,
+                'bodySchema' => $bodySchema,
+                'successStatus' => $successStatus,
+            ];
+        }
+    }
+
+    return $lookup;
+}
 
 /**
  * Get the success return type from a method's union return type.
@@ -229,18 +331,6 @@ function getSuccessReturnType(ReflectionMethod $method): array
     }
 
     return ['type' => null, 'isArray' => $isArray];
-}
-
-/**
- * Check if the return type is an array of models (e.g., User[]).
- */
-function isArrayReturnType(ReflectionMethod $method): bool
-{
-    $docComment = $method->getDocComment();
-    if ($docComment && preg_match('/@return\s+[^[]+\[\]/', $docComment)) {
-        return true;
-    }
-    return false;
 }
 
 /**
@@ -297,6 +387,45 @@ function getModelMockData(string $modelClass): array
 }
 
 /**
+ * Generate mock data for a Request model class.
+ */
+function getRequestModelMockData(string $modelClass): ?array
+{
+    try {
+        $reflection = new ReflectionClass($modelClass);
+    } catch (ReflectionException $e) {
+        return null;
+    }
+
+    $constructor = $reflection->getConstructor();
+    if ($constructor === null) {
+        return [];
+    }
+
+    $params = $constructor->getParameters();
+    $data = [];
+
+    foreach ($params as $param) {
+        $paramName = $param->getName();
+        $paramType = $param->getType();
+
+        // Skip optional params for simplicity
+        if ($param->isOptional()) {
+            continue;
+        }
+
+        if ($paramType instanceof ReflectionNamedType) {
+            $typeName = $paramType->getName();
+            $data[$paramName] = getMockValueForType($typeName, $paramName);
+        } else {
+            $data[$paramName] = 'test-' . $paramName;
+        }
+    }
+
+    return $data;
+}
+
+/**
  * Get a mock value for a given type.
  */
 function getMockValueForType(string $typeName, string $paramName): mixed
@@ -318,7 +447,6 @@ function getMockValueForType(string $typeName, string $paramName): mixed
 function mockDataToCode(array $data, bool $isArrayOfItems = false): string
 {
     if ($isArrayOfItems && isset($data[0]) && is_array($data[0])) {
-        // Wrap inner object in outer array
         $innerCode = mockDataToCode($data[0], false);
         return '[' . $innerCode . ']';
     }
@@ -326,7 +454,7 @@ function mockDataToCode(array $data, bool $isArrayOfItems = false): string
     $parts = [];
     foreach ($data as $key => $value) {
         if ($value === null) {
-            continue; // Skip null values
+            continue;
         }
         if (is_string($value)) {
             $parts[] = "'$key' => '$value'";
@@ -351,10 +479,29 @@ function getShortClassName(string $fqcn): string
 }
 
 /**
+ * Build expected path with test values substituted.
+ * Note: OpenAPI paths already include /api/v4 prefix.
+ */
+function buildExpectedPath(string $path, array $pathParams, array $testValues): string
+{
+    $result = $path;
+    foreach ($pathParams as $paramName => $paramInfo) {
+        $testValue = $testValues[$paramName] ?? 'test-' . $paramName;
+        $result = str_replace('{' . $paramName . '}', $testValue, $result);
+    }
+    return $result;
+}
+
+/**
  * Generate a test class for an endpoint.
  */
-function generateEndpointTest(string $endpointClass, ReflectionClass $reflection, array $curatedTests, array $methodsToSkip = []): string
-{
+function generateEndpointTest(
+    string $endpointClass,
+    ReflectionClass $reflection,
+    array $curatedTests,
+    array $methodsToSkip,
+    array $operationLookup
+): string {
     global $printer;
 
     $namespace = new PhpNamespace('CedricZiel\\MattermostPhp\\Test\\Client\\Endpoint');
@@ -372,7 +519,7 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
     $class = $namespace->addClass($endpointClass . 'Test')
         ->setExtends('CedricZiel\\MattermostPhp\\Test\\Client\\ClientTestCase');
 
-    // Add CoversClass attribute with proper class reference
+    // Add CoversClass attribute
     $class->addAttribute('PHPUnit\\Framework\\Attributes\\CoversClass', [new Nette\PhpGenerator\Literal($endpointClass . '::class')]);
 
     // Add property for the endpoint
@@ -392,7 +539,7 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
     $setUp->addBody('    $this->streamFactory,');
     $setUp->addBody(');');
 
-    // Trait methods to skip (not API methods)
+    // Trait methods to skip
     $traitMethods = [
         'buildUri',
         'setHttpClient',
@@ -420,8 +567,12 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
 
         $curatedConfig = $curatedTests[$methodName] ?? [];
 
+        // Get OpenAPI operation info
+        $operationKey = $endpointClass . '::' . $methodName;
+        $operationInfo = $operationLookup[$operationKey] ?? null;
+
         // Generate basic test
-        $result = generateMethodTest($class, $method, $curatedConfig, $namespace);
+        $result = generateMethodTest($class, $method, $curatedConfig, $namespace, $operationInfo);
         if ($result !== false) {
             $testsGenerated++;
             if (is_string($result)) {
@@ -430,13 +581,11 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
         }
     }
 
-    // Add UsesClass attributes for models (skip scalar types and 'ok' placeholder)
+    // Add UsesClass attributes for models
     foreach (array_keys($usedModels) as $modelClass) {
-        // Skip scalar types and placeholder values
         if (in_array($modelClass, ['int', 'string', 'bool', 'float', 'array', 'object', 'mixed', 'ok'], true)) {
             continue;
         }
-        // Only add use for actual class types (must contain backslash or be a known model)
         if (!str_contains($modelClass, '\\')) {
             continue;
         }
@@ -466,8 +615,13 @@ function generateEndpointTest(string $endpointClass, ReflectionClass $reflection
  *
  * @return false|string False if skipped, or the model class name used
  */
-function generateMethodTest(ClassType $class, ReflectionMethod $method, array $curatedConfig, PhpNamespace $namespace): false|string
-{
+function generateMethodTest(
+    ClassType $class,
+    ReflectionMethod $method,
+    array $curatedConfig,
+    PhpNamespace $namespace,
+    ?array $operationInfo
+): false|string {
     $methodName = $method->getName();
     $testName = $methodName . 'BuildsCorrectRequest';
 
@@ -480,6 +634,7 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
     $params = $method->getParameters();
     $paramSetup = [];
     $argList = [];
+    $testValues = []; // Track test values for path substitution
 
     foreach ($params as $param) {
         $paramName = $param->getName();
@@ -488,71 +643,89 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
         if ($paramType instanceof ReflectionNamedType) {
             $typeName = $paramType->getName();
 
-            if (str_contains($typeName, 'Request') || str_contains($typeName, 'Model')) {
-                // It's a request model - skip for now
+            // Handle Request model objects
+            if (str_contains($typeName, 'Request')) {
+                $requestMockData = getRequestModelMockData($typeName);
+                if ($requestMockData !== null && !empty($requestMockData)) {
+                    $shortName = getShortClassName($typeName);
+                    $namespace->addUse($typeName);
+                    $constructorArgs = [];
+                    foreach ($requestMockData as $key => $value) {
+                        if (is_string($value)) {
+                            $constructorArgs[] = "$key: '$value'";
+                        } elseif (is_int($value) || is_float($value)) {
+                            $constructorArgs[] = "$key: $value";
+                        } elseif (is_bool($value)) {
+                            $constructorArgs[] = "$key: " . ($value ? 'true' : 'false');
+                        } elseif (is_array($value)) {
+                            $constructorArgs[] = "$key: []";
+                        }
+                    }
+                    $paramSetup[] = sprintf('$%s = new \\%s(%s);', $paramName, $typeName, implode(', ', $constructorArgs));
+                    $argList[] = '$' . $paramName;
+                    continue;
+                }
+                // Can't generate mock data, skip param
+                if (!$param->isOptional()) {
+                    // Required param we can't fill - skip this test
+                    $class->removeMethod($testName);
+                    return false;
+                }
                 $argList[] = 'null';
                 continue;
             }
 
             switch ($typeName) {
                 case 'string':
-                    $paramSetup[] = sprintf('$%s = \'test-%s\';', $paramName, $paramName);
+                    $testValue = 'test-' . $paramName;
+                    $paramSetup[] = sprintf("\$%s = '%s';", $paramName, $testValue);
                     $argList[] = '$' . $paramName;
+                    $testValues[$paramName] = $testValue;
                     break;
                 case 'int':
                     $paramSetup[] = sprintf('$%s = 1;', $paramName);
                     $argList[] = '$' . $paramName;
+                    $testValues[$paramName] = '1';
                     break;
                 case 'bool':
                     $paramSetup[] = sprintf('$%s = true;', $paramName);
                     $argList[] = '$' . $paramName;
+                    $testValues[$paramName] = 'true';
                     break;
                 case 'array':
                     $paramSetup[] = sprintf('$%s = [];', $paramName);
                     $argList[] = '$' . $paramName;
                     break;
                 default:
+                    if (!$param->isOptional()) {
+                        $class->removeMethod($testName);
+                        return false;
+                    }
                     $argList[] = 'null';
             }
         } else {
+            if (!$param->isOptional()) {
+                $class->removeMethod($testName);
+                return false;
+            }
             $argList[] = 'null';
         }
     }
 
-    // Check for required body params
-    $hasRequiredBodyParam = false;
-    foreach ($params as $param) {
-        if (!$param->isOptional() && !$param->getType()?->allowsNull()) {
-            $typeName = $param->getType() instanceof ReflectionNamedType ? $param->getType()->getName() : '';
-            if (str_contains($typeName, 'Request') || str_contains($typeName, 'Model')) {
-                $hasRequiredBodyParam = true;
-                break;
-            }
-        }
-    }
-
-    if ($hasRequiredBodyParam) {
-        // Don't generate incomplete tests - skip this method entirely
-        $class->removeMethod($testName);
-        return false;
-    }
-
-    // Check if the success return type has hydrate() - if not, skip (SDK bug)
+    // Check if the success return type has hydrate()
     $returnTypeInfo = getSuccessReturnType($method);
     if ($returnTypeInfo['type'] !== null &&
         str_contains($returnTypeInfo['type'], '\\') &&
         !modelHasHydrate($returnTypeInfo['type'])) {
-        // Model doesn't have hydrate() - skip this test
         $class->removeMethod($testName);
         return false;
     }
 
-    // Determine response type from return type
+    // Determine response type
     $needsBinaryResponse = $curatedConfig['testBinaryResponse'] ?? false;
     $needsTextResponse = $curatedConfig['testTextResponse'] ?? false;
     $noAuthHeader = $curatedConfig['testNoAuthHeader'] ?? false;
 
-    // Use the return type info from the earlier check
     $successType = $returnTypeInfo['type'];
     $isArrayReturn = $returnTypeInfo['isArray'];
     $modelClass = null;
@@ -560,7 +733,6 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
     $canAssertResponse = false;
 
     if ($successType !== null && !$needsBinaryResponse && !$needsTextResponse) {
-        // Check if model has hydrate method before using it
         if (str_contains($successType, '\\') && modelHasHydrate($successType)) {
             $modelClass = $successType;
             $mockData = getModelMockData($successType);
@@ -568,21 +740,23 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
         }
     }
 
-    // For array return types, wrap the mock data in an outer array
     if ($isArrayReturn) {
         $mockData = [$mockData];
     }
 
+    // Get success status code from OpenAPI spec
+    $successStatus = $operationInfo['successStatus'] ?? 200;
+
     // Add mock response
     if ($needsBinaryResponse) {
         $contentType = $curatedConfig['contentType'] ?? 'application/octet-stream';
-        $test->addBody(sprintf("\$this->mockBinaryResponse(200, 'binary-content', '%s');", $contentType));
+        $test->addBody(sprintf("\$this->mockBinaryResponse(%d, 'binary-content', '%s');", $successStatus, $contentType));
     } elseif ($needsTextResponse) {
         $contentType = $curatedConfig['contentType'] ?? 'text/plain';
-        $test->addBody(sprintf("\$this->mockTextResponse(200, 'text content', '%s');", $contentType));
+        $test->addBody(sprintf("\$this->mockTextResponse(%d, 'text content', '%s');", $successStatus, $contentType));
     } else {
         $mockDataCode = mockDataToCode($mockData, $isArrayReturn);
-        $test->addBody(sprintf('$this->mockJsonResponse(200, %s);', $mockDataCode));
+        $test->addBody(sprintf('$this->mockJsonResponse(%d, %s);', $successStatus, $mockDataCode));
     }
     $test->addBody('');
 
@@ -594,20 +768,52 @@ function generateMethodTest(ClassType $class, ReflectionMethod $method, array $c
         $test->addBody('');
     }
 
-    // Call the method and capture result
+    // Call the method
     $test->addBody(sprintf('$result = $this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
     $test->addBody('');
 
     // Add request assertions
     $test->addBody('$this->assertNotNull($this->getLastRequest());');
 
+    // Add HTTP method assertion
+    if ($operationInfo !== null) {
+        $test->addBody(sprintf("\$this->assertRequestMethod('%s');", $operationInfo['httpMethod']));
+
+        // Build and add path assertion
+        $expectedPath = buildExpectedPath($operationInfo['path'], $operationInfo['pathParams'], $testValues);
+        $test->addBody(sprintf("\$this->assertRequestPath('%s');", $expectedPath));
+    }
+
+    // Add auth header assertion
     if ($noAuthHeader) {
         $test->addBody('$this->assertRequestHasNoAuthHeader();');
     } else {
         $test->addBody('$this->assertRequestHasAuthHeader();');
     }
 
-    // Add response type assertions for non-binary/text responses (only if model has hydrate)
+    // Add query parameter assertions for non-empty query params
+    // Skip boolean params since PHP sends them as '1' or '' which is harder to assert
+    if ($operationInfo !== null && !empty($operationInfo['queryParams'])) {
+        $expectedQueryParams = [];
+        foreach ($operationInfo['queryParams'] as $paramName => $paramInfo) {
+            // Skip boolean params - they're sent as '1' or '' which is tricky to test
+            if (($paramInfo['type'] ?? '') === 'boolean') {
+                continue;
+            }
+            if (isset($testValues[$paramName])) {
+                $expectedQueryParams[$paramName] = $testValues[$paramName];
+            }
+        }
+        if (!empty($expectedQueryParams)) {
+            $queryParamCode = [];
+            foreach ($expectedQueryParams as $key => $value) {
+                $queryParamCode[] = "'$key' => '$value'";
+            }
+            $test->addBody(sprintf('$this->assertRequestQueryParams([%s]);', implode(', ', $queryParamCode)));
+        }
+    }
+
+    // Add response type assertions
     if (!$needsBinaryResponse && !$needsTextResponse && $canAssertResponse) {
         if ($isArrayReturn) {
             $test->addBody('$this->assertIsArray($result);');
