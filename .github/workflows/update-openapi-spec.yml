@@ -44,6 +44,9 @@ jobs:
       - name: Regenerate client
         run: php bin/api-generate
 
+      - name: Regenerate endpoint tests
+        run: php bin/generate-tests --force
+
       - name: Check for changes
         id: changes
         run: |
@@ -67,6 +70,7 @@ jobs:
 
             - Updated `resources/openapi.json` with the latest Mattermost OpenAPI v4 spec
             - Regenerated client code from the updated spec
+            - Regenerated endpoint tests from the updated client
 
             Please review the changes before merging.
           branch: chore/update-openapi-spec
