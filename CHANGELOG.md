@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://github.com/cedricziel/mattermost-php/compare/v1.4.36...v1.5.0) (2025-12-21)
+
+
+### Features
+
+* add Symfony 8 component support ([#295](https://github.com/cedricziel/mattermost-php/issues/295)) ([b375c9e](https://github.com/cedricziel/mattermost-php/commit/b375c9e89b2e2388ef11dd512a6fa0def7443782))
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nette/php-generator from 4.1.7 to 4.2.0 ([#273](https://github.com/cedricziel/mattermost-php/issues/273)) ([5aab166](https://github.com/cedricziel/mattermost-php/commit/5aab1662c33c56d12d32c1ac9ff61689be867239))
+* **deps-dev:** bump nikic/php-parser from 5.4.0 to 5.6.2 ([#286](https://github.com/cedricziel/mattermost-php/issues/286)) ([397c160](https://github.com/cedricziel/mattermost-php/commit/397c1607525f2d4deff9724f9af0c2bd942fed53))
+* **deps:** bump actions/cache from 4 to 5 ([#291](https://github.com/cedricziel/mattermost-php/issues/291)) ([06ea033](https://github.com/cedricziel/mattermost-php/commit/06ea033da3a5d8de8c3c236f8415721d37e93040))
+* **deps:** bump actions/checkout from 4 to 6 ([#285](https://github.com/cedricziel/mattermost-php/issues/285)) ([ebbec0d](https://github.com/cedricziel/mattermost-php/commit/ebbec0d7c56509083ce38cabbf798a330cd55ffe))
+* **deps:** bump guzzlehttp/psr7 from 2.7.0 to 2.8.0 ([#276](https://github.com/cedricziel/mattermost-php/issues/276)) ([14ec4a8](https://github.com/cedricziel/mattermost-php/commit/14ec4a804254b50b2d4ac47f211157c6a58ef89e))
+* **deps:** bump phpdocumentor/reflection-docblock from 5.6.1 to 5.6.5 ([#287](https://github.com/cedricziel/mattermost-php/issues/287)) ([b3e17cf](https://github.com/cedricziel/mattermost-php/commit/b3e17cfccecda317a073ae59f54a9dcfe6eab943))
+
 ## [1.4.36](https://github.com/cedricziel/mattermost-php/compare/v1.4.35...v1.4.36) (2025-03-10)
 
 
