@@ -1,3 +1,8 @@
+---
+layout: default
+title: Home
+---
+
 # Mattermost PHP SDK
 
 A PHP SDK for building apps and integrations for Mattermost.
@@ -10,11 +15,11 @@ A PHP SDK for building apps and integrations for Mattermost.
 
 ## Quick Links
 
-- [Getting Started](getting-started.md) - Installation and first steps
-- [API Client](api-client.md) - Using the REST API client
-- [Apps Framework](apps-framework.md) - Building Mattermost Apps
-- [Slash Commands](slash-commands.md) - Custom slash command development
-- [Examples](examples.md) - Code examples for common use cases
+- [Getting Started](getting-started) - Installation and first steps
+- [API Client](api-client) - Using the REST API client
+- [Apps Framework](apps-framework) - Building Mattermost Apps
+- [Slash Commands](slash-commands) - Custom slash command development
+- [Examples](examples) - Code examples for common use cases
 
 ## Requirements
 

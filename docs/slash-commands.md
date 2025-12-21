@@ -1,3 +1,8 @@
+---
+layout: default
+title: Slash Commands
+---
+
 # Slash Commands
 
 Slash commands are one of the most common ways to integrate with Mattermost. Users invoke them by typing a slash followed by the command name (e.g., `/weather toronto`).
@@ -306,6 +311,6 @@ public function execute(SlashCommandInput $input): SlashCommandOutput
 
 ## Next Steps
 
-- [Apps Framework](apps-framework.md) - For more complex integrations
-- [Examples](examples.md) - More code examples
+- [Apps Framework](apps-framework) - For more complex integrations
+- [Examples](examples) - More code examples
 - [Mattermost Slash Commands Docs](https://developers.mattermost.com/integrate/slash-commands/)

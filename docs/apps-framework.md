@@ -1,3 +1,8 @@
+---
+layout: default
+title: Apps Framework
+---
+
 # Apps Framework
 
 The Apps Framework provides a PSR-15 compatible request handler for building [Mattermost Apps](https://developers.mattermost.com/integrate/apps/). Apps can extend Mattermost with custom commands, channel header buttons, post menu actions, and more.
@@ -263,6 +268,6 @@ $response = $app->handle($serverRequest);
 
 ## Next Steps
 
-- [Slash Commands](slash-commands.md) - Simpler slash command integration
-- [Examples](examples.md) - More code examples
+- [Slash Commands](slash-commands) - Simpler slash command integration
+- [Examples](examples) - More code examples
 - [Mattermost Apps Documentation](https://developers.mattermost.com/integrate/apps/)

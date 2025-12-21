@@ -1,0 +1,5 @@
+title: Mattermost PHP SDK
+description: A PHP SDK for building apps and integrations for Mattermost
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+  - jekyll-remote-theme

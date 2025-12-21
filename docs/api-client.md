@@ -1,3 +1,8 @@
+---
+layout: default
+title: API Client
+---
+
 # API Client
 
 The API client provides a fluent, type-safe interface to the Mattermost REST API. It is auto-generated from the official Mattermost OpenAPI specification.
@@ -223,6 +228,6 @@ $moreChannels = $client->channels()->getAllChannels(
 
 ## Next Steps
 
-- [Apps Framework](apps-framework.md) - Build Mattermost Apps
-- [Slash Commands](slash-commands.md) - Create custom slash commands
-- [Examples](examples.md) - More code examples
+- [Apps Framework](apps-framework) - Build Mattermost Apps
+- [Slash Commands](slash-commands) - Create custom slash commands
+- [Examples](examples) - More code examples

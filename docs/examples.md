@@ -1,3 +1,8 @@
+---
+layout: default
+title: Examples
+---
+
 # Examples
 
 This page contains practical code examples for common use cases.
@@ -477,8 +482,8 @@ try {
 
 ## More Resources
 
-- [Getting Started](getting-started.md)
-- [API Client Guide](api-client.md)
-- [Apps Framework](apps-framework.md)
-- [Slash Commands](slash-commands.md)
+- [Getting Started](getting-started)
+- [API Client Guide](api-client)
+- [Apps Framework](apps-framework)
+- [Slash Commands](slash-commands)
 - [Mattermost Developer Docs](https://developers.mattermost.com/)

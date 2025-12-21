@@ -1,3 +1,8 @@
+---
+layout: default
+title: Getting Started
+---
+
 # Getting Started
 
 This guide will help you install and configure the Mattermost PHP SDK.
@@ -111,7 +116,7 @@ $client = new Client(
 
 ## Next Steps
 
-- [API Client Guide](api-client.md) - Learn about all available endpoints
-- [Apps Framework](apps-framework.md) - Build Mattermost Apps
-- [Slash Commands](slash-commands.md) - Create custom slash commands
-- [Examples](examples.md) - More code examples
+- [API Client Guide](api-client) - Learn about all available endpoints
+- [Apps Framework](apps-framework) - Build Mattermost Apps
+- [Slash Commands](slash-commands) - Create custom slash commands
+- [Examples](examples) - More code examples
