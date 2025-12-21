@@ -43,6 +43,7 @@ echo "Authenticated as: " . $user->username;
 ```
 
 To create a personal access token in Mattermost:
+
 1. Go to **Settings > Security > Personal Access Tokens**
 2. Click **Create Token**
 3. Copy the token (it won't be shown again)
@@ -90,6 +91,7 @@ echo "Created post with ID: " . $post->id;
 The SDK uses [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client discovery. It will automatically find and use any installed PSR-18 compatible HTTP client.
 
 Popular options include:
+
 - `guzzlehttp/guzzle`
 - `symfony/http-client`
 - `php-http/curl-client`
