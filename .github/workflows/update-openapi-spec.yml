@@ -47,6 +47,9 @@ jobs:
       - name: Regenerate endpoint tests
         run: php bin/generate-tests --force
 
+      - name: Rector Code Quality Check
+        run: composer rector:dry-run
+
       - name: Check for changes
         id: changes
         run: |
