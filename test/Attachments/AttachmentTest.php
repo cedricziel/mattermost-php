@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\Test;
 class AttachmentTest extends MattermostTestCase
 {
     #[Test]
-    public function canSerialize()
+    public function canSerialize(): void
     {
         $attachmentJson = <<<JSON
 {
@@ -65,7 +65,7 @@ JSON;
     }
 
     #[Test]
-    public function canSerializeSelectAction()
+    public function canSerializeSelectAction(): void
     {
         $json = <<<JSON
 {
@@ -133,7 +133,7 @@ JSON;
     }
 
     #[Test]
-    public function canCreateChannelSelect()
+    public function canCreateChannelSelect(): void
     {
         $json = <<<JSON
 {

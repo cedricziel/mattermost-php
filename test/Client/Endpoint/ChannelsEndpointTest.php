@@ -87,7 +87,7 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/channels');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['not_associated_to_group' => 'test-not_associated_to_group', 'page' => '1', 'per_page' => '1']);
+        $this->assertRequestQueryParams(['not_associated_to_group' => 'test-not_associated_to_group', 'page' => '1', 'per_page' => '1', 'exclude_default_channels' => '1', 'include_deleted' => '1', 'include_total_count' => '1', 'exclude_policy_constrained' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData::class, $result);
     }
 
@@ -153,6 +153,7 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/channels/search');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['system_console' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SearchAllChannelsResponse::class, $result);
     }
 
@@ -461,6 +462,7 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/name/test-channel_name');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['include_deleted' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result);
     }
 
@@ -479,6 +481,7 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/teams/name/test-team_name/channels/name/test-channel_name');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['include_deleted' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result);
     }
 
@@ -644,7 +647,7 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/channels');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['last_delete_at' => '1']);
+        $this->assertRequestQueryParams(['include_deleted' => '1', 'last_delete_at' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
@@ -665,7 +668,7 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/channels');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['last_delete_at' => '1']);
+        $this->assertRequestQueryParams(['last_delete_at' => '1', 'include_deleted' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
@@ -715,14 +718,13 @@ class ChannelsEndpointTest extends ClientTestCase
         $page = 1;
         $per_page = 1;
 
-        $result = $this->endpoint->channelMembersMinusGroupMembers($channel_id, $group_ids, $page, $per_page);
+        $this->endpoint->channelMembersMinusGroupMembers($channel_id, $group_ids, $page, $per_page);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/channels/test-channel_id/members_minus_group_members');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['group_ids' => 'test-group_ids', 'page' => '1', 'per_page' => '1']);
-        $this->assertNull($result);
     }
 
     #[Test]

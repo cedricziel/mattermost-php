@@ -12,7 +12,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
 class ManifestTest extends MattermostTestCase
 {
 
-    public function testCanDeserializeManiest()
+    public function testCanDeserializeManiest(): void
     {
         $json = <<<EOF
 {
@@ -45,7 +45,7 @@ EOF;
         $this->assertEquals('Hello, world!', $manifest->getDisplayName());
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $json = <<<EOF
 {
@@ -68,7 +68,7 @@ EOF;
         $this->assertEquals('/on-install', $request->getPath());
     }
 
-    public function testCanDeserializePingRequest()
+    public function testCanDeserializePingRequest(): void
     {
         $pingRequest = <<<EOF
 {

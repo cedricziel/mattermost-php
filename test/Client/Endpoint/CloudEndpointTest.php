@@ -91,13 +91,12 @@ class CloudEndpointTest extends ClientTestCase
 
         $stripe_setup_intent_id = 'test-stripe_setup_intent_id';
 
-        $result = $this->endpoint->confirmCustomerPayment($stripe_setup_intent_id);
+        $this->endpoint->confirmCustomerPayment($stripe_setup_intent_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/cloud/payment/confirm');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]

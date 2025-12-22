@@ -68,7 +68,7 @@ class WebhooksEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/hooks/incoming');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'team_id' => 'test-team_id']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'team_id' => 'test-team_id', 'include_total_count' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\IncomingWebhook::class, $result[0]);

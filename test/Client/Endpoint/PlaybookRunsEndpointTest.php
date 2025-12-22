@@ -65,7 +65,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'page' => '1', 'per_page' => '1', 'sort' => 'test-sort', 'direction' => 'test-direction', 'owner_user_id' => 'test-owner_user_id', 'participant_id' => 'test-participant_id', 'search_term' => 'test-search_term', 'channel_id' => 'test-channel_id', 'since' => '1']);
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'page' => '1', 'per_page' => '1', 'sort' => 'test-sort', 'direction' => 'test-direction', 'owner_user_id' => 'test-owner_user_id', 'participant_id' => 'test-participant_id', 'search_term' => 'test-search_term', 'channel_id' => 'test-channel_id', 'omit_ended' => '1', 'since' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookRunList::class, $result);
     }
 
@@ -178,11 +178,11 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function endPlaybookRunBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $id = 'test-id';
 
-        $result = $this->endpoint->endPlaybookRun($id);
+        $this->endpoint->endPlaybookRun($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
@@ -193,11 +193,11 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function restartPlaybookRunBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $id = 'test-id';
 
-        $result = $this->endpoint->restartPlaybookRun($id);
+        $this->endpoint->restartPlaybookRun($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
@@ -213,23 +213,22 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $id = 'test-id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\StatusRequest(message: 'test-message');
 
-        $result = $this->endpoint->status($id, $requestBody);
+        $this->endpoint->status($id, $requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/status');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
     public function finishBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $id = 'test-id';
 
-        $result = $this->endpoint->finish($id);
+        $this->endpoint->finish($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
@@ -245,13 +244,12 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $id = 'test-id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ChangeOwnerRequest(owner_id: 'test-owner_id');
 
-        $result = $this->endpoint->changeOwner($id, $requestBody);
+        $this->endpoint->changeOwner($id, $requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/owner');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]

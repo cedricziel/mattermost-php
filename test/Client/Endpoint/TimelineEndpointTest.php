@@ -34,12 +34,11 @@ class TimelineEndpointTest extends ClientTestCase
         $id = 'test-id';
         $event_id = 'test-event_id';
 
-        $result = $this->endpoint->removeTimelineEvent($id, $event_id);
+        $this->endpoint->removeTimelineEvent($id, $event_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/timeline/test-event_id');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 }

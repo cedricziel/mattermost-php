@@ -33,6 +33,25 @@ class EmojiEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function createEmojiBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'creator_id' => 'test-creator_id', 'name' => 'test-name', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]);
+
+        $image = 'test-file-content';
+        $emoji = 'test-emoji';
+
+        $result = $this->endpoint->createEmoji($image, $emoji);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/emoji');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('image');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result);
+    }
+
+    #[Test]
     public function getEmojiListBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['id' => 'test-id', 'creator_id' => 'test-creator_id', 'name' => 'test-name', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]);

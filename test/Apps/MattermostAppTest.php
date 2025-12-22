@@ -69,7 +69,7 @@ class MattermostAppTest extends TestCase
     }
 
     #[Test]
-    public function canCreateApp()
+    public function canCreateApp(): void
     {
         $app = MattermostApp::create('test', 'Test', 'https://example.com');
 
@@ -78,7 +78,7 @@ class MattermostAppTest extends TestCase
 
     #[Test]
     #[DataProvider('provideApps')]
-    public function canGetManifest(string $description, MattermostApp $app)
+    public function canGetManifest(string $description, MattermostApp $app): void
     {
         $this->assertNotNull($app->getManifest());
 
@@ -98,7 +98,7 @@ class MattermostAppTest extends TestCase
     }
 
     #[Test]
-    public function canAddBinding()
+    public function canAddBinding(): void
     {
         $app = MattermostApp::create('test', 'Test', 'https://example.com')
             ->withHttp(HttpDeploymentDescriptor::create('https://example.com'))
@@ -124,7 +124,7 @@ class MattermostAppTest extends TestCase
     }
 
     #[Test]
-    public function canPrefixBindings()
+    public function canPrefixBindings(): void
     {
         $app = MattermostApp::create('test', 'Test', 'https://example.com')
             ->withBindingsPrefix('dev')

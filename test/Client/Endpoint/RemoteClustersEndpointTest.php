@@ -54,7 +54,7 @@ class RemoteClustersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/remotecluster');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'exclude_offline' => '1', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel', 'only_confirmed' => '1', 'only_plugins' => '1', 'exclude_plugins' => '1', 'include_deleted' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RemoteCluster::class, $result[0]);
@@ -99,13 +99,12 @@ class RemoteClustersEndpointTest extends ClientTestCase
 
         $remote_id = 'test-remote_id';
 
-        $result = $this->endpoint->deleteRemoteCluster($remote_id);
+        $this->endpoint->deleteRemoteCluster($remote_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/remotecluster/test-remote_id');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]

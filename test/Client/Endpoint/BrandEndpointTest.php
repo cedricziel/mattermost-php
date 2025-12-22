@@ -29,6 +29,24 @@ class BrandEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function uploadBrandImageBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['status' => 'test-status']);
+
+        $image = 'test-file-content';
+
+        $result = $this->endpoint->uploadBrandImage($image);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/brand/image');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('image');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function deleteBrandImageBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);

@@ -278,4 +278,59 @@ abstract class ClientTestCase extends TestCase
     {
         return $this->streamFactory->createStream($content);
     }
+
+    /**
+     * Assert that the request Content-Type is multipart/form-data.
+     */
+    protected function assertRequestContentTypeMultipart(): void
+    {
+        $request = $this->getLastRequest();
+        $this->assertNotNull($request, 'No request was made');
+
+        $contentType = $request->getHeaderLine('Content-Type');
+        $this->assertStringStartsWith(
+            'multipart/form-data; boundary=',
+            $contentType,
+            'Expected multipart/form-data Content-Type'
+        );
+    }
+
+    /**
+     * Assert that the request body contains a multipart form field.
+     */
+    protected function assertRequestBodyHasMultipartField(string $fieldName): void
+    {
+        $request = $this->getLastRequest();
+        $this->assertNotNull($request, 'No request was made');
+
+        $body = (string) $request->getBody();
+        $this->assertStringContainsString(
+            'Content-Disposition: form-data; name="' . $fieldName . '"',
+            $body,
+            sprintf('Expected multipart field "%s" not found in request body', $fieldName)
+        );
+    }
+
+    /**
+     * Assert that the request body contains a multipart file field with filename.
+     */
+    protected function assertRequestBodyHasMultipartFile(string $fieldName, ?string $filename = null): void
+    {
+        $request = $this->getLastRequest();
+        $this->assertNotNull($request, 'No request was made');
+
+        $body = (string) $request->getBody();
+
+        if ($filename !== null) {
+            $pattern = 'Content-Disposition: form-data; name="' . $fieldName . '"; filename="' . $filename . '"';
+        } else {
+            $pattern = 'Content-Disposition: form-data; name="' . $fieldName . '"; filename=';
+        }
+
+        $this->assertStringContainsString(
+            $pattern,
+            $body,
+            sprintf('Expected multipart file field "%s" not found in request body', $fieldName)
+        );
+    }
 }

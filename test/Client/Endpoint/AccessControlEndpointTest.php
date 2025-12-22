@@ -117,6 +117,7 @@ class AccessControlEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/access_control_policies/test-policy_id/activate');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['active' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 

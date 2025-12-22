@@ -29,6 +29,22 @@ class Audit_logsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function addAuditLogCertificateBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $certificate = 'test-file-content';
+
+        $result = $this->endpoint->addAuditLogCertificate($certificate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/audit_logs/certificate');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function removeAuditLogCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);

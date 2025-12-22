@@ -80,7 +80,7 @@ class BotsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/bots');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'include_deleted' => '1', 'only_orphaned' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Bot::class, $result[0]);
@@ -117,6 +117,7 @@ class BotsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/bots/test-bot_user_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['include_deleted' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Bot::class, $result);
     }
 

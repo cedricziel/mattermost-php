@@ -18,8 +18,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PluginsEndpoint::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(GetPluginsResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetPluginsResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PluginManifestWebapp::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PluginStatus::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PluginManifest::class)]
@@ -39,6 +39,25 @@ class PluginsEndpointTest extends ClientTestCase
             new \GuzzleHttp\Psr7\HttpFactory(),
             $this->streamFactory,
         );
+    }
+
+    #[Test]
+    public function uploadPluginBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['status' => 'test-status']);
+
+        $plugin = 'test-file-content';
+        $force = 'test-force';
+
+        $result = $this->endpoint->uploadPlugin($plugin, $force);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/plugins');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('plugin');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
     #[Test]
@@ -186,7 +205,7 @@ class PluginsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/plugins/marketplace');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter' => 'test-filter', 'server_version' => 'test-server_version']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter' => 'test-filter', 'server_version' => 'test-server_version', 'local_only' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\MarketplacePlugin::class, $result[0]);

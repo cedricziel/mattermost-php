@@ -68,7 +68,7 @@ class CommandsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/commands');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['team_id' => 'test-team_id']);
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'custom_only' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Command::class, $result[0]);

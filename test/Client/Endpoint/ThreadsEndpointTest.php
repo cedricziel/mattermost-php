@@ -49,7 +49,7 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['since' => '1', 'page' => '1', 'per_page' => '1']);
+        $this->assertRequestQueryParams(['since' => '1', 'deleted' => '1', 'extended' => '1', 'page' => '1', 'per_page' => '1', 'totalsOnly' => '1', 'threadsOnly' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserThreads::class, $result);
     }
 
@@ -61,13 +61,12 @@ class ThreadsEndpointTest extends ClientTestCase
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
 
-        $result = $this->endpoint->getThreadMentionCountsByChannel($user_id, $team_id);
+        $this->endpoint->getThreadMentionCountsByChannel($user_id, $team_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/mention_counts');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -78,13 +77,12 @@ class ThreadsEndpointTest extends ClientTestCase
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
 
-        $result = $this->endpoint->updateThreadsReadForUser($user_id, $team_id);
+        $this->endpoint->updateThreadsReadForUser($user_id, $team_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/read');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -97,13 +95,12 @@ class ThreadsEndpointTest extends ClientTestCase
         $thread_id = 'test-thread_id';
         $timestamp = 'test-timestamp';
 
-        $result = $this->endpoint->updateThreadReadForUser($user_id, $team_id, $thread_id, $timestamp);
+        $this->endpoint->updateThreadReadForUser($user_id, $team_id, $thread_id, $timestamp);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/read/test-timestamp');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -115,13 +112,12 @@ class ThreadsEndpointTest extends ClientTestCase
         $team_id = 'test-team_id';
         $thread_id = 'test-thread_id';
 
-        $result = $this->endpoint->startFollowingThread($user_id, $team_id, $thread_id);
+        $this->endpoint->startFollowingThread($user_id, $team_id, $thread_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/following');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -133,13 +129,12 @@ class ThreadsEndpointTest extends ClientTestCase
         $team_id = 'test-team_id';
         $thread_id = 'test-thread_id';
 
-        $result = $this->endpoint->stopFollowingThread($user_id, $team_id, $thread_id);
+        $this->endpoint->stopFollowingThread($user_id, $team_id, $thread_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/following');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -151,12 +146,11 @@ class ThreadsEndpointTest extends ClientTestCase
         $team_id = 'test-team_id';
         $thread_id = 'test-thread_id';
 
-        $result = $this->endpoint->getUserThread($user_id, $team_id, $thread_id);
+        $this->endpoint->getUserThread($user_id, $team_id, $thread_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 }

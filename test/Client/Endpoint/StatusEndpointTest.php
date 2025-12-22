@@ -92,13 +92,12 @@ class StatusEndpointTest extends ClientTestCase
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest(emoji: 'test-emoji', text: 'test-text');
 
-        $result = $this->endpoint->updateUserCustomStatus($user_id, $requestBody);
+        $this->endpoint->updateUserCustomStatus($user_id, $requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -108,13 +107,12 @@ class StatusEndpointTest extends ClientTestCase
 
         $user_id = 'test-user_id';
 
-        $result = $this->endpoint->unsetUserCustomStatus($user_id);
+        $this->endpoint->unsetUserCustomStatus($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -125,13 +123,12 @@ class StatusEndpointTest extends ClientTestCase
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest(emoji: 'test-emoji', text: 'test-text', duration: 'test-duration', expires_at: 'test-expires_at');
 
-        $result = $this->endpoint->removeRecentCustomStatus($user_id, $requestBody);
+        $this->endpoint->removeRecentCustomStatus($user_id, $requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom/recent');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -142,12 +139,11 @@ class StatusEndpointTest extends ClientTestCase
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest(emoji: 'test-emoji', text: 'test-text', duration: 'test-duration', expires_at: 'test-expires_at');
 
-        $result = $this->endpoint->postUserRecentCustomStatusDelete($user_id, $requestBody);
+        $this->endpoint->postUserRecentCustomStatusDelete($user_id, $requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom/recent/delete');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 }

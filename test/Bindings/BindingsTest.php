@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TopLevelBinding::class)]
 class BindingsTest extends MattermostTestCase
 {
-    public function testCanDeserializeBindings()
+    public function testCanDeserializeBindings(): void
     {
         $json = <<<EOF
 {

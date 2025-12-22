@@ -55,13 +55,12 @@ class ConditionsEndpointTest extends ClientTestCase
         $id = 'test-id';
         $conditionID = 'test-conditionID';
 
-        $result = $this->endpoint->deletePlaybookCondition($id, $conditionID);
+        $this->endpoint->deletePlaybookCondition($id, $conditionID);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/conditions/test-conditionID');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]

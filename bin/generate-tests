@@ -48,17 +48,13 @@ $endpointFiles = glob($endpointDir . '/*Endpoint.php');
 echo sprintf("Found %d endpoint files\n", count($endpointFiles));
 echo sprintf("Loaded %d operations from OpenAPI spec\n", count($operationLookup));
 
-// Methods to skip due to SDK issues (multipart uploads, binary downloads, etc.)
+// Methods to skip due to SDK issues (binary downloads, special response types, etc.)
 $skipMethods = [
-    // Multipart file upload endpoints (need special handling for mixed type params)
-    'EmojiEndpoint' => ['createEmoji'],
-    'PluginsEndpoint' => ['uploadPlugin'],
-    'SystemEndpoint' => ['uploadLicenseFile', 'generateSupportPacket', 'getSupportedTimezone', 'getClientConfig', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld'],
+    // Chunked upload API - different pattern from standard multipart
     'UploadsEndpoint' => ['uploadData', 'getUpload'],
 
-    // Multipart file upload endpoints (continued)
-    'BrandEndpoint' => ['uploadBrandImage'],
-    'FilesEndpoint' => ['uploadFile'],
+    // SystemEndpoint - various non-multipart issues
+    'SystemEndpoint' => ['generateSupportPacket', 'getSupportedTimezone', 'getClientConfig', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld'],
 
     // Void responses but with special issues
     'UsersEndpoint' => [
@@ -145,7 +141,7 @@ $curatedTests = [
             'testBinaryResponse' => true,
             'contentType' => 'image/png',
         ],
-        'createCustomEmoji' => [
+        'createEmoji' => [
             'testMultipart' => true,
         ],
     ],
@@ -165,11 +161,11 @@ $curatedTests = [
         ],
     ],
     'BotsEndpoint' => [
-        'getBotIcon' => [
+        'getBotIconImage' => [
             'testBinaryResponse' => true,
             'contentType' => 'image/png',
         ],
-        'setBotIcon' => [
+        'setBotIconImage' => [
             'testMultipart' => true,
         ],
     ],
@@ -177,6 +173,33 @@ $curatedTests = [
         'getSamlMetadataFromIdp' => [
             'testTextResponse' => true,
             'contentType' => 'text/plain',
+        ],
+        'uploadSamlIdpCertificate' => [
+            'testMultipart' => true,
+        ],
+        'uploadSamlPublicCertificate' => [
+            'testMultipart' => true,
+        ],
+        'uploadSamlPrivateCertificate' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'PluginsEndpoint' => [
+        'uploadPlugin' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'SystemEndpoint' => [
+        'uploadLicenseFile' => [
+            'testMultipart' => true,
+        ],
+    ],
+    'LDAPEndpoint' => [
+        'uploadLdapPublicCertificate' => [
+            'testMultipart' => true,
+        ],
+        'uploadLdapPrivateCertificate' => [
+            'testMultipart' => true,
         ],
     ],
 ];
@@ -376,8 +399,18 @@ function getSuccessReturnType(ReflectionMethod $method): array
         }
     } elseif ($returnType instanceof ReflectionNamedType) {
         $typeName = $returnType->getName();
+        // Handle explicit null return type (void response)
+        if ($typeName === 'null') {
+            return ['type' => null, 'isArray' => false, 'isVoid' => true];
+        }
         if ($typeName === 'array') {
             return ['type' => null, 'isArray' => true, 'isVoid' => false];
+        }
+        // Check if it's an error-only nullable type (e.g., Default500Response|null)
+        // PHP represents this as ReflectionNamedType with allowsNull=true
+        if ($returnType->allowsNull() &&
+            (str_contains($typeName, 'Default') || str_contains($typeName, 'AppError'))) {
+            return ['type' => null, 'isArray' => false, 'isVoid' => true];
         }
         if (!str_contains($typeName, 'Default') && !str_contains($typeName, 'AppError')) {
             return ['type' => $typeName, 'isArray' => false, 'isVoid' => false];
@@ -848,10 +881,16 @@ function generateMethodTest(
                 case 'bool':
                     $paramSetup[] = sprintf('$%s = true;', $paramName);
                     $argList[] = '$' . $paramName;
-                    $testValues[$paramName] = 'true';
+                    $testValues[$paramName] = '1'; // HTTP query string format for true
                     break;
                 case 'array':
                     $paramSetup[] = sprintf('$%s = [];', $paramName);
+                    $argList[] = '$' . $paramName;
+                    break;
+                case 'mixed':
+                    // For file upload parameters (mixed can be string, resource, or StreamInterface)
+                    // Use a simple string as test content
+                    $paramSetup[] = sprintf("\$%s = 'test-file-content';", $paramName);
                     $argList[] = '$' . $paramName;
                     break;
                 default:
@@ -883,6 +922,7 @@ function generateMethodTest(
     $needsBinaryResponse = $curatedConfig['testBinaryResponse'] ?? false;
     $needsTextResponse = $curatedConfig['testTextResponse'] ?? false;
     $noAuthHeader = $curatedConfig['testNoAuthHeader'] ?? false;
+    $isMultipart = $curatedConfig['testMultipart'] ?? false;
 
     $successType = $returnTypeInfo['type'];
     $isArrayReturn = $returnTypeInfo['isArray'];
@@ -956,7 +996,11 @@ function generateMethodTest(
     }
 
     // Call the method
-    $test->addBody(sprintf('$result = $this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
+    if ($isVoidResponse) {
+        $test->addBody(sprintf('$this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
+    } else {
+        $test->addBody(sprintf('$result = $this->endpoint->%s(%s);', $methodName, implode(', ', $argList)));
+    }
     $test->addBody('');
 
     // Add request assertions
@@ -978,15 +1022,22 @@ function generateMethodTest(
         $test->addBody('$this->assertRequestHasAuthHeader();');
     }
 
+    // Add multipart assertions
+    if ($isMultipart) {
+        $test->addBody('$this->assertRequestContentTypeMultipart();');
+        // Add assertions for each mixed type parameter (these are file fields)
+        foreach ($params as $param) {
+            $paramType = $param->getType();
+            if ($paramType instanceof ReflectionNamedType && $paramType->getName() === 'mixed') {
+                $test->addBody(sprintf("\$this->assertRequestBodyHasMultipartFile('%s');", $param->getName()));
+            }
+        }
+    }
+
     // Add query parameter assertions for non-empty query params
-    // Skip boolean params since PHP sends them as '1' or '' which is harder to assert
     if ($operationInfo !== null && !empty($operationInfo['queryParams'])) {
         $expectedQueryParams = [];
         foreach ($operationInfo['queryParams'] as $paramName => $paramInfo) {
-            // Skip boolean params - they're sent as '1' or '' which is tricky to test
-            if (($paramInfo['type'] ?? '') === 'boolean') {
-                continue;
-            }
             if (isset($testValues[$paramName])) {
                 $expectedQueryParams[$paramName] = $testValues[$paramName];
             }
@@ -1000,9 +1051,9 @@ function generateMethodTest(
         }
     }
 
-    // Add response type assertions
+    // Add response type assertions (skip for void - no result to assert)
     if ($isVoidResponse) {
-        $test->addBody('$this->assertNull($result);');
+        // No assertion needed - void methods don't return a value
     } elseif ($needsBinaryResponse) {
         $test->addBody('$this->assertInstanceOf(\\CedricZiel\\MattermostPhp\\Client\\Response\\BinaryResponse::class, $result);');
     } elseif ($needsTextResponse) {

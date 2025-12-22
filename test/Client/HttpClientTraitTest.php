@@ -345,11 +345,8 @@ class HttpClientTraitTestDouble
 {
     use HttpClientTrait;
 
-    protected string $baseUrl;
-
-    public function __construct(string $baseUrl)
+    public function __construct(protected string $baseUrl)
     {
-        $this->baseUrl = $baseUrl;
     }
 
     public function exposeParseContentType(string $header): string

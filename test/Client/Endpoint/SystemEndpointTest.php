@@ -69,7 +69,7 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/system/ping');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['device_id' => 'test-device_id']);
+        $this->assertRequestQueryParams(['get_server_status' => '1', 'device_id' => 'test-device_id', 'use_rest_semantics' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse::class, $result);
     }
 
@@ -169,7 +169,7 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/config');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['remove_defaults' => 'test-remove_defaults']);
+        $this->assertRequestQueryParams(['remove_masked' => '1', 'remove_defaults' => 'test-remove_defaults']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Config::class, $result);
     }
 
@@ -202,17 +202,34 @@ class SystemEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function uploadLicenseFileBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['status' => 'test-status']);
+
+        $license = 'test-file-content';
+
+        $result = $this->endpoint->uploadLicenseFile($license);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/license');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('license');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function removeLicenseFileBuildsCorrectRequest(): void
     {
         $this->mockEmptyResponse(200);
 
-        $result = $this->endpoint->removeLicenseFile();
+        $this->endpoint->removeLicenseFile();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/license');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -250,13 +267,12 @@ class SystemEndpointTest extends ClientTestCase
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest(users: 1234567890);
 
-        $result = $this->endpoint->requestTrialLicense($requestBody);
+        $this->endpoint->requestTrialLicense($requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/trial-license');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -352,9 +368,9 @@ class SystemEndpointTest extends ClientTestCase
     #[Test]
     public function isAllowedToUpgradeToEnterpriseBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
-        $result = $this->endpoint->isAllowedToUpgradeToEnterprise();
+        $this->endpoint->isAllowedToUpgradeToEnterprise();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('GET');

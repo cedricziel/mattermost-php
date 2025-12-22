@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 class SlashCommandInputTest extends TestCase
 {
     #[Test]
-    public function canHandleSlashCommandAction()
+    public function canHandleSlashCommandAction(): void
     {
         $parsingMiddleware = new ParsingMiddleware();
         $slashCommand = new class extends AbstractSlashCommand {

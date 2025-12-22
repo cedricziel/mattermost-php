@@ -15,7 +15,7 @@ use function PHPUnit\Framework\assertInstanceOf;
 class LocationBindingsTest extends TestCase
 {
     #[Test]
-    public function canCreateLocationBinding()
+    public function canCreateLocationBinding(): void
     {
         $binding = LocationBinding::create('location', 'icon', 'hint', 'description');
 
@@ -27,7 +27,7 @@ class LocationBindingsTest extends TestCase
     }
 
     #[Test]
-    public function canCreateLocationBindingWithSubmit()
+    public function canCreateLocationBindingWithSubmit(): void
     {
         $binding = LocationBinding::create('location', 'icon', 'hint', 'description')
             ->withSubmit(

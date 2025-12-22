@@ -74,6 +74,24 @@ class LDAPEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function uploadLdapPublicCertificateBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $certificate = 'test-file-content';
+
+        $result = $this->endpoint->uploadLdapPublicCertificate($certificate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ldap/certificate/public');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('certificate');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function deleteLdapPublicCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
@@ -84,6 +102,24 @@ class LDAPEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/ldap/certificate/public');
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function uploadLdapPrivateCertificateBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $certificate = 'test-file-content';
+
+        $result = $this->endpoint->uploadLdapPrivateCertificate($certificate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/ldap/certificate/private');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('certificate');
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 

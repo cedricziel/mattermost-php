@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(Request::class)]
 class RequestTest extends MattermostTestCase
 {
-    public function testCanDeserializeCommandRequest()
+    public function testCanDeserializeCommandRequest(): void
     {
         $json = <<<JSON
 {
@@ -34,7 +34,7 @@ JSON;
         self::assertEquals('jdr84j3wbfbjijzjsz7c4hbbgay', $request->getContext()->getBotAccessToken());
     }
 
-    public function testCanDeserializeWithExpand()
+    public function testCanDeserializeWithExpand(): void
     {
         $json = <<<JSON
 {
@@ -103,7 +103,7 @@ JSON;
         self::assertNotEmpty($request->getContext()->getActingUser()->getId());
     }
 
-    public function testCanDeserializeWithSummary()
+    public function testCanDeserializeWithSummary(): void
     {
         $json = <<<JSON
 {

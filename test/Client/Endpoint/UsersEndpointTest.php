@@ -165,7 +165,7 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_team' => 'test-in_team', 'not_in_team' => 'test-not_in_team', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel', 'in_group' => 'test-in_group', 'role' => 'test-role', 'sort' => 'test-sort', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_team' => 'test-in_team', 'not_in_team' => 'test-not_in_team', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel', 'in_group' => 'test-in_group', 'group_constrained' => '1', 'without_team' => '1', 'active' => '1', 'inactive' => '1', 'role' => 'test-role', 'sort' => 'test-sort', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
@@ -174,9 +174,9 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function permanentDeleteAllUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
-        $result = $this->endpoint->permanentDeleteAllUsers();
+        $this->endpoint->permanentDeleteAllUsers();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
@@ -323,7 +323,7 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/stats/filtered');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['in_team' => 'test-in_team', 'in_channel' => 'test-in_channel', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
+        $this->assertRequestQueryParams(['in_team' => 'test-in_team', 'in_channel' => 'test-in_channel', 'include_deleted' => '1', 'include_bots' => '1', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UsersStats::class, $result);
     }
 
@@ -883,13 +883,12 @@ class UsersEndpointTest extends ClientTestCase
     {
         $this->mockEmptyResponse(200);
 
-        $result = $this->endpoint->revokeSessionsFromAllUsers();
+        $this->endpoint->revokeSessionsFromAllUsers();
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/sessions/revoke/all');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -900,13 +899,12 @@ class UsersEndpointTest extends ClientTestCase
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest(channel_id: 'test-channel_id');
 
-        $result = $this->endpoint->publishUserTyping($user_id, $requestBody);
+        $this->endpoint->publishUserTyping($user_id, $requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/test-user_id/typing');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -955,13 +953,12 @@ class UsersEndpointTest extends ClientTestCase
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToLdapRequest(from: 'test-from', match_field: 'test-match_field', force: true);
 
-        $result = $this->endpoint->migrateAuthToLdap($requestBody);
+        $this->endpoint->migrateAuthToLdap($requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/migrate_auth/ldap');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -991,13 +988,12 @@ class UsersEndpointTest extends ClientTestCase
 
         $user_id = 'test-user_id';
 
-        $result = $this->endpoint->resetPasswordFailedAttempts($user_id);
+        $this->endpoint->resetPasswordFailedAttempts($user_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/test-user_id/reset_failed_attempts');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]

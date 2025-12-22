@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class SelectActionTest extends TestCase
 {
     #[Test]
-    public function canSerialize()
+    public function canSerialize(): void
     {
         $action = SelectAction::create(
             'actionoptions',

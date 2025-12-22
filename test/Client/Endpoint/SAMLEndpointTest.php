@@ -45,6 +45,24 @@ class SAMLEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function uploadSamlIdpCertificateBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $certificate = 'test-file-content';
+
+        $result = $this->endpoint->uploadSamlIdpCertificate($certificate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/saml/certificate/idp');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('certificate');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function deleteSamlIdpCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
@@ -59,6 +77,24 @@ class SAMLEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function uploadSamlPublicCertificateBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $certificate = 'test-file-content';
+
+        $result = $this->endpoint->uploadSamlPublicCertificate($certificate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/saml/certificate/public');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('certificate');
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
     public function deleteSamlPublicCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
@@ -69,6 +105,24 @@ class SAMLEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/saml/certificate/public');
         $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function uploadSamlPrivateCertificateBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'test-status']);
+
+        $certificate = 'test-file-content';
+
+        $result = $this->endpoint->uploadSamlPrivateCertificate($certificate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/saml/certificate/private');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('certificate');
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 

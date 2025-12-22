@@ -59,6 +59,7 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/posts');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['set_online' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }
 
@@ -92,6 +93,7 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/posts/test-post_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['include_deleted' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }
 
@@ -150,7 +152,7 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/posts/test-post_id/thread');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['perPage' => '1', 'fromPost' => 'test-fromPost', 'fromCreateAt' => '1', 'fromUpdateAt' => '1', 'direction' => 'test-direction']);
+        $this->assertRequestQueryParams(['perPage' => '1', 'fromPost' => 'test-fromPost', 'fromCreateAt' => '1', 'fromUpdateAt' => '1', 'direction' => 'test-direction', 'skipFetchThreads' => '1', 'collapsedThreads' => '1', 'collapsedThreadsExtended' => '1', 'updatesOnly' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result);
     }
 
@@ -196,7 +198,7 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/channels/test-channel_id/posts');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'since' => '1', 'before' => 'test-before', 'after' => 'test-after']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'since' => '1', 'before' => 'test-before', 'after' => 'test-after', 'include_deleted' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result);
     }
 
@@ -219,7 +221,7 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/channels/test-channel_id/posts/unread');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['limit_before' => '1', 'limit_after' => '1']);
+        $this->assertRequestQueryParams(['limit_before' => '1', 'limit_after' => '1', 'skipFetchThreads' => '1', 'collapsedThreads' => '1', 'collapsedThreadsExtended' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result);
     }
 

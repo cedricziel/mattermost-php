@@ -10,6 +10,7 @@ use CedricZiel\MattermostPhp\Client\Model\CreateTeamRequest;
 use CedricZiel\MattermostPhp\Client\Model\FileInfoList;
 use CedricZiel\MattermostPhp\Client\Model\GetTeamInviteInfoResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest;
+use CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse;
 use CedricZiel\MattermostPhp\Client\Model\InviteGuestsToTeamRequest;
 use CedricZiel\MattermostPhp\Client\Model\InviteUsersToTeamRequest;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
@@ -34,6 +35,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(TeamMember::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(TeamStats::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(TeamUnread::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ImportTeamResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetTeamInviteInfoResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(FileInfoList::class)]
 class TeamsEndpointTest extends ClientTestCase
@@ -84,7 +86,7 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/teams');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'include_total_count' => '1', 'exclude_policy_constrained' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result[0]);
@@ -137,6 +139,7 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/teams/test-team_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['permanent' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
@@ -240,7 +243,7 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/teams/test-team_id/members');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'sort' => 'test-sort']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'sort' => 'test-sort', 'exclude_deleted_users' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result[0]);
@@ -278,6 +281,7 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/teams/test-team_id/members/batch');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['graceful' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result[0]);
@@ -453,7 +457,7 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/unread');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['exclude_team' => 'test-exclude_team']);
+        $this->assertRequestQueryParams(['exclude_team' => 'test-exclude_team', 'include_collapsed_threads' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamUnread::class, $result[0]);
@@ -509,6 +513,7 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/teams/test-team_id/invite-guests/email');
         $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['graceful' => '1', 'guest_magic_link' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
     }
 
@@ -524,6 +529,25 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/invites/email');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function importTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['results' => 'test-results']);
+
+        $team_id = 'test-team_id';
+        $file = 'test-file-content';
+        $filesize = 1;
+        $importFrom = 'test-importFrom';
+
+        $result = $this->endpoint->importTeam($team_id, $file, $filesize, $importFrom);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/import');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ImportTeamResponse::class, $result);
     }
 
     #[Test]

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class FormTest extends TestCase
 {
     #[Test]
-    public function canCreateForm()
+    public function canCreateForm(): void
     {
         $form = Form::create('title', Call::create('submit'));
 
@@ -28,7 +28,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function canAddFields()
+    public function canAddFields(): void
     {
         $form = Form::create('title', Call::create('submit'))
             ->addField(Field::createText('field1'))

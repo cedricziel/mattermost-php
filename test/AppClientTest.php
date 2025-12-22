@@ -41,7 +41,7 @@ class AppClientTest extends MattermostTestCase
         );
     }
 
-    public function testAppClientAsBotCanBeCreated()
+    public function testAppClientAsBotCanBeCreated(): void
     {
         $client = AppClient::asBot($this->createBotContext(), $this->serializer);
 
@@ -50,7 +50,7 @@ class AppClientTest extends MattermostTestCase
         self::assertEquals('https://example.com', $client->getMattermostSiteUrl());
     }
 
-    public function testAppClientAsActingUserCanBeCreated()
+    public function testAppClientAsActingUserCanBeCreated(): void
     {
         $client = AppClient::asActingUser($this->createUserContext(), $this->serializer);
 
@@ -60,7 +60,7 @@ class AppClientTest extends MattermostTestCase
         self::assertEquals('acting_user_id', $client->getUserId());
     }
 
-    public function testCanCreateTimer()
+    public function testCanCreateTimer(): void
     {
         $timer = Timer::create(new \DateTime(), new Call('/foo'));
 
@@ -71,7 +71,7 @@ class AppClientTest extends MattermostTestCase
         $appClient->createTimer($timer);
     }
 
-    public function testCanCreatePost()
+    public function testCanCreatePost(): void
     {
         $httpFactory = new HttpFactory();
 
@@ -95,7 +95,7 @@ class AppClientTest extends MattermostTestCase
         self::assertEquals('foo', $post->message);
     }
 
-    public function testCanCreateDM()
+    public function testCanCreateDM(): void
     {
         $httpFactory = new HttpFactory();
 

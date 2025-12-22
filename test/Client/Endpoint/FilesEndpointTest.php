@@ -8,11 +8,13 @@ use CedricZiel\MattermostPhp\Client\Endpoint\FilesEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\FileInfo;
 use CedricZiel\MattermostPhp\Client\Model\FileInfoList;
 use CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse;
+use CedricZiel\MattermostPhp\Client\Model\UploadFileResponse;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(FilesEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UploadFileResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetFileLinkResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(FileInfo::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(FileInfoList::class)]
@@ -30,6 +32,28 @@ class FilesEndpointTest extends ClientTestCase
             new \GuzzleHttp\Psr7\HttpFactory(),
             $this->streamFactory,
         );
+    }
+
+    #[Test]
+    public function uploadFileBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['file_infos' => [], 'client_ids' => []]);
+
+        $files = 'test-file-content';
+        $channel_id = 'test-channel_id';
+        $client_ids = 'test-client_ids';
+        $filename = 'test-filename';
+
+        $result = $this->endpoint->uploadFile($files, $channel_id, $client_ids, $filename);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/files');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestContentTypeMultipart();
+        $this->assertRequestBodyHasMultipartFile('files');
+        $this->assertRequestQueryParams(['channel_id' => 'test-channel_id', 'filename' => 'test-filename']);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UploadFileResponse::class, $result);
     }
 
     #[Test]

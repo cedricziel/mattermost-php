@@ -29,11 +29,11 @@ class InternalEndpointTest extends ClientTestCase
     #[Test]
     public function endPlaybookRunDialogBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $id = 'test-id';
 
-        $result = $this->endpoint->endPlaybookRunDialog($id);
+        $this->endpoint->endPlaybookRunDialog($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');

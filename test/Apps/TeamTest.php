@@ -12,7 +12,7 @@ use PHPUnit\Framework\Attributes\Test;
 class TeamTest extends MattermostTestCase
 {
     #[Test]
-    public function canCreate()
+    public function canCreate(): void
     {
         $team = new Team(
             'id',
@@ -37,7 +37,7 @@ class TeamTest extends MattermostTestCase
     }
 
     #[Test]
-    public function canDeSerialize()
+    public function canDeSerialize(): void
     {
         $json = file_get_contents(__DIR__ . '/request-with-team.json');;
 
@@ -49,7 +49,7 @@ class TeamTest extends MattermostTestCase
     }
 
     #[Test]
-    public function canDeserializeMinimal()
+    public function canDeserializeMinimal(): void
     {
         $json = file_get_contents(__DIR__ . '/request-with-team-id.json');;
 

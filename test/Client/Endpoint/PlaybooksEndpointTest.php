@@ -54,7 +54,7 @@ class PlaybooksEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'page' => '1', 'per_page' => '1', 'sort' => 'test-sort', 'direction' => 'test-direction']);
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'page' => '1', 'per_page' => '1', 'sort' => 'test-sort', 'direction' => 'test-direction', 'with_archived' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PlaybookList::class, $result);
     }
 
@@ -97,13 +97,12 @@ class PlaybooksEndpointTest extends ClientTestCase
 
         $id = 'test-id';
 
-        $result = $this->endpoint->deletePlaybook($id);
+        $this->endpoint->deletePlaybook($id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -134,13 +133,12 @@ class PlaybooksEndpointTest extends ClientTestCase
         $id = 'test-id';
         $field_id = 'test-field_id';
 
-        $result = $this->endpoint->deletePlaybookPropertyField($id, $field_id);
+        $this->endpoint->deletePlaybookPropertyField($id, $field_id);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields/test-field_id');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]

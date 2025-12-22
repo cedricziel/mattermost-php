@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(Timer::class)]
 class TimerTest extends MattermostTestCase
 {
-    public function testCanCreateTimer()
+    public function testCanCreateTimer(): void
     {
         $timer = Timer::create(new \DateTime(), new Call('/foo'));
 

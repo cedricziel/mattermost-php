@@ -80,7 +80,7 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/groups');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'q' => 'test-q', 'not_associated_to_team' => 'test-not_associated_to_team', 'not_associated_to_channel' => 'test-not_associated_to_channel', 'since' => '1']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'q' => 'test-q', 'include_member_count' => '1', 'not_associated_to_team' => 'test-not_associated_to_team', 'not_associated_to_channel' => 'test-not_associated_to_channel', 'since' => '1', 'filter_allow_reference' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
@@ -93,13 +93,12 @@ class GroupsEndpointTest extends ClientTestCase
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest(name: 'test-name', display_name: 'test-display_name', source: 'test-source', allow_reference: true, user_ids: []);
 
-        $result = $this->endpoint->createGroup($requestBody);
+        $this->endpoint->createGroup($requestBody);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/groups');
         $this->assertRequestHasAuthHeader();
-        $this->assertNull($result);
     }
 
     #[Test]
@@ -339,7 +338,7 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/channels/test-channel_id/groups');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter_allow_reference' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
@@ -370,7 +369,7 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/teams/test-team_id/groups');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter_has_member' => 'test-filter_has_member']);
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter_allow_reference' => '1', 'include_member_count' => '1', 'include_timezones' => '1', 'include_total_count' => '1', 'include_archived' => '1', 'filter_archived' => '1', 'filter_parent_team_permitted' => '1', 'filter_has_member' => 'test-filter_has_member', 'include_member_ids' => '1', 'only_syncable_sources' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);

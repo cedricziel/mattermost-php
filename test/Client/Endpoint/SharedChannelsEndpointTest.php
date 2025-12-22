@@ -77,7 +77,7 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/remotecluster/test-remote_id/sharedchannelremotes');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertRequestQueryParams(['include_unconfirmed' => '1', 'exclude_confirmed' => '1', 'exclude_home' => '1', 'exclude_remote' => '1', 'include_deleted' => '1', 'page' => '1', 'per_page' => '1']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SharedChannelRemote::class, $result[0]);

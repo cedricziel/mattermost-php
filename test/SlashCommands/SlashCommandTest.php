@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class SlashCommandTest extends TestCase
 {
     #[Test]
-    public function canHandleSimpleSlashCommand()
+    public function canHandleSimpleSlashCommand(): void
     {
         $slashCommand = new class extends AbstractSlashCommand {
             public function execute(SlashCommandInput $input): SlashCommandOutput
@@ -37,7 +37,7 @@ class SlashCommandTest extends TestCase
     }
 
     #[Test]
-    public function canHandleSlashCommandWithAttachments()
+    public function canHandleSlashCommandWithAttachments(): void
     {
         $slashCommand = new class extends AbstractSlashCommand {
             public function execute(SlashCommandInput $input): SlashCommandOutput

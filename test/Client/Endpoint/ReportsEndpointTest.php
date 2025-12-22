@@ -56,7 +56,7 @@ class ReportsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/reports/users');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['sort_column' => 'test-sort_column', 'direction' => 'test-direction', 'sort_direction' => 'test-sort_direction', 'page_size' => '1', 'from_column_value' => 'test-from_column_value', 'from_id' => 'test-from_id', 'date_range' => 'test-date_range', 'role_filter' => 'test-role_filter', 'team_filter' => 'test-team_filter', 'search_term' => 'test-search_term']);
+        $this->assertRequestQueryParams(['sort_column' => 'test-sort_column', 'direction' => 'test-direction', 'sort_direction' => 'test-sort_direction', 'page_size' => '1', 'from_column_value' => 'test-from_column_value', 'from_id' => 'test-from_id', 'date_range' => 'test-date_range', 'role_filter' => 'test-role_filter', 'team_filter' => 'test-team_filter', 'has_no_team' => '1', 'hide_active' => '1', 'hide_inactive' => '1', 'search_term' => 'test-search_term']);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserReport::class, $result[0]);
@@ -80,7 +80,7 @@ class ReportsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/reports/users/count');
         $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['role_filter' => 'test-role_filter', 'team_filter' => 'test-team_filter', 'search_term' => 'test-search_term']);
+        $this->assertRequestQueryParams(['role_filter' => 'test-role_filter', 'team_filter' => 'test-team_filter', 'has_no_team' => '1', 'hide_active' => '1', 'hide_inactive' => '1', 'search_term' => 'test-search_term']);
         $this->assertIsInt($result);
     }
 
