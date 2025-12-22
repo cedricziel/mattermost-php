@@ -117,6 +117,5 @@ $client = new Client(
 ## Next Steps
 
 - [API Client Guide](api-client) - Learn about all available endpoints
-- [Apps Framework](apps-framework) - Build Mattermost Apps
 - [Slash Commands](slash-commands) - Create custom slash commands
 - [Examples](examples) - More code examples
