@@ -70,16 +70,15 @@ $skipMethods = [
     'ExportsEndpoint' => ['listExports', 'downloadExport', 'deleteExport'],
     'ImportsEndpoint' => ['listImports', 'deleteImport'],
 
-    // Complex array return types or missing models
-    'CloudEndpoint' => ['getInvoiceForSubscriptionAsPdf', 'postEndpointForCwsWebhooks'],
+    // Empty or anonymous object schemas in OpenAPI spec (no model generated)
     'CustomProfileAttributesEndpoint' => ['listCPAValues', 'patchCPAValues', 'patchCPAValuesForUser'],
-    'DataRetentionEndpoint' => ['getDataRetentionPolicyByID'],
-    'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel'],
+
+    // Primitive array/string returns without proper model mapping
+    'CloudEndpoint' => ['postEndpointForCwsWebhooks'],  // No success response defined
     'Integration_actionsEndpoint' => ['openInteractiveDialog', 'submitInteractiveDialog', 'lookupInteractiveDialog'],
     'InternalEndpoint' => ['getChecklistAutocomplete'],
     'PermissionsEndpoint' => ['getAncillaryPermissionsPost'],
     'PlaybookRunsEndpoint' => ['getChannels', 'addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemDelete', 'itemSetState', 'itemSetAssignee', 'itemRun'],
-    'PostsEndpoint' => ['createPostEphemeral'],
     'RemoteClustersEndpoint' => ['generateRemoteClusterInvite'],
     'ReportsEndpoint' => ['getUserCountForReporting'],
     'SAMLEndpoint' => ['getSamlMetadata'],
@@ -93,6 +92,12 @@ $curatedTests = [
         'getBrandImage' => [
             'testBinaryResponse' => true,
             'contentType' => 'image/png',
+        ],
+    ],
+    'CloudEndpoint' => [
+        'getInvoiceForSubscriptionAsPdf' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'application/pdf',
         ],
     ],
     'UsersEndpoint' => [
@@ -784,6 +789,8 @@ function generateMethodTest(
                             $constructorArgs[] = "$key: " . ($value ? 'true' : 'false');
                         } elseif (is_array($value)) {
                             $constructorArgs[] = "$key: []";
+                        } elseif ($value instanceof stdClass) {
+                            $constructorArgs[] = "$key: new \\stdClass()";
                         }
                     }
                     $paramSetup[] = sprintf('$%s = new \\%s(%s);', $paramName, $typeName, implode(', ', $constructorArgs));

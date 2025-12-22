@@ -7,6 +7,7 @@ namespace CedricZiel\MattermostPhp\Test\Client\Response;
 use CedricZiel\MattermostPhp\Client\Response\TextResponse;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TextResponse::class)]
@@ -133,6 +134,7 @@ class TextResponseTest extends TestCase
     }
 
     #[Test]
+    #[WithoutErrorHandler]
     public function saveToFileThrowsExceptionForInvalidPath(): void
     {
         $response = new TextResponse(200, 'text/plain', 'content');

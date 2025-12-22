@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(BinaryResponse::class)]
@@ -127,6 +128,7 @@ class BinaryResponseTest extends TestCase
     }
 
     #[Test]
+    #[WithoutErrorHandler]
     public function saveToFileThrowsExceptionForInvalidPath(): void
     {
         $response = new BinaryResponse(200, 'application/octet-stream', Utils::streamFor('content'));

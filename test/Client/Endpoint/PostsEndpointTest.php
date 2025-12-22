@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\CreatePostEphemeralRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
 use CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest;
 use CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest;
@@ -57,6 +58,22 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/posts');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
+    }
+
+    #[Test]
+    public function createPostEphemeralBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreatePostEphemeralRequest(user_id: 'test-user_id', post: new \stdClass());
+
+        $result = $this->endpoint->createPostEphemeral($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/ephemeral');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result);
     }

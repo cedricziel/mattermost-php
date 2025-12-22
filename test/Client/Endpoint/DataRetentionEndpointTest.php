@@ -133,6 +133,22 @@ class DataRetentionEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function getDataRetentionPolicyByIDBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['display_name' => 'test-display_name', 'post_duration' => 1234567890, 'id' => 'test-id', 'team_count' => 1234567890, 'channel_count' => 1234567890]);
+
+        $policy_id = 'test-policy_id';
+
+        $result = $this->endpoint->getDataRetentionPolicyByID($policy_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\DataRetentionPolicyWithTeamAndChannelCounts::class, $result);
+    }
+
+    #[Test]
     public function deleteDataRetentionPolicyBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);

@@ -151,6 +151,23 @@ class GroupsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function linkGroupSyncableForTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['team_id' => 'test-team_id', 'group_id' => 'test-group_id', 'auto_add' => true, 'create_at' => 1234567890, 'delete_at' => 1234567890, 'update_at' => 1234567890]);
+
+        $group_id = 'test-group_id';
+        $team_id = 'test-team_id';
+
+        $result = $this->endpoint->linkGroupSyncableForTeam($group_id, $team_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/teams/test-team_id/link');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam::class, $result);
+    }
+
+    #[Test]
     public function unlinkGroupSyncableForTeamBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);
@@ -165,6 +182,23 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/groups/test-group_id/teams/test-team_id/link');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function linkGroupSyncableForChannelBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, ['channel_id' => 'test-channel_id', 'group_id' => 'test-group_id', 'auto_add' => true, 'create_at' => 1234567890, 'delete_at' => 1234567890, 'update_at' => 1234567890]);
+
+        $group_id = 'test-group_id';
+        $channel_id = 'test-channel_id';
+
+        $result = $this->endpoint->linkGroupSyncableForChannel($group_id, $channel_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/groups/test-group_id/channels/test-channel_id/link');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel::class, $result);
     }
 
     #[Test]

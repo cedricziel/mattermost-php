@@ -1040,7 +1040,7 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             $combinedText = $summary . ' ' . $description;
 
             // Binary content indicators
-            $binaryKeywords = ['file', 'thumbnail', 'preview', 'download', 'icon', 'image', 'binary', 'export'];
+            $binaryKeywords = ['file', 'thumbnail', 'preview', 'download', 'icon', 'image', 'binary', 'export', 'pdf'];
             $isBinaryEndpoint = false;
 
             foreach ($binaryKeywords as $keyword) {
