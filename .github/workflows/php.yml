@@ -53,8 +53,9 @@ jobs:
         composer require --no-update symfony/serializer:${{ matrix.symfony-version }} symfony/property-access:${{ matrix.symfony-version }} symfony/http-client:${{ matrix.symfony-version }}
         composer install --prefer-dist --no-progress
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+    - name: Rector Code Quality Check
+      if: matrix.php-version == '8.2' && matrix.symfony-version == '7.*'
+      run: composer rector:dry-run
 
     - name: Run test suite
       run: composer run-script test

@@ -23,7 +23,8 @@
         "nette/php-generator": "^4.1",
         "nikic/php-parser": "^5.0",
         "php-http/mock-client": "^1.6",
-        "phpstan/phpstan": "^1.10 || ^2.0"
+        "phpstan/phpstan": "^1.10 || ^2.0",
+        "rector/rector": "^2.2"
     },
     "license": "MIT",
     "autoload": {
@@ -43,7 +44,9 @@
         }
     ],
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit",
+        "rector": "vendor/bin/rector process",
+        "rector:dry-run": "vendor/bin/rector process --dry-run"
     },
     "config": {
         "allow-plugins": {
