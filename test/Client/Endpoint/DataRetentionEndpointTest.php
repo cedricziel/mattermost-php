@@ -8,6 +8,7 @@ use CedricZiel\MattermostPhp\Client\Endpoint\DataRetentionEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\AddChannelsToRetentionPolicyRequest;
 use CedricZiel\MattermostPhp\Client\Model\AddTeamsToRetentionPolicyRequest;
 use CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData;
+use CedricZiel\MattermostPhp\Client\Model\DataRetentionPolicyWithTeamAndChannelCounts;
 use CedricZiel\MattermostPhp\Client\Model\GetDataRetentionPoliciesCountResponse;
 use CedricZiel\MattermostPhp\Client\Model\GlobalDataRetentionPolicy;
 use CedricZiel\MattermostPhp\Client\Model\RemoveChannelsFromRetentionPolicyRequest;
@@ -15,6 +16,7 @@ use CedricZiel\MattermostPhp\Client\Model\RemoveTeamsFromRetentionPolicyRequest;
 use CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForChannelList;
 use CedricZiel\MattermostPhp\Client\Model\RetentionPolicyForTeamList;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\Team;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -24,7 +26,9 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(RetentionPolicyForChannelList::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GlobalDataRetentionPolicy::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetDataRetentionPoliciesCountResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(DataRetentionPolicyWithTeamAndChannelCounts::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Team::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(ChannelListWithTeamData::class)]
 class DataRetentionEndpointTest extends ClientTestCase
 {
@@ -111,7 +115,7 @@ class DataRetentionEndpointTest extends ClientTestCase
     #[Test]
     public function getDataRetentionPoliciesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['display_name' => 'test-display_name', 'post_duration' => 1234567890, 'id' => 'test-id', 'team_count' => 1234567890, 'channel_count' => 1234567890]]);
 
         $page = 1;
         $per_page = 1;
@@ -123,6 +127,9 @@ class DataRetentionEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/data_retention/policies');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\DataRetentionPolicyWithTeamAndChannelCounts::class, $result[0]);
     }
 
     #[Test]
@@ -144,7 +151,7 @@ class DataRetentionEndpointTest extends ClientTestCase
     #[Test]
     public function getTeamsForRetentionPolicyBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']]);
 
         $policy_id = 'test-policy_id';
         $page = 1;
@@ -157,6 +164,9 @@ class DataRetentionEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/data_retention/policies/test-policy_id/teams');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result[0]);
     }
 
     #[Test]

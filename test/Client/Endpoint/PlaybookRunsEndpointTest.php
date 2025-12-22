@@ -7,9 +7,12 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 use CedricZiel\MattermostPhp\Client\Endpoint\PlaybookRunsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\ChangeOwnerRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreatePlaybookRunFromPostRequest;
+use CedricZiel\MattermostPhp\Client\Model\OwnerInfo;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookRun;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookRunList;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookRunMetadata;
+use CedricZiel\MattermostPhp\Client\Model\PropertyField;
+use CedricZiel\MattermostPhp\Client\Model\PropertyValue;
 use CedricZiel\MattermostPhp\Client\Model\StatusRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,7 +21,10 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversClass(PlaybookRunsEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRunList::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRun::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(OwnerInfo::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookRunMetadata::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PropertyField::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PropertyValue::class)]
 class PlaybookRunsEndpointTest extends ClientTestCase
 {
     public PlaybookRunsEndpoint $endpoint;
@@ -82,7 +88,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function getOwnersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['user_id' => 'test-user_id', 'username' => 'test-username']]);
 
         $team_id = 'test-team_id';
 
@@ -93,6 +99,9 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/owners');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['team_id' => 'test-team_id']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OwnerInfo::class, $result[0]);
     }
 
     #[Test]
@@ -223,7 +232,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function getRunPropertyFieldsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'name' => 'test-name', 'description' => 'test-description', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]]);
 
         $id = 'test-id';
         $updated_since = 1;
@@ -235,12 +244,15 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/property_fields');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['updated_since' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PropertyField::class, $result[0]);
     }
 
     #[Test]
     public function getRunPropertyValuesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'field_id' => 'test-field_id', 'value' => 'test-value', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]]);
 
         $id = 'test-id';
         $updated_since = 1;
@@ -252,5 +264,8 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/property_values');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['updated_since' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PropertyValue::class, $result[0]);
     }
 }

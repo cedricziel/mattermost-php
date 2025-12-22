@@ -8,12 +8,14 @@ use CedricZiel\MattermostPhp\Client\Endpoint\EmojiEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\Emoji;
 use CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\SearchEmojiRequest;
+use CedricZiel\MattermostPhp\Client\Model\User;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(EmojiEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Emoji::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(User::class)]
 class EmojiEndpointTest extends ClientTestCase
 {
     public EmojiEndpoint $endpoint;
@@ -100,7 +102,7 @@ class EmojiEndpointTest extends ClientTestCase
     #[Test]
     public function searchEmojiBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'creator_id' => 'test-creator_id', 'name' => 'test-name', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchEmojiRequest(term: 'test-term');
 
@@ -110,6 +112,9 @@ class EmojiEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/emoji/search');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Emoji::class, $result[0]);
     }
 
     #[Test]
@@ -132,7 +137,7 @@ class EmojiEndpointTest extends ClientTestCase
     #[Test]
     public function getEmojisByNamesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetEmojisByNamesRequest(items: []);
 
@@ -142,5 +147,8 @@ class EmojiEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/emoji/names');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
     }
 }

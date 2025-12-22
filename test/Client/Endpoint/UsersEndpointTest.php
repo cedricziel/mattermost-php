@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\UsersEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\Audit;
+use CedricZiel\MattermostPhp\Client\Model\ChannelMemberWithTeamData;
 use CedricZiel\MattermostPhp\Client\Model\CheckUserMfaRequest;
 use CedricZiel\MattermostPhp\Client\Model\CheckUserMfaResponse;
 use CedricZiel\MattermostPhp\Client\Model\CreateUserAccessTokenRequest;
@@ -29,6 +31,8 @@ use CedricZiel\MattermostPhp\Client\Model\SearchUserAccessTokensRequest;
 use CedricZiel\MattermostPhp\Client\Model\SearchUsersRequest;
 use CedricZiel\MattermostPhp\Client\Model\SendPasswordResetEmailRequest;
 use CedricZiel\MattermostPhp\Client\Model\SendVerificationEmailRequest;
+use CedricZiel\MattermostPhp\Client\Model\ServerLimits;
+use CedricZiel\MattermostPhp\Client\Model\Session;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeRequest;
 use CedricZiel\MattermostPhp\Client\Model\SwitchAccountTypeResponse;
@@ -37,6 +41,7 @@ use CedricZiel\MattermostPhp\Client\Model\UpdateUserMfaRequest;
 use CedricZiel\MattermostPhp\Client\Model\UpdateUserPasswordRequest;
 use CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest;
 use CedricZiel\MattermostPhp\Client\Model\UpdateUserRolesRequest;
+use CedricZiel\MattermostPhp\Client\Model\UploadSession;
 use CedricZiel\MattermostPhp\Client\Model\User;
 use CedricZiel\MattermostPhp\Client\Model\UserAccessToken;
 use CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized;
@@ -58,10 +63,15 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(UsersStats::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GenerateMfaSecretResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(CheckUserMfaResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Session::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Audit::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(SwitchAccountTypeResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserAccessToken::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserAccessTokenSanitized::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UserTermsOfService::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(UploadSession::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ChannelMemberWithTeamData::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ServerLimits::class)]
 class UsersEndpointTest extends ClientTestCase
 {
     public UsersEndpoint $endpoint;
@@ -111,7 +121,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function createUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateUserRequest(email: 'test-email', username: 'test-username');
         $t = 'test-t';
@@ -130,7 +140,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]]);
 
         $page = 1;
         $per_page = 1;
@@ -156,6 +166,9 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_team' => 'test-in_team', 'not_in_team' => 'test-not_in_team', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel', 'in_group' => 'test-in_group', 'role' => 'test-role', 'sort' => 'test-sort', 'roles' => 'test-roles', 'channel_roles' => 'test-channel_roles', 'team_roles' => 'test-team_roles']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
     }
 
     #[Test]
@@ -174,7 +187,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersByIdsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersByIdsRequest(items: []);
         $since = 1;
@@ -186,12 +199,15 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/ids');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['since' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
     }
 
     #[Test]
     public function getUsersByGroupChannelIdsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, []);
+        $this->mockJsonResponse(200, ['status' => 'ok']);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersByGroupChannelIdsRequest(items: []);
 
@@ -207,7 +223,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersByUsernamesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersByUsernamesRequest(items: []);
 
@@ -217,12 +233,15 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/usernames');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
     }
 
     #[Test]
     public function searchUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchUsersRequest(term: 'test-term');
 
@@ -232,6 +251,9 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/search');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
     }
 
     #[Test]
@@ -308,7 +330,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $user_id = 'test-user_id';
 
@@ -324,7 +346,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function updateUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserRequest(id: 'test-id', email: 'test-email', username: 'test-username');
@@ -391,7 +413,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserByUsernameBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $username = 'test-username';
 
@@ -537,7 +559,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserByEmailBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $email = 'test-email';
 
@@ -553,7 +575,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getSessionsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['create_at' => 1234567890, 'device_id' => 'test-device_id', 'expires_at' => 1234567890, 'id' => 'test-id', 'is_oauth' => true, 'last_activity_at' => 1234567890, 'roles' => 'test-roles', 'team_members' => [], 'token' => 'test-token', 'user_id' => 'test-user_id']]);
 
         $user_id = 'test-user_id';
 
@@ -563,6 +585,9 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/sessions');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Session::class, $result[0]);
     }
 
     #[Test]
@@ -601,7 +626,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserAuditsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'action' => 'test-action', 'extra_info' => 'test-extra_info', 'ip_address' => 'test-ip_address', 'session_id' => 'test-session_id']]);
 
         $user_id = 'test-user_id';
 
@@ -611,12 +636,15 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/audits');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Audit::class, $result[0]);
     }
 
     #[Test]
     public function verifyUserEmailWithoutTokenBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'notify_props' => 'test-notify_props', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 'test-timezone', 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]);
 
         $user_id = 'test-user_id';
 
@@ -697,7 +725,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUserAccessTokensForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'user_id' => 'test-user_id', 'description' => 'test-description', 'is_active' => true]]);
 
         $user_id = 'test-user_id';
         $page = 1;
@@ -710,12 +738,15 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/tokens');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized::class, $result[0]);
     }
 
     #[Test]
     public function getUserAccessTokensBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'user_id' => 'test-user_id', 'description' => 'test-description', 'is_active' => true]]);
 
         $page = 1;
         $per_page = 1;
@@ -727,6 +758,9 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/tokens');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized::class, $result[0]);
     }
 
     #[Test]
@@ -796,7 +830,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function searchUserAccessTokensBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'user_id' => 'test-user_id', 'description' => 'test-description', 'is_active' => true]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchUserAccessTokensRequest(term: 'test-term');
 
@@ -806,6 +840,9 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/tokens/search');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserAccessTokenSanitized::class, $result[0]);
     }
 
     #[Test]
@@ -873,7 +910,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUploadsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'filename' => 'test-filename', 'file_size' => 1234567890, 'file_offset' => 1234567890]]);
 
         $user_id = 'test-user_id';
 
@@ -883,12 +920,15 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/uploads');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UploadSession::class, $result[0]);
     }
 
     #[Test]
     public function getChannelMembersWithTeamDataForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['channel_id' => 'test-channel_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'last_viewed_at' => 1234567890, 'msg_count' => 1234567890, 'mention_count' => 1234567890, 'last_update_at' => 1234567890, 'team_display_name' => 'test-team_display_name', 'team_name' => 'test-team_name', 'team_update_at' => 1234567890]]);
 
         $user_id = 'test-user_id';
         $page = 1;
@@ -901,6 +941,9 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/channel_members');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelMemberWithTeamData::class, $result[0]);
     }
 
     #[Test]
@@ -921,7 +964,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersWithInvalidEmailsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'nickname' => 'test-nickname', 'email' => 'test-email', 'email_verified' => true, 'auth_service' => 'test-auth_service', 'roles' => 'test-roles', 'locale' => 'test-locale', 'last_password_update' => 1234567890, 'last_picture_update' => 1234567890, 'failed_attempts' => 1234567890, 'mfa_active' => true, 'timezone' => 1234567890, 'terms_of_service_id' => 'test-terms_of_service_id', 'terms_of_service_create_at' => 1234567890]]);
 
         $page = 1;
         $per_page = 1;
@@ -933,12 +976,15 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/invalid_emails');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\User::class, $result[0]);
     }
 
     #[Test]
     public function getServerLimitsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['maxUsersLimit' => 1234567890, 'activeUserCount' => 1234567890]]);
 
         $result = $this->endpoint->getServerLimits();
 
@@ -946,5 +992,8 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/limits/server');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ServerLimits::class, $result[0]);
     }
 }

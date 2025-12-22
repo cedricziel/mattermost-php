@@ -69,7 +69,7 @@ class StatusEndpointTest extends ClientTestCase
     #[Test]
     public function getUsersStatusesByIdsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['user_id' => 'test-user_id', 'status' => 'test-status', 'manual' => true, 'last_activity_at' => 1234567890]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetUsersStatusesByIdsRequest(items: []);
 
@@ -79,6 +79,9 @@ class StatusEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/status/ids');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Status::class, $result[0]);
     }
 
     #[Test]

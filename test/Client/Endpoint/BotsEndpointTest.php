@@ -67,7 +67,7 @@ class BotsEndpointTest extends ClientTestCase
     #[Test]
     public function getBotsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['user_id' => 'test-user_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'display_name' => 'test-display_name', 'description' => 'test-description', 'owner_id' => 'test-owner_id']]);
 
         $page = 1;
         $per_page = 1;
@@ -81,6 +81,9 @@ class BotsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/bots');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Bot::class, $result[0]);
     }
 
     #[Test]

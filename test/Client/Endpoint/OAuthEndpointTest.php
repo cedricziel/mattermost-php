@@ -53,7 +53,7 @@ class OAuthEndpointTest extends ClientTestCase
     #[Test]
     public function getOAuthAppsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]]);
 
         $page = 1;
         $per_page = 1;
@@ -65,6 +65,9 @@ class OAuthEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/oauth/apps');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result[0]);
     }
 
     #[Test]
@@ -165,7 +168,7 @@ class OAuthEndpointTest extends ClientTestCase
     #[Test]
     public function getAuthorizedOAuthAppsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'client_secret' => 'test-client_secret', 'name' => 'test-name', 'description' => 'test-description', 'icon_url' => 'test-icon_url', 'callback_urls' => [], 'homepage' => 'test-homepage', 'is_trusted' => true, 'create_at' => 1234567890, 'update_at' => 1234567890]]);
 
         $user_id = 'test-user_id';
         $page = 1;
@@ -178,5 +181,8 @@ class OAuthEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/oauth/apps/authorized');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OAuthApp::class, $result[0]);
     }
 }

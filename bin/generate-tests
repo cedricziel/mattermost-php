@@ -48,7 +48,7 @@ $endpointFiles = glob($endpointDir . '/*Endpoint.php');
 echo sprintf("Found %d endpoint files\n", count($endpointFiles));
 echo sprintf("Loaded %d operations from OpenAPI spec\n", count($operationLookup));
 
-// Methods to skip due to SDK issues (multipart uploads, binary downloads, return type mismatches, void responses, etc.)
+// Methods to skip due to SDK issues (multipart uploads, binary downloads, etc.)
 $skipMethods = [
     // Multipart file upload / binary download endpoints
     'BrandEndpoint' => ['uploadBrandImage', 'getBrandImage'],
@@ -57,9 +57,6 @@ $skipMethods = [
     'PluginsEndpoint' => ['uploadPlugin'],
     'SystemEndpoint' => ['uploadLicenseFile', 'generateSupportPacket', 'getSupportedTimezone', 'getClientConfig', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld'],
     'UploadsEndpoint' => ['uploadData', 'getUpload'],
-
-    // Return type mismatches (mock returns different model than expected)
-    'BookmarksEndpoint' => ['deleteChannelBookmark', 'listChannelBookmarksForChannel', 'createChannelBookmark', 'updateChannelBookmark'],
 
     // Void responses - tests need to handle null returns properly
     'ChannelsEndpoint' => ['getChannelMembersTimezones', 'channelMembersMinusGroupMembers', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser', 'updateSidebarCategoryOrderForTeamForUser'],
@@ -365,11 +362,27 @@ function getModelMockData(string $modelClass): array
     }
 
     $constructor = $reflection->getConstructor();
+
+    // If no constructor or empty constructor, check parent class
+    if ($constructor === null || count($constructor->getParameters()) === 0) {
+        $parent = $reflection->getParentClass();
+        if ($parent !== false) {
+            $parentConstructor = $parent->getConstructor();
+            if ($parentConstructor !== null && count($parentConstructor->getParameters()) > 0) {
+                $constructor = $parentConstructor;
+            }
+        }
+    }
+
     if ($constructor === null) {
         return ['status' => 'ok'];
     }
 
     $params = $constructor->getParameters();
+    if (count($params) === 0) {
+        return ['status' => 'ok'];
+    }
+
     $data = [];
 
     foreach ($params as $param) {
@@ -380,12 +393,66 @@ function getModelMockData(string $modelClass): array
             $typeName = $paramType->getName();
             $data[$paramName] = getMockValueForType($typeName, $paramName);
         } else {
-            // No type hint, use string as default
-            $data[$paramName] = 'test-' . $paramName;
+            // No type hint, try to infer from parameter name
+            $data[$paramName] = inferMockValueFromName($paramName);
         }
     }
 
     return $data;
+}
+
+/**
+ * Infer a mock value from parameter name when no type hint is available.
+ */
+function inferMockValueFromName(string $paramName): mixed
+{
+    // Common naming patterns
+    if (str_contains($paramName, 'id') || str_ends_with($paramName, '_id')) {
+        return 'test-' . $paramName;
+    }
+    if (str_contains($paramName, 'name') || str_contains($paramName, 'title')) {
+        return 'test-' . $paramName;
+    }
+    if (str_contains($paramName, 'count') || str_contains($paramName, 'num')) {
+        return 1;
+    }
+    if (str_contains($paramName, 'time') || str_contains($paramName, '_at')) {
+        return 1234567890;
+    }
+    if (str_contains($paramName, 'enabled') || str_contains($paramName, 'is_')) {
+        return true;
+    }
+    if (str_contains($paramName, 'url') || str_contains($paramName, 'link')) {
+        return 'https://example.com/' . $paramName;
+    }
+    if (str_contains($paramName, 'description') || str_contains($paramName, 'message')) {
+        return 'test-' . $paramName;
+    }
+    // Default: return null (parameter is likely optional)
+    return null;
+}
+
+/**
+ * Extract array element type from method docblock (@return Model[]).
+ */
+function extractArrayElementType(ReflectionMethod $method): ?string
+{
+    $docComment = $method->getDocComment();
+    if ($docComment === false) {
+        return null;
+    }
+
+    // Match @return \Namespace\Model[] or Model[]
+    if (preg_match('/@return\s+\\\\?([A-Za-z0-9_\\\\]+)\[\]/', $docComment, $matches)) {
+        $className = $matches[1];
+        // Resolve to fully qualified name if needed
+        if (!str_starts_with($className, 'CedricZiel')) {
+            $className = 'CedricZiel\\MattermostPhp\\Client\\Model\\' . $className;
+        }
+        return $className;
+    }
+
+    return null;
 }
 
 /**
@@ -738,6 +805,16 @@ function generateMethodTest(
         if (str_contains($successType, '\\') && modelHasHydrate($successType)) {
             $modelClass = $successType;
             $mockData = getModelMockData($successType);
+            $canAssertResponse = true;
+        }
+    }
+
+    // For array returns without a model class, try to extract element type from docblock
+    if ($isArrayReturn && $modelClass === null) {
+        $elementType = extractArrayElementType($method);
+        if ($elementType !== null && class_exists($elementType) && modelHasHydrate($elementType)) {
+            $modelClass = $elementType;
+            $mockData = getModelMockData($elementType);
             $canAssertResponse = true;
         }
     }

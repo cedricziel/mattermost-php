@@ -9,6 +9,7 @@ use CedricZiel\MattermostPhp\Client\Model\CreatePlaybookRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreatePlaybookResponse;
 use CedricZiel\MattermostPhp\Client\Model\Playbook;
 use CedricZiel\MattermostPhp\Client\Model\PlaybookList;
+use CedricZiel\MattermostPhp\Client\Model\PropertyField;
 use CedricZiel\MattermostPhp\Client\Model\ReorderPlaybookPropertyFieldsRequest;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,6 +19,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(PlaybookList::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(CreatePlaybookResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Playbook::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PropertyField::class)]
 class PlaybooksEndpointTest extends ClientTestCase
 {
     public PlaybooksEndpoint $endpoint;
@@ -106,7 +108,7 @@ class PlaybooksEndpointTest extends ClientTestCase
     #[Test]
     public function getPlaybookPropertyFieldsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'name' => 'test-name', 'description' => 'test-description', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]]);
 
         $id = 'test-id';
         $updated_since = 1;
@@ -118,6 +120,9 @@ class PlaybooksEndpointTest extends ClientTestCase
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['updated_since' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PropertyField::class, $result[0]);
     }
 
     #[Test]
@@ -139,7 +144,7 @@ class PlaybooksEndpointTest extends ClientTestCase
     #[Test]
     public function reorderPlaybookPropertyFieldsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'name' => 'test-name', 'description' => 'test-description', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]]);
 
         $id = 'test-id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ReorderPlaybookPropertyFieldsRequest(field_id: 'test-field_id', target_position: 1234567890);
@@ -150,5 +155,8 @@ class PlaybooksEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/plugins/playbooks/api/v0/playbooks/test-id/property_fields/reorder');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PropertyField::class, $result[0]);
     }
 }

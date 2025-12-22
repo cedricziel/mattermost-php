@@ -55,7 +55,7 @@ class WebhooksEndpointTest extends ClientTestCase
     #[Test]
     public function getIncomingWebhooksBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'channel_id' => 'test-channel_id', 'description' => 'test-description', 'display_name' => 'test-display_name']]);
 
         $page = 1;
         $per_page = 1;
@@ -69,6 +69,9 @@ class WebhooksEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/hooks/incoming');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'team_id' => 'test-team_id']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\IncomingWebhook::class, $result[0]);
     }
 
     #[Test]
@@ -139,7 +142,7 @@ class WebhooksEndpointTest extends ClientTestCase
     #[Test]
     public function getOutgoingWebhooksBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'creator_id' => 'test-creator_id', 'team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'description' => 'test-description', 'display_name' => 'test-display_name', 'trigger_words' => [], 'trigger_when' => 1234567890, 'callback_urls' => [], 'content_type' => 'test-content_type']]);
 
         $page = 1;
         $per_page = 1;
@@ -153,6 +156,9 @@ class WebhooksEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/hooks/outgoing');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'team_id' => 'test-team_id', 'channel_id' => 'test-channel_id']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OutgoingWebhook::class, $result[0]);
     }
 
     #[Test]

@@ -32,7 +32,7 @@ class RolesEndpointTest extends ClientTestCase
     #[Test]
     public function getAllRolesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'permissions' => [], 'scheme_managed' => true]]);
 
         $result = $this->endpoint->getAllRoles();
 
@@ -40,6 +40,9 @@ class RolesEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/roles');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Role::class, $result[0]);
     }
 
     #[Test]
@@ -77,7 +80,7 @@ class RolesEndpointTest extends ClientTestCase
     #[Test]
     public function getRolesByNamesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'permissions' => [], 'scheme_managed' => true]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetRolesByNamesRequest(items: []);
 
@@ -87,5 +90,8 @@ class RolesEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/roles/names');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Role::class, $result[0]);
     }
 }

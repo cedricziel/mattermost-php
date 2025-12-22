@@ -7,7 +7,10 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 use CedricZiel\MattermostPhp\Client\Endpoint\CloudEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CloudCustomer;
 use CedricZiel\MattermostPhp\Client\Model\Installation;
+use CedricZiel\MattermostPhp\Client\Model\Invoice;
 use CedricZiel\MattermostPhp\Client\Model\PaymentSetupIntent;
+use CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData;
+use CedricZiel\MattermostPhp\Client\Model\Product;
 use CedricZiel\MattermostPhp\Client\Model\ProductLimits;
 use CedricZiel\MattermostPhp\Client\Model\Subscription;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
@@ -16,10 +19,13 @@ use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(CloudEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(ProductLimits::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Product::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PaymentSetupIntent::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(CloudCustomer::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Subscription::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Installation::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Invoice::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PreviewModalContentData::class)]
 class CloudEndpointTest extends ClientTestCase
 {
     public CloudEndpoint $endpoint;
@@ -39,7 +45,7 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getCloudLimitsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['boards' => 'test-boards', 'files' => 'test-files', 'integrations' => 'test-integrations', 'messages' => 'test-messages', 'teams' => 'test-teams']);
+        $this->mockJsonResponse(200, ['messages' => 'test-messages']);
 
         $result = $this->endpoint->getCloudLimits();
 
@@ -53,7 +59,7 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getCloudProductsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'description' => 'test-description', 'price_per_seat' => 'test-price_per_seat', 'add_ons' => []]]);
 
         $result = $this->endpoint->getCloudProducts();
 
@@ -61,6 +67,9 @@ class CloudEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/cloud/products');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Product::class, $result[0]);
     }
 
     #[Test]
@@ -95,7 +104,7 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getCloudCustomerBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'creator_id' => 'test-creator_id', 'create_at' => 1234567890, 'email' => 'test-email', 'name' => 'test-name', 'num_employees' => 'test-num_employees', 'contact_first_name' => 'test-contact_first_name', 'contact_last_name' => 'test-contact_last_name', 'billing_address' => 'test-billing_address', 'company_address' => 'test-company_address', 'payment_method' => 'test-payment_method']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'creator_id' => 'test-creator_id', 'create_at' => 1234567890, 'email' => 'test-email', 'name' => 'test-name', 'num_employees' => 'test-num_employees', 'contact_first_name' => 'test-contact_first_name', 'contact_last_name' => 'test-contact_last_name']);
 
         $result = $this->endpoint->getCloudCustomer();
 
@@ -123,7 +132,7 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getEndpointForInstallationInformationBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'allowed_ip_ranges' => 'test-allowed_ip_ranges', 'state' => 'test-state']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'state' => 'test-state']);
 
         $result = $this->endpoint->getEndpointForInstallationInformation();
 
@@ -137,7 +146,7 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function getInvoicesForSubscriptionBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'number' => 'test-number', 'create_at' => 1234567890, 'total' => 1234567890, 'tax' => 1234567890, 'status' => 'test-status', 'period_start' => 1234567890, 'period_end' => 1234567890, 'subscription_id' => 'test-subscription_id', 'item' => []]]);
 
         $result = $this->endpoint->getInvoicesForSubscription();
 
@@ -145,12 +154,15 @@ class CloudEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/cloud/subscription/invoices');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Invoice::class, $result[0]);
     }
 
     #[Test]
     public function getPreviewModalDataBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['title' => 'test-title', 'subtitle' => 'test-subtitle', 'videoUrl' => 'test-videoUrl', 'videoPoster' => 'test-videoPoster', 'useCase' => 'test-useCase']]);
 
         $result = $this->endpoint->getPreviewModalData();
 
@@ -158,5 +170,8 @@ class CloudEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/cloud/preview/modal_data');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData::class, $result[0]);
     }
 }

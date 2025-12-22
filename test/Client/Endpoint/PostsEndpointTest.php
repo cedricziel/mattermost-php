@@ -6,6 +6,7 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
+use CedricZiel\MattermostPhp\Client\Model\FileInfo;
 use CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest;
 use CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest;
 use CedricZiel\MattermostPhp\Client\Model\Post;
@@ -25,6 +26,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(Post::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostList::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(FileInfo::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostListWithSearchMatches::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostAcknowledgement::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(RewriteMessageResponse::class)]
@@ -47,7 +49,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function createPostBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+        $this->mockJsonResponse(201, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreatePostRequest(channel_id: 'test-channel_id', message: 'test-message');
         $set_online = true;
@@ -64,7 +66,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function getPostBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']);
 
         $post_id = 'test-post_id';
         $include_deleted = true;
@@ -97,7 +99,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function updatePostBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']);
 
         $post_id = 'test-post_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdatePostRequest(id: 'test-id');
@@ -140,7 +142,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function getFlaggedPostsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['order' => [], 'next_post_id' => 'test-next_post_id', 'prev_post_id' => 'test-prev_post_id', 'has_next' => true]]);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -155,12 +157,15 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/posts/flagged');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result[0]);
     }
 
     #[Test]
     public function getFileInfosForPostBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'user_id' => 'test-user_id', 'post_id' => 'test-post_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'name' => 'test-name', 'extension' => 'test-extension', 'size' => 1234567890, 'mime_type' => 'test-mime_type', 'width' => 1234567890, 'height' => 1234567890, 'has_preview_image' => true]]);
 
         $post_id = 'test-post_id';
         $include_deleted = true;
@@ -171,6 +176,9 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/posts/test-post_id/files/info');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfo::class, $result[0]);
     }
 
     #[Test]
@@ -288,7 +296,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function getPostsByIdsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest(items: []);
 
@@ -298,6 +306,9 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/posts/ids');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Post::class, $result[0]);
     }
 
     #[Test]
@@ -354,7 +365,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function restorePostVersionBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']);
 
         $post_id = 'test-post_id';
         $restore_version_id = 'test-restore_version_id';
@@ -371,7 +382,7 @@ class PostsEndpointTest extends ClientTestCase
     #[Test]
     public function revealPostBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id', 'metadata' => 'test-metadata']);
+        $this->mockJsonResponse(200, ['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'edit_at' => 1234567890, 'user_id' => 'test-user_id', 'channel_id' => 'test-channel_id', 'root_id' => 'test-root_id', 'original_id' => 'test-original_id', 'message' => 'test-message', 'type' => 'test-type', 'hashtag' => 'test-hashtag', 'file_ids' => [], 'pending_post_id' => 'test-pending_post_id']);
 
         $post_id = 'test-post_id';
 

@@ -14,8 +14,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(PreferencesEndpoint::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Preference::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 class PreferencesEndpointTest extends ClientTestCase
 {
     public PreferencesEndpoint $endpoint;
@@ -35,7 +35,7 @@ class PreferencesEndpointTest extends ClientTestCase
     #[Test]
     public function getPreferencesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['user_id' => 'test-user_id', 'category' => 'test-category', 'name' => 'test-name', 'value' => 'test-value']]);
 
         $user_id = 'test-user_id';
 
@@ -45,6 +45,9 @@ class PreferencesEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/preferences');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Preference::class, $result[0]);
     }
 
     #[Test]
@@ -84,7 +87,7 @@ class PreferencesEndpointTest extends ClientTestCase
     #[Test]
     public function getPreferencesByCategoryBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['user_id' => 'test-user_id', 'category' => 'test-category', 'name' => 'test-name', 'value' => 'test-value']]);
 
         $user_id = 'test-user_id';
         $category = 'test-category';
@@ -95,6 +98,9 @@ class PreferencesEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/preferences/test-category');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Preference::class, $result[0]);
     }
 
     #[Test]

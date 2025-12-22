@@ -7,12 +7,16 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 use CedricZiel\MattermostPhp\Client\Endpoint\SharedChannelsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CanUserDirectMessageResponse;
 use CedricZiel\MattermostPhp\Client\Model\RemoteClusterInfo;
+use CedricZiel\MattermostPhp\Client\Model\SharedChannel;
+use CedricZiel\MattermostPhp\Client\Model\SharedChannelRemote;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(SharedChannelsEndpoint::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(SharedChannel::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(SharedChannelRemote::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(RemoteClusterInfo::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(CanUserDirectMessageResponse::class)]
@@ -35,7 +39,7 @@ class SharedChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getAllSharedChannelsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'team_id' => 'test-team_id', 'home' => true, 'readonly' => true, 'name' => 'test-name', 'display_name' => 'test-display_name', 'purpose' => 'test-purpose', 'header' => 'test-header', 'creator_id' => 'test-creator_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'remote_id' => 'test-remote_id']]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -48,12 +52,15 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/sharedchannels/test-team_id');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SharedChannel::class, $result[0]);
     }
 
     #[Test]
     public function getSharedChannelRemotesByRemoteClusterBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'channel_id' => 'test-channel_id', 'creator_id' => 'test-creator_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'is_invite_accepted' => true, 'is_invite_confirmed' => true, 'remote_id' => 'test-remote_id', 'last_post_update_at' => 1234567890, 'last_post_id' => 'test-last_post_id', 'last_post_create_at' => 'test-last_post_create_at', 'last_post_create_id' => 'test-last_post_create_id']]);
 
         $remote_id = 'test-remote_id';
         $include_unconfirmed = true;
@@ -71,6 +78,9 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/remotecluster/test-remote_id/sharedchannelremotes');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\SharedChannelRemote::class, $result[0]);
     }
 
     #[Test]
@@ -126,7 +136,7 @@ class SharedChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getSharedChannelRemotesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['display_name' => 'test-display_name', 'create_at' => 1234567890, 'last_ping_at' => 1234567890]]);
 
         $channel_id = 'test-channel_id';
 
@@ -136,6 +146,9 @@ class SharedChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/sharedchannels/test-channel_id/remotes');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RemoteClusterInfo::class, $result[0]);
     }
 
     #[Test]

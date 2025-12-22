@@ -14,8 +14,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(RemoteClustersEndpoint::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(CreateRemoteClusterResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(RemoteCluster::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(CreateRemoteClusterResponse::class)]
 class RemoteClustersEndpointTest extends ClientTestCase
 {
     public RemoteClustersEndpoint $endpoint;
@@ -35,7 +35,7 @@ class RemoteClustersEndpointTest extends ClientTestCase
     #[Test]
     public function getRemoteClustersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['remote_id' => 'test-remote_id', 'remote_team_id' => 'test-remote_team_id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'site_url' => 'test-site_url', 'default_team_id' => 'test-default_team_id', 'create_at' => 1234567890, 'delete_at' => 1234567890, 'last_ping_at' => 1234567890, 'token' => 'test-token', 'remote_token' => 'test-remote_token', 'topics' => 'test-topics', 'creator_id' => 'test-creator_id', 'plugin_id' => 'test-plugin_id', 'options' => 1234567890]]);
 
         $page = 1;
         $per_page = 1;
@@ -54,12 +54,15 @@ class RemoteClustersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/remotecluster');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'in_channel' => 'test-in_channel', 'not_in_channel' => 'test-not_in_channel']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\RemoteCluster::class, $result[0]);
     }
 
     #[Test]
     public function createRemoteClusterBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(201, ['remote_cluster' => 'test-remote_cluster', 'invite' => 'test-invite', 'password' => 'test-password']);
+        $this->mockJsonResponse(201, ['invite' => 'test-invite', 'password' => 'test-password']);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateRemoteClusterRequest(name: 'test-name', default_team_id: 'test-default_team_id');
 

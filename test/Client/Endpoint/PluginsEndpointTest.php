@@ -7,7 +7,10 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 use CedricZiel\MattermostPhp\Client\Endpoint\PluginsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\GetPluginsResponse;
 use CedricZiel\MattermostPhp\Client\Model\InstallMarketplacePluginRequest;
+use CedricZiel\MattermostPhp\Client\Model\MarketplacePlugin;
 use CedricZiel\MattermostPhp\Client\Model\PluginManifest;
+use CedricZiel\MattermostPhp\Client\Model\PluginManifestWebapp;
+use CedricZiel\MattermostPhp\Client\Model\PluginStatus;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\System;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
@@ -17,7 +20,10 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversClass(PluginsEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetPluginsResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PluginManifestWebapp::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PluginStatus::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PluginManifest::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(MarketplacePlugin::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(System::class)]
 class PluginsEndpointTest extends ClientTestCase
 {
@@ -118,7 +124,7 @@ class PluginsEndpointTest extends ClientTestCase
     #[Test]
     public function getWebappPluginsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'version' => 'test-version']]);
 
         $result = $this->endpoint->getWebappPlugins();
 
@@ -126,12 +132,15 @@ class PluginsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/plugins/webapp');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PluginManifestWebapp::class, $result[0]);
     }
 
     #[Test]
     public function getPluginStatusesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['plugin_id' => 'test-plugin_id', 'name' => 'test-name', 'description' => 'test-description', 'version' => 'test-version', 'cluster_id' => 'test-cluster_id', 'plugin_path' => 'test-plugin_path', 'state' => 1234567890]]);
 
         $result = $this->endpoint->getPluginStatuses();
 
@@ -139,6 +148,9 @@ class PluginsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/plugins/statuses');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PluginStatus::class, $result[0]);
     }
 
     #[Test]
@@ -160,7 +172,7 @@ class PluginsEndpointTest extends ClientTestCase
     #[Test]
     public function getMarketplacePluginsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['homepage_url' => 'test-homepage_url', 'icon_data' => 'test-icon_data', 'download_url' => 'test-download_url', 'release_notes_url' => 'test-release_notes_url', 'labels' => [], 'signature' => 'test-signature', 'installed_version' => 'test-installed_version']]);
 
         $page = 1;
         $per_page = 1;
@@ -175,6 +187,9 @@ class PluginsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/plugins/marketplace');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter' => 'test-filter', 'server_version' => 'test-server_version']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\MarketplacePlugin::class, $result[0]);
     }
 
     #[Test]

@@ -33,6 +33,17 @@ function findClass(PhpNamespace $namespace, string $tag): ?ClassType
     return null;
 }
 
+function findModelClass(PhpNamespace $namespace, string $name): ?ClassType
+{
+    foreach ($namespace->getClasses() as $class) {
+        if ($class->getName() === $name) {
+            return $class;
+        }
+    }
+
+    return null;
+}
+
 $ymlSrc = file_get_contents(__DIR__ . '/../resources/openapi.json');
 $openApi = json_decode($ymlSrc, true);
 
@@ -278,13 +289,22 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
 
     if ($class->hasMethod('__construct')) {
         if ($class->getExtends() !== null) {
-            $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-                if ($property->getType() === 'stdClass') {
-                    return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
-                }
+            // Extract just the class name from the fully qualified name
+            $extendsName = $class->getExtends();
+            if (str_contains($extendsName, '\\')) {
+                $parts = explode('\\', $extendsName);
+                $extendsName = end($parts);
+            }
+            $parentClass = findModelClass($modelNamespace, $extendsName);
+            if ($parentClass !== null && $parentClass->hasMethod('__construct')) {
+                $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
+                    if ($property->getType() === 'stdClass') {
+                        return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
+                    }
 
-                return sprintf('    %s: isset($data[\'%s\']) ? isset($data[\'%s\']) : null,', $property->getName(), $property->getName(), $property->getName());
-            }, findClass($modelNamespace,$class->getExtends())->getMethod('__construct')?->getParameters() ?? [])));
+                    return sprintf('    %s: isset($data[\'%s\']) ? isset($data[\'%s\']) : null,', $property->getName(), $property->getName(), $property->getName());
+                }, $parentClass->getMethod('__construct')->getParameters())));
+            }
         }
 
         $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
@@ -318,8 +338,58 @@ function createHydrationMethodForArrayBody(PhpNamespace $modelNamespace, ClassTy
     return $hydrationMethod;
 }
 
+function createHydrationMethodForAllOf(PhpNamespace $modelNamespace, ClassType $class, ?string $parentClass, array $additionalProperties): Method
+{
+    $hydrationMethod = $class->addMethod('hydrate')
+        ->setReturnType($modelNamespace->getName() . '\\' . $class->getName())
+        ->setStatic();
+
+    $hydrationMethod->addParameter('data')
+        ->setType('array')
+        ->setNullable()
+        ->setComment('@param array<string, mixed> $data');
+
+    $hydrationMethod->addBody('$object = new self(');
+
+    // First, add parent class constructor parameters if there's a parent
+    if ($parentClass !== null) {
+        $parentClassName = str_replace('\\' . $modelNamespace->getName() . '\\', '', $parentClass);
+        $parentClassType = findModelClass($modelNamespace, $parentClassName);
+        if ($parentClassType !== null && $parentClassType->hasMethod('__construct')) {
+            foreach ($parentClassType->getMethod('__construct')->getParameters() as $parameter) {
+                $paramName = $parameter->getName();
+                if ($parameter->getType() === 'stdClass') {
+                    $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $paramName, $paramName, $paramName));
+                } else {
+                    $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $paramName, $paramName, $paramName));
+                }
+            }
+        }
+    }
+
+    // Then add additional properties from allOf
+    foreach ($additionalProperties as $propertyName => $property) {
+        if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+            continue;
+        }
+
+        // Check if this is a reference to another model
+        if (isset($property['$ref'])) {
+            $refType = str_replace('#/components/schemas/', '', $property['$ref']);
+            $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? %s::hydrate($data[\'%s\']) : null,', $propertyName, $propertyName, $refType, $propertyName));
+        } else {
+            $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $propertyName, $propertyName, $propertyName));
+        }
+    }
+
+    $hydrationMethod->addBody(');');
+    $hydrationMethod->addBody('return $object;');
+
+    return $hydrationMethod;
+}
+
 function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName, array $schema): ClassType {
-    $class = findClass($modelNamespace, $schemaName);
+    $class = findModelClass($modelNamespace, $schemaName);
     if ($class === null) $class = $modelNamespace->addClass($schemaName);
 
     $constructor = $class->hasMethod('__construct') ? $class->getMethod('__construct') : $class->addMethod('__construct');
@@ -389,15 +459,71 @@ function createClassFromSchema(PhpNamespace $modelNamespace, string $schemaName,
         $jsonSerialize->addBody('    return $item;');
         $jsonSerialize->addBody('}, $this->items);');
     } elseif (isset($schema['allOf'])) {
+        $parentClass = null;
+        $parentClassName = null;
+        $additionalProperties = [];
+
         foreach ($schema['allOf'] as $i => $allOf) {
-            // class extends another object (allOf)
+            // class extends another object (allOf with $ref)
             if (isset($allOf['$ref'])) {
                 $itemType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $allOf['$ref']);
-
-                $class
-                    ->setExtends($itemType);
+                $parentClass = $itemType;
+                $parentClassName = str_replace('#/components/schemas/', '', $allOf['$ref']);
+                $class->setExtends($itemType);
+            }
+            // additional properties in allOf
+            elseif (isset($allOf['type']) && $allOf['type'] === 'object' && isset($allOf['properties'])) {
+                foreach ($allOf['properties'] as $propertyName => $property) {
+                    $additionalProperties[$propertyName] = $property;
+                }
             }
         }
+
+        // Add parent class constructor parameters to the child constructor
+        $parentConstructorParams = [];
+        if ($parentClassName !== null) {
+            $parentClassType = findModelClass($modelNamespace, $parentClassName);
+            if ($parentClassType !== null && $parentClassType->hasMethod('__construct')) {
+                foreach ($parentClassType->getMethod('__construct')->getParameters() as $parentParam) {
+                    $paramName = $parentParam->getName();
+                    $parentConstructorParams[] = $paramName;
+
+                    $p = $constructor->addParameter($paramName);
+                    $p->setType($parentParam->getType());
+                    $p->setNullable(true);
+                    $p->setDefaultValue(null);
+                }
+            }
+        }
+
+        // Add additional properties from allOf to constructor
+        foreach ($additionalProperties as $propertyName => $property) {
+            if (false === \Nette\PhpGenerator\Helpers::isIdentifier($propertyName)) {
+                continue;
+            }
+
+            // Determine the type - could be a $ref to another model
+            $propertyType = null;
+            if (isset($property['$ref'])) {
+                $propertyType = '\\' . $modelNamespace->getName() . '\\' . str_replace('#/components/schemas/', '', $property['$ref']);
+            } elseif (isset($property['type'])) {
+                $propertyType = mapParameterType($property['type']);
+            }
+
+            $p = $constructor->addPromotedParameter($propertyName);
+            $p->setType($propertyType);
+            $p->setComment($property['description'] ?? null)->setNullable(true);
+            $p->setDefaultValue(null);
+        }
+
+        // Add parent::__construct() call to constructor body
+        if (!empty($parentConstructorParams)) {
+            $parentCallParams = implode(', ', array_map(fn($p) => $p . ': $' . $p, $parentConstructorParams));
+            $constructor->addBody('parent::__construct(' . $parentCallParams . ');');
+        }
+
+        // Create hydration method for allOf classes
+        $hydrationMethod = createHydrationMethodForAllOf($modelNamespace, $class, $parentClass, $additionalProperties);
     }
 
     return $class;

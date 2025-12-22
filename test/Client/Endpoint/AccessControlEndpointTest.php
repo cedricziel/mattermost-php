@@ -123,7 +123,7 @@ class AccessControlEndpointTest extends ClientTestCase
     #[Test]
     public function getChannelsForAccessControlPolicyBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['channels' => 'test-channels', 'total_count' => 1234567890]);
+        $this->mockJsonResponse(200, ['total_count' => 1234567890]);
 
         $policy_id = 'test-policy_id';
         $limit = 1;

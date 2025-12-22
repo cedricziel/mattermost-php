@@ -8,6 +8,7 @@ use CedricZiel\MattermostPhp\Client\Endpoint\ChannelsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\Channel;
 use CedricZiel\MattermostPhp\Client\Model\ChannelListWithTeamData;
 use CedricZiel\MattermostPhp\Client\Model\ChannelMember;
+use CedricZiel\MattermostPhp\Client\Model\ChannelModeration;
 use CedricZiel\MattermostPhp\Client\Model\ChannelStats;
 use CedricZiel\MattermostPhp\Client\Model\ChannelUnread;
 use CedricZiel\MattermostPhp\Client\Model\CreateChannelRequest;
@@ -16,6 +17,7 @@ use CedricZiel\MattermostPhp\Client\Model\CreateGroupChannelRequest;
 use CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsRequest;
 use CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamRequest;
 use CedricZiel\MattermostPhp\Client\Model\MoveChannelRequest;
+use CedricZiel\MattermostPhp\Client\Model\OrderedSidebarCategories;
 use CedricZiel\MattermostPhp\Client\Model\PostList;
 use CedricZiel\MattermostPhp\Client\Model\SearchAllChannelsRequest;
 use CedricZiel\MattermostPhp\Client\Model\SearchAllChannelsResponse;
@@ -23,6 +25,7 @@ use CedricZiel\MattermostPhp\Client\Model\SearchChannelsRequest;
 use CedricZiel\MattermostPhp\Client\Model\SearchGroupChannelsRequest;
 use CedricZiel\MattermostPhp\Client\Model\SidebarCategory;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
+use CedricZiel\MattermostPhp\Client\Model\Team;
 use CedricZiel\MattermostPhp\Client\Model\UpdateChannelMemberSchemeRolesRequest;
 use CedricZiel\MattermostPhp\Client\Model\UpdateChannelPrivacyRequest;
 use CedricZiel\MattermostPhp\Client\Model\UpdateChannelRequest;
@@ -45,7 +48,10 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(ChannelMember::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(ViewChannelResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(ChannelUnread::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(ChannelModeration::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(OrderedSidebarCategories::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(SidebarCategory::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Team::class)]
 class ChannelsEndpointTest extends ClientTestCase
 {
     public ChannelsEndpoint $endpoint;
@@ -153,7 +159,7 @@ class ChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function searchGroupChannelsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchGroupChannelsRequest(term: 'test-term');
 
@@ -163,12 +169,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/channels/group/search');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function getPublicChannelsByIdsForTeamBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetPublicChannelsByIdsForTeamRequest(items: []);
@@ -179,6 +188,9 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/ids');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
@@ -315,7 +327,7 @@ class ChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getPublicChannelsForTeamBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -328,12 +340,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function getPrivateChannelsForTeamBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -346,12 +361,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/private');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function getDeletedChannelsForTeamBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -364,12 +382,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/deleted');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function autocompleteChannelsForTeamBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $name = 'test-name';
@@ -381,12 +402,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/autocomplete');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['name' => 'test-name']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function autocompleteChannelsForTeamForSearchBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $name = 'test-name';
@@ -398,12 +422,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/search_autocomplete');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['name' => 'test-name']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function searchChannelsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(201, [['status' => 'ok']]);
+        $this->mockJsonResponse(201, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $team_id = 'test-team_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\SearchChannelsRequest(term: 'test-term');
@@ -414,6 +441,9 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/teams/test-team_id/channels/search');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
@@ -455,7 +485,7 @@ class ChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getChannelMembersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['channel_id' => 'test-channel_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'last_viewed_at' => 1234567890, 'msg_count' => 1234567890, 'mention_count' => 1234567890, 'last_update_at' => 1234567890]]);
 
         $channel_id = 'test-channel_id';
         $page = 1;
@@ -468,12 +498,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/channels/test-channel_id/members');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelMember::class, $result[0]);
     }
 
     #[Test]
     public function getChannelMembersByIdsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['channel_id' => 'test-channel_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'last_viewed_at' => 1234567890, 'msg_count' => 1234567890, 'mention_count' => 1234567890, 'last_update_at' => 1234567890]]);
 
         $channel_id = 'test-channel_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetChannelMembersByIdsRequest(items: []);
@@ -484,12 +517,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/channels/test-channel_id/members/ids');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelMember::class, $result[0]);
     }
 
     #[Test]
     public function getChannelMemberBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['channel_id' => 'test-channel_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'last_viewed_at' => 1234567890, 'msg_count' => 1234567890, 'mention_count' => 1234567890, 'notify_props' => 'test-notify_props', 'last_update_at' => 1234567890]);
+        $this->mockJsonResponse(200, ['channel_id' => 'test-channel_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'last_viewed_at' => 1234567890, 'msg_count' => 1234567890, 'mention_count' => 1234567890, 'last_update_at' => 1234567890]);
 
         $channel_id = 'test-channel_id';
         $user_id = 'test-user_id';
@@ -576,7 +612,7 @@ class ChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getChannelMembersForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['channel_id' => 'test-channel_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'last_viewed_at' => 1234567890, 'msg_count' => 1234567890, 'mention_count' => 1234567890, 'last_update_at' => 1234567890]]);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -587,12 +623,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/channels/members');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelMember::class, $result[0]);
     }
 
     #[Test]
     public function getChannelsForTeamForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -606,12 +645,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/channels');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['last_delete_at' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
     public function getChannelsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'team_id' => 'test-team_id', 'type' => 'test-type', 'display_name' => 'test-display_name', 'name' => 'test-name', 'header' => 'test-header', 'purpose' => 'test-purpose', 'last_post_at' => 1234567890, 'total_msg_count' => 1234567890, 'extra_update_at' => 1234567890, 'creator_id' => 'test-creator_id']]);
 
         $user_id = 'test-user_id';
         $last_delete_at = 1;
@@ -624,6 +666,9 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/channels');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['last_delete_at' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Channel::class, $result[0]);
     }
 
     #[Test]
@@ -663,7 +708,7 @@ class ChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getChannelModerationsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['name' => 'test-name']]);
 
         $channel_id = 'test-channel_id';
 
@@ -673,12 +718,15 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/channels/test-channel_id/moderations');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelModeration::class, $result[0]);
     }
 
     #[Test]
     public function getSidebarCategoriesForTeamForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['order' => [], 'categories' => []]]);
 
         $team_id = 'test-team_id';
         $user_id = 'test-user_id';
@@ -689,6 +737,9 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/channels/categories');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\OrderedSidebarCategories::class, $result[0]);
     }
 
     #[Test]
@@ -748,7 +799,7 @@ class ChannelsEndpointTest extends ClientTestCase
     #[Test]
     public function getGroupMessageMembersCommonTeamsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']]);
 
         $channel_id = 'test-channel_id';
 
@@ -758,5 +809,8 @@ class ChannelsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/channels/test-channel_id/common_teams');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result[0]);
     }
 }

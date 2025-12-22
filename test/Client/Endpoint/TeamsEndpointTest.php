@@ -71,7 +71,7 @@ class TeamsEndpointTest extends ClientTestCase
     #[Test]
     public function getAllTeamsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']]);
 
         $page = 1;
         $per_page = 1;
@@ -85,6 +85,9 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result[0]);
     }
 
     #[Test]
@@ -205,7 +208,7 @@ class TeamsEndpointTest extends ClientTestCase
     #[Test]
     public function getTeamsForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'display_name' => 'test-display_name', 'name' => 'test-name', 'description' => 'test-description', 'email' => 'test-email', 'type' => 'test-type', 'allowed_domains' => 'test-allowed_domains', 'invite_id' => 'test-invite_id', 'allow_open_invite' => true, 'policy_id' => 'test-policy_id']]);
 
         $user_id = 'test-user_id';
 
@@ -215,12 +218,15 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Team::class, $result[0]);
     }
 
     #[Test]
     public function getTeamMembersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['team_id' => 'test-team_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'delete_at' => 1234567890, 'scheme_user' => true, 'scheme_admin' => true, 'explicit_roles' => 'test-explicit_roles']]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -235,6 +241,9 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/members');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'sort' => 'test-sort']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result[0]);
     }
 
     #[Test]
@@ -257,7 +266,7 @@ class TeamsEndpointTest extends ClientTestCase
     #[Test]
     public function addTeamMembersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(201, [['status' => 'ok']]);
+        $this->mockJsonResponse(201, [['team_id' => 'test-team_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'delete_at' => 1234567890, 'scheme_user' => true, 'scheme_admin' => true, 'explicit_roles' => 'test-explicit_roles']]);
 
         $team_id = 'test-team_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\AddTeamMembersRequest(items: []);
@@ -269,12 +278,15 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/teams/test-team_id/members/batch');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result[0]);
     }
 
     #[Test]
     public function getTeamMembersForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['team_id' => 'test-team_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'delete_at' => 1234567890, 'scheme_user' => true, 'scheme_admin' => true, 'explicit_roles' => 'test-explicit_roles']]);
 
         $user_id = 'test-user_id';
 
@@ -284,6 +296,9 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/members');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result[0]);
     }
 
     #[Test]
@@ -323,7 +338,7 @@ class TeamsEndpointTest extends ClientTestCase
     #[Test]
     public function getTeamMembersByIdsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['team_id' => 'test-team_id', 'user_id' => 'test-user_id', 'roles' => 'test-roles', 'delete_at' => 1234567890, 'scheme_user' => true, 'scheme_admin' => true, 'explicit_roles' => 'test-explicit_roles']]);
 
         $team_id = 'test-team_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetTeamMembersByIdsRequest(items: []);
@@ -334,6 +349,9 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/teams/test-team_id/members/ids');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamMember::class, $result[0]);
     }
 
     #[Test]
@@ -423,7 +441,7 @@ class TeamsEndpointTest extends ClientTestCase
     #[Test]
     public function getTeamsUnreadForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['team_id' => 'test-team_id', 'msg_count' => 1234567890, 'mention_count' => 1234567890]]);
 
         $user_id = 'test-user_id';
         $exclude_team = 'test-exclude_team';
@@ -436,6 +454,9 @@ class TeamsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/unread');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['exclude_team' => 'test-exclude_team']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\TeamUnread::class, $result[0]);
     }
 
     #[Test]

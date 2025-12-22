@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\SystemEndpoint;
+use CedricZiel\MattermostPhp\Client\Model\Audit;
 use CedricZiel\MattermostPhp\Client\Model\Config;
 use CedricZiel\MattermostPhp\Client\Model\EnvironmentConfig;
 use CedricZiel\MattermostPhp\Client\Model\GetLicenseLoadMetricResponse;
+use CedricZiel\MattermostPhp\Client\Model\IntegrityCheckResult;
 use CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink;
 use CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedRequest;
+use CedricZiel\MattermostPhp\Client\Model\Notice;
 use CedricZiel\MattermostPhp\Client\Model\PostLogRequest;
 use CedricZiel\MattermostPhp\Client\Model\PushNotification;
 use CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest;
@@ -24,14 +27,17 @@ use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(SystemEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(SystemStatusResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Notice::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Config::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(EnvironmentConfig::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetLicenseLoadMetricResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(LicenseRenewalLink::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(Audit::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Server_Busy::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PushNotification::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UpgradeToEnterpriseStatusResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(IntegrityCheckResult::class)]
 class SystemEndpointTest extends ClientTestCase
 {
     public SystemEndpoint $endpoint;
@@ -70,7 +76,7 @@ class SystemEndpointTest extends ClientTestCase
     #[Test]
     public function getNoticesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'sysAdminOnly' => true, 'teamAdminOnly' => true, 'action' => 'test-action', 'actionParam' => 'test-actionParam', 'actionText' => 'test-actionText', 'description' => 'test-description', 'image' => 'test-image', 'title' => 'test-title']]);
 
         $teamId = 'test-teamId';
         $clientVersion = 'test-clientVersion';
@@ -84,6 +90,9 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/system/notices/test-teamId');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['clientVersion' => 'test-clientVersion', 'locale' => 'test-locale', 'client' => 'test-client']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Notice::class, $result[0]);
     }
 
     #[Test]
@@ -251,7 +260,7 @@ class SystemEndpointTest extends ClientTestCase
     #[Test]
     public function getAuditsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'user_id' => 'test-user_id', 'action' => 'test-action', 'extra_info' => 'test-extra_info', 'ip_address' => 'test-ip_address', 'session_id' => 'test-session_id']]);
 
         $page = 1;
         $per_page = 1;
@@ -263,6 +272,9 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/audits');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Audit::class, $result[0]);
     }
 
     #[Test]
@@ -365,7 +377,7 @@ class SystemEndpointTest extends ClientTestCase
     #[Test]
     public function checkIntegrityBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['err' => 'test-err']]);
 
         $result = $this->endpoint->checkIntegrity();
 
@@ -373,5 +385,8 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/integrity');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\IntegrityCheckResult::class, $result[0]);
     }
 }

@@ -36,7 +36,7 @@ class CustomProfileAttributesEndpointTest extends ClientTestCase
     #[Test]
     public function listAllCPAFieldsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'name' => 'test-name', 'description' => 'test-description', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890]]);
 
         $result = $this->endpoint->listAllCPAFields();
 
@@ -44,6 +44,9 @@ class CustomProfileAttributesEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/custom_profile_attributes/fields');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PropertyField::class, $result[0]);
     }
 
     #[Test]

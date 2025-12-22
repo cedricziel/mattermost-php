@@ -11,7 +11,9 @@ use CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\Group;
 use CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel;
+use CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannels;
 use CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeam;
+use CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeams;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -22,6 +24,8 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(Group::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GroupSyncableTeam::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GroupSyncableChannel::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GroupSyncableTeams::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GroupSyncableChannels::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetGroupUsersResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetGroupStatsResponse::class)]
 class GroupsEndpointTest extends ClientTestCase
@@ -59,7 +63,7 @@ class GroupsEndpointTest extends ClientTestCase
     #[Test]
     public function getGroupsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'source' => 'test-source', 'remote_id' => 'test-remote_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'has_syncables' => true]]);
 
         $page = 1;
         $per_page = 1;
@@ -77,6 +81,9 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/groups');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'q' => 'test-q', 'not_associated_to_team' => 'test-not_associated_to_team', 'not_associated_to_channel' => 'test-not_associated_to_channel', 'since' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
     }
 
     #[Test]
@@ -213,7 +220,7 @@ class GroupsEndpointTest extends ClientTestCase
     #[Test]
     public function getGroupSyncablesTeamsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['team_id' => 'test-team_id', 'team_display_name' => 'test-team_display_name', 'team_type' => 'test-team_type', 'group_id' => 'test-group_id', 'auto_add' => true, 'create_at' => 1234567890, 'delete_at' => 1234567890, 'update_at' => 1234567890]]);
 
         $group_id = 'test-group_id';
 
@@ -223,12 +230,15 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/groups/test-group_id/teams');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GroupSyncableTeams::class, $result[0]);
     }
 
     #[Test]
     public function getGroupSyncablesChannelsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['channel_id' => 'test-channel_id', 'channel_display_name' => 'test-channel_display_name', 'channel_type' => 'test-channel_type', 'team_id' => 'test-team_id', 'team_display_name' => 'test-team_display_name', 'team_type' => 'test-team_type', 'group_id' => 'test-group_id', 'auto_add' => true, 'create_at' => 1234567890, 'delete_at' => 1234567890, 'update_at' => 1234567890]]);
 
         $group_id = 'test-group_id';
 
@@ -238,6 +248,9 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/groups/test-group_id/channels');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannels::class, $result[0]);
     }
 
     #[Test]
@@ -278,7 +291,7 @@ class GroupsEndpointTest extends ClientTestCase
     #[Test]
     public function getGroupsByChannelBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'source' => 'test-source', 'remote_id' => 'test-remote_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'has_syncables' => true]]);
 
         $channel_id = 'test-channel_id';
         $page = 1;
@@ -292,12 +305,15 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/channels/test-channel_id/groups');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
     }
 
     #[Test]
     public function getGroupsByTeamBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'source' => 'test-source', 'remote_id' => 'test-remote_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'has_syncables' => true]]);
 
         $team_id = 'test-team_id';
         $page = 1;
@@ -320,12 +336,15 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/teams/test-team_id/groups');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter_has_member' => 'test-filter_has_member']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
     }
 
     #[Test]
     public function getGroupsByUserIdBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'source' => 'test-source', 'remote_id' => 'test-remote_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'has_syncables' => true]]);
 
         $user_id = 'test-user_id';
 
@@ -335,12 +354,15 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/groups');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
     }
 
     #[Test]
     public function getGroupsByNamesBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'name' => 'test-name', 'display_name' => 'test-display_name', 'description' => 'test-description', 'source' => 'test-source', 'remote_id' => 'test-remote_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'has_syncables' => true]]);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest(items: []);
 
@@ -350,5 +372,8 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/groups/names');
         $this->assertRequestHasAuthHeader();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
     }
 }

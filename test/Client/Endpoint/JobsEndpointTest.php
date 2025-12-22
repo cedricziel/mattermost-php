@@ -35,7 +35,7 @@ class JobsEndpointTest extends ClientTestCase
     #[Test]
     public function getJobsBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'create_at' => 1234567890, 'start_at' => 1234567890, 'last_activity_at' => 1234567890, 'status' => 'test-status', 'progress' => 1234567890]]);
 
         $page = 1;
         $per_page = 1;
@@ -49,6 +49,9 @@ class JobsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/jobs');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'job_type' => 'test-job_type', 'status' => 'test-status']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Job::class, $result[0]);
     }
 
     #[Test]
@@ -102,7 +105,7 @@ class JobsEndpointTest extends ClientTestCase
     #[Test]
     public function getJobsByTypeBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, [['status' => 'ok']]);
+        $this->mockJsonResponse(200, [['id' => 'test-id', 'type' => 'test-type', 'create_at' => 1234567890, 'start_at' => 1234567890, 'last_activity_at' => 1234567890, 'status' => 'test-status', 'progress' => 1234567890]]);
 
         $type = 'test-type';
         $page = 1;
@@ -115,6 +118,9 @@ class JobsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/jobs/type/test-type');
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1']);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Job::class, $result[0]);
     }
 
     #[Test]
