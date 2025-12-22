@@ -22,6 +22,10 @@ vendor/bin/phpunit --filter testMethodName
 # Static analysis
 vendor/bin/phpstan analyse
 
+# Code quality with Rector
+composer rector:dry-run  # Preview Rector changes
+composer rector          # Apply Rector fixes
+
 # Regenerate API client from OpenAPI spec
 php bin/api-generate
 ```
@@ -59,6 +63,8 @@ A framework for building Mattermost Apps with PSR-15 request handling:
 ### Code Generation
 
 The API client is generated from `resources/openapi.json` using `bin/api-generate`. This PHP script uses Nette PHP Generator to create endpoint classes, models, and the main Client class. Do not manually edit generated files in `src/Client/`.
+
+Generated code in `src/Client/Endpoint/` and `src/Client/Model/` is included in Rector validation to ensure consistent code quality.
 
 ## Commit Guidelines
 
