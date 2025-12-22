@@ -105,6 +105,29 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function getChannelsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['item1', 'item2', 'item3']);
+
+        $team_id = 'test-team_id';
+        $sort = 'test-sort';
+        $direction = 'test-direction';
+        $status = 'test-status';
+        $owner_user_id = 'test-owner_user_id';
+        $search_term = 'test-search_term';
+        $participant_id = 'test-participant_id';
+
+        $result = $this->endpoint->getChannels($team_id, $sort, $direction, $status, $owner_user_id, $search_term, $participant_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/plugins/playbooks/api/v0/runs/channels');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['team_id' => 'test-team_id', 'sort' => 'test-sort', 'direction' => 'test-direction', 'status' => 'test-status', 'owner_user_id' => 'test-owner_user_id', 'search_term' => 'test-search_term', 'participant_id' => 'test-participant_id']);
+        $this->assertIsArray($result);
+    }
+
+    #[Test]
     public function getPlaybookRunByChannelIdBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['id' => 'test-id', 'name' => 'test-name', 'description' => 'test-description', 'is_active' => true, 'owner_user_id' => 'test-owner_user_id', 'team_id' => 'test-team_id', 'channel_id' => 'test-channel_id', 'create_at' => 1234567890, 'end_at' => 1234567890, 'delete_at' => 1234567890, 'active_stage' => 1234567890, 'active_stage_title' => 'test-active_stage_title', 'post_id' => 'test-post_id', 'playbook_id' => 'test-playbook_id', 'checklists' => []]);

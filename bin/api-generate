@@ -1011,6 +1011,22 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                         addReturnType($method, 'array');
                         continue;
                     }
+                    // Check for primitive array items (string[], int[], etc.)
+                    $itemsType = $responseSpec['content']['application/json']['schema']['items']['type'] ?? null;
+                    if (in_array($itemsType, ['string', 'integer', 'number', 'boolean'], true)) {
+                        $hasPrimitiveOnlyResponse = true;
+                        addReturnType($method, 'array');
+                        // Add primitive array type mapping for mapResponse()
+                        $primitiveArrayType = match($itemsType) {
+                            'string' => 'string[]',
+                            'integer' => 'int[]',
+                            'number' => 'float[]',
+                            'boolean' => 'bool[]',
+                            default => 'array',
+                        };
+                        $method->addBody(sprintf("\$map[%d] = '%s';", $responseCode, $primitiveArrayType));
+                        continue;
+                    }
                     continue;
                 }
 
@@ -1029,6 +1045,15 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
                     $hasPrimitiveOnlyResponse = true;
                     $primitiveType = mapParameterType($schemaType);
                     addReturnType($method, $primitiveType);
+                    // Add primitive type mapping for mapResponse()
+                    $primitiveMapType = match($schemaType) {
+                        'string' => 'string',
+                        'integer' => 'int',
+                        'number' => 'float',
+                        'boolean' => 'bool',
+                        default => 'string',
+                    };
+                    $method->addBody(sprintf("\$map[%d] = '%s';", $responseCode, $primitiveMapType));
                     continue;
                 }
 

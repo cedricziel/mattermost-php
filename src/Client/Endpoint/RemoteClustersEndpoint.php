@@ -259,6 +259,7 @@ class RemoteClustersEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[201] = 'string';
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 

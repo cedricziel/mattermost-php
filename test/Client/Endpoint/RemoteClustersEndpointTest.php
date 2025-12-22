@@ -8,6 +8,7 @@ use CedricZiel\MattermostPhp\Client\Endpoint\RemoteClustersEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\AcceptRemoteClusterInviteRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreateRemoteClusterRequest;
 use CedricZiel\MattermostPhp\Client\Model\CreateRemoteClusterResponse;
+use CedricZiel\MattermostPhp\Client\Model\GenerateRemoteClusterInviteRequest;
 use CedricZiel\MattermostPhp\Client\Model\RemoteCluster;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -105,6 +106,23 @@ class RemoteClustersEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/remotecluster/test-remote_id');
         $this->assertRequestHasAuthHeader();
         $this->assertNull($result);
+    }
+
+    #[Test]
+    public function generateRemoteClusterInviteBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(201, 'test-response-value');
+
+        $remote_id = 'test-remote_id';
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GenerateRemoteClusterInviteRequest(password: 'test-password');
+
+        $result = $this->endpoint->generateRemoteClusterInvite($remote_id, $requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/remotecluster/test-remote_id/generate_invite');
+        $this->assertRequestHasAuthHeader();
+        $this->assertIsString($result);
     }
 
     #[Test]

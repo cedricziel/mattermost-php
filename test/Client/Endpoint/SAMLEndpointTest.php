@@ -31,6 +31,20 @@ class SAMLEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function getSamlMetadataBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, 'test-response-value');
+
+        $result = $this->endpoint->getSamlMetadata();
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/saml/metadata');
+        $this->assertRequestHasAuthHeader();
+        $this->assertIsString($result);
+    }
+
+    #[Test]
     public function deleteSamlIdpCertificateBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, ['status' => 'test-status']);

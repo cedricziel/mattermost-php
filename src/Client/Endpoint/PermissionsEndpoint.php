@@ -38,7 +38,7 @@ class PermissionsEndpoint
      */
     public function getAncillaryPermissionsPost(
         \CedricZiel\MattermostPhp\Client\Model\GetAncillaryPermissionsPostRequest $requestBody,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -53,6 +53,7 @@ class PermissionsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
 
         return $this->mapResponse($response, $map);

@@ -64,9 +64,9 @@ trait HttpClientTrait
     /**
      * @param ResponseInterface $response
      * @param array<int, string> $map
-     * @return object|array
+     * @return mixed
      */
-    protected function mapResponse(ResponseInterface $response, array $map): object|array
+    protected function mapResponse(ResponseInterface $response, array $map): mixed
     {
         $responseCode = $response->getStatusCode();
 
@@ -78,16 +78,47 @@ trait HttpClientTrait
             ));
         }
 
-        $body = json_decode($response->getBody(), true);
-        if (str_contains($map[$responseCode], '[]')) {
+        $mapValue = $map[$responseCode];
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        // Handle primitive types in the map
+        if ($mapValue === 'string') {
+            return $body;
+        }
+        if ($mapValue === 'int' || $mapValue === 'integer') {
+            return (int) $body;
+        }
+        if ($mapValue === 'float' || $mapValue === 'number') {
+            return (float) $body;
+        }
+        if ($mapValue === 'bool' || $mapValue === 'boolean') {
+            return (bool) $body;
+        }
+        if ($mapValue === 'string[]' || $mapValue === 'array') {
+            return $body; // Already an array from json_decode
+        }
+        if ($mapValue === 'int[]') {
+            return array_map('intval', $body);
+        }
+        if ($mapValue === 'float[]') {
+            return array_map('floatval', $body);
+        }
+        if ($mapValue === 'bool[]') {
+            return array_map('boolval', $body);
+        }
+
+        // Handle array of models
+        if (str_contains($mapValue, '[]')) {
             $objects = [];
+            $modelClass = str_replace('[]', '', $mapValue);
             foreach ($body as $item) {
-                $map[$responseCode] = str_replace('[]', '', $map[$responseCode]);
-                $objects[] = $map[$responseCode]::hydrate($item);
+                $objects[] = $modelClass::hydrate($item);
             }
             return $objects;
         }
-        return $map[$responseCode]::hydrate($body);
+
+        // Handle model class
+        return $mapValue::hydrate($body);
     }
 
     public function buildUri(string $path, array $pathParameters = [], array $queryParameters = []): string

@@ -63,6 +63,28 @@ class ReportsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function getUserCountForReportingBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, 42);
+
+        $role_filter = 'test-role_filter';
+        $team_filter = 'test-team_filter';
+        $has_no_team = true;
+        $hide_active = true;
+        $hide_inactive = true;
+        $search_term = 'test-search_term';
+
+        $result = $this->endpoint->getUserCountForReporting($role_filter, $team_filter, $has_no_team, $hide_active, $hide_inactive, $search_term);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/reports/users/count');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['role_filter' => 'test-role_filter', 'team_filter' => 'test-team_filter', 'search_term' => 'test-search_term']);
+        $this->assertIsInt($result);
+    }
+
+    #[Test]
     public function getPostsForReportingBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, []);

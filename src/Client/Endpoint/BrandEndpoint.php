@@ -54,6 +54,7 @@ class BrandEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string';
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 

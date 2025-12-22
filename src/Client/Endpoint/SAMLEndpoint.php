@@ -54,6 +54,7 @@ class SAMLEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string';
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -84,6 +85,7 @@ class SAMLEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string';
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
         return $this->mapResponse($response, $map);

@@ -73,17 +73,11 @@ $skipMethods = [
     // Empty or anonymous object schemas in OpenAPI spec (no model generated)
     'CustomProfileAttributesEndpoint' => ['listCPAValues', 'patchCPAValues', 'patchCPAValuesForUser'],
 
-    // Primitive array/string returns without proper model mapping
-    'CloudEndpoint' => ['postEndpointForCwsWebhooks'],  // No success response defined
-    'Integration_actionsEndpoint' => ['openInteractiveDialog', 'submitInteractiveDialog', 'lookupInteractiveDialog'],
-    'InternalEndpoint' => ['getChecklistAutocomplete'],
-    'PermissionsEndpoint' => ['getAncillaryPermissionsPost'],
-    'PlaybookRunsEndpoint' => ['getChannels', 'addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemDelete', 'itemSetState', 'itemSetAssignee', 'itemRun'],
-    'RemoteClustersEndpoint' => ['generateRemoteClusterInvite'],
-    'ReportsEndpoint' => ['getUserCountForReporting'],
-    'SAMLEndpoint' => ['getSamlMetadata'],
-    'TeamsEndpoint' => ['teamMembersMinusGroupMembers'],
-    'ThreadsEndpoint' => ['getThreadMentionCountsByChannel'],
+    // Remaining issues - no success response or complex objects
+    'CloudEndpoint' => ['postEndpointForCwsWebhooks'],  // No success response defined in OpenAPI
+    'InternalEndpoint' => ['getChecklistAutocomplete'],  // Complex objects, no model
+    'PlaybookRunsEndpoint' => ['addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemDelete', 'itemSetState', 'itemSetAssignee', 'itemRun'],  // Void success with error model
+    'TeamsEndpoint' => ['teamMembersMinusGroupMembers'],  // OpenAPI spec incomplete
 ];
 
 // Curated test cases for specific endpoints with special handling
@@ -574,13 +568,45 @@ function getMockValueForType(string $typeName, string $paramName): mixed
 /**
  * Convert mock data array to PHP code string.
  */
-function mockDataToCode(array $data, bool $isArrayOfItems = false): string
+function mockDataToCode(mixed $data, bool $isArrayOfItems = false): string
 {
+    // Handle primitive scalar types
+    if (is_string($data)) {
+        return "'$data'";
+    }
+    if (is_int($data) || is_float($data)) {
+        return (string) $data;
+    }
+    if (is_bool($data)) {
+        return $data ? 'true' : 'false';
+    }
+
+    // Handle arrays
+    if (!is_array($data)) {
+        return "''";  // Fallback
+    }
+
     if ($isArrayOfItems && isset($data[0]) && is_array($data[0])) {
         $innerCode = mockDataToCode($data[0], false);
         return '[' . $innerCode . ']';
     }
 
+    // Handle primitive arrays (e.g., ['item1', 'item2'])
+    if (isset($data[0]) && !is_array($data[0])) {
+        $items = [];
+        foreach ($data as $value) {
+            if (is_string($value)) {
+                $items[] = "'$value'";
+            } elseif (is_int($value) || is_float($value)) {
+                $items[] = (string) $value;
+            } elseif (is_bool($value)) {
+                $items[] = $value ? 'true' : 'false';
+            }
+        }
+        return '[' . implode(', ', $items) . ']';
+    }
+
+    // Handle associative arrays (model data)
     $parts = [];
     foreach ($data as $key => $value) {
         if ($value === null) {
@@ -864,26 +890,42 @@ function generateMethodTest(
     $modelClass = null;
     $mockData = ['status' => 'ok'];
     $canAssertResponse = false;
+    $primitiveType = null;
 
     if ($successType !== null && !$needsBinaryResponse && !$needsTextResponse) {
         if (str_contains($successType, '\\') && modelHasHydrate($successType)) {
             $modelClass = $successType;
             $mockData = getModelMockData($successType);
             $canAssertResponse = true;
+        } elseif (in_array($successType, ['string', 'int', 'float', 'bool'], true)) {
+            // Handle primitive scalar return types
+            $primitiveType = $successType;
+            $mockData = match($successType) {
+                'string' => 'test-response-value',
+                'int' => 42,
+                'float' => 3.14,
+                'bool' => true,
+            };
+            $canAssertResponse = true;
         }
     }
 
     // For array returns without a model class, try to extract element type from docblock
-    if ($isArrayReturn && $modelClass === null) {
+    if ($isArrayReturn && $modelClass === null && $primitiveType === null) {
         $elementType = extractArrayElementType($method);
         if ($elementType !== null && class_exists($elementType) && modelHasHydrate($elementType)) {
             $modelClass = $elementType;
             $mockData = getModelMockData($elementType);
             $canAssertResponse = true;
+        } else {
+            // For primitive arrays (string[], int[], etc.), set appropriate mock data
+            $primitiveType = 'array';
+            $mockData = ['item1', 'item2', 'item3'];
+            $canAssertResponse = true;
         }
     }
 
-    if ($isArrayReturn) {
+    if ($isArrayReturn && $primitiveType !== 'array') {
         $mockData = [$mockData];
     }
 
@@ -972,10 +1014,22 @@ function generateMethodTest(
                 $test->addBody('$this->assertNotEmpty($result);');
                 $test->addBody(sprintf('$this->assertInstanceOf(\\%s::class, $result[0]);', $modelClass));
             }
+        } elseif ($primitiveType !== null) {
+            // Handle primitive scalar return types
+            $assertion = match($primitiveType) {
+                'string' => 'assertIsString',
+                'int' => 'assertIsInt',
+                'float' => 'assertIsFloat',
+                'bool' => 'assertIsBool',
+                default => null,
+            };
+            if ($assertion !== null) {
+                $test->addBody(sprintf('$this->%s($result);', $assertion));
+            }
         } elseif ($modelClass !== null) {
             $test->addBody(sprintf('$this->assertInstanceOf(\\%s::class, $result);', $modelClass));
         }
     }
 
-    return $isVoidResponse ? 'void' : ($modelClass ?? 'ok');
+    return $isVoidResponse ? 'void' : ($modelClass ?? ($primitiveType ?? 'ok'));
 }

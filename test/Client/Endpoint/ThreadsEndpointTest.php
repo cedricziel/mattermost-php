@@ -54,6 +54,23 @@ class ThreadsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function getThreadMentionCountsByChannelBuildsCorrectRequest(): void
+    {
+        $this->mockEmptyResponse(200);
+
+        $user_id = 'test-user_id';
+        $team_id = 'test-team_id';
+
+        $result = $this->endpoint->getThreadMentionCountsByChannel($user_id, $team_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/mention_counts');
+        $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
+    }
+
+    #[Test]
     public function updateThreadsReadForUserBuildsCorrectRequest(): void
     {
         $this->mockEmptyResponse(200);

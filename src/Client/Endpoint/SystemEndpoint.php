@@ -39,8 +39,8 @@ class SystemEndpoint
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getSupportedTimezone(): \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse
-    {
+    public function getSupportedTimezone(
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -54,6 +54,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string[]';
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
         return $this->mapResponse($response, $map);
@@ -890,7 +891,7 @@ class SystemEndpoint
         ?int $page = 0,
         /** The number of logs per page. There is a maximum limit of 10000 logs per page. */
         ?string $logs_per_page = '10000',
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -906,6 +907,7 @@ class SystemEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string[]';
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
         return $this->mapResponse($response, $map);

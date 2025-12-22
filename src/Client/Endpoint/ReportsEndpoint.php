@@ -143,6 +143,7 @@ class ReportsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'float';
 
         return json_decode($response->getBody()->getContents(), true);
     }

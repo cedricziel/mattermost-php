@@ -176,7 +176,7 @@ class PlaybookRunsEndpoint
         ?string $search_term = null,
         /** The returned list will contain only the channels associated to a playbook run for which the given user is a participant. */
         ?string $participant_id = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\Default400Response|\CedricZiel\MattermostPhp\Client\Model\Default403Response|\CedricZiel\MattermostPhp\Client\Model\Default500Response {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -197,6 +197,7 @@ class PlaybookRunsEndpoint
         $response = $this->httpClient->sendRequest($request);
 
         $map = [];
+        $map[200] = 'string[]';
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\Default400Response::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\Default403Response::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\Default500Response::class;

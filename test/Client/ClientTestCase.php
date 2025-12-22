@@ -35,15 +35,15 @@ abstract class ClientTestCase extends TestCase
      * Add a mock response to the client.
      *
      * @param int $statusCode HTTP status code
-     * @param array|string $body Response body (array will be JSON-encoded)
+     * @param array|string|int|float|bool $body Response body (non-string values will be JSON-encoded)
      * @param array<string, string|string[]> $headers Response headers
      */
     protected function mockResponse(
         int $statusCode,
-        array|string $body = '',
+        array|string|int|float|bool $body = '',
         array $headers = []
     ): void {
-        if (is_array($body)) {
+        if (!is_string($body)) {
             $body = json_encode($body);
             if (!isset($headers['Content-Type'])) {
                 $headers['Content-Type'] = 'application/json';
@@ -57,10 +57,16 @@ abstract class ClientTestCase extends TestCase
 
     /**
      * Add a mock JSON response.
+     * Supports arrays (model data) and primitive types (string, int, float, bool).
+     * All values are JSON-encoded to produce valid JSON response body.
      */
-    protected function mockJsonResponse(int $statusCode, array $body): void
+    protected function mockJsonResponse(int $statusCode, array|string|int|float|bool $body): void
     {
-        $this->mockResponse($statusCode, $body, ['Content-Type' => 'application/json']);
+        // Always JSON-encode for JSON responses (strings become quoted, arrays become objects/arrays)
+        $jsonBody = json_encode($body);
+        $this->mockClient->addResponse(
+            new Response($statusCode, ['Content-Type' => 'application/json'], $jsonBody)
+        );
     }
 
     /**
