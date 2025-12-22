@@ -18,12 +18,11 @@ class ChannelStats
      */
     public static function hydrate(?array $data): ChannelStats
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_id: $data['channel_id'] ?? null,
             member_count: $data['member_count'] ?? null,
         );
-        return $object;
     }
 }

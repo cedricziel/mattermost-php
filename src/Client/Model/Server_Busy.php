@@ -20,12 +20,11 @@ class Server_Busy
      */
     public static function hydrate(?array $data): Server_Busy
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             busy: $data['busy'] ?? null,
             expires: $data['expires'] ?? null,
         );
-        return $object;
     }
 }

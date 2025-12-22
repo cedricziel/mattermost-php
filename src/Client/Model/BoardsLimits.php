@@ -18,12 +18,11 @@ class BoardsLimits
      */
     public static function hydrate(?array $data): BoardsLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             cards: $data['cards'] ?? null,
             views: $data['views'] ?? null,
         );
-        return $object;
     }
 }

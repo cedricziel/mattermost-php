@@ -37,9 +37,9 @@ class EnvironmentConfig
      */
     public static function hydrate(?array $data): EnvironmentConfig
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             ServiceSettings: isset($data['ServiceSettings']) ? (object) $data['ServiceSettings'] : null,
             TeamSettings: isset($data['TeamSettings']) ? (object) $data['TeamSettings'] : null,
             SqlSettings: isset($data['SqlSettings']) ? (object) $data['SqlSettings'] : null,
@@ -62,6 +62,5 @@ class EnvironmentConfig
             MetricsSettings: isset($data['MetricsSettings']) ? (object) $data['MetricsSettings'] : null,
             AnalyticsSettings: isset($data['AnalyticsSettings']) ? (object) $data['AnalyticsSettings'] : null,
         );
-        return $object;
     }
 }

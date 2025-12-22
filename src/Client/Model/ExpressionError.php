@@ -24,14 +24,13 @@ class ExpressionError
      */
     public static function hydrate(?array $data): ExpressionError
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             message: $data['message'] ?? null,
             field: $data['field'] ?? null,
             line: $data['line'] ?? null,
             column: $data['column'] ?? null,
         );
-        return $object;
     }
 }

@@ -18,11 +18,10 @@ class VisualExpression
      */
     public static function hydrate(?array $data): VisualExpression
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             conditions: $data['conditions'] ?? null,
         );
-        return $object;
     }
 }

@@ -15,10 +15,9 @@ class DefaultTooManyRequestsResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultTooManyRequestsResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

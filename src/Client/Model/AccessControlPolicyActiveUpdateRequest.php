@@ -17,11 +17,10 @@ class AccessControlPolicyActiveUpdateRequest
      */
     public static function hydrate(?array $data): AccessControlPolicyActiveUpdateRequest
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             entries: $data['entries'] ?? null,
         );
-        return $object;
     }
 }

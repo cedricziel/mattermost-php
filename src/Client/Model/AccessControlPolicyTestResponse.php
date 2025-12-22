@@ -20,12 +20,11 @@ class AccessControlPolicyTestResponse
      */
     public static function hydrate(?array $data): AccessControlPolicyTestResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             users: $data['users'] ?? null,
             total_count: $data['total_count'] ?? null,
         );
-        return $object;
     }
 }

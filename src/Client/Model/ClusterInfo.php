@@ -17,11 +17,10 @@ class ClusterInfo
      */
     public static function hydrate(?array $data): ClusterInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             items: isset($data['items']) ? (object) $data['items'] : null,
         );
-        return $object;
     }
 }

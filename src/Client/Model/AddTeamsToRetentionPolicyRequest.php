@@ -15,11 +15,6 @@ class AddTeamsToRetentionPolicyRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return array_map(function ($item) {
-            if ($item instanceof \JsonSerializable) {
-              return $item->jsonSerialize();
-            }
-            return $item;
-        }, $this->items);
+        return array_map(fn(mixed $item): mixed => $item instanceof \JsonSerializable ? $item->jsonSerialize() : $item, $this->items);
     }
 }

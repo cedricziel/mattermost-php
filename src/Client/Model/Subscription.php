@@ -25,9 +25,9 @@ class Subscription
      */
     public static function hydrate(?array $data): Subscription
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             customer_id: $data['customer_id'] ?? null,
             product_id: $data['product_id'] ?? null,
@@ -38,6 +38,5 @@ class Subscription
             seats: $data['seats'] ?? null,
             dns: $data['dns'] ?? null,
         );
-        return $object;
     }
 }

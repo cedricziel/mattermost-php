@@ -19,12 +19,11 @@ class AccessControlPoliciesWithCount
      */
     public static function hydrate(?array $data): AccessControlPoliciesWithCount
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             policies: $data['policies'] ?? null,
             total_count: $data['total_count'] ?? null,
         );
-        return $object;
     }
 }

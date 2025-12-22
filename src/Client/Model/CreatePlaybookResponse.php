@@ -17,11 +17,10 @@ class CreatePlaybookResponse
      */
     public static function hydrate(?array $data): CreatePlaybookResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
         );
-        return $object;
     }
 }

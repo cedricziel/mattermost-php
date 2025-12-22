@@ -31,9 +31,9 @@ class MarketplacePlugin
      */
     public static function hydrate(?array $data): MarketplacePlugin
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             homepage_url: $data['homepage_url'] ?? null,
             icon_data: $data['icon_data'] ?? null,
             download_url: $data['download_url'] ?? null,
@@ -43,6 +43,5 @@ class MarketplacePlugin
             manifest: $data['manifest'] ?? null,
             installed_version: $data['installed_version'] ?? null,
         );
-        return $object;
     }
 }

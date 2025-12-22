@@ -18,11 +18,10 @@ class GetDataRetentionPoliciesCountResponse
      */
     public static function hydrate(?array $data): GetDataRetentionPoliciesCountResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             total_count: $data['total_count'] ?? null,
         );
-        return $object;
     }
 }

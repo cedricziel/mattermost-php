@@ -47,9 +47,9 @@ class PostMetadata
      */
     public static function hydrate(?array $data): PostMetadata
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             embeds: $data['embeds'] ?? null,
             emojis: $data['emojis'] ?? null,
             files: $data['files'] ?? null,
@@ -58,6 +58,5 @@ class PostMetadata
             priority: isset($data['priority']) ? (object) $data['priority'] : null,
             acknowledgements: $data['acknowledgements'] ?? null,
         );
-        return $object;
     }
 }

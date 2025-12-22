@@ -24,14 +24,13 @@ class EventTargetMapping
      */
     public static function hydrate(?array $data): EventTargetMapping
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             assigned: $data['assigned'] ?? null,
             dismissed: $data['dismissed'] ?? null,
             flagged: $data['flagged'] ?? null,
             removed: $data['removed'] ?? null,
         );
-        return $object;
     }
 }

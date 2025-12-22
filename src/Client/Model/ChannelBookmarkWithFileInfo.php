@@ -33,9 +33,9 @@ class ChannelBookmarkWithFileInfo extends ChannelBookmark
      */
     public static function hydrate(?array $data): ChannelBookmarkWithFileInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -53,6 +53,5 @@ class ChannelBookmarkWithFileInfo extends ChannelBookmark
             parent_id: $data['parent_id'] ?? null,
             file: isset($data['file']) ? FileInfo::hydrate($data['file']) : null,
         );
-        return $object;
     }
 }

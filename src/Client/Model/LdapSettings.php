@@ -51,9 +51,9 @@ class LdapSettings
      */
     public static function hydrate(?array $data): LdapSettings
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             Enable: $data['Enable'] ?? null,
             EnableSync: $data['EnableSync'] ?? null,
             LdapServer: $data['LdapServer'] ?? null,
@@ -90,6 +90,5 @@ class LdapSettings
             LoginButtonBorderColor: $data['LoginButtonBorderColor'] ?? null,
             LoginButtonTextColor: $data['LoginButtonTextColor'] ?? null,
         );
-        return $object;
     }
 }

@@ -22,13 +22,12 @@ class RemoteClusterInfo
      */
     public static function hydrate(?array $data): RemoteClusterInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             display_name: $data['display_name'] ?? null,
             create_at: $data['create_at'] ?? null,
             last_ping_at: $data['last_ping_at'] ?? null,
         );
-        return $object;
     }
 }

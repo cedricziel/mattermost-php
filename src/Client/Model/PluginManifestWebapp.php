@@ -21,13 +21,12 @@ class PluginManifestWebapp
      */
     public static function hydrate(?array $data): PluginManifestWebapp
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             version: $data['version'] ?? null,
             webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
         );
-        return $object;
     }
 }

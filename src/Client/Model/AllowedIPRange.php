@@ -20,12 +20,11 @@ class AllowedIPRange
      */
     public static function hydrate(?array $data): AllowedIPRange
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             CIDRBlock: $data['CIDRBlock'] ?? null,
             Description: $data['Description'] ?? null,
         );
-        return $object;
     }
 }

@@ -24,14 +24,13 @@ class ChannelNotifyProps
      */
     public static function hydrate(?array $data): ChannelNotifyProps
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             email: $data['email'] ?? null,
             push: $data['push'] ?? null,
             desktop: $data['desktop'] ?? null,
             mark_unread: $data['mark_unread'] ?? null,
         );
-        return $object;
     }
 }

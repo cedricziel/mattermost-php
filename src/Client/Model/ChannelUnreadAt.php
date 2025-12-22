@@ -26,15 +26,14 @@ class ChannelUnreadAt
      */
     public static function hydrate(?array $data): ChannelUnreadAt
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
             channel_id: $data['channel_id'] ?? null,
             msg_count: $data['msg_count'] ?? null,
             mention_count: $data['mention_count'] ?? null,
             last_viewed_at: $data['last_viewed_at'] ?? null,
         );
-        return $object;
     }
 }

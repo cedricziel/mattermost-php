@@ -20,12 +20,11 @@ class UserAuthData
      */
     public static function hydrate(?array $data): UserAuthData
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             auth_data: $data['auth_data'] ?? null,
             auth_service: $data['auth_service'] ?? null,
         );
-        return $object;
     }
 }

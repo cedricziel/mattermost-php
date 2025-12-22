@@ -26,9 +26,9 @@ class NewTeamMember
      */
     public static function hydrate(?array $data): NewTeamMember
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             username: $data['username'] ?? null,
             first_name: $data['first_name'] ?? null,
@@ -37,6 +37,5 @@ class NewTeamMember
             position: $data['position'] ?? null,
             create_at: $data['create_at'] ?? null,
         );
-        return $object;
     }
 }

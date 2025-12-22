@@ -17,11 +17,10 @@ class AccessControlFieldsAutocompleteResponse
      */
     public static function hydrate(?array $data): AccessControlFieldsAutocompleteResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             fields: $data['fields'] ?? null,
         );
-        return $object;
     }
 }

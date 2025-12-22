@@ -36,9 +36,9 @@ class PluginManifest
      */
     public static function hydrate(?array $data): PluginManifest
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             description: $data['description'] ?? null,
@@ -49,6 +49,5 @@ class PluginManifest
             webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
             settings_schema: isset($data['settings_schema']) ? (object) $data['settings_schema'] : null,
         );
-        return $object;
     }
 }

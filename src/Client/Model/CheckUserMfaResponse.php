@@ -18,11 +18,10 @@ class CheckUserMfaResponse
      */
     public static function hydrate(?array $data): CheckUserMfaResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             mfa_required: $data['mfa_required'] ?? null,
         );
-        return $object;
     }
 }

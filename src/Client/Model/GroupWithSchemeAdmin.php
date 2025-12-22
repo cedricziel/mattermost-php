@@ -21,12 +21,11 @@ class GroupWithSchemeAdmin
      */
     public static function hydrate(?array $data): GroupWithSchemeAdmin
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             group: $data['group'] ?? null,
             scheme_admin: $data['scheme_admin'] ?? null,
         );
-        return $object;
     }
 }

@@ -28,9 +28,9 @@ class LdapDiagnosticResult
      */
     public static function hydrate(?array $data): LdapDiagnosticResult
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             test_name: $data['test_name'] ?? null,
             test_value: $data['test_value'] ?? null,
             total_count: $data['total_count'] ?? null,
@@ -38,6 +38,5 @@ class LdapDiagnosticResult
             error: $data['error'] ?? null,
             sample_results: $data['sample_results'] ?? null,
         );
-        return $object;
     }
 }

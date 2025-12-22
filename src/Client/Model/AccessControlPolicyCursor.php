@@ -18,11 +18,10 @@ class AccessControlPolicyCursor
      */
     public static function hydrate(?array $data): AccessControlPolicyCursor
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
         );
-        return $object;
     }
 }

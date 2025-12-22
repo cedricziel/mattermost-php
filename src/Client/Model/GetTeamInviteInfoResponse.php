@@ -20,14 +20,13 @@ class GetTeamInviteInfoResponse
      */
     public static function hydrate(?array $data): GetTeamInviteInfoResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             display_name: $data['display_name'] ?? null,
             description: $data['description'] ?? null,
         );
-        return $object;
     }
 }

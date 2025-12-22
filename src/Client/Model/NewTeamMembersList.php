@@ -22,13 +22,12 @@ class NewTeamMembersList
      */
     public static function hydrate(?array $data): NewTeamMembersList
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             has_next: $data['has_next'] ?? null,
             items: $data['items'] ?? null,
             total_count: $data['total_count'] ?? null,
         );
-        return $object;
     }
 }

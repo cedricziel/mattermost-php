@@ -24,15 +24,14 @@ class DataRetentionPolicyWithTeamAndChannelCounts extends DataRetentionPolicy
      */
     public static function hydrate(?array $data): DataRetentionPolicyWithTeamAndChannelCounts
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             display_name: $data['display_name'] ?? null,
             post_duration: $data['post_duration'] ?? null,
             id: $data['id'] ?? null,
             team_count: $data['team_count'] ?? null,
             channel_count: $data['channel_count'] ?? null,
         );
-        return $object;
     }
 }

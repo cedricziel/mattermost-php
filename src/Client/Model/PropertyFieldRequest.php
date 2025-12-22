@@ -22,13 +22,12 @@ class PropertyFieldRequest
      */
     public static function hydrate(?array $data): PropertyFieldRequest
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             name: $data['name'] ?? null,
             type: $data['type'] ?? null,
             attrs: isset($data['attrs']) ? (object) $data['attrs'] : null,
         );
-        return $object;
     }
 }

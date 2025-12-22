@@ -22,12 +22,11 @@ class DataRetentionPolicyWithoutId
      */
     public static function hydrate(?array $data): DataRetentionPolicyWithoutId
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             display_name: $data['display_name'] ?? null,
             post_duration: $data['post_duration'] ?? null,
         );
-        return $object;
     }
 }

@@ -23,12 +23,11 @@ class OrphanedRecord
      */
     public static function hydrate(?array $data): OrphanedRecord
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             parent_id: $data['parent_id'] ?? null,
             child_id: $data['child_id'] ?? null,
         );
-        return $object;
     }
 }

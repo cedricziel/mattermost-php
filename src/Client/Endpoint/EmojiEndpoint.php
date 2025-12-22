@@ -57,12 +57,8 @@ class EmojiEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($image !== null) {
-            $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
-        }
-        if ($emoji !== null) {
-            $multipartFields['emoji'] = $emoji;
-        }
+        $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
+        $multipartFields['emoji'] = $emoji;
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);

@@ -31,9 +31,9 @@ class ChannelMemberWithTeamData extends ChannelMember
      */
     public static function hydrate(?array $data): ChannelMemberWithTeamData
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_id: $data['channel_id'] ?? null,
             user_id: $data['user_id'] ?? null,
             roles: $data['roles'] ?? null,
@@ -46,6 +46,5 @@ class ChannelMemberWithTeamData extends ChannelMember
             team_name: $data['team_name'] ?? null,
             team_update_at: $data['team_update_at'] ?? null,
         );
-        return $object;
     }
 }

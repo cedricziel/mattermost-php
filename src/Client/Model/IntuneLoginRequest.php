@@ -23,12 +23,11 @@ class IntuneLoginRequest
      */
     public static function hydrate(?array $data): IntuneLoginRequest
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             access_token: $data['access_token'] ?? null,
             device_id: $data['device_id'] ?? null,
         );
-        return $object;
     }
 }

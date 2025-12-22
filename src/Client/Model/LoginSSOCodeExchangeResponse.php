@@ -20,12 +20,11 @@ class LoginSSOCodeExchangeResponse
      */
     public static function hydrate(?array $data): LoginSSOCodeExchangeResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             token: $data['token'] ?? null,
             csrf: $data['csrf'] ?? null,
         );
-        return $object;
     }
 }

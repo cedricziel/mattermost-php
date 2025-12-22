@@ -18,11 +18,10 @@ class RewriteMessageResponse
      */
     public static function hydrate(?array $data): RewriteMessageResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             rewritten_text: $data['rewritten_text'] ?? null,
         );
-        return $object;
     }
 }

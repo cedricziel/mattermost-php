@@ -45,9 +45,9 @@ class UserReport
      */
     public static function hydrate(?array $data): UserReport
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -70,6 +70,5 @@ class UserReport
             days_active: $data['days_active'] ?? null,
             total_posts: $data['total_posts'] ?? null,
         );
-        return $object;
     }
 }

@@ -18,11 +18,10 @@ class LookupInteractiveDialogResponse
      */
     public static function hydrate(?array $data): LookupInteractiveDialogResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             options: $data['options'] ?? null,
         );
-        return $object;
     }
 }

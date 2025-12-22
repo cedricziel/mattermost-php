@@ -17,11 +17,10 @@ class TeamsLimits
      */
     public static function hydrate(?array $data): TeamsLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             active: $data['active'] ?? null,
         );
-        return $object;
     }
 }

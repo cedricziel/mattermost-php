@@ -24,13 +24,12 @@ class CreateRemoteClusterResponse
      */
     public static function hydrate(?array $data): CreateRemoteClusterResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             remote_cluster: $data['remote_cluster'] ?? null,
             invite: $data['invite'] ?? null,
             password: $data['password'] ?? null,
         );
-        return $object;
     }
 }

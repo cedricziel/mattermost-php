@@ -15,10 +15,9 @@ class Default500Response extends Error
      */
     public static function hydrate(?array $data): Default500Response
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

@@ -36,9 +36,9 @@ class SystemStatusResponse
      */
     public static function hydrate(?array $data): SystemStatusResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             AndroidLatestVersion: $data['AndroidLatestVersion'] ?? null,
             AndroidMinVersion: $data['AndroidMinVersion'] ?? null,
             DesktopLatestVersion: $data['DesktopLatestVersion'] ?? null,
@@ -50,6 +50,5 @@ class SystemStatusResponse
             status: $data['status'] ?? null,
             CanReceiveNotifications: $data['CanReceiveNotifications'] ?? null,
         );
-        return $object;
     }
 }

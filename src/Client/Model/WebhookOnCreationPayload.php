@@ -36,9 +36,9 @@ class WebhookOnCreationPayload extends PlaybookRun
      */
     public static function hydrate(?array $data): WebhookOnCreationPayload
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             description: $data['description'] ?? null,
@@ -57,6 +57,5 @@ class WebhookOnCreationPayload extends PlaybookRun
             channel_url: $data['channel_url'] ?? null,
             details_url: $data['details_url'] ?? null,
         );
-        return $object;
     }
 }

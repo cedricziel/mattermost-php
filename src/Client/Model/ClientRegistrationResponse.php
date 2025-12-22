@@ -37,9 +37,9 @@ class ClientRegistrationResponse
      */
     public static function hydrate(?array $data): ClientRegistrationResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             client_id: $data['client_id'] ?? null,
             client_secret: $data['client_secret'] ?? null,
             redirect_uris: $data['redirect_uris'] ?? null,
@@ -50,6 +50,5 @@ class ClientRegistrationResponse
             client_name: $data['client_name'] ?? null,
             client_uri: $data['client_uri'] ?? null,
         );
-        return $object;
     }
 }

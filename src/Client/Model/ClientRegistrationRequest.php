@@ -25,13 +25,12 @@ class ClientRegistrationRequest
      */
     public static function hydrate(?array $data): ClientRegistrationRequest
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             redirect_uris: $data['redirect_uris'] ?? null,
             client_name: $data['client_name'] ?? null,
             client_uri: $data['client_uri'] ?? null,
         );
-        return $object;
     }
 }

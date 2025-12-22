@@ -37,9 +37,9 @@ class SharedChannel
      */
     public static function hydrate(?array $data): SharedChannel
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             team_id: $data['team_id'] ?? null,
             home: $data['home'] ?? null,
@@ -53,6 +53,5 @@ class SharedChannel
             update_at: $data['update_at'] ?? null,
             remote_id: $data['remote_id'] ?? null,
         );
-        return $object;
     }
 }

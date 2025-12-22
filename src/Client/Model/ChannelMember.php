@@ -26,9 +26,9 @@ class ChannelMember
      */
     public static function hydrate(?array $data): ChannelMember
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_id: $data['channel_id'] ?? null,
             user_id: $data['user_id'] ?? null,
             roles: $data['roles'] ?? null,
@@ -38,6 +38,5 @@ class ChannelMember
             notify_props: $data['notify_props'] ?? null,
             last_update_at: $data['last_update_at'] ?? null,
         );
-        return $object;
     }
 }

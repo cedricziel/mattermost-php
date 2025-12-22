@@ -25,13 +25,12 @@ class ChannelMemberCountByGroup
      */
     public static function hydrate(?array $data): ChannelMemberCountByGroup
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             group_id: $data['group_id'] ?? null,
             channel_member_count: $data['channel_member_count'] ?? null,
             channel_member_timezones_count: $data['channel_member_timezones_count'] ?? null,
         );
-        return $object;
     }
 }

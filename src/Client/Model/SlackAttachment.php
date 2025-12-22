@@ -33,9 +33,9 @@ class SlackAttachment
      */
     public static function hydrate(?array $data): SlackAttachment
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             Id: $data['Id'] ?? null,
             Fallback: $data['Fallback'] ?? null,
             Color: $data['Color'] ?? null,
@@ -53,6 +53,5 @@ class SlackAttachment
             FooterIcon: $data['FooterIcon'] ?? null,
             Timestamp: $data['Timestamp'] ?? null,
         );
-        return $object;
     }
 }

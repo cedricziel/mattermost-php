@@ -18,11 +18,10 @@ class CanUserDirectMessageResponse
      */
     public static function hydrate(?array $data): CanUserDirectMessageResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             can_dm: $data['can_dm'] ?? null,
         );
-        return $object;
     }
 }

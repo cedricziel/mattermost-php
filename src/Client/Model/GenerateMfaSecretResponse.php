@@ -20,12 +20,11 @@ class GenerateMfaSecretResponse
      */
     public static function hydrate(?array $data): GenerateMfaSecretResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             secret: $data['secret'] ?? null,
             qr_code: $data['qr_code'] ?? null,
         );
-        return $object;
     }
 }

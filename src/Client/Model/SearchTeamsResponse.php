@@ -20,12 +20,11 @@ class SearchTeamsResponse
      */
     public static function hydrate(?array $data): SearchTeamsResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             teams: $data['teams'] ?? null,
             total_count: $data['total_count'] ?? null,
         );
-        return $object;
     }
 }

@@ -32,9 +32,9 @@ class Job
      */
     public static function hydrate(?array $data): Job
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             type: $data['type'] ?? null,
             create_at: $data['create_at'] ?? null,
@@ -44,6 +44,5 @@ class Job
             progress: $data['progress'] ?? null,
             data: isset($data['data']) ? (object) $data['data'] : null,
         );
-        return $object;
     }
 }

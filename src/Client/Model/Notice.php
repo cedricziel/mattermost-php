@@ -37,9 +37,9 @@ class Notice
      */
     public static function hydrate(?array $data): Notice
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             sysAdminOnly: $data['sysAdminOnly'] ?? null,
             teamAdminOnly: $data['teamAdminOnly'] ?? null,
@@ -50,6 +50,5 @@ class Notice
             image: $data['image'] ?? null,
             title: $data['title'] ?? null,
         );
-        return $object;
     }
 }

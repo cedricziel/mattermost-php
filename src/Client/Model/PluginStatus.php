@@ -30,9 +30,9 @@ class PluginStatus
      */
     public static function hydrate(?array $data): PluginStatus
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             plugin_id: $data['plugin_id'] ?? null,
             name: $data['name'] ?? null,
             description: $data['description'] ?? null,
@@ -41,6 +41,5 @@ class PluginStatus
             plugin_path: $data['plugin_path'] ?? null,
             state: $data['state'] ?? null,
         );
-        return $object;
     }
 }

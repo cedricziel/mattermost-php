@@ -37,9 +37,9 @@ class AuthorizationServerMetadata
      */
     public static function hydrate(?array $data): AuthorizationServerMetadata
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             issuer: $data['issuer'] ?? null,
             authorization_endpoint: $data['authorization_endpoint'] ?? null,
             token_endpoint: $data['token_endpoint'] ?? null,
@@ -50,6 +50,5 @@ class AuthorizationServerMetadata
             token_endpoint_auth_methods_supported: $data['token_endpoint_auth_methods_supported'] ?? null,
             code_challenge_methods_supported: $data['code_challenge_methods_supported'] ?? null,
         );
-        return $object;
     }
 }

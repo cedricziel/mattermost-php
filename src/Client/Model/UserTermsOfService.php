@@ -22,13 +22,12 @@ class UserTermsOfService
      */
     public static function hydrate(?array $data): UserTermsOfService
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             terms_of_service_id: $data['terms_of_service_id'] ?? null,
             create_at: $data['create_at'] ?? null,
         );
-        return $object;
     }
 }

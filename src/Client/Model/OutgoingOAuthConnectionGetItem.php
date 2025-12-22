@@ -28,9 +28,9 @@ class OutgoingOAuthConnectionGetItem
      */
     public static function hydrate(?array $data): OutgoingOAuthConnectionGetItem
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             create_at: $data['create_at'] ?? null,
@@ -38,6 +38,5 @@ class OutgoingOAuthConnectionGetItem
             grant_type: $data['grant_type'] ?? null,
             audiences: $data['audiences'] ?? null,
         );
-        return $object;
     }
 }

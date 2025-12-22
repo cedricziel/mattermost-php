@@ -17,11 +17,10 @@ class FilesLimits
      */
     public static function hydrate(?array $data): FilesLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             total_storage: $data['total_storage'] ?? null,
         );
-        return $object;
     }
 }

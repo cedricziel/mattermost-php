@@ -18,11 +18,10 @@ class TriggerIdReturn
      */
     public static function hydrate(?array $data): TriggerIdReturn
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             trigger_id: $data['trigger_id'] ?? null,
         );
-        return $object;
     }
 }

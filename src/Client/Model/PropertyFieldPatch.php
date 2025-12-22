@@ -21,15 +21,14 @@ class PropertyFieldPatch
      */
     public static function hydrate(?array $data): PropertyFieldPatch
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             name: $data['name'] ?? null,
             type: $data['type'] ?? null,
             attrs: isset($data['attrs']) ? (object) $data['attrs'] : null,
             target_id: $data['target_id'] ?? null,
             target_type: $data['target_type'] ?? null,
         );
-        return $object;
     }
 }

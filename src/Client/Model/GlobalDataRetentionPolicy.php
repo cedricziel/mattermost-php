@@ -24,14 +24,13 @@ class GlobalDataRetentionPolicy
      */
     public static function hydrate(?array $data): GlobalDataRetentionPolicy
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             message_deletion_enabled: $data['message_deletion_enabled'] ?? null,
             file_deletion_enabled: $data['file_deletion_enabled'] ?? null,
             message_retention_cutoff: $data['message_retention_cutoff'] ?? null,
             file_retention_cutoff: $data['file_retention_cutoff'] ?? null,
         );
-        return $object;
     }
 }

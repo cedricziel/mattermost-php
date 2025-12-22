@@ -28,9 +28,9 @@ class PropertyValue
      */
     public static function hydrate(?array $data): PropertyValue
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             field_id: $data['field_id'] ?? null,
             value: $data['value'] ?? null,
@@ -38,6 +38,5 @@ class PropertyValue
             update_at: $data['update_at'] ?? null,
             delete_at: $data['delete_at'] ?? null,
         );
-        return $object;
     }
 }

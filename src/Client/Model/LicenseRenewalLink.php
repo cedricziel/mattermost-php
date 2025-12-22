@@ -18,11 +18,10 @@ class LicenseRenewalLink
      */
     public static function hydrate(?array $data): LicenseRenewalLink
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             renewal_link: $data['renewal_link'] ?? null,
         );
-        return $object;
     }
 }

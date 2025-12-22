@@ -22,13 +22,12 @@ class Checklist
      */
     public static function hydrate(?array $data): Checklist
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             title: $data['title'] ?? null,
             items: $data['items'] ?? null,
         );
-        return $object;
     }
 }

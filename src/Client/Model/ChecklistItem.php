@@ -48,9 +48,9 @@ class ChecklistItem
      */
     public static function hydrate(?array $data): ChecklistItem
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             title: $data['title'] ?? null,
             state: $data['state'] ?? null,
@@ -68,6 +68,5 @@ class ChecklistItem
             condition_action: $data['condition_action'] ?? null,
             condition_reason: $data['condition_reason'] ?? null,
         );
-        return $object;
     }
 }

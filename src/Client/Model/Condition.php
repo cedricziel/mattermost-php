@@ -29,9 +29,9 @@ class Condition
      */
     public static function hydrate(?array $data): Condition
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             condition_expr: $data['condition_expr'] ?? null,
             version: $data['version'] ?? null,
@@ -40,6 +40,5 @@ class Condition
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
         );
-        return $object;
     }
 }

@@ -25,14 +25,13 @@ class ConditionExprV1
      */
     public static function hydrate(?array $data): ConditionExprV1
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             and: $data['and'] ?? null,
             or: $data['or'] ?? null,
             is: $data['is'] ?? null,
             isNot: $data['isNot'] ?? null,
         );
-        return $object;
     }
 }

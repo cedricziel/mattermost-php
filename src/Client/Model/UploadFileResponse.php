@@ -20,12 +20,11 @@ class UploadFileResponse
      */
     public static function hydrate(?array $data): UploadFileResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             file_infos: $data['file_infos'] ?? null,
             client_ids: $data['client_ids'] ?? null,
         );
-        return $object;
     }
 }

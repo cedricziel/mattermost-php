@@ -24,14 +24,13 @@ class UserAccessTokenSanitized
      */
     public static function hydrate(?array $data): UserAccessTokenSanitized
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             user_id: $data['user_id'] ?? null,
             description: $data['description'] ?? null,
             is_active: $data['is_active'] ?? null,
         );
-        return $object;
     }
 }

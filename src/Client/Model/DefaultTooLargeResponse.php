@@ -15,10 +15,9 @@ class DefaultTooLargeResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultTooLargeResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

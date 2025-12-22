@@ -18,12 +18,11 @@ class ChannelModeratedRole
      */
     public static function hydrate(?array $data): ChannelModeratedRole
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             value: $data['value'] ?? null,
             enabled: $data['enabled'] ?? null,
         );
-        return $object;
     }
 }

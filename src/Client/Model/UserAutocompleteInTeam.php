@@ -18,11 +18,10 @@ class UserAutocompleteInTeam
      */
     public static function hydrate(?array $data): UserAutocompleteInTeam
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             in_team: $data['in_team'] ?? null,
         );
-        return $object;
     }
 }

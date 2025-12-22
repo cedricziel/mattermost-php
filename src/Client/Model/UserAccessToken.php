@@ -24,14 +24,13 @@ class UserAccessToken
      */
     public static function hydrate(?array $data): UserAccessToken
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             token: $data['token'] ?? null,
             user_id: $data['user_id'] ?? null,
             description: $data['description'] ?? null,
         );
-        return $object;
     }
 }

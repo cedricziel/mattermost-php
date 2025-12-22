@@ -15,10 +15,9 @@ class DefaultUnauthorizedResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultUnauthorizedResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

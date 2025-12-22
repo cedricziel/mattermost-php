@@ -22,9 +22,9 @@ class PaymentMethod
      */
     public static function hydrate(?array $data): PaymentMethod
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             type: $data['type'] ?? null,
             last_four: $data['last_four'] ?? null,
             exp_month: $data['exp_month'] ?? null,
@@ -32,6 +32,5 @@ class PaymentMethod
             card_brand: $data['card_brand'] ?? null,
             name: $data['name'] ?? null,
         );
-        return $object;
     }
 }

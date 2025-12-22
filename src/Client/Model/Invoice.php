@@ -26,9 +26,9 @@ class Invoice
      */
     public static function hydrate(?array $data): Invoice
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             number: $data['number'] ?? null,
             create_at: $data['create_at'] ?? null,
@@ -40,6 +40,5 @@ class Invoice
             subscription_id: $data['subscription_id'] ?? null,
             item: $data['item'] ?? null,
         );
-        return $object;
     }
 }

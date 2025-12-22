@@ -18,11 +18,10 @@ class GetLicenseLoadMetricResponse
      */
     public static function hydrate(?array $data): GetLicenseLoadMetricResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             load: $data['load'] ?? null,
         );
-        return $object;
     }
 }

@@ -22,14 +22,13 @@ class FileInfoList
      */
     public static function hydrate(?array $data): FileInfoList
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             order: $data['order'] ?? null,
             file_infos: isset($data['file_infos']) ? (object) $data['file_infos'] : null,
             next_file_id: $data['next_file_id'] ?? null,
             prev_file_id: $data['prev_file_id'] ?? null,
         );
-        return $object;
     }
 }

@@ -26,15 +26,14 @@ class PlaybookRunMetadata
      */
     public static function hydrate(?array $data): PlaybookRunMetadata
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_name: $data['channel_name'] ?? null,
             channel_display_name: $data['channel_display_name'] ?? null,
             team_name: $data['team_name'] ?? null,
             num_members: $data['num_members'] ?? null,
             total_posts: $data['total_posts'] ?? null,
         );
-        return $object;
     }
 }

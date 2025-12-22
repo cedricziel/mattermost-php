@@ -18,11 +18,10 @@ class ValidateExpressionAgainstRequesterResponse
      */
     public static function hydrate(?array $data): ValidateExpressionAgainstRequesterResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             requester_matches: $data['requester_matches'] ?? null,
         );
-        return $object;
     }
 }

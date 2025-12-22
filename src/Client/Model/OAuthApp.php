@@ -36,9 +36,9 @@ class OAuthApp
      */
     public static function hydrate(?array $data): OAuthApp
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             client_secret: $data['client_secret'] ?? null,
             name: $data['name'] ?? null,
@@ -50,6 +50,5 @@ class OAuthApp
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
         );
-        return $object;
     }
 }

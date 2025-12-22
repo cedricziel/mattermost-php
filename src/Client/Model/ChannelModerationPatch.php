@@ -18,12 +18,11 @@ class ChannelModerationPatch
      */
     public static function hydrate(?array $data): ChannelModerationPatch
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             name: $data['name'] ?? null,
             roles: $data['roles'] ?? null,
         );
-        return $object;
     }
 }

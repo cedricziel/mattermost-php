@@ -15,10 +15,9 @@ class DefaultNotImplementedResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultNotImplementedResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

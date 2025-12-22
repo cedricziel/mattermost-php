@@ -7,7 +7,14 @@ namespace CedricZiel\MattermostPhp\Client\Model;
  */
 class GroupsAssociatedToChannels
 {
-    public function __construct()
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GroupsAssociatedToChannels The hydrated instance
+     */
+    public static function hydrate(?array $data): GroupsAssociatedToChannels
     {
+        return new self();
     }
 }

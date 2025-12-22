@@ -20,12 +20,11 @@ class TeamReviewerConfig
      */
     public static function hydrate(?array $data): TeamReviewerConfig
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             Enabled: $data['Enabled'] ?? null,
             ReviewerIds: $data['ReviewerIds'] ?? null,
         );
-        return $object;
     }
 }

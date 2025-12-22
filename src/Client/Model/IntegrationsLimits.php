@@ -17,11 +17,10 @@ class IntegrationsLimits
      */
     public static function hydrate(?array $data): IntegrationsLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             enabled: $data['enabled'] ?? null,
         );
-        return $object;
     }
 }

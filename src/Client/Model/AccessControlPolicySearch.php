@@ -31,9 +31,9 @@ class AccessControlPolicySearch
      */
     public static function hydrate(?array $data): AccessControlPolicySearch
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             term: $data['term'] ?? null,
             type: $data['type'] ?? null,
             parent_id: $data['parent_id'] ?? null,
@@ -43,6 +43,5 @@ class AccessControlPolicySearch
             cursor: $data['cursor'] ?? null,
             limit: $data['limit'] ?? null,
         );
-        return $object;
     }
 }

@@ -18,12 +18,11 @@ class PaymentSetupIntent
      */
     public static function hydrate(?array $data): PaymentSetupIntent
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             client_secret: $data['client_secret'] ?? null,
         );
-        return $object;
     }
 }

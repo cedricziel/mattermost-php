@@ -24,14 +24,13 @@ class AdditionalSettings
      */
     public static function hydrate(?array $data): AdditionalSettings
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             Reasons: $data['Reasons'] ?? null,
             ReporterCommentRequired: $data['ReporterCommentRequired'] ?? null,
             ReviewerCommentRequired: $data['ReviewerCommentRequired'] ?? null,
             HideFlaggedContent: $data['HideFlaggedContent'] ?? null,
         );
-        return $object;
     }
 }

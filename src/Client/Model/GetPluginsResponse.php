@@ -18,12 +18,11 @@ class GetPluginsResponse
      */
     public static function hydrate(?array $data): GetPluginsResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             active: $data['active'] ?? null,
             inactive: $data['inactive'] ?? null,
         );
-        return $object;
     }
 }

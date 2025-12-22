@@ -17,11 +17,10 @@ class TeamExists
      */
     public static function hydrate(?array $data): TeamExists
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             exists: $data['exists'] ?? null,
         );
-        return $object;
     }
 }

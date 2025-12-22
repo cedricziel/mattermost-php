@@ -20,14 +20,13 @@ class Status
      */
     public static function hydrate(?array $data): Status
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             status: $data['status'] ?? null,
             manual: $data['manual'] ?? null,
             last_activity_at: $data['last_activity_at'] ?? null,
         );
-        return $object;
     }
 }

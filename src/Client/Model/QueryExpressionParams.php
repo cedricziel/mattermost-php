@@ -26,15 +26,14 @@ class QueryExpressionParams
      */
     public static function hydrate(?array $data): QueryExpressionParams
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             expression: $data['expression'] ?? null,
             term: $data['term'] ?? null,
             limit: $data['limit'] ?? null,
             after: $data['after'] ?? null,
             channelId: $data['channelId'] ?? null,
         );
-        return $object;
     }
 }

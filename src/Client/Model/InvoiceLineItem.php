@@ -22,9 +22,9 @@ class InvoiceLineItem
      */
     public static function hydrate(?array $data): InvoiceLineItem
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             price_id: $data['price_id'] ?? null,
             total: $data['total'] ?? null,
             quantity: $data['quantity'] ?? null,
@@ -32,6 +32,5 @@ class InvoiceLineItem
             description: $data['description'] ?? null,
             metadata: $data['metadata'] ?? null,
         );
-        return $object;
     }
 }

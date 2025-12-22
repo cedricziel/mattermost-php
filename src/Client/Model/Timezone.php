@@ -22,13 +22,12 @@ class Timezone
      */
     public static function hydrate(?array $data): Timezone
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             useAutomaticTimezone: $data['useAutomaticTimezone'] ?? null,
             manualTimezone: $data['manualTimezone'] ?? null,
             automaticTimezone: $data['automaticTimezone'] ?? null,
         );
-        return $object;
     }
 }

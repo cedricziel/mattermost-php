@@ -20,13 +20,12 @@ class PostListWithSearchMatches
      */
     public static function hydrate(?array $data): PostListWithSearchMatches
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             order: $data['order'] ?? null,
             posts: isset($data['posts']) ? (object) $data['posts'] : null,
             matches: isset($data['matches']) ? (object) $data['matches'] : null,
         );
-        return $object;
     }
 }

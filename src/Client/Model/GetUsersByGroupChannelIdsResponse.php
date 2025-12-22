@@ -4,10 +4,6 @@ namespace CedricZiel\MattermostPhp\Client\Model;
 
 class GetUsersByGroupChannelIdsResponse
 {
-    public function __construct()
-    {
-    }
-
     /**
      * Hydrate a new instance from an array of data.
      *
@@ -16,11 +12,6 @@ class GetUsersByGroupChannelIdsResponse
      */
     public static function hydrate(?array $data): GetUsersByGroupChannelIdsResponse
     {
-        $data = $data ?? [];
-
-        $object = new self(
-
-        );
-        return $object;
+        return new self();
     }
 }

@@ -398,9 +398,7 @@ class BotsEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($image !== null) {
-            $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
-        }
+        $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);

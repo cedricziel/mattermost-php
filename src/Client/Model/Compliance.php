@@ -27,9 +27,9 @@ class Compliance
      */
     public static function hydrate(?array $data): Compliance
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             user_id: $data['user_id'] ?? null,
@@ -42,6 +42,5 @@ class Compliance
             keywords: $data['keywords'] ?? null,
             emails: $data['emails'] ?? null,
         );
-        return $object;
     }
 }

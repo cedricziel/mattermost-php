@@ -21,12 +21,11 @@ class OrderedSidebarCategories
      */
     public static function hydrate(?array $data): OrderedSidebarCategories
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             order: $data['order'] ?? null,
             categories: $data['categories'] ?? null,
         );
-        return $object;
     }
 }

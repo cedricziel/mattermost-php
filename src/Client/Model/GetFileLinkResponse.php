@@ -17,11 +17,10 @@ class GetFileLinkResponse
      */
     public static function hydrate(?array $data): GetFileLinkResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             link: $data['link'] ?? null,
         );
-        return $object;
     }
 }

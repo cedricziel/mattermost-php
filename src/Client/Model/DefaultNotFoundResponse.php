@@ -15,10 +15,9 @@ class DefaultNotFoundResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultNotFoundResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

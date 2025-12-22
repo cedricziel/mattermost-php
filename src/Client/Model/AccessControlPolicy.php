@@ -34,9 +34,9 @@ class AccessControlPolicy
      */
     public static function hydrate(?array $data): AccessControlPolicy
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             display_name: $data['display_name'] ?? null,
@@ -47,6 +47,5 @@ class AccessControlPolicy
             update_at: $data['update_at'] ?? null,
             delete_at: $data['delete_at'] ?? null,
         );
-        return $object;
     }
 }

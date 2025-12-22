@@ -20,12 +20,11 @@ class SearchAllChannelsResponse
      */
     public static function hydrate(?array $data): SearchAllChannelsResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channels: $data['channels'] ?? null,
             total_count: $data['total_count'] ?? null,
         );
-        return $object;
     }
 }

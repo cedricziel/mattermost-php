@@ -42,9 +42,9 @@ class FileInfo
      */
     public static function hydrate(?array $data): FileInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             user_id: $data['user_id'] ?? null,
             post_id: $data['post_id'] ?? null,
@@ -59,6 +59,5 @@ class FileInfo
             height: $data['height'] ?? null,
             has_preview_image: $data['has_preview_image'] ?? null,
         );
-        return $object;
     }
 }

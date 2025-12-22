@@ -38,9 +38,9 @@ class Scheme
      */
     public static function hydrate(?array $data): Scheme
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             description: $data['description'] ?? null,
@@ -53,6 +53,5 @@ class Scheme
             default_channel_admin_role: $data['default_channel_admin_role'] ?? null,
             default_channel_user_role: $data['default_channel_user_role'] ?? null,
         );
-        return $object;
     }
 }

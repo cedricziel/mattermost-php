@@ -20,12 +20,11 @@ class ServerLimits
      */
     public static function hydrate(?array $data): ServerLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             maxUsersLimit: $data['maxUsersLimit'] ?? null,
             activeUserCount: $data['activeUserCount'] ?? null,
         );
-        return $object;
     }
 }

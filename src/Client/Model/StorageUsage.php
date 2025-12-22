@@ -18,11 +18,10 @@ class StorageUsage
      */
     public static function hydrate(?array $data): StorageUsage
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             bytes: $data['bytes'] ?? null,
         );
-        return $object;
     }
 }

@@ -43,9 +43,9 @@ class User
      */
     public static function hydrate(?array $data): User
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -69,6 +69,5 @@ class User
             terms_of_service_id: $data['terms_of_service_id'] ?? null,
             terms_of_service_create_at: $data['terms_of_service_create_at'] ?? null,
         );
-        return $object;
     }
 }

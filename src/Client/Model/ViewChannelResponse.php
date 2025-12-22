@@ -20,12 +20,11 @@ class ViewChannelResponse
      */
     public static function hydrate(?array $data): ViewChannelResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             status: $data['status'] ?? null,
             last_viewed_at_times: isset($data['last_viewed_at_times']) ? (object) $data['last_viewed_at_times'] : null,
         );
-        return $object;
     }
 }

@@ -20,14 +20,13 @@ class GroupMember
      */
     public static function hydrate(?array $data): GroupMember
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             group_id: $data['group_id'] ?? null,
             user_id: $data['user_id'] ?? null,
             create_at: $data['create_at'] ?? null,
             delete_at: $data['delete_at'] ?? null,
         );
-        return $object;
     }
 }

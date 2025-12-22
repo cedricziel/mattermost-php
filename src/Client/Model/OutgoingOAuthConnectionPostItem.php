@@ -32,9 +32,9 @@ class OutgoingOAuthConnectionPostItem
      */
     public static function hydrate(?array $data): OutgoingOAuthConnectionPostItem
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             name: $data['name'] ?? null,
             client_id: $data['client_id'] ?? null,
             client_secret: $data['client_secret'] ?? null,
@@ -44,6 +44,5 @@ class OutgoingOAuthConnectionPostItem
             grant_type: $data['grant_type'] ?? null,
             audiences: $data['audiences'] ?? null,
         );
-        return $object;
     }
 }

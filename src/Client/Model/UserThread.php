@@ -30,9 +30,9 @@ class UserThread
      */
     public static function hydrate(?array $data): UserThread
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             reply_count: $data['reply_count'] ?? null,
             last_reply_at: $data['last_reply_at'] ?? null,
@@ -40,6 +40,5 @@ class UserThread
             participants: $data['participants'] ?? null,
             post: $data['post'] ?? null,
         );
-        return $object;
     }
 }

@@ -17,11 +17,10 @@ class ImportTeamResponse
      */
     public static function hydrate(?array $data): ImportTeamResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             results: $data['results'] ?? null,
         );
-        return $object;
     }
 }

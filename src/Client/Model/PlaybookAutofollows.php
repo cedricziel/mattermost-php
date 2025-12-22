@@ -20,12 +20,11 @@ class PlaybookAutofollows
      */
     public static function hydrate(?array $data): PlaybookAutofollows
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             total_count: $data['total_count'] ?? null,
             items: $data['items'] ?? null,
         );
-        return $object;
     }
 }

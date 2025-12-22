@@ -17,11 +17,10 @@ class MessagesLimits
      */
     public static function hydrate(?array $data): MessagesLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             history: $data['history'] ?? null,
         );
-        return $object;
     }
 }

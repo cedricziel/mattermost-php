@@ -16,10 +16,9 @@ class UserLimits
         /** @param array<string, mixed> $data */
         ?array $data,
     ): UserLimits {
-        $object = new self(
-            maxUsersLimit: isset($data['maxUsersLimit']) ? $data['maxUsersLimit'] : null,
-            activeUserCount: isset($data['activeUserCount']) ? $data['activeUserCount'] : null,
+        return new self(
+            maxUsersLimit: $data['maxUsersLimit'] ?? null,
+            activeUserCount: $data['activeUserCount'] ?? null,
         );
-        return $object;
     }
 }

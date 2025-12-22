@@ -17,11 +17,10 @@ class UsersStats
      */
     public static function hydrate(?array $data): UsersStats
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             total_users_count: $data['total_users_count'] ?? null,
         );
-        return $object;
     }
 }

@@ -18,11 +18,10 @@ class PropertyValueRequest
      */
     public static function hydrate(?array $data): PropertyValueRequest
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             value: $data['value'] ?? null,
         );
-        return $object;
     }
 }

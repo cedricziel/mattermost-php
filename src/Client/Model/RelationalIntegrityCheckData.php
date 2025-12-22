@@ -29,15 +29,14 @@ class RelationalIntegrityCheckData
      */
     public static function hydrate(?array $data): RelationalIntegrityCheckData
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             parent_name: $data['parent_name'] ?? null,
             child_name: $data['child_name'] ?? null,
             parent_id_attr: $data['parent_id_attr'] ?? null,
             child_id_attr: $data['child_id_attr'] ?? null,
             records: $data['records'] ?? null,
         );
-        return $object;
     }
 }

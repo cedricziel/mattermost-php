@@ -22,9 +22,9 @@ class GroupSyncableChannel
      */
     public static function hydrate(?array $data): GroupSyncableChannel
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_id: $data['channel_id'] ?? null,
             group_id: $data['group_id'] ?? null,
             auto_add: $data['auto_add'] ?? null,
@@ -32,6 +32,5 @@ class GroupSyncableChannel
             delete_at: $data['delete_at'] ?? null,
             update_at: $data['update_at'] ?? null,
         );
-        return $object;
     }
 }

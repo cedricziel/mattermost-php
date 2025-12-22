@@ -25,9 +25,9 @@ class SidebarCategoryWithChannels
      */
     public static function hydrate(?array $data): SidebarCategoryWithChannels
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             user_id: $data['user_id'] ?? null,
             team_id: $data['team_id'] ?? null,
@@ -35,6 +35,5 @@ class SidebarCategoryWithChannels
             type: $data['type'] ?? null,
             channel_ids: $data['channel_ids'] ?? null,
         );
-        return $object;
     }
 }

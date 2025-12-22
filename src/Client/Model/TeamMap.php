@@ -20,11 +20,10 @@ class TeamMap
      */
     public static function hydrate(?array $data): TeamMap
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
         );
-        return $object;
     }
 }

@@ -20,12 +20,11 @@ class ComparisonCondition
      */
     public static function hydrate(?array $data): ComparisonCondition
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             field_id: $data['field_id'] ?? null,
             value: $data['value'] ?? null,
         );
-        return $object;
     }
 }

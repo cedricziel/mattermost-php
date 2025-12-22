@@ -20,14 +20,13 @@ class AppError
      */
     public static function hydrate(?array $data): AppError
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             status_code: $data['status_code'] ?? null,
             id: $data['id'] ?? null,
             message: $data['message'] ?? null,
             request_id: $data['request_id'] ?? null,
         );
-        return $object;
     }
 }

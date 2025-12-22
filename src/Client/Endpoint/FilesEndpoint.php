@@ -364,12 +364,8 @@ class FilesEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($terms !== null) {
-            $multipartFields['terms'] = $terms;
-        }
-        if ($is_or_search !== null) {
-            $multipartFields['is_or_search'] = $is_or_search;
-        }
+        $multipartFields['terms'] = $terms;
+        $multipartFields['is_or_search'] = $is_or_search;
         if ($time_zone_offset !== null) {
             $multipartFields['time_zone_offset'] = $time_zone_offset;
         }

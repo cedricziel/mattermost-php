@@ -26,9 +26,9 @@ class Group
      */
     public static function hydrate(?array $data): Group
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             display_name: $data['display_name'] ?? null,
@@ -40,6 +40,5 @@ class Group
             delete_at: $data['delete_at'] ?? null,
             has_syncables: $data['has_syncables'] ?? null,
         );
-        return $object;
     }
 }

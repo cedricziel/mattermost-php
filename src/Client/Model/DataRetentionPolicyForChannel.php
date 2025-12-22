@@ -20,12 +20,11 @@ class DataRetentionPolicyForChannel
      */
     public static function hydrate(?array $data): DataRetentionPolicyForChannel
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_id: $data['channel_id'] ?? null,
             post_duration: $data['post_duration'] ?? null,
         );
-        return $object;
     }
 }

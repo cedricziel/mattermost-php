@@ -24,9 +24,9 @@ class GroupSyncableTeams
      */
     public static function hydrate(?array $data): GroupSyncableTeams
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
             team_display_name: $data['team_display_name'] ?? null,
             team_type: $data['team_type'] ?? null,
@@ -36,6 +36,5 @@ class GroupSyncableTeams
             delete_at: $data['delete_at'] ?? null,
             update_at: $data['update_at'] ?? null,
         );
-        return $object;
     }
 }

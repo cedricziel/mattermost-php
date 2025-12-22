@@ -41,9 +41,9 @@ class SharedChannelRemote
      */
     public static function hydrate(?array $data): SharedChannelRemote
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             channel_id: $data['channel_id'] ?? null,
             creator_id: $data['creator_id'] ?? null,
@@ -58,6 +58,5 @@ class SharedChannelRemote
             last_post_create_at: $data['last_post_create_at'] ?? null,
             last_post_create_id: $data['last_post_create_id'] ?? null,
         );
-        return $object;
     }
 }

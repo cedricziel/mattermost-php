@@ -18,12 +18,11 @@ class GetGroupStatsResponse
      */
     public static function hydrate(?array $data): GetGroupStatsResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             group_id: $data['group_id'] ?? null,
             total_member_count: $data['total_member_count'] ?? null,
         );
-        return $object;
     }
 }

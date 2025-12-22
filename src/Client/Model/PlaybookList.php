@@ -24,14 +24,13 @@ class PlaybookList
      */
     public static function hydrate(?array $data): PlaybookList
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             total_count: $data['total_count'] ?? null,
             page_count: $data['page_count'] ?? null,
             has_more: $data['has_more'] ?? null,
             items: $data['items'] ?? null,
         );
-        return $object;
     }
 }

@@ -20,12 +20,11 @@ class UserAutocompleteInChannel
      */
     public static function hydrate(?array $data): UserAutocompleteInChannel
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             in_channel: $data['in_channel'] ?? null,
             out_of_channel: $data['out_of_channel'] ?? null,
         );
-        return $object;
     }
 }

@@ -25,9 +25,9 @@ class PreviewModalContentData
      */
     public static function hydrate(?array $data): PreviewModalContentData
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             skuLabel: $data['skuLabel'] ?? null,
             title: $data['title'] ?? null,
             subtitle: $data['subtitle'] ?? null,
@@ -35,6 +35,5 @@ class PreviewModalContentData
             videoPoster: $data['videoPoster'] ?? null,
             useCase: $data['useCase'] ?? null,
         );
-        return $object;
     }
 }

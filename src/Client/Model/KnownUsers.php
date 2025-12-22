@@ -17,11 +17,10 @@ class KnownUsers
      */
     public static function hydrate(?array $data): KnownUsers
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             items: $data['items'] ?? null,
         );
-        return $object;
     }
 }

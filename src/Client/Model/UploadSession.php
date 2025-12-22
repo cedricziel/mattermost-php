@@ -35,9 +35,9 @@ class UploadSession
      */
     public static function hydrate(?array $data): UploadSession
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             type: $data['type'] ?? null,
             create_at: $data['create_at'] ?? null,
@@ -47,6 +47,5 @@ class UploadSession
             file_size: $data['file_size'] ?? null,
             file_offset: $data['file_offset'] ?? null,
         );
-        return $object;
     }
 }

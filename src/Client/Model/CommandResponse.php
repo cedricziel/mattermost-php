@@ -23,9 +23,9 @@ class CommandResponse
      */
     public static function hydrate(?array $data): CommandResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             ResponseType: $data['ResponseType'] ?? null,
             Text: $data['Text'] ?? null,
             Username: $data['Username'] ?? null,
@@ -33,6 +33,5 @@ class CommandResponse
             GotoLocation: $data['GotoLocation'] ?? null,
             Attachments: $data['Attachments'] ?? null,
         );
-        return $object;
     }
 }

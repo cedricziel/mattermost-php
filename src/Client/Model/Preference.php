@@ -21,14 +21,13 @@ class Preference
      */
     public static function hydrate(?array $data): Preference
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             category: $data['category'] ?? null,
             name: $data['name'] ?? null,
             value: $data['value'] ?? null,
         );
-        return $object;
     }
 }

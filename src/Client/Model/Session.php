@@ -30,9 +30,9 @@ class Session
      */
     public static function hydrate(?array $data): Session
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             create_at: $data['create_at'] ?? null,
             device_id: $data['device_id'] ?? null,
             expires_at: $data['expires_at'] ?? null,
@@ -45,6 +45,5 @@ class Session
             token: $data['token'] ?? null,
             user_id: $data['user_id'] ?? null,
         );
-        return $object;
     }
 }

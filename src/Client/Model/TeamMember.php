@@ -30,9 +30,9 @@ class TeamMember
      */
     public static function hydrate(?array $data): TeamMember
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
             user_id: $data['user_id'] ?? null,
             roles: $data['roles'] ?? null,
@@ -41,6 +41,5 @@ class TeamMember
             scheme_admin: $data['scheme_admin'] ?? null,
             explicit_roles: $data['explicit_roles'] ?? null,
         );
-        return $object;
     }
 }

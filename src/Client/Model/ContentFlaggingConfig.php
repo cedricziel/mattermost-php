@@ -18,11 +18,10 @@ class ContentFlaggingConfig
      */
     public static function hydrate(?array $data): ContentFlaggingConfig
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             EnableContentFlagging: $data['EnableContentFlagging'] ?? null,
         );
-        return $object;
     }
 }

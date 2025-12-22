@@ -20,12 +20,11 @@ class AccessControlPolicyActiveUpdate
      */
     public static function hydrate(?array $data): AccessControlPolicyActiveUpdate
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             active: $data['active'] ?? null,
         );
-        return $object;
     }
 }

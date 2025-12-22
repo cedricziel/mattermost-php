@@ -40,9 +40,9 @@ class UserNotifyProps
      */
     public static function hydrate(?array $data): UserNotifyProps
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             email: $data['email'] ?? null,
             push: $data['push'] ?? null,
             desktop: $data['desktop'] ?? null,
@@ -56,6 +56,5 @@ class UserNotifyProps
             desktop_threads: $data['desktop_threads'] ?? null,
             email_threads: $data['email_threads'] ?? null,
         );
-        return $object;
     }
 }

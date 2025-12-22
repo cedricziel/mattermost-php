@@ -18,12 +18,11 @@ class SubscriptionStats
      */
     public static function hydrate(?array $data): SubscriptionStats
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             remaining_seats: $data['remaining_seats'] ?? null,
             is_paid_tier: $data['is_paid_tier'] ?? null,
         );
-        return $object;
     }
 }

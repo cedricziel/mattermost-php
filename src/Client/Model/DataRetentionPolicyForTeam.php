@@ -20,12 +20,11 @@ class DataRetentionPolicyForTeam
      */
     public static function hydrate(?array $data): DataRetentionPolicyForTeam
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
             post_duration: $data['post_duration'] ?? null,
         );
-        return $object;
     }
 }

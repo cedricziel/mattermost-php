@@ -18,11 +18,10 @@ class SwitchAccountTypeResponse
      */
     public static function hydrate(?array $data): SwitchAccountTypeResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             follow_link: $data['follow_link'] ?? null,
         );
-        return $object;
     }
 }

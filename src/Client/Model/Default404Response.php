@@ -15,10 +15,9 @@ class Default404Response extends Error
      */
     public static function hydrate(?array $data): Default404Response
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

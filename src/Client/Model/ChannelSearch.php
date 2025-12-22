@@ -28,9 +28,9 @@ class ChannelSearch
      */
     public static function hydrate(?array $data): ChannelSearch
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             term: $data['term'] ?? null,
             team_ids: $data['team_ids'] ?? null,
             public: $data['public'] ?? null,
@@ -38,6 +38,5 @@ class ChannelSearch
             deleted: $data['deleted'] ?? null,
             include_deleted: $data['include_deleted'] ?? null,
         );
-        return $object;
     }
 }

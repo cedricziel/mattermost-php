@@ -18,11 +18,10 @@ class AgentsResponse
      */
     public static function hydrate(?array $data): AgentsResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             agents: $data['agents'] ?? null,
         );
-        return $object;
     }
 }

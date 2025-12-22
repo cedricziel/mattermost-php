@@ -15,10 +15,9 @@ class DefaultBadGatewayResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultBadGatewayResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

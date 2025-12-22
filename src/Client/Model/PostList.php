@@ -24,15 +24,14 @@ class PostList
      */
     public static function hydrate(?array $data): PostList
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             order: $data['order'] ?? null,
             posts: isset($data['posts']) ? (object) $data['posts'] : null,
             next_post_id: $data['next_post_id'] ?? null,
             prev_post_id: $data['prev_post_id'] ?? null,
             has_next: $data['has_next'] ?? null,
         );
-        return $object;
     }
 }

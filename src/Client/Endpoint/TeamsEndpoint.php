@@ -925,9 +925,7 @@ class TeamsEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($image !== null) {
-            $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
-        }
+        $multipartFields['image'] = ['contents' => $image, 'filename' => 'image'];
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
@@ -1300,15 +1298,9 @@ class TeamsEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($file !== null) {
-            $multipartFields['file'] = ['contents' => $file, 'filename' => 'file'];
-        }
-        if ($filesize !== null) {
-            $multipartFields['filesize'] = $filesize;
-        }
-        if ($importFrom !== null) {
-            $multipartFields['importFrom'] = $importFrom;
-        }
+        $multipartFields['file'] = ['contents' => $file, 'filename' => 'file'];
+        $multipartFields['filesize'] = $filesize;
+        $multipartFields['importFrom'] = $importFrom;
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
@@ -1485,12 +1477,8 @@ class TeamsEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($terms !== null) {
-            $multipartFields['terms'] = $terms;
-        }
-        if ($is_or_search !== null) {
-            $multipartFields['is_or_search'] = $is_or_search;
-        }
+        $multipartFields['terms'] = $terms;
+        $multipartFields['is_or_search'] = $is_or_search;
         if ($time_zone_offset !== null) {
             $multipartFields['time_zone_offset'] = $time_zone_offset;
         }

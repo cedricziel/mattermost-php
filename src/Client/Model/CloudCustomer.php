@@ -27,9 +27,9 @@ class CloudCustomer
      */
     public static function hydrate(?array $data): CloudCustomer
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             creator_id: $data['creator_id'] ?? null,
             create_at: $data['create_at'] ?? null,
@@ -42,6 +42,5 @@ class CloudCustomer
             company_address: $data['company_address'] ?? null,
             payment_method: $data['payment_method'] ?? null,
         );
-        return $object;
     }
 }

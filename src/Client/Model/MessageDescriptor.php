@@ -22,13 +22,12 @@ class MessageDescriptor
      */
     public static function hydrate(?array $data): MessageDescriptor
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             defaultMessage: $data['defaultMessage'] ?? null,
             values: isset($data['values']) ? (object) $data['values'] : null,
         );
-        return $object;
     }
 }

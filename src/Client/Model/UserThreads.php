@@ -20,12 +20,11 @@ class UserThreads
      */
     public static function hydrate(?array $data): UserThreads
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             total: $data['total'] ?? null,
             threads: $data['threads'] ?? null,
         );
-        return $object;
     }
 }

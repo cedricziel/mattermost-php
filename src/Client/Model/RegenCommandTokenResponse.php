@@ -18,11 +18,10 @@ class RegenCommandTokenResponse
      */
     public static function hydrate(?array $data): RegenCommandTokenResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             token: $data['token'] ?? null,
         );
-        return $object;
     }
 }

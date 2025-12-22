@@ -37,9 +37,9 @@ class RemoteCluster
      */
     public static function hydrate(?array $data): RemoteCluster
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             remote_id: $data['remote_id'] ?? null,
             remote_team_id: $data['remote_team_id'] ?? null,
             name: $data['name'] ?? null,
@@ -56,6 +56,5 @@ class RemoteCluster
             plugin_id: $data['plugin_id'] ?? null,
             options: $data['options'] ?? null,
         );
-        return $object;
     }
 }

@@ -35,9 +35,9 @@ class OpenGraph
      */
     public static function hydrate(?array $data): OpenGraph
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             type: $data['type'] ?? null,
             url: $data['url'] ?? null,
             title: $data['title'] ?? null,
@@ -53,6 +53,5 @@ class OpenGraph
             book: isset($data['book']) ? (object) $data['book'] : null,
             profile: isset($data['profile']) ? (object) $data['profile'] : null,
         );
-        return $object;
     }
 }

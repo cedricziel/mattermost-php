@@ -22,13 +22,12 @@ class BridgeServiceInfo
      */
     public static function hydrate(?array $data): BridgeServiceInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             type: $data['type'] ?? null,
         );
-        return $object;
     }
 }

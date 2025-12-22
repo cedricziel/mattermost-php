@@ -22,13 +22,12 @@ class SamlCertificateStatus
      */
     public static function hydrate(?array $data): SamlCertificateStatus
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             idp_certificate_file: $data['idp_certificate_file'] ?? null,
             public_certificate_file: $data['public_certificate_file'] ?? null,
             private_key_file: $data['private_key_file'] ?? null,
         );
-        return $object;
     }
 }

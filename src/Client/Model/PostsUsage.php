@@ -18,11 +18,10 @@ class PostsUsage
      */
     public static function hydrate(?array $data): PostsUsage
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             count: $data['count'] ?? null,
         );
-        return $object;
     }
 }

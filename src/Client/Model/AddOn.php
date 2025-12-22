@@ -20,14 +20,13 @@ class AddOn
      */
     public static function hydrate(?array $data): AddOn
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             display_name: $data['display_name'] ?? null,
             price_per_seat: $data['price_per_seat'] ?? null,
         );
-        return $object;
     }
 }

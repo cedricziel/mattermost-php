@@ -38,9 +38,9 @@ class PushNotification
      */
     public static function hydrate(?array $data): PushNotification
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             ack_id: $data['ack_id'] ?? null,
             platform: $data['platform'] ?? null,
             server_id: $data['server_id'] ?? null,
@@ -64,6 +64,5 @@ class PushNotification
             version: $data['version'] ?? null,
             is_id_loaded: $data['is_id_loaded'] ?? null,
         );
-        return $object;
     }
 }

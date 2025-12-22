@@ -19,13 +19,12 @@ class TeamUnread
      */
     public static function hydrate(?array $data): TeamUnread
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
             msg_count: $data['msg_count'] ?? null,
             mention_count: $data['mention_count'] ?? null,
         );
-        return $object;
     }
 }

@@ -32,9 +32,9 @@ class Bot
      */
     public static function hydrate(?array $data): Bot
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -44,6 +44,5 @@ class Bot
             description: $data['description'] ?? null,
             owner_id: $data['owner_id'] ?? null,
         );
-        return $object;
     }
 }

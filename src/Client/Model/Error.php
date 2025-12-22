@@ -20,12 +20,11 @@ class Error
      */
     public static function hydrate(?array $data): Error
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             error: $data['error'] ?? null,
             details: $data['details'] ?? null,
         );
-        return $object;
     }
 }

@@ -24,14 +24,13 @@ class TermsOfService
      */
     public static function hydrate(?array $data): TermsOfService
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             user_id: $data['user_id'] ?? null,
             text: $data['text'] ?? null,
         );
-        return $object;
     }
 }

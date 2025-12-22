@@ -18,11 +18,10 @@ class ResetSamlAuthDataToEmailResponse
      */
     public static function hydrate(?array $data): ResetSamlAuthDataToEmailResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             num_affected: $data['num_affected'] ?? null,
         );
-        return $object;
     }
 }

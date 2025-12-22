@@ -23,14 +23,13 @@ class LDAPGroup
      */
     public static function hydrate(?array $data): LDAPGroup
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             has_syncables: $data['has_syncables'] ?? null,
             mattermost_group_id: $data['mattermost_group_id'] ?? null,
             primary_key: $data['primary_key'] ?? null,
             name: $data['name'] ?? null,
         );
-        return $object;
     }
 }

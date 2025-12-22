@@ -595,9 +595,7 @@ class SystemEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($license !== null) {
-            $multipartFields['license'] = ['contents' => $license, 'filename' => 'license'];
-        }
+        $multipartFields['license'] = ['contents' => $license, 'filename' => 'license'];
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);

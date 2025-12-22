@@ -26,15 +26,14 @@ class ReviewerSettings
      */
     public static function hydrate(?array $data): ReviewerSettings
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             CommonReviewers: $data['CommonReviewers'] ?? null,
             SystemAdminsAsReviewers: $data['SystemAdminsAsReviewers'] ?? null,
             TeamAdminsAsReviewers: $data['TeamAdminsAsReviewers'] ?? null,
             CommonReviewerIds: $data['CommonReviewerIds'] ?? null,
             TeamReviewersSetting: isset($data['TeamReviewersSetting']) ? (object) $data['TeamReviewersSetting'] : null,
         );
-        return $object;
     }
 }

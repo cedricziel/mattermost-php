@@ -35,9 +35,9 @@ class Post
      */
     public static function hydrate(?array $data): Post
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -55,6 +55,5 @@ class Post
             pending_post_id: $data['pending_post_id'] ?? null,
             metadata: $data['metadata'] ?? null,
         );
-        return $object;
     }
 }

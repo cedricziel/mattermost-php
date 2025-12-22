@@ -28,9 +28,9 @@ class Emoji
      */
     public static function hydrate(?array $data): Emoji
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             creator_id: $data['creator_id'] ?? null,
             name: $data['name'] ?? null,
@@ -38,6 +38,5 @@ class Emoji
             update_at: $data['update_at'] ?? null,
             delete_at: $data['delete_at'] ?? null,
         );
-        return $object;
     }
 }

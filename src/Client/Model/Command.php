@@ -50,9 +50,9 @@ class Command
      */
     public static function hydrate(?array $data): Command
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             token: $data['token'] ?? null,
             create_at: $data['create_at'] ?? null,
@@ -71,6 +71,5 @@ class Command
             description: $data['description'] ?? null,
             url: $data['url'] ?? null,
         );
-        return $object;
     }
 }

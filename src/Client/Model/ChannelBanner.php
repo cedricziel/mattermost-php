@@ -22,13 +22,12 @@ class ChannelBanner
      */
     public static function hydrate(?array $data): ChannelBanner
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             enabled: $data['enabled'] ?? null,
             text: $data['text'] ?? null,
             background_color: $data['background_color'] ?? null,
         );
-        return $object;
     }
 }

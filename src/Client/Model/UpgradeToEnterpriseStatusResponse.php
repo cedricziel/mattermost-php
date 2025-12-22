@@ -20,12 +20,11 @@ class UpgradeToEnterpriseStatusResponse
      */
     public static function hydrate(?array $data): UpgradeToEnterpriseStatusResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             percentage: $data['percentage'] ?? null,
             error: $data['error'] ?? null,
         );
-        return $object;
     }
 }

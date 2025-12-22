@@ -24,15 +24,14 @@ class SidebarCategory
      */
     public static function hydrate(?array $data): SidebarCategory
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             user_id: $data['user_id'] ?? null,
             team_id: $data['team_id'] ?? null,
             display_name: $data['display_name'] ?? null,
             type: $data['type'] ?? null,
         );
-        return $object;
     }
 }

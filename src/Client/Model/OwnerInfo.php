@@ -20,12 +20,11 @@ class OwnerInfo
      */
     public static function hydrate(?array $data): OwnerInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             username: $data['username'] ?? null,
         );
-        return $object;
     }
 }

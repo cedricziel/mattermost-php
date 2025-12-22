@@ -21,15 +21,14 @@ class ProductLimits
      */
     public static function hydrate(?array $data): ProductLimits
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             boards: $data['boards'] ?? null,
             files: $data['files'] ?? null,
             integrations: $data['integrations'] ?? null,
             messages: $data['messages'] ?? null,
             teams: $data['teams'] ?? null,
         );
-        return $object;
     }
 }

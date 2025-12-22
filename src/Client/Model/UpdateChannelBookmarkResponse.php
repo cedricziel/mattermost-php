@@ -18,12 +18,11 @@ class UpdateChannelBookmarkResponse
      */
     public static function hydrate(?array $data): UpdateChannelBookmarkResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             updated: $data['updated'] ?? null,
             deleted: $data['deleted'] ?? null,
         );
-        return $object;
     }
 }

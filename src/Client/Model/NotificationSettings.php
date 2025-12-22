@@ -17,11 +17,10 @@ class NotificationSettings
      */
     public static function hydrate(?array $data): NotificationSettings
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             EventTargetMapping: $data['EventTargetMapping'] ?? null,
         );
-        return $object;
     }
 }

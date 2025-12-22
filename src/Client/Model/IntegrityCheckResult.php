@@ -22,12 +22,11 @@ class IntegrityCheckResult
      */
     public static function hydrate(?array $data): IntegrityCheckResult
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             data: $data['data'] ?? null,
             err: $data['err'] ?? null,
         );
-        return $object;
     }
 }

@@ -45,9 +45,9 @@ class PlaybookRun
      */
     public static function hydrate(?array $data): PlaybookRun
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             description: $data['description'] ?? null,
@@ -64,6 +64,5 @@ class PlaybookRun
             playbook_id: $data['playbook_id'] ?? null,
             checklists: $data['checklists'] ?? null,
         );
-        return $object;
     }
 }

@@ -32,9 +32,9 @@ class PropertyField
      */
     public static function hydrate(?array $data): PropertyField
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             type: $data['type'] ?? null,
             name: $data['name'] ?? null,
@@ -44,6 +44,5 @@ class PropertyField
             delete_at: $data['delete_at'] ?? null,
             attrs: isset($data['attrs']) ? (object) $data['attrs'] : null,
         );
-        return $object;
     }
 }

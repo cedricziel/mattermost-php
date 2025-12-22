@@ -18,11 +18,10 @@ class GetLoginTypeResponse
      */
     public static function hydrate(?array $data): GetLoginTypeResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             auth_service: $data['auth_service'] ?? null,
         );
-        return $object;
     }
 }

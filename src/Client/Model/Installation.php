@@ -21,13 +21,12 @@ class Installation
      */
     public static function hydrate(?array $data): Installation
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             allowed_ip_ranges: $data['allowed_ip_ranges'] ?? null,
             state: $data['state'] ?? null,
         );
-        return $object;
     }
 }

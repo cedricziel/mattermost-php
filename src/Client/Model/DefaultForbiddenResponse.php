@@ -15,10 +15,9 @@ class DefaultForbiddenResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultForbiddenResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

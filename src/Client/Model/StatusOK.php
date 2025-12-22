@@ -18,11 +18,10 @@ class StatusOK
      */
     public static function hydrate(?array $data): StatusOK
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             status: $data['status'] ?? null,
         );
-        return $object;
     }
 }

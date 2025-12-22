@@ -15,10 +15,9 @@ class DefaultBadRequestResponse extends AppError
      */
     public static function hydrate(?array $data): DefaultBadRequestResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

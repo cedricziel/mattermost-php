@@ -18,12 +18,11 @@ class TeamStats
      */
     public static function hydrate(?array $data): TeamStats
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             team_id: $data['team_id'] ?? null,
             total_member_count: $data['total_member_count'] ?? null,
         );
-        return $object;
     }
 }

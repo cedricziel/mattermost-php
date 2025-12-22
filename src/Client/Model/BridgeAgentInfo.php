@@ -26,15 +26,14 @@ class BridgeAgentInfo
      */
     public static function hydrate(?array $data): BridgeAgentInfo
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             displayName: $data['displayName'] ?? null,
             username: $data['username'] ?? null,
             service_id: $data['service_id'] ?? null,
             service_type: $data['service_type'] ?? null,
         );
-        return $object;
     }
 }

@@ -26,15 +26,14 @@ class AutocompleteSuggestion
      */
     public static function hydrate(?array $data): AutocompleteSuggestion
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             Complete: $data['Complete'] ?? null,
             Suggestion: $data['Suggestion'] ?? null,
             Hint: $data['Hint'] ?? null,
             Description: $data['Description'] ?? null,
             IconData: $data['IconData'] ?? null,
         );
-        return $object;
     }
 }

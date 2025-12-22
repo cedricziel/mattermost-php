@@ -27,9 +27,9 @@ class GroupSyncableChannels
      */
     public static function hydrate(?array $data): GroupSyncableChannels
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel_id: $data['channel_id'] ?? null,
             channel_display_name: $data['channel_display_name'] ?? null,
             channel_type: $data['channel_type'] ?? null,
@@ -42,6 +42,5 @@ class GroupSyncableChannels
             delete_at: $data['delete_at'] ?? null,
             update_at: $data['update_at'] ?? null,
         );
-        return $object;
     }
 }

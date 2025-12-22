@@ -33,9 +33,9 @@ class Team
      */
     public static function hydrate(?array $data): Team
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -50,6 +50,5 @@ class Team
             allow_open_invite: $data['allow_open_invite'] ?? null,
             policy_id: $data['policy_id'] ?? null,
         );
-        return $object;
     }
 }

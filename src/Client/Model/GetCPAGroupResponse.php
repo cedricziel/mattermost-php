@@ -18,11 +18,10 @@ class GetCPAGroupResponse
      */
     public static function hydrate(?array $data): GetCPAGroupResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
         );
-        return $object;
     }
 }

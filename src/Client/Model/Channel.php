@@ -35,9 +35,9 @@ class Channel
      */
     public static function hydrate(?array $data): Channel
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -53,6 +53,5 @@ class Channel
             extra_update_at: $data['extra_update_at'] ?? null,
             creator_id: $data['creator_id'] ?? null,
         );
-        return $object;
     }
 }

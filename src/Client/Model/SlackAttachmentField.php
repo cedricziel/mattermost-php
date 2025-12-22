@@ -20,13 +20,12 @@ class SlackAttachmentField
      */
     public static function hydrate(?array $data): SlackAttachmentField
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             Title: $data['Title'] ?? null,
             Value: $data['Value'] ?? null,
             Short: $data['Short'] ?? null,
         );
-        return $object;
     }
 }

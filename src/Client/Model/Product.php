@@ -21,15 +21,14 @@ class Product
      */
     public static function hydrate(?array $data): Product
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             description: $data['description'] ?? null,
             price_per_seat: $data['price_per_seat'] ?? null,
             add_ons: $data['add_ons'] ?? null,
         );
-        return $object;
     }
 }

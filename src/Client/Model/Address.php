@@ -22,9 +22,9 @@ class Address
      */
     public static function hydrate(?array $data): Address
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             city: $data['city'] ?? null,
             country: $data['country'] ?? null,
             line1: $data['line1'] ?? null,
@@ -32,6 +32,5 @@ class Address
             postal_code: $data['postal_code'] ?? null,
             state: $data['state'] ?? null,
         );
-        return $object;
     }
 }

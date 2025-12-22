@@ -30,9 +30,9 @@ class IncomingWebhook
      */
     public static function hydrate(?array $data): IncomingWebhook
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -41,6 +41,5 @@ class IncomingWebhook
             description: $data['description'] ?? null,
             display_name: $data['display_name'] ?? null,
         );
-        return $object;
     }
 }

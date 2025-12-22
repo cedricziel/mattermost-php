@@ -22,13 +22,12 @@ class PostAcknowledgement
      */
     public static function hydrate(?array $data): PostAcknowledgement
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             post_id: $data['post_id'] ?? null,
             acknowledged_at: $data['acknowledged_at'] ?? null,
         );
-        return $object;
     }
 }

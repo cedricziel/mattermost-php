@@ -115,9 +115,7 @@ class SAMLEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($certificate !== null) {
-            $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
-        }
+        $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
@@ -192,9 +190,7 @@ class SAMLEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($certificate !== null) {
-            $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
-        }
+        $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);
@@ -269,9 +265,7 @@ class SAMLEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($certificate !== null) {
-            $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
-        }
+        $multipartFields['certificate'] = ['contents' => $certificate, 'filename' => 'certificate'];
 
         $multipart = $this->createMultipartStream($multipartFields);
         $request = $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart['boundary']);

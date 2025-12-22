@@ -22,12 +22,11 @@ class LDAPGroupsPaged
      */
     public static function hydrate(?array $data): LDAPGroupsPaged
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             count: $data['count'] ?? null,
             groups: $data['groups'] ?? null,
         );
-        return $object;
     }
 }

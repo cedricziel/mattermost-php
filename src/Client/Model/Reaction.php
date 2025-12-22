@@ -24,14 +24,13 @@ class Reaction
      */
     public static function hydrate(?array $data): Reaction
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             user_id: $data['user_id'] ?? null,
             post_id: $data['post_id'] ?? null,
             emoji_name: $data['emoji_name'] ?? null,
             create_at: $data['create_at'] ?? null,
         );
-        return $object;
     }
 }

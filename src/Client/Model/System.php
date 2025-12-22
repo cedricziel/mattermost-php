@@ -20,12 +20,11 @@ class System
      */
     public static function hydrate(?array $data): System
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             name: $data['name'] ?? null,
             value: $data['value'] ?? null,
         );
-        return $object;
     }
 }

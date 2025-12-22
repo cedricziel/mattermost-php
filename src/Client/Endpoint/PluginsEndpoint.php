@@ -60,9 +60,7 @@ class PluginsEndpoint
 
         // Build multipart form data
         $multipartFields = [];
-        if ($plugin !== null) {
-            $multipartFields['plugin'] = ['contents' => $plugin, 'filename' => 'plugin'];
-        }
+        $multipartFields['plugin'] = ['contents' => $plugin, 'filename' => 'plugin'];
         if ($force !== null) {
             $multipartFields['force'] = $force;
         }

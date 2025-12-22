@@ -15,10 +15,9 @@ class Default403Response extends Error
      */
     public static function hydrate(?array $data): Default403Response
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
         );
-        return $object;
     }
 }

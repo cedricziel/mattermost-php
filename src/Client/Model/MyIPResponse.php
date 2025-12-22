@@ -18,11 +18,10 @@ class MyIPResponse
      */
     public static function hydrate(?array $data): MyIPResponse
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             ip: $data['ip'] ?? null,
         );
-        return $object;
     }
 }

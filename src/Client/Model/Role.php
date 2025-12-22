@@ -28,9 +28,9 @@ class Role
      */
     public static function hydrate(?array $data): Role
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             name: $data['name'] ?? null,
             display_name: $data['display_name'] ?? null,
@@ -38,6 +38,5 @@ class Role
             permissions: $data['permissions'] ?? null,
             scheme_managed: $data['scheme_managed'] ?? null,
         );
-        return $object;
     }
 }

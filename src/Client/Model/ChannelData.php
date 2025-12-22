@@ -18,12 +18,11 @@ class ChannelData
      */
     public static function hydrate(?array $data): ChannelData
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             channel: $data['channel'] ?? null,
             member: $data['member'] ?? null,
         );
-        return $object;
     }
 }

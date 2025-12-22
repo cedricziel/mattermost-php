@@ -34,9 +34,9 @@ class ScheduledPost
      */
     public static function hydrate(?array $data): ScheduledPost
     {
-        $data = $data ?? [];
+        $data ??= [];
 
-        $object = new self(
+        return new self(
             id: $data['id'] ?? null,
             create_at: $data['create_at'] ?? null,
             update_at: $data['update_at'] ?? null,
@@ -51,6 +51,5 @@ class ScheduledPost
             error_code: $data['error_code'] ?? null,
             metadata: $data['metadata'] ?? null,
         );
-        return $object;
     }
 }
