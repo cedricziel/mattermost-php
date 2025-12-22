@@ -59,12 +59,6 @@ $classNeedsFormEncoded = [];
 $methodNeedsBinaryResponse = [];
 
 /**
- * Detect the response media type from a response specification.
- *
- * @param array $responseSpec The response specification from OpenAPI
- * @return array{type: string, mediaType: ?string, schema?: array}
- */
-/**
  * Add a type to a union return type, avoiding duplicates.
  *
  * @param Method $method The method to update
@@ -92,6 +86,12 @@ function addReturnType(Method $method, string $newType): void
     $method->setReturnType($currentReturnType . '|' . $newType);
 }
 
+/**
+ * Detect the response media type from a response specification.
+ *
+ * @param array $responseSpec The response specification from OpenAPI
+ * @return array{type: string, mediaType: ?string, schema?: array}
+ */
 function detectResponseMediaType(array $responseSpec): array
 {
     if (!isset($responseSpec['content'])) {
