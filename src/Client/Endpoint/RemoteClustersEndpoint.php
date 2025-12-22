@@ -240,11 +240,14 @@ class RemoteClustersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function generateRemoteClusterInvite(
+        /** Path parameter: remote_id */
+        string $remote_id,
         \CedricZiel\MattermostPhp\Client\Model\GenerateRemoteClusterInviteRequest $requestBody,
     ): string|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
         $pathParameters = [];
         $queryParameters = [];
 
+        $pathParameters['remote_id'] = $remote_id;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/remotecluster/{remote_id}/generate_invite', $pathParameters, $queryParameters);

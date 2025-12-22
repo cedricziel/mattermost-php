@@ -820,6 +820,29 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             }
         }
 
+        // Auto-extract path parameters from URI pattern that are not explicitly declared
+        preg_match_all('/\{([^}]+)\}/', $path, $pathMatches);
+        if (!empty($pathMatches[1])) {
+            $declaredPathParamNames = array_merge(
+                array_map(fn($p) => $p->getName(), $pathParameters),
+                array_map(fn($p) => $p->getName(), $optionalPathParameters)
+            );
+
+            foreach ($pathMatches[1] as $pathParamName) {
+                // Skip if already declared explicitly
+                if (in_array($pathParamName, $declaredPathParamNames, true)) {
+                    continue;
+                }
+
+                // Create a required string path parameter
+                $p = (new Parameter($pathParamName))->setType('string');
+                $p->setComment("Path parameter: $pathParamName")->setNullable(false);
+
+                $pathParameters[] = $p;
+                $method->addBody(sprintf('$pathParameters[\'%s\'] = $%s;', $pathParamName, $pathParamName));
+            }
+        }
+
         $method
             ->addBody('')
             ->addBody('// build URI through path and query parameters')

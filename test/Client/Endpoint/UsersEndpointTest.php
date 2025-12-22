@@ -985,6 +985,22 @@ class UsersEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function resetPasswordFailedAttemptsBuildsCorrectRequest(): void
+    {
+        $this->mockEmptyResponse(200);
+
+        $user_id = 'test-user_id';
+
+        $result = $this->endpoint->resetPasswordFailedAttempts($user_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/users/test-user_id/reset_failed_attempts');
+        $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
+    }
+
+    #[Test]
     public function getServerLimitsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['maxUsersLimit' => 1234567890, 'activeUserCount' => 1234567890]]);

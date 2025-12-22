@@ -60,7 +60,6 @@ $skipMethods = [
 
     // Void responses but with special issues
     'UsersEndpoint' => [
-        'resetPasswordFailedAttempts',  // Endpoint bug: missing user_id path parameter
         'migrateAuthToSaml',  // Requires stdClass mock data handling
     ],
 
@@ -257,6 +256,19 @@ function buildOperationLookup(array $openApi): array
                         $queryParams[$paramName] = [
                             'type' => $paramType,
                             'required' => $isRequired,
+                        ];
+                    }
+                }
+            }
+
+            // Auto-extract path parameters from URI pattern that are not explicitly declared
+            preg_match_all('/\{([^}]+)\}/', $path, $pathMatches);
+            if (!empty($pathMatches[1])) {
+                foreach ($pathMatches[1] as $pathParamName) {
+                    if (!isset($pathParams[$pathParamName])) {
+                        $pathParams[$pathParamName] = [
+                            'type' => 'string',
+                            'required' => true,
                         ];
                     }
                 }

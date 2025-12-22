@@ -2514,10 +2514,13 @@ class UsersEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function resetPasswordFailedAttempts(
+        /** Path parameter: user_id */
+        string $user_id,
     ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|null {
         $pathParameters = [];
         $queryParameters = [];
 
+        $pathParameters['user_id'] = $user_id;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/users/{user_id}/reset_failed_attempts', $pathParameters, $queryParameters);

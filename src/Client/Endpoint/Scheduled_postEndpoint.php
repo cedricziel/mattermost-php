@@ -75,6 +75,8 @@ class Scheduled_postEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getUserScheduledPosts(
+        /** Path parameter: team_id */
+        string $team_id,
         /** Whether to include scheduled posts from DMs an GMs or not. Default is false */
         ?bool $includeDirectChannels = false,
     ): \CedricZiel\MattermostPhp\Client\Model\GetUserScheduledPostsResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
@@ -82,6 +84,7 @@ class Scheduled_postEndpoint
         $queryParameters = [];
 
         $queryParameters['includeDirectChannels'] = $includeDirectChannels;
+        $pathParameters['team_id'] = $team_id;
 
         // build URI through path and query parameters
         $uri = $this->buildUri('/api/v4/posts/scheduled/team/{team_id}', $pathParameters, $queryParameters);
