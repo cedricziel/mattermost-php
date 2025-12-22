@@ -99,7 +99,7 @@ class SystemEndpoint
         ?string $device_id = null,
         /** Returns 200 status code even if the server status is unhealthy. */
         ?bool $use_rest_semantics = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -119,7 +119,9 @@ class SystemEndpoint
         $map[200] = \CedricZiel\MattermostPhp\Client\Model\SystemStatusResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -443,7 +445,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function reloadConfig(
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -461,7 +463,9 @@ class SystemEndpoint
         $map[400] = \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -577,7 +581,7 @@ class SystemEndpoint
     public function uploadLicenseFile(
         /** The license to be uploaded (string|resource|\Psr\Http\Message\StreamInterface) */
         mixed $license,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -607,7 +611,9 @@ class SystemEndpoint
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[413] = \CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -1154,7 +1160,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function upgradeToEnterprise(
-    ): \CedricZiel\MattermostPhp\Client\Model\PushNotification|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooManyRequestsResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\PushNotification|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooManyRequestsResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1172,7 +1178,9 @@ class SystemEndpoint
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[429] = \CedricZiel\MattermostPhp\Client\Model\DefaultTooManyRequestsResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -1242,7 +1250,7 @@ class SystemEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function restartServer(
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1259,7 +1267,9 @@ class SystemEndpoint
         $map[200] = \CedricZiel\MattermostPhp\Client\Model\StatusOK::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -1322,7 +1332,7 @@ class SystemEndpoint
          * __Minimum server version__: 9.8.0
          */
         ?string $plugin_packets = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1343,7 +1353,9 @@ class SystemEndpoint
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**

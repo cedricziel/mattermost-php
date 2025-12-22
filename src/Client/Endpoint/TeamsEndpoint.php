@@ -911,7 +911,7 @@ class TeamsEndpoint
         string $team_id,
         /** The image to be uploaded (string|resource|\Psr\Http\Message\StreamInterface) */
         mixed $image,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -943,7 +943,9 @@ class TeamsEndpoint
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -960,7 +962,7 @@ class TeamsEndpoint
     public function removeTeamIcon(
         /** Team GUID */
         string $team_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\StatusOK|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -982,7 +984,9 @@ class TeamsEndpoint
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -1467,7 +1471,7 @@ class TeamsEndpoint
         ?int $page = null,
         /** The number of posts per page. (Only works with Elasticsearch) */
         ?int $per_page = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -1512,6 +1516,8 @@ class TeamsEndpoint
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 }

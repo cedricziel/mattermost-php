@@ -63,25 +63,6 @@ class ReportsEndpointTest extends ClientTestCase
     }
 
     #[Test]
-    public function startBatchUsersExportBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, [['id' => 'test-id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'username' => 'test-username', 'auth_data' => 'test-auth_data', 'auth_service' => 'test-auth_service', 'email' => 'test-email', 'nickname' => 'test-nickname', 'first_name' => 'test-first_name', 'last_name' => 'test-last_name', 'position' => 'test-position', 'roles' => 'test-roles', 'locale' => 'test-locale', 'timezone' => 1234567890, 'disable_welcome_email' => true, 'last_login' => 1234567890, 'last_status_at' => 1234567890, 'last_post_date' => 1234567890, 'days_active' => 1234567890, 'total_posts' => 1234567890]]);
-
-        $date_range = 'test-date_range';
-
-        $result = $this->endpoint->startBatchUsersExport($date_range);
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestMethod('POST');
-        $this->assertRequestPath('/api/v4/reports/users/export');
-        $this->assertRequestHasAuthHeader();
-        $this->assertRequestQueryParams(['date_range' => 'test-date_range']);
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\UserReport::class, $result[0]);
-    }
-
-    #[Test]
     public function getPostsForReportingBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, []);

@@ -71,7 +71,7 @@ class UsageEndpoint
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getStorageUsage(
-    ): \CedricZiel\MattermostPhp\Client\Model\StorageUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\StorageUsage|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -89,6 +89,8 @@ class UsageEndpoint
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 }

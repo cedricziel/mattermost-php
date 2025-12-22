@@ -59,7 +59,7 @@ class FilesEndpoint
         ?string $client_ids = null,
         /** The name of the file to be uploaded */
         ?string $filename = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\UploadFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\UploadFileResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -98,7 +98,9 @@ class FilesEndpoint
         $map[413] = \CedricZiel\MattermostPhp\Client\Model\DefaultTooLargeResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -112,7 +114,7 @@ class FilesEndpoint
     public function getFile(
         /** The ID of the file to get */
         string $file_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -133,7 +135,9 @@ class FilesEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -147,7 +151,7 @@ class FilesEndpoint
     public function getFileThumbnail(
         /** The ID of the file to get */
         string $file_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -168,7 +172,9 @@ class FilesEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -182,7 +188,7 @@ class FilesEndpoint
     public function getFilePreview(
         /** The ID of the file to get */
         string $file_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -203,7 +209,9 @@ class FilesEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -217,7 +225,7 @@ class FilesEndpoint
     public function getFileLink(
         /** The ID of the file to get a link for */
         string $file_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\GetFileLinkResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -239,7 +247,9 @@ class FilesEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -253,7 +263,7 @@ class FilesEndpoint
     public function getFileInfo(
         /** The ID of the file info to get */
         string $file_id,
-    ): \CedricZiel\MattermostPhp\Client\Model\FileInfo|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\FileInfo|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -275,7 +285,9 @@ class FilesEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -290,7 +302,7 @@ class FilesEndpoint
         string $file_id,
         /** File hash */
         string $h,
-    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\AppError|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -312,7 +324,9 @@ class FilesEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[501] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotImplementedResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 
     /**
@@ -337,7 +351,7 @@ class FilesEndpoint
         ?int $page = null,
         /** The number of posts per page. (Only works with Elasticsearch) */
         ?int $per_page = null,
-    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse {
+    ): \CedricZiel\MattermostPhp\Client\Model\FileInfoList|\CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -381,6 +395,8 @@ class FilesEndpoint
         $map[401] = \CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse::class;
         $map[403] = \CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 }

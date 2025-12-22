@@ -1031,6 +1031,44 @@ foreach ($openApi['paths'] as $path => $pathSpec) {
             }
         }
 
+        // Fallback: detect binary endpoints with no success response defined
+        // OR primitive-only responses that are actually binary (OpenAPI spec incorrectly defines them as string)
+        // Check operation summary/description for binary content hints
+        if (!$hasBinaryResponse && !$hasTextResponse && !$hasVoidResponse) {
+            $summary = strtolower($methodSpec['summary'] ?? '');
+            $description = strtolower($methodSpec['description'] ?? '');
+            $combinedText = $summary . ' ' . $description;
+
+            // Binary content indicators
+            $binaryKeywords = ['file', 'thumbnail', 'preview', 'download', 'icon', 'image', 'binary', 'export'];
+            $isBinaryEndpoint = false;
+
+            foreach ($binaryKeywords as $keyword) {
+                if (str_contains($combinedText, $keyword)) {
+                    // Exclude "file_id" parameter references
+                    if ($keyword === 'file' && str_contains($combinedText, 'file_id')) {
+                        // Also check for actual file content hints
+                        if (str_contains($combinedText, 'get a file') ||
+                            str_contains($combinedText, 'gets a file') ||
+                            str_contains($combinedText, 'download')) {
+                            $isBinaryEndpoint = true;
+                            break;
+                        }
+                        continue;
+                    }
+                    $isBinaryEndpoint = true;
+                    break;
+                }
+            }
+
+            if ($isBinaryEndpoint) {
+                $hasBinaryResponse = true;
+                $hasPrimitiveOnlyResponse = false; // Override - treat as binary, not primitive
+                $binaryMediaTypes[] = 'application/octet-stream';
+                addReturnType($method, '\\CedricZiel\\MattermostPhp\\Client\\Response\\BinaryResponse');
+            }
+        }
+
         // Track if this method needs binary response handling
         if ($hasBinaryResponse || $hasTextResponse) {
             $methodNeedsBinaryResponse[$class->getName() . '::' . $method->getName()] = array_unique($binaryMediaTypes);

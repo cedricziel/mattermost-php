@@ -459,7 +459,7 @@ class CloudEndpoint
      * @return \CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData[]
      */
     public function getPreviewModalData(
-    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse {
+    ): array|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse|\CedricZiel\MattermostPhp\Client\Response\BinaryResponse {
         $pathParameters = [];
         $queryParameters = [];
 
@@ -478,6 +478,8 @@ class CloudEndpoint
         $map[404] = \CedricZiel\MattermostPhp\Client\Model\DefaultNotFoundResponse::class;
         $map[500] = \CedricZiel\MattermostPhp\Client\Model\DefaultInternalServerErrorResponse::class;
 
-        return $this->mapResponse($response, $map);
+        $binaryMediaTypes = ['application/octet-stream'];
+
+        return $this->mapResponseWithMediaTypes($response, $map, $binaryMediaTypes);
     }
 }

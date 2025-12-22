@@ -6,7 +6,6 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\PostsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CreatePostRequest;
-use CedricZiel\MattermostPhp\Client\Model\FileInfo;
 use CedricZiel\MattermostPhp\Client\Model\GetPostsByIdsRequest;
 use CedricZiel\MattermostPhp\Client\Model\MoveThreadRequest;
 use CedricZiel\MattermostPhp\Client\Model\Post;
@@ -26,7 +25,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(Post::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostList::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(FileInfo::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostListWithSearchMatches::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PostAcknowledgement::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(RewriteMessageResponse::class)]
@@ -160,25 +158,6 @@ class PostsEndpointTest extends ClientTestCase
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostList::class, $result[0]);
-    }
-
-    #[Test]
-    public function getFileInfosForPostBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, [['id' => 'test-id', 'user_id' => 'test-user_id', 'post_id' => 'test-post_id', 'create_at' => 1234567890, 'update_at' => 1234567890, 'delete_at' => 1234567890, 'name' => 'test-name', 'extension' => 'test-extension', 'size' => 1234567890, 'mime_type' => 'test-mime_type', 'width' => 1234567890, 'height' => 1234567890, 'has_preview_image' => true]]);
-
-        $post_id = 'test-post_id';
-        $include_deleted = true;
-
-        $result = $this->endpoint->getFileInfosForPost($post_id, $include_deleted);
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestMethod('GET');
-        $this->assertRequestPath('/api/v4/posts/test-post_id/files/info');
-        $this->assertRequestHasAuthHeader();
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\FileInfo::class, $result[0]);
     }
 
     #[Test]

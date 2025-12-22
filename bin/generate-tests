@@ -50,13 +50,15 @@ echo sprintf("Loaded %d operations from OpenAPI spec\n", count($operationLookup)
 
 // Methods to skip due to SDK issues (multipart uploads, binary downloads, etc.)
 $skipMethods = [
-    // Multipart file upload / binary download endpoints
-    'BrandEndpoint' => ['uploadBrandImage', 'getBrandImage'],
+    // Multipart file upload endpoints (need special handling for mixed type params)
     'EmojiEndpoint' => ['createEmoji'],
-    'FilesEndpoint' => ['uploadFile', 'getFile', 'getFileThumbnail', 'getFilePreview', 'getFilePublic'],
     'PluginsEndpoint' => ['uploadPlugin'],
     'SystemEndpoint' => ['uploadLicenseFile', 'generateSupportPacket', 'getSupportedTimezone', 'getClientConfig', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld'],
     'UploadsEndpoint' => ['uploadData', 'getUpload'],
+
+    // Multipart file upload endpoints (continued)
+    'BrandEndpoint' => ['uploadBrandImage'],
+    'FilesEndpoint' => ['uploadFile'],
 
     // Void responses but with special issues
     'UsersEndpoint' => [
@@ -75,7 +77,6 @@ $skipMethods = [
     'GroupsEndpoint' => ['linkGroupSyncableForTeam', 'linkGroupSyncableForChannel'],
     'Integration_actionsEndpoint' => ['openInteractiveDialog', 'submitInteractiveDialog', 'lookupInteractiveDialog'],
     'InternalEndpoint' => ['getChecklistAutocomplete'],
-    'JobsEndpoint' => ['downloadJob'],
     'PermissionsEndpoint' => ['getAncillaryPermissionsPost'],
     'PlaybookRunsEndpoint' => ['getChannels', 'addChecklistItem', 'reoderChecklistItem', 'itemRename', 'itemDelete', 'itemSetState', 'itemSetAssignee', 'itemRun'],
     'PostsEndpoint' => ['createPostEphemeral'],
@@ -88,6 +89,12 @@ $skipMethods = [
 
 // Curated test cases for specific endpoints with special handling
 $curatedTests = [
+    'BrandEndpoint' => [
+        'getBrandImage' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+    ],
     'UsersEndpoint' => [
         'login' => [
             'testNoAuthHeader' => true,
@@ -103,6 +110,24 @@ $curatedTests = [
             'testMultipart' => true,
         ],
         'getFile' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'application/octet-stream',
+        ],
+        'getFileThumbnail' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+        'getFilePreview' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'image/png',
+        ],
+        'getFilePublic' => [
+            'testBinaryResponse' => true,
+            'contentType' => 'application/octet-stream',
+        ],
+    ],
+    'JobsEndpoint' => [
+        'downloadJob' => [
             'testBinaryResponse' => true,
             'contentType' => 'application/octet-stream',
         ],
@@ -929,7 +954,11 @@ function generateMethodTest(
     // Add response type assertions
     if ($isVoidResponse) {
         $test->addBody('$this->assertNull($result);');
-    } elseif (!$needsBinaryResponse && !$needsTextResponse && $canAssertResponse) {
+    } elseif ($needsBinaryResponse) {
+        $test->addBody('$this->assertInstanceOf(\\CedricZiel\\MattermostPhp\\Client\\Response\\BinaryResponse::class, $result);');
+    } elseif ($needsTextResponse) {
+        $test->addBody('$this->assertInstanceOf(\\CedricZiel\\MattermostPhp\\Client\\Response\\TextResponse::class, $result);');
+    } elseif ($canAssertResponse) {
         if ($isArrayReturn) {
             $test->addBody('$this->assertIsArray($result);');
             if ($modelClass !== null) {

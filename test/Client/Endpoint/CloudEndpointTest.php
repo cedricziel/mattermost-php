@@ -9,7 +9,6 @@ use CedricZiel\MattermostPhp\Client\Model\CloudCustomer;
 use CedricZiel\MattermostPhp\Client\Model\Installation;
 use CedricZiel\MattermostPhp\Client\Model\Invoice;
 use CedricZiel\MattermostPhp\Client\Model\PaymentSetupIntent;
-use CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData;
 use CedricZiel\MattermostPhp\Client\Model\Product;
 use CedricZiel\MattermostPhp\Client\Model\ProductLimits;
 use CedricZiel\MattermostPhp\Client\Model\Subscription;
@@ -25,7 +24,6 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(Subscription::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Installation::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Invoice::class)]
-#[\PHPUnit\Framework\Attributes\UsesClass(PreviewModalContentData::class)]
 class CloudEndpointTest extends ClientTestCase
 {
     public CloudEndpoint $endpoint;
@@ -158,21 +156,5 @@ class CloudEndpointTest extends ClientTestCase
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Invoice::class, $result[0]);
-    }
-
-    #[Test]
-    public function getPreviewModalDataBuildsCorrectRequest(): void
-    {
-        $this->mockJsonResponse(200, [['title' => 'test-title', 'subtitle' => 'test-subtitle', 'videoUrl' => 'test-videoUrl', 'videoPoster' => 'test-videoPoster', 'useCase' => 'test-useCase']]);
-
-        $result = $this->endpoint->getPreviewModalData();
-
-        $this->assertNotNull($this->getLastRequest());
-        $this->assertRequestMethod('GET');
-        $this->assertRequestPath('/api/v4/cloud/preview/modal_data');
-        $this->assertRequestHasAuthHeader();
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PreviewModalContentData::class, $result[0]);
     }
 }
