@@ -12,13 +12,19 @@ class System
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): System {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return System The hydrated instance
+     */
+    public static function hydrate(?array $data): System
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            name: isset($data['name']) ? $data['name'] : null,
-            value: isset($data['value']) ? $data['value'] : null,
+            name: $data['name'] ?? null,
+            value: $data['value'] ?? null,
         );
         return $object;
     }

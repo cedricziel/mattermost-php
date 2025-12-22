@@ -28,21 +28,27 @@ class SystemStatusResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SystemStatusResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SystemStatusResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): SystemStatusResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            AndroidLatestVersion: isset($data['AndroidLatestVersion']) ? $data['AndroidLatestVersion'] : null,
-            AndroidMinVersion: isset($data['AndroidMinVersion']) ? $data['AndroidMinVersion'] : null,
-            DesktopLatestVersion: isset($data['DesktopLatestVersion']) ? $data['DesktopLatestVersion'] : null,
-            DesktopMinVersion: isset($data['DesktopMinVersion']) ? $data['DesktopMinVersion'] : null,
-            IosLatestVersion: isset($data['IosLatestVersion']) ? $data['IosLatestVersion'] : null,
-            IosMinVersion: isset($data['IosMinVersion']) ? $data['IosMinVersion'] : null,
-            database_status: isset($data['database_status']) ? $data['database_status'] : null,
-            filestore_status: isset($data['filestore_status']) ? $data['filestore_status'] : null,
-            status: isset($data['status']) ? $data['status'] : null,
-            CanReceiveNotifications: isset($data['CanReceiveNotifications']) ? $data['CanReceiveNotifications'] : null,
+            AndroidLatestVersion: $data['AndroidLatestVersion'] ?? null,
+            AndroidMinVersion: $data['AndroidMinVersion'] ?? null,
+            DesktopLatestVersion: $data['DesktopLatestVersion'] ?? null,
+            DesktopMinVersion: $data['DesktopMinVersion'] ?? null,
+            IosLatestVersion: $data['IosLatestVersion'] ?? null,
+            IosMinVersion: $data['IosMinVersion'] ?? null,
+            database_status: $data['database_status'] ?? null,
+            filestore_status: $data['filestore_status'] ?? null,
+            status: $data['status'] ?? null,
+            CanReceiveNotifications: $data['CanReceiveNotifications'] ?? null,
         );
         return $object;
     }

@@ -12,13 +12,19 @@ class TeamReviewerConfig
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): TeamReviewerConfig {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return TeamReviewerConfig The hydrated instance
+     */
+    public static function hydrate(?array $data): TeamReviewerConfig
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            Enabled: isset($data['Enabled']) ? $data['Enabled'] : null,
-            ReviewerIds: isset($data['ReviewerIds']) ? $data['ReviewerIds'] : null,
+            Enabled: $data['Enabled'] ?? null,
+            ReviewerIds: $data['ReviewerIds'] ?? null,
         );
         return $object;
     }

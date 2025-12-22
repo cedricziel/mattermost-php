@@ -10,13 +10,19 @@ class UpdateChannelBookmarkResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UpdateChannelBookmarkResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UpdateChannelBookmarkResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): UpdateChannelBookmarkResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            updated: isset($data['updated']) ? $data['updated'] : null,
-            deleted: isset($data['deleted']) ? $data['deleted'] : null,
+            updated: $data['updated'] ?? null,
+            deleted: $data['deleted'] ?? null,
         );
         return $object;
     }

@@ -12,13 +12,19 @@ class PlaybookAutofollows
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PlaybookAutofollows {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PlaybookAutofollows The hydrated instance
+     */
+    public static function hydrate(?array $data): PlaybookAutofollows
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
-            items: isset($data['items']) ? $data['items'] : null,
+            total_count: $data['total_count'] ?? null,
+            items: $data['items'] ?? null,
         );
         return $object;
     }

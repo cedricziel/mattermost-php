@@ -28,20 +28,26 @@ class PluginManifest
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PluginManifest {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PluginManifest The hydrated instance
+     */
+    public static function hydrate(?array $data): PluginManifest
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            version: isset($data['version']) ? $data['version'] : null,
-            min_server_version: isset($data['min_server_version']) ? $data['min_server_version'] : null,
-            backend: isset($data['backend']) ? $data['backend'] : null,
-            server: isset($data['server']) ? $data['server'] : null,
-            webapp: isset($data['webapp']) ? $data['webapp'] : null,
-            settings_schema: isset($data['settings_schema']) ? $data['settings_schema'] : null,
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            version: $data['version'] ?? null,
+            min_server_version: $data['min_server_version'] ?? null,
+            backend: isset($data['backend']) ? (object) $data['backend'] : null,
+            server: isset($data['server']) ? (object) $data['server'] : null,
+            webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
+            settings_schema: isset($data['settings_schema']) ? (object) $data['settings_schema'] : null,
         );
         return $object;
     }

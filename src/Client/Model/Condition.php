@@ -21,18 +21,24 @@ class Condition
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Condition {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Condition The hydrated instance
+     */
+    public static function hydrate(?array $data): Condition
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            condition_expr: isset($data['condition_expr']) ? $data['condition_expr'] : null,
-            version: isset($data['version']) ? $data['version'] : null,
-            playbook_id: isset($data['playbook_id']) ? $data['playbook_id'] : null,
-            run_id: isset($data['run_id']) ? $data['run_id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            id: $data['id'] ?? null,
+            condition_expr: $data['condition_expr'] ?? null,
+            version: $data['version'] ?? null,
+            playbook_id: $data['playbook_id'] ?? null,
+            run_id: $data['run_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
         );
         return $object;
     }

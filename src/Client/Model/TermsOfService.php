@@ -16,15 +16,21 @@ class TermsOfService
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): TermsOfService {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return TermsOfService The hydrated instance
+     */
+    public static function hydrate(?array $data): TermsOfService
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            text: isset($data['text']) ? $data['text'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            text: $data['text'] ?? null,
         );
         return $object;
     }

@@ -29,23 +29,29 @@ class SharedChannel
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SharedChannel {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SharedChannel The hydrated instance
+     */
+    public static function hydrate(?array $data): SharedChannel
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            team_id: isset($data['team_id']) ? $data['team_id'] : null,
-            home: isset($data['home']) ? $data['home'] : null,
-            readonly: isset($data['readonly']) ? $data['readonly'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            purpose: isset($data['purpose']) ? $data['purpose'] : null,
-            header: isset($data['header']) ? $data['header'] : null,
-            creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            remote_id: isset($data['remote_id']) ? $data['remote_id'] : null,
+            id: $data['id'] ?? null,
+            team_id: $data['team_id'] ?? null,
+            home: $data['home'] ?? null,
+            readonly: $data['readonly'] ?? null,
+            name: $data['name'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            purpose: $data['purpose'] ?? null,
+            header: $data['header'] ?? null,
+            creator_id: $data['creator_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            remote_id: $data['remote_id'] ?? null,
         );
         return $object;
     }

@@ -10,13 +10,19 @@ class BoardsLimits
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): BoardsLimits {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return BoardsLimits The hydrated instance
+     */
+    public static function hydrate(?array $data): BoardsLimits
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            cards: isset($data['cards']) ? $data['cards'] : null,
-            views: isset($data['views']) ? $data['views'] : null,
+            cards: $data['cards'] ?? null,
+            views: $data['views'] ?? null,
         );
         return $object;
     }

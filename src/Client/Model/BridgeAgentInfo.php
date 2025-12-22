@@ -18,16 +18,22 @@ class BridgeAgentInfo
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): BridgeAgentInfo {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return BridgeAgentInfo The hydrated instance
+     */
+    public static function hydrate(?array $data): BridgeAgentInfo
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            displayName: isset($data['displayName']) ? $data['displayName'] : null,
-            username: isset($data['username']) ? $data['username'] : null,
-            service_id: isset($data['service_id']) ? $data['service_id'] : null,
-            service_type: isset($data['service_type']) ? $data['service_type'] : null,
+            id: $data['id'] ?? null,
+            displayName: $data['displayName'] ?? null,
+            username: $data['username'] ?? null,
+            service_id: $data['service_id'] ?? null,
+            service_type: $data['service_type'] ?? null,
         );
         return $object;
     }

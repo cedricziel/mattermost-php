@@ -26,24 +26,30 @@ class ScheduledPost
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ScheduledPost {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ScheduledPost The hydrated instance
+     */
+    public static function hydrate(?array $data): ScheduledPost
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            root_id: isset($data['root_id']) ? $data['root_id'] : null,
-            message: isset($data['message']) ? $data['message'] : null,
-            props: isset($data['props']) ? $data['props'] : null,
-            file_ids: isset($data['file_ids']) ? $data['file_ids'] : null,
-            scheduled_at: isset($data['scheduled_at']) ? $data['scheduled_at'] : null,
-            processed_at: isset($data['processed_at']) ? $data['processed_at'] : null,
-            error_code: isset($data['error_code']) ? $data['error_code'] : null,
-            metadata: isset($data['metadata']) ? $data['metadata'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            channel_id: $data['channel_id'] ?? null,
+            root_id: $data['root_id'] ?? null,
+            message: $data['message'] ?? null,
+            props: isset($data['props']) ? (object) $data['props'] : null,
+            file_ids: $data['file_ids'] ?? null,
+            scheduled_at: $data['scheduled_at'] ?? null,
+            processed_at: $data['processed_at'] ?? null,
+            error_code: $data['error_code'] ?? null,
+            metadata: $data['metadata'] ?? null,
         );
         return $object;
     }

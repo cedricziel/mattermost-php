@@ -10,12 +10,18 @@ class StorageUsage
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): StorageUsage {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return StorageUsage The hydrated instance
+     */
+    public static function hydrate(?array $data): StorageUsage
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            bytes: isset($data['bytes']) ? $data['bytes'] : null,
+            bytes: $data['bytes'] ?? null,
         );
         return $object;
     }

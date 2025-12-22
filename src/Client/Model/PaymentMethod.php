@@ -14,17 +14,23 @@ class PaymentMethod
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PaymentMethod {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PaymentMethod The hydrated instance
+     */
+    public static function hydrate(?array $data): PaymentMethod
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            type: isset($data['type']) ? $data['type'] : null,
-            last_four: isset($data['last_four']) ? $data['last_four'] : null,
-            exp_month: isset($data['exp_month']) ? $data['exp_month'] : null,
-            exp_year: isset($data['exp_year']) ? $data['exp_year'] : null,
-            card_brand: isset($data['card_brand']) ? $data['card_brand'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
+            type: $data['type'] ?? null,
+            last_four: $data['last_four'] ?? null,
+            exp_month: $data['exp_month'] ?? null,
+            exp_year: $data['exp_year'] ?? null,
+            card_brand: $data['card_brand'] ?? null,
+            name: $data['name'] ?? null,
         );
         return $object;
     }

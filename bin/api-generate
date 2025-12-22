@@ -278,13 +278,18 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
 {
     $hydrationMethod = $class->addMethod('hydrate')
         ->setReturnType($modelNamespace->getName() . '\\' . $class->getName())
-        ->setStatic();
+        ->setStatic()
+        ->addComment('Hydrate a new instance from an array of data.')
+        ->addComment('')
+        ->addComment('@param array<string, mixed>|null $data The data to hydrate from')
+        ->addComment('@return ' . $class->getName() . ' The hydrated instance');
 
-    $dataParameter = $hydrationMethod->addParameter('data')
+    $hydrationMethod->addParameter('data')
         ->setType('array')
-        ->setNullable()
-        ->setComment('@param array<string, mixed> $data');
+        ->setNullable();
 
+    $hydrationMethod->addBody('$data = $data ?? [];');
+    $hydrationMethod->addBody('');
     $hydrationMethod->addBody('$object = new self(');
 
     if ($class->hasMethod('__construct')) {
@@ -298,21 +303,21 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
             $parentClass = findModelClass($modelNamespace, $extendsName);
             if ($parentClass !== null && $parentClass->hasMethod('__construct')) {
                 $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-                    if ($property->getType() === 'stdClass') {
+                    if (str_contains($property->getType() ?? '', 'stdClass')) {
                         return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
                     }
 
-                    return sprintf('    %s: isset($data[\'%s\']) ? isset($data[\'%s\']) : null,', $property->getName(), $property->getName(), $property->getName());
+                    return sprintf('    %s: $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
                 }, $parentClass->getMethod('__construct')->getParameters())));
             }
         }
 
         $hydrationMethod->addBody(implode("\n", array_map(function ($property) {
-            if ($property->getType() === 'stdClass') {
+            if (str_contains($property->getType() ?? '', 'stdClass')) {
                 return sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $property->getName(), $property->getName(), $property->getName());
             }
 
-            return sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $property->getName(), $property->getName(),  $property->getName());
+            return sprintf('    %s: $data[\'%s\'] ?? null,', $property->getName(), $property->getName());
         }, $class->getMethod('__construct')?->getParameters())));
     }
 
@@ -326,10 +331,13 @@ function createHydrationMethod(PhpNamespace $modelNamespace, ClassType $class): 
 function createHydrationMethodForArrayBody(PhpNamespace $modelNamespace, ClassType $class, string $itemType): Method
 {
     $hydrationMethod = createHydrationMethod($modelNamespace, $class);
-    $hydrationMethod->setBody('$object = new self(' . PHP_EOL);
+    // Reset body but preserve null safety
+    $hydrationMethod->setBody('$data = $data ?? [];' . PHP_EOL);
+    $hydrationMethod->addBody('');
+    $hydrationMethod->addBody('$object = new self(');
 
     $hydrationMethod->addBody('    items: array_map(function ($item) {');
-    $hydrationMethod->addBody(sprintf('    return %s::hydrate($item);', $itemType));
+    $hydrationMethod->addBody(sprintf('        return %s::hydrate($item);', $itemType));
     $hydrationMethod->addBody('    }, $data[\'items\'] ?? []),');
 
     $hydrationMethod->addBody(');');
@@ -342,13 +350,18 @@ function createHydrationMethodForAllOf(PhpNamespace $modelNamespace, ClassType $
 {
     $hydrationMethod = $class->addMethod('hydrate')
         ->setReturnType($modelNamespace->getName() . '\\' . $class->getName())
-        ->setStatic();
+        ->setStatic()
+        ->addComment('Hydrate a new instance from an array of data.')
+        ->addComment('')
+        ->addComment('@param array<string, mixed>|null $data The data to hydrate from')
+        ->addComment('@return ' . $class->getName() . ' The hydrated instance');
 
     $hydrationMethod->addParameter('data')
         ->setType('array')
-        ->setNullable()
-        ->setComment('@param array<string, mixed> $data');
+        ->setNullable();
 
+    $hydrationMethod->addBody('$data = $data ?? [];');
+    $hydrationMethod->addBody('');
     $hydrationMethod->addBody('$object = new self(');
 
     // First, add parent class constructor parameters if there's a parent
@@ -358,10 +371,10 @@ function createHydrationMethodForAllOf(PhpNamespace $modelNamespace, ClassType $
         if ($parentClassType !== null && $parentClassType->hasMethod('__construct')) {
             foreach ($parentClassType->getMethod('__construct')->getParameters() as $parameter) {
                 $paramName = $parameter->getName();
-                if ($parameter->getType() === 'stdClass') {
+                if (str_contains($parameter->getType() ?? '', 'stdClass')) {
                     $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? (object) $data[\'%s\'] : null,', $paramName, $paramName, $paramName));
                 } else {
-                    $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $paramName, $paramName, $paramName));
+                    $hydrationMethod->addBody(sprintf('    %s: $data[\'%s\'] ?? null,', $paramName, $paramName));
                 }
             }
         }
@@ -378,7 +391,7 @@ function createHydrationMethodForAllOf(PhpNamespace $modelNamespace, ClassType $
             $refType = str_replace('#/components/schemas/', '', $property['$ref']);
             $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? %s::hydrate($data[\'%s\']) : null,', $propertyName, $propertyName, $refType, $propertyName));
         } else {
-            $hydrationMethod->addBody(sprintf('    %s: isset($data[\'%s\']) ? $data[\'%s\'] : null,', $propertyName, $propertyName, $propertyName));
+            $hydrationMethod->addBody(sprintf('    %s: $data[\'%s\'] ?? null,', $propertyName, $propertyName));
         }
     }
 

@@ -16,16 +16,22 @@ class DataRetentionPolicyWithTeamAndChannelCounts extends DataRetentionPolicy
         parent::__construct(display_name: $display_name, post_duration: $post_duration, id: $id);
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): DataRetentionPolicyWithTeamAndChannelCounts {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return DataRetentionPolicyWithTeamAndChannelCounts The hydrated instance
+     */
+    public static function hydrate(?array $data): DataRetentionPolicyWithTeamAndChannelCounts
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,
-            id: isset($data['id']) ? $data['id'] : null,
-            team_count: isset($data['team_count']) ? $data['team_count'] : null,
-            channel_count: isset($data['channel_count']) ? $data['channel_count'] : null,
+            display_name: $data['display_name'] ?? null,
+            post_duration: $data['post_duration'] ?? null,
+            id: $data['id'] ?? null,
+            team_count: $data['team_count'] ?? null,
+            channel_count: $data['channel_count'] ?? null,
         );
         return $object;
     }

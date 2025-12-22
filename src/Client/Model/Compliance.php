@@ -19,22 +19,28 @@ class Compliance
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Compliance {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Compliance The hydrated instance
+     */
+    public static function hydrate(?array $data): Compliance
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            status: isset($data['status']) ? $data['status'] : null,
-            count: isset($data['count']) ? $data['count'] : null,
-            desc: isset($data['desc']) ? $data['desc'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            start_at: isset($data['start_at']) ? $data['start_at'] : null,
-            end_at: isset($data['end_at']) ? $data['end_at'] : null,
-            keywords: isset($data['keywords']) ? $data['keywords'] : null,
-            emails: isset($data['emails']) ? $data['emails'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            status: $data['status'] ?? null,
+            count: $data['count'] ?? null,
+            desc: $data['desc'] ?? null,
+            type: $data['type'] ?? null,
+            start_at: $data['start_at'] ?? null,
+            end_at: $data['end_at'] ?? null,
+            keywords: $data['keywords'] ?? null,
+            emails: $data['emails'] ?? null,
         );
         return $object;
     }

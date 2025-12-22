@@ -18,16 +18,22 @@ class ReviewerSettings
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ReviewerSettings {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ReviewerSettings The hydrated instance
+     */
+    public static function hydrate(?array $data): ReviewerSettings
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            CommonReviewers: isset($data['CommonReviewers']) ? $data['CommonReviewers'] : null,
-            SystemAdminsAsReviewers: isset($data['SystemAdminsAsReviewers']) ? $data['SystemAdminsAsReviewers'] : null,
-            TeamAdminsAsReviewers: isset($data['TeamAdminsAsReviewers']) ? $data['TeamAdminsAsReviewers'] : null,
-            CommonReviewerIds: isset($data['CommonReviewerIds']) ? $data['CommonReviewerIds'] : null,
-            TeamReviewersSetting: isset($data['TeamReviewersSetting']) ? $data['TeamReviewersSetting'] : null,
+            CommonReviewers: $data['CommonReviewers'] ?? null,
+            SystemAdminsAsReviewers: $data['SystemAdminsAsReviewers'] ?? null,
+            TeamAdminsAsReviewers: $data['TeamAdminsAsReviewers'] ?? null,
+            CommonReviewerIds: $data['CommonReviewerIds'] ?? null,
+            TeamReviewersSetting: isset($data['TeamReviewersSetting']) ? (object) $data['TeamReviewersSetting'] : null,
         );
         return $object;
     }

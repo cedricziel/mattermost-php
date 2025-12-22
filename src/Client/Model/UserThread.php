@@ -22,17 +22,23 @@ class UserThread
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserThread {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserThread The hydrated instance
+     */
+    public static function hydrate(?array $data): UserThread
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            reply_count: isset($data['reply_count']) ? $data['reply_count'] : null,
-            last_reply_at: isset($data['last_reply_at']) ? $data['last_reply_at'] : null,
-            last_viewed_at: isset($data['last_viewed_at']) ? $data['last_viewed_at'] : null,
-            participants: isset($data['participants']) ? $data['participants'] : null,
-            post: isset($data['post']) ? $data['post'] : null,
+            id: $data['id'] ?? null,
+            reply_count: $data['reply_count'] ?? null,
+            last_reply_at: $data['last_reply_at'] ?? null,
+            last_viewed_at: $data['last_viewed_at'] ?? null,
+            participants: $data['participants'] ?? null,
+            post: $data['post'] ?? null,
         );
         return $object;
     }

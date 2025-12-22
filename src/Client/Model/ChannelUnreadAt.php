@@ -18,16 +18,22 @@ class ChannelUnreadAt
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelUnreadAt {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelUnreadAt The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelUnreadAt
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            team_id: isset($data['team_id']) ? $data['team_id'] : null,
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            msg_count: isset($data['msg_count']) ? $data['msg_count'] : null,
-            mention_count: isset($data['mention_count']) ? $data['mention_count'] : null,
-            last_viewed_at: isset($data['last_viewed_at']) ? $data['last_viewed_at'] : null,
+            team_id: $data['team_id'] ?? null,
+            channel_id: $data['channel_id'] ?? null,
+            msg_count: $data['msg_count'] ?? null,
+            mention_count: $data['mention_count'] ?? null,
+            last_viewed_at: $data['last_viewed_at'] ?? null,
         );
         return $object;
     }

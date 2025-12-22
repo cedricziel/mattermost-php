@@ -12,13 +12,19 @@ class AccessControlPolicyTestResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AccessControlPolicyTestResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AccessControlPolicyTestResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): AccessControlPolicyTestResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            users: isset($data['users']) ? $data['users'] : null,
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
+            users: $data['users'] ?? null,
+            total_count: $data['total_count'] ?? null,
         );
         return $object;
     }

@@ -28,21 +28,27 @@ class OAuthApp
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): OAuthApp {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return OAuthApp The hydrated instance
+     */
+    public static function hydrate(?array $data): OAuthApp
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            client_secret: isset($data['client_secret']) ? $data['client_secret'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            icon_url: isset($data['icon_url']) ? $data['icon_url'] : null,
-            callback_urls: isset($data['callback_urls']) ? $data['callback_urls'] : null,
-            homepage: isset($data['homepage']) ? $data['homepage'] : null,
-            is_trusted: isset($data['is_trusted']) ? $data['is_trusted'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
+            id: $data['id'] ?? null,
+            client_secret: $data['client_secret'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            icon_url: $data['icon_url'] ?? null,
+            callback_urls: $data['callback_urls'] ?? null,
+            homepage: $data['homepage'] ?? null,
+            is_trusted: $data['is_trusted'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
         );
         return $object;
     }

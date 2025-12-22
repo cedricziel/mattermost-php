@@ -9,12 +9,18 @@ class GetFileLinkResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GetFileLinkResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GetFileLinkResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): GetFileLinkResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            link: isset($data['link']) ? $data['link'] : null,
+            link: $data['link'] ?? null,
         );
         return $object;
     }

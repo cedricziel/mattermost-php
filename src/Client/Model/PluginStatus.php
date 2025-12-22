@@ -22,18 +22,24 @@ class PluginStatus
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PluginStatus {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PluginStatus The hydrated instance
+     */
+    public static function hydrate(?array $data): PluginStatus
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            plugin_id: isset($data['plugin_id']) ? $data['plugin_id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            version: isset($data['version']) ? $data['version'] : null,
-            cluster_id: isset($data['cluster_id']) ? $data['cluster_id'] : null,
-            plugin_path: isset($data['plugin_path']) ? $data['plugin_path'] : null,
-            state: isset($data['state']) ? $data['state'] : null,
+            plugin_id: $data['plugin_id'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            version: $data['version'] ?? null,
+            cluster_id: $data['cluster_id'] ?? null,
+            plugin_path: $data['plugin_path'] ?? null,
+            state: $data['state'] ?? null,
         );
         return $object;
     }

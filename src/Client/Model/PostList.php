@@ -16,16 +16,22 @@ class PostList
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PostList {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PostList The hydrated instance
+     */
+    public static function hydrate(?array $data): PostList
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            order: isset($data['order']) ? $data['order'] : null,
-            posts: isset($data['posts']) ? $data['posts'] : null,
-            next_post_id: isset($data['next_post_id']) ? $data['next_post_id'] : null,
-            prev_post_id: isset($data['prev_post_id']) ? $data['prev_post_id'] : null,
-            has_next: isset($data['has_next']) ? $data['has_next'] : null,
+            order: $data['order'] ?? null,
+            posts: isset($data['posts']) ? (object) $data['posts'] : null,
+            next_post_id: $data['next_post_id'] ?? null,
+            prev_post_id: $data['prev_post_id'] ?? null,
+            has_next: $data['has_next'] ?? null,
         );
         return $object;
     }

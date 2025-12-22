@@ -16,15 +16,21 @@ class ChannelNotifyProps
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelNotifyProps {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelNotifyProps The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelNotifyProps
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            email: isset($data['email']) ? $data['email'] : null,
-            push: isset($data['push']) ? $data['push'] : null,
-            desktop: isset($data['desktop']) ? $data['desktop'] : null,
-            mark_unread: isset($data['mark_unread']) ? $data['mark_unread'] : null,
+            email: $data['email'] ?? null,
+            push: $data['push'] ?? null,
+            desktop: $data['desktop'] ?? null,
+            mark_unread: $data['mark_unread'] ?? null,
         );
         return $object;
     }

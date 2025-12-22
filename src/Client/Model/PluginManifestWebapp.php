@@ -13,14 +13,20 @@ class PluginManifestWebapp
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PluginManifestWebapp {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PluginManifestWebapp The hydrated instance
+     */
+    public static function hydrate(?array $data): PluginManifestWebapp
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            version: isset($data['version']) ? $data['version'] : null,
-            webapp: isset($data['webapp']) ? $data['webapp'] : null,
+            id: $data['id'] ?? null,
+            version: $data['version'] ?? null,
+            webapp: isset($data['webapp']) ? (object) $data['webapp'] : null,
         );
         return $object;
     }

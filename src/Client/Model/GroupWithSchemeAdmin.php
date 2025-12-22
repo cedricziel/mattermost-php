@@ -13,13 +13,19 @@ class GroupWithSchemeAdmin
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GroupWithSchemeAdmin {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GroupWithSchemeAdmin The hydrated instance
+     */
+    public static function hydrate(?array $data): GroupWithSchemeAdmin
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            group: isset($data['group']) ? $data['group'] : null,
-            scheme_admin: isset($data['scheme_admin']) ? $data['scheme_admin'] : null,
+            group: $data['group'] ?? null,
+            scheme_admin: $data['scheme_admin'] ?? null,
         );
         return $object;
     }

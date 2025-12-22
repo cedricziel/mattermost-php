@@ -18,21 +18,27 @@ class Group
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Group {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Group The hydrated instance
+     */
+    public static function hydrate(?array $data): Group
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            source: isset($data['source']) ? $data['source'] : null,
-            remote_id: isset($data['remote_id']) ? $data['remote_id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            has_syncables: isset($data['has_syncables']) ? $data['has_syncables'] : null,
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            description: $data['description'] ?? null,
+            source: $data['source'] ?? null,
+            remote_id: $data['remote_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            has_syncables: $data['has_syncables'] ?? null,
         );
         return $object;
     }

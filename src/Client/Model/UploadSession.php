@@ -27,19 +27,25 @@ class UploadSession
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UploadSession {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UploadSession The hydrated instance
+     */
+    public static function hydrate(?array $data): UploadSession
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            filename: isset($data['filename']) ? $data['filename'] : null,
-            file_size: isset($data['file_size']) ? $data['file_size'] : null,
-            file_offset: isset($data['file_offset']) ? $data['file_offset'] : null,
+            id: $data['id'] ?? null,
+            type: $data['type'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            channel_id: $data['channel_id'] ?? null,
+            filename: $data['filename'] ?? null,
+            file_size: $data['file_size'] ?? null,
+            file_offset: $data['file_offset'] ?? null,
         );
         return $object;
     }

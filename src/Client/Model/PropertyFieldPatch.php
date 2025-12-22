@@ -13,16 +13,22 @@ class PropertyFieldPatch
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PropertyFieldPatch {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PropertyFieldPatch The hydrated instance
+     */
+    public static function hydrate(?array $data): PropertyFieldPatch
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            name: isset($data['name']) ? $data['name'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            attrs: isset($data['attrs']) ? $data['attrs'] : null,
-            target_id: isset($data['target_id']) ? $data['target_id'] : null,
-            target_type: isset($data['target_type']) ? $data['target_type'] : null,
+            name: $data['name'] ?? null,
+            type: $data['type'] ?? null,
+            attrs: isset($data['attrs']) ? (object) $data['attrs'] : null,
+            target_id: $data['target_id'] ?? null,
+            target_type: $data['target_type'] ?? null,
         );
         return $object;
     }

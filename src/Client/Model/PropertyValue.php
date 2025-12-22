@@ -20,17 +20,23 @@ class PropertyValue
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PropertyValue {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PropertyValue The hydrated instance
+     */
+    public static function hydrate(?array $data): PropertyValue
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            field_id: isset($data['field_id']) ? $data['field_id'] : null,
-            value: isset($data['value']) ? $data['value'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            id: $data['id'] ?? null,
+            field_id: $data['field_id'] ?? null,
+            value: $data['value'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
         );
         return $object;
     }

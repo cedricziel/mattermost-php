@@ -24,19 +24,25 @@ class Job
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Job {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Job The hydrated instance
+     */
+    public static function hydrate(?array $data): Job
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            start_at: isset($data['start_at']) ? $data['start_at'] : null,
-            last_activity_at: isset($data['last_activity_at']) ? $data['last_activity_at'] : null,
-            status: isset($data['status']) ? $data['status'] : null,
-            progress: isset($data['progress']) ? $data['progress'] : null,
-            data: isset($data['data']) ? $data['data'] : null,
+            id: $data['id'] ?? null,
+            type: $data['type'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            start_at: $data['start_at'] ?? null,
+            last_activity_at: $data['last_activity_at'] ?? null,
+            status: $data['status'] ?? null,
+            progress: $data['progress'] ?? null,
+            data: isset($data['data']) ? (object) $data['data'] : null,
         );
         return $object;
     }

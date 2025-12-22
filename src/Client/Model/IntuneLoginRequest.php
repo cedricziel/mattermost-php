@@ -15,13 +15,19 @@ class IntuneLoginRequest
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): IntuneLoginRequest {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return IntuneLoginRequest The hydrated instance
+     */
+    public static function hydrate(?array $data): IntuneLoginRequest
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            access_token: isset($data['access_token']) ? $data['access_token'] : null,
-            device_id: isset($data['device_id']) ? $data['device_id'] : null,
+            access_token: $data['access_token'] ?? null,
+            device_id: $data['device_id'] ?? null,
         );
         return $object;
     }

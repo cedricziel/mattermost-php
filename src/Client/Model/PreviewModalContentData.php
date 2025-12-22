@@ -17,17 +17,23 @@ class PreviewModalContentData
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PreviewModalContentData {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PreviewModalContentData The hydrated instance
+     */
+    public static function hydrate(?array $data): PreviewModalContentData
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            skuLabel: isset($data['skuLabel']) ? $data['skuLabel'] : null,
-            title: isset($data['title']) ? $data['title'] : null,
-            subtitle: isset($data['subtitle']) ? $data['subtitle'] : null,
-            videoUrl: isset($data['videoUrl']) ? $data['videoUrl'] : null,
-            videoPoster: isset($data['videoPoster']) ? $data['videoPoster'] : null,
-            useCase: isset($data['useCase']) ? $data['useCase'] : null,
+            skuLabel: $data['skuLabel'] ?? null,
+            title: $data['title'] ?? null,
+            subtitle: $data['subtitle'] ?? null,
+            videoUrl: $data['videoUrl'] ?? null,
+            videoPoster: $data['videoPoster'] ?? null,
+            useCase: $data['useCase'] ?? null,
         );
         return $object;
     }

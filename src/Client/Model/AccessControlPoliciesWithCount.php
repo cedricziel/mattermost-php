@@ -11,13 +11,19 @@ class AccessControlPoliciesWithCount
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AccessControlPoliciesWithCount {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AccessControlPoliciesWithCount The hydrated instance
+     */
+    public static function hydrate(?array $data): AccessControlPoliciesWithCount
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            policies: isset($data['policies']) ? $data['policies'] : null,
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
+            policies: $data['policies'] ?? null,
+            total_count: $data['total_count'] ?? null,
         );
         return $object;
     }

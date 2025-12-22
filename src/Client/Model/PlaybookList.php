@@ -16,15 +16,21 @@ class PlaybookList
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PlaybookList {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PlaybookList The hydrated instance
+     */
+    public static function hydrate(?array $data): PlaybookList
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
-            page_count: isset($data['page_count']) ? $data['page_count'] : null,
-            has_more: isset($data['has_more']) ? $data['has_more'] : null,
-            items: isset($data['items']) ? $data['items'] : null,
+            total_count: $data['total_count'] ?? null,
+            page_count: $data['page_count'] ?? null,
+            has_more: $data['has_more'] ?? null,
+            items: $data['items'] ?? null,
         );
         return $object;
     }

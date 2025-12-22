@@ -10,12 +10,18 @@ class UserAutocompleteInTeam
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserAutocompleteInTeam {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserAutocompleteInTeam The hydrated instance
+     */
+    public static function hydrate(?array $data): UserAutocompleteInTeam
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            in_team: isset($data['in_team']) ? $data['in_team'] : null,
+            in_team: $data['in_team'] ?? null,
         );
         return $object;
     }

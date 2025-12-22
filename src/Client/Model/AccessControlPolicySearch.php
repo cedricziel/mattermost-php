@@ -23,19 +23,25 @@ class AccessControlPolicySearch
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AccessControlPolicySearch {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AccessControlPolicySearch The hydrated instance
+     */
+    public static function hydrate(?array $data): AccessControlPolicySearch
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            term: isset($data['term']) ? $data['term'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            parent_id: isset($data['parent_id']) ? $data['parent_id'] : null,
-            ids: isset($data['ids']) ? $data['ids'] : null,
-            active: isset($data['active']) ? $data['active'] : null,
-            include_children: isset($data['include_children']) ? $data['include_children'] : null,
-            cursor: isset($data['cursor']) ? $data['cursor'] : null,
-            limit: isset($data['limit']) ? $data['limit'] : null,
+            term: $data['term'] ?? null,
+            type: $data['type'] ?? null,
+            parent_id: $data['parent_id'] ?? null,
+            ids: $data['ids'] ?? null,
+            active: $data['active'] ?? null,
+            include_children: $data['include_children'] ?? null,
+            cursor: $data['cursor'] ?? null,
+            limit: $data['limit'] ?? null,
         );
         return $object;
     }

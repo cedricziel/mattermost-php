@@ -9,12 +9,18 @@ class TeamExists
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): TeamExists {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return TeamExists The hydrated instance
+     */
+    public static function hydrate(?array $data): TeamExists
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            exists: isset($data['exists']) ? $data['exists'] : null,
+            exists: $data['exists'] ?? null,
         );
         return $object;
     }

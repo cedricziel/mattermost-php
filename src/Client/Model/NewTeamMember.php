@@ -18,18 +18,24 @@ class NewTeamMember
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): NewTeamMember {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return NewTeamMember The hydrated instance
+     */
+    public static function hydrate(?array $data): NewTeamMember
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            username: isset($data['username']) ? $data['username'] : null,
-            first_name: isset($data['first_name']) ? $data['first_name'] : null,
-            last_name: isset($data['last_name']) ? $data['last_name'] : null,
-            nickname: isset($data['nickname']) ? $data['nickname'] : null,
-            position: isset($data['position']) ? $data['position'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            id: $data['id'] ?? null,
+            username: $data['username'] ?? null,
+            first_name: $data['first_name'] ?? null,
+            last_name: $data['last_name'] ?? null,
+            nickname: $data['nickname'] ?? null,
+            position: $data['position'] ?? null,
+            create_at: $data['create_at'] ?? null,
         );
         return $object;
     }

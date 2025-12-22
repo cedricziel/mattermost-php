@@ -12,13 +12,19 @@ class ViewChannelResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ViewChannelResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ViewChannelResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): ViewChannelResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            status: isset($data['status']) ? $data['status'] : null,
-            last_viewed_at_times: isset($data['last_viewed_at_times']) ? $data['last_viewed_at_times'] : null,
+            status: $data['status'] ?? null,
+            last_viewed_at_times: isset($data['last_viewed_at_times']) ? (object) $data['last_viewed_at_times'] : null,
         );
         return $object;
     }

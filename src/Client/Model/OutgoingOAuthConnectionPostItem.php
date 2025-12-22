@@ -24,19 +24,25 @@ class OutgoingOAuthConnectionPostItem
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): OutgoingOAuthConnectionPostItem {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return OutgoingOAuthConnectionPostItem The hydrated instance
+     */
+    public static function hydrate(?array $data): OutgoingOAuthConnectionPostItem
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            name: isset($data['name']) ? $data['name'] : null,
-            client_id: isset($data['client_id']) ? $data['client_id'] : null,
-            client_secret: isset($data['client_secret']) ? $data['client_secret'] : null,
-            credentials_username: isset($data['credentials_username']) ? $data['credentials_username'] : null,
-            credentials_password: isset($data['credentials_password']) ? $data['credentials_password'] : null,
-            oauth_token_url: isset($data['oauth_token_url']) ? $data['oauth_token_url'] : null,
-            grant_type: isset($data['grant_type']) ? $data['grant_type'] : null,
-            audiences: isset($data['audiences']) ? $data['audiences'] : null,
+            name: $data['name'] ?? null,
+            client_id: $data['client_id'] ?? null,
+            client_secret: $data['client_secret'] ?? null,
+            credentials_username: $data['credentials_username'] ?? null,
+            credentials_password: $data['credentials_password'] ?? null,
+            oauth_token_url: $data['oauth_token_url'] ?? null,
+            grant_type: $data['grant_type'] ?? null,
+            audiences: $data['audiences'] ?? null,
         );
         return $object;
     }

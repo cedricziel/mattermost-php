@@ -13,16 +13,22 @@ class Product
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Product {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Product The hydrated instance
+     */
+    public static function hydrate(?array $data): Product
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            price_per_seat: isset($data['price_per_seat']) ? $data['price_per_seat'] : null,
-            add_ons: isset($data['add_ons']) ? $data['add_ons'] : null,
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            price_per_seat: $data['price_per_seat'] ?? null,
+            add_ons: $data['add_ons'] ?? null,
         );
         return $object;
     }

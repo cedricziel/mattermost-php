@@ -16,15 +16,21 @@ class UserAccessTokenSanitized
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserAccessTokenSanitized {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserAccessTokenSanitized The hydrated instance
+     */
+    public static function hydrate(?array $data): UserAccessTokenSanitized
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            is_active: isset($data['is_active']) ? $data['is_active'] : null,
+            id: $data['id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            description: $data['description'] ?? null,
+            is_active: $data['is_active'] ?? null,
         );
         return $object;
     }

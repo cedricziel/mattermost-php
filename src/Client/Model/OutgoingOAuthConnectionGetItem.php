@@ -20,17 +20,23 @@ class OutgoingOAuthConnectionGetItem
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): OutgoingOAuthConnectionGetItem {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return OutgoingOAuthConnectionGetItem The hydrated instance
+     */
+    public static function hydrate(?array $data): OutgoingOAuthConnectionGetItem
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            grant_type: isset($data['grant_type']) ? $data['grant_type'] : null,
-            audiences: isset($data['audiences']) ? $data['audiences'] : null,
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            grant_type: $data['grant_type'] ?? null,
+            audiences: $data['audiences'] ?? null,
         );
         return $object;
     }

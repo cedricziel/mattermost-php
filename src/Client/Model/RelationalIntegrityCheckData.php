@@ -21,16 +21,22 @@ class RelationalIntegrityCheckData
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): RelationalIntegrityCheckData {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return RelationalIntegrityCheckData The hydrated instance
+     */
+    public static function hydrate(?array $data): RelationalIntegrityCheckData
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            parent_name: isset($data['parent_name']) ? $data['parent_name'] : null,
-            child_name: isset($data['child_name']) ? $data['child_name'] : null,
-            parent_id_attr: isset($data['parent_id_attr']) ? $data['parent_id_attr'] : null,
-            child_id_attr: isset($data['child_id_attr']) ? $data['child_id_attr'] : null,
-            records: isset($data['records']) ? $data['records'] : null,
+            parent_name: $data['parent_name'] ?? null,
+            child_name: $data['child_name'] ?? null,
+            parent_id_attr: $data['parent_id_attr'] ?? null,
+            child_id_attr: $data['child_id_attr'] ?? null,
+            records: $data['records'] ?? null,
         );
         return $object;
     }

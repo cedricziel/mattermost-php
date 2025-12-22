@@ -11,13 +11,19 @@ class ChannelsWithCount
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelsWithCount {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelsWithCount The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelsWithCount
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            channels: isset($data['channels']) ? $data['channels'] : null,
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
+            channels: $data['channels'] ?? null,
+            total_count: $data['total_count'] ?? null,
         );
         return $object;
     }

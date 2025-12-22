@@ -29,20 +29,26 @@ class ClientRegistrationResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ClientRegistrationResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ClientRegistrationResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): ClientRegistrationResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            client_id: isset($data['client_id']) ? $data['client_id'] : null,
-            client_secret: isset($data['client_secret']) ? $data['client_secret'] : null,
-            redirect_uris: isset($data['redirect_uris']) ? $data['redirect_uris'] : null,
-            token_endpoint_auth_method: isset($data['token_endpoint_auth_method']) ? $data['token_endpoint_auth_method'] : null,
-            grant_types: isset($data['grant_types']) ? $data['grant_types'] : null,
-            response_types: isset($data['response_types']) ? $data['response_types'] : null,
-            scope: isset($data['scope']) ? $data['scope'] : null,
-            client_name: isset($data['client_name']) ? $data['client_name'] : null,
-            client_uri: isset($data['client_uri']) ? $data['client_uri'] : null,
+            client_id: $data['client_id'] ?? null,
+            client_secret: $data['client_secret'] ?? null,
+            redirect_uris: $data['redirect_uris'] ?? null,
+            token_endpoint_auth_method: $data['token_endpoint_auth_method'] ?? null,
+            grant_types: $data['grant_types'] ?? null,
+            response_types: $data['response_types'] ?? null,
+            scope: $data['scope'] ?? null,
+            client_name: $data['client_name'] ?? null,
+            client_uri: $data['client_uri'] ?? null,
         );
         return $object;
     }

@@ -40,27 +40,33 @@ class ChecklistItem
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChecklistItem {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChecklistItem The hydrated instance
+     */
+    public static function hydrate(?array $data): ChecklistItem
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            title: isset($data['title']) ? $data['title'] : null,
-            state: isset($data['state']) ? $data['state'] : null,
-            state_modified: isset($data['state_modified']) ? $data['state_modified'] : null,
-            assignee_id: isset($data['assignee_id']) ? $data['assignee_id'] : null,
-            assignee_modified: isset($data['assignee_modified']) ? $data['assignee_modified'] : null,
-            command: isset($data['command']) ? $data['command'] : null,
-            command_last_run: isset($data['command_last_run']) ? $data['command_last_run'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            due_date: isset($data['due_date']) ? $data['due_date'] : null,
-            task_actions: isset($data['task_actions']) ? $data['task_actions'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            condition_id: isset($data['condition_id']) ? $data['condition_id'] : null,
-            condition_action: isset($data['condition_action']) ? $data['condition_action'] : null,
-            condition_reason: isset($data['condition_reason']) ? $data['condition_reason'] : null,
+            id: $data['id'] ?? null,
+            title: $data['title'] ?? null,
+            state: $data['state'] ?? null,
+            state_modified: $data['state_modified'] ?? null,
+            assignee_id: $data['assignee_id'] ?? null,
+            assignee_modified: $data['assignee_modified'] ?? null,
+            command: $data['command'] ?? null,
+            command_last_run: $data['command_last_run'] ?? null,
+            description: $data['description'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            due_date: $data['due_date'] ?? null,
+            task_actions: $data['task_actions'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            condition_id: $data['condition_id'] ?? null,
+            condition_action: $data['condition_action'] ?? null,
+            condition_reason: $data['condition_reason'] ?? null,
         );
         return $object;
     }

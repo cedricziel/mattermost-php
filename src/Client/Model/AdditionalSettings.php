@@ -16,15 +16,21 @@ class AdditionalSettings
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AdditionalSettings {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AdditionalSettings The hydrated instance
+     */
+    public static function hydrate(?array $data): AdditionalSettings
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            Reasons: isset($data['Reasons']) ? $data['Reasons'] : null,
-            ReporterCommentRequired: isset($data['ReporterCommentRequired']) ? $data['ReporterCommentRequired'] : null,
-            ReviewerCommentRequired: isset($data['ReviewerCommentRequired']) ? $data['ReviewerCommentRequired'] : null,
-            HideFlaggedContent: isset($data['HideFlaggedContent']) ? $data['HideFlaggedContent'] : null,
+            Reasons: $data['Reasons'] ?? null,
+            ReporterCommentRequired: $data['ReporterCommentRequired'] ?? null,
+            ReviewerCommentRequired: $data['ReviewerCommentRequired'] ?? null,
+            HideFlaggedContent: $data['HideFlaggedContent'] ?? null,
         );
         return $object;
     }

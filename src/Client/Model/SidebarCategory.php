@@ -16,16 +16,22 @@ class SidebarCategory
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SidebarCategory {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SidebarCategory The hydrated instance
+     */
+    public static function hydrate(?array $data): SidebarCategory
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            team_id: isset($data['team_id']) ? $data['team_id'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
+            id: $data['id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            team_id: $data['team_id'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            type: $data['type'] ?? null,
         );
         return $object;
     }

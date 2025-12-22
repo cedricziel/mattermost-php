@@ -14,14 +14,20 @@ class SamlCertificateStatus
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SamlCertificateStatus {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SamlCertificateStatus The hydrated instance
+     */
+    public static function hydrate(?array $data): SamlCertificateStatus
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            idp_certificate_file: isset($data['idp_certificate_file']) ? $data['idp_certificate_file'] : null,
-            public_certificate_file: isset($data['public_certificate_file']) ? $data['public_certificate_file'] : null,
-            private_key_file: isset($data['private_key_file']) ? $data['private_key_file'] : null,
+            idp_certificate_file: $data['idp_certificate_file'] ?? null,
+            public_certificate_file: $data['public_certificate_file'] ?? null,
+            private_key_file: $data['private_key_file'] ?? null,
         );
         return $object;
     }

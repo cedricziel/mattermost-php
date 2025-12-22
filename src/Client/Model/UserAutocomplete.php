@@ -12,13 +12,19 @@ class UserAutocomplete
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserAutocomplete {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserAutocomplete The hydrated instance
+     */
+    public static function hydrate(?array $data): UserAutocomplete
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            users: isset($data['users']) ? $data['users'] : null,
-            out_of_channel: isset($data['out_of_channel']) ? $data['out_of_channel'] : null,
+            users: $data['users'] ?? null,
+            out_of_channel: $data['out_of_channel'] ?? null,
         );
         return $object;
     }

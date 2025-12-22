@@ -14,13 +14,19 @@ class LDAPGroupsPaged
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): LDAPGroupsPaged {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return LDAPGroupsPaged The hydrated instance
+     */
+    public static function hydrate(?array $data): LDAPGroupsPaged
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            count: isset($data['count']) ? $data['count'] : null,
-            groups: isset($data['groups']) ? $data['groups'] : null,
+            count: $data['count'] ?? null,
+            groups: $data['groups'] ?? null,
         );
         return $object;
     }

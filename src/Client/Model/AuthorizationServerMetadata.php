@@ -29,20 +29,26 @@ class AuthorizationServerMetadata
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AuthorizationServerMetadata {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AuthorizationServerMetadata The hydrated instance
+     */
+    public static function hydrate(?array $data): AuthorizationServerMetadata
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            issuer: isset($data['issuer']) ? $data['issuer'] : null,
-            authorization_endpoint: isset($data['authorization_endpoint']) ? $data['authorization_endpoint'] : null,
-            token_endpoint: isset($data['token_endpoint']) ? $data['token_endpoint'] : null,
-            response_types_supported: isset($data['response_types_supported']) ? $data['response_types_supported'] : null,
-            registration_endpoint: isset($data['registration_endpoint']) ? $data['registration_endpoint'] : null,
-            scopes_supported: isset($data['scopes_supported']) ? $data['scopes_supported'] : null,
-            grant_types_supported: isset($data['grant_types_supported']) ? $data['grant_types_supported'] : null,
-            token_endpoint_auth_methods_supported: isset($data['token_endpoint_auth_methods_supported']) ? $data['token_endpoint_auth_methods_supported'] : null,
-            code_challenge_methods_supported: isset($data['code_challenge_methods_supported']) ? $data['code_challenge_methods_supported'] : null,
+            issuer: $data['issuer'] ?? null,
+            authorization_endpoint: $data['authorization_endpoint'] ?? null,
+            token_endpoint: $data['token_endpoint'] ?? null,
+            response_types_supported: $data['response_types_supported'] ?? null,
+            registration_endpoint: $data['registration_endpoint'] ?? null,
+            scopes_supported: $data['scopes_supported'] ?? null,
+            grant_types_supported: $data['grant_types_supported'] ?? null,
+            token_endpoint_auth_methods_supported: $data['token_endpoint_auth_methods_supported'] ?? null,
+            code_challenge_methods_supported: $data['code_challenge_methods_supported'] ?? null,
         );
         return $object;
     }

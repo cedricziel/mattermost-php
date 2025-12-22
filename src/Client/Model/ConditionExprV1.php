@@ -17,15 +17,21 @@ class ConditionExprV1
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ConditionExprV1 {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ConditionExprV1 The hydrated instance
+     */
+    public static function hydrate(?array $data): ConditionExprV1
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            and: isset($data['and']) ? $data['and'] : null,
-            or: isset($data['or']) ? $data['or'] : null,
-            is: isset($data['is']) ? $data['is'] : null,
-            isNot: isset($data['isNot']) ? $data['isNot'] : null,
+            and: $data['and'] ?? null,
+            or: $data['or'] ?? null,
+            is: $data['is'] ?? null,
+            isNot: $data['isNot'] ?? null,
         );
         return $object;
     }

@@ -14,13 +14,19 @@ class DataRetentionPolicyWithoutId
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): DataRetentionPolicyWithoutId {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return DataRetentionPolicyWithoutId The hydrated instance
+     */
+    public static function hydrate(?array $data): DataRetentionPolicyWithoutId
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,
+            display_name: $data['display_name'] ?? null,
+            post_duration: $data['post_duration'] ?? null,
         );
         return $object;
     }

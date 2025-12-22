@@ -33,26 +33,32 @@ class ChannelBookmark
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelBookmark {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelBookmark The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelBookmark
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            owner_id: isset($data['owner_id']) ? $data['owner_id'] : null,
-            file_id: isset($data['file_id']) ? $data['file_id'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            sort_order: isset($data['sort_order']) ? $data['sort_order'] : null,
-            link_url: isset($data['link_url']) ? $data['link_url'] : null,
-            image_url: isset($data['image_url']) ? $data['image_url'] : null,
-            emoji: isset($data['emoji']) ? $data['emoji'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            original_id: isset($data['original_id']) ? $data['original_id'] : null,
-            parent_id: isset($data['parent_id']) ? $data['parent_id'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            channel_id: $data['channel_id'] ?? null,
+            owner_id: $data['owner_id'] ?? null,
+            file_id: $data['file_id'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            sort_order: $data['sort_order'] ?? null,
+            link_url: $data['link_url'] ?? null,
+            image_url: $data['image_url'] ?? null,
+            emoji: $data['emoji'] ?? null,
+            type: $data['type'] ?? null,
+            original_id: $data['original_id'] ?? null,
+            parent_id: $data['parent_id'] ?? null,
         );
         return $object;
     }

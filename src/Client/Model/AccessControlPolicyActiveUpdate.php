@@ -12,13 +12,19 @@ class AccessControlPolicyActiveUpdate
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AccessControlPolicyActiveUpdate {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AccessControlPolicyActiveUpdate The hydrated instance
+     */
+    public static function hydrate(?array $data): AccessControlPolicyActiveUpdate
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            active: isset($data['active']) ? $data['active'] : null,
+            id: $data['id'] ?? null,
+            active: $data['active'] ?? null,
         );
         return $object;
     }

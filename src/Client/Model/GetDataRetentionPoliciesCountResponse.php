@@ -10,12 +10,18 @@ class GetDataRetentionPoliciesCountResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GetDataRetentionPoliciesCountResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GetDataRetentionPoliciesCountResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): GetDataRetentionPoliciesCountResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
+            total_count: $data['total_count'] ?? null,
         );
         return $object;
     }

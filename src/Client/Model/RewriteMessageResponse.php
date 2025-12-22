@@ -10,12 +10,18 @@ class RewriteMessageResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): RewriteMessageResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return RewriteMessageResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): RewriteMessageResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            rewritten_text: isset($data['rewritten_text']) ? $data['rewritten_text'] : null,
+            rewritten_text: $data['rewritten_text'] ?? null,
         );
         return $object;
     }

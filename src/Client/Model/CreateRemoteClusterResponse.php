@@ -16,14 +16,20 @@ class CreateRemoteClusterResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): CreateRemoteClusterResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return CreateRemoteClusterResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): CreateRemoteClusterResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            remote_cluster: isset($data['remote_cluster']) ? $data['remote_cluster'] : null,
-            invite: isset($data['invite']) ? $data['invite'] : null,
-            password: isset($data['password']) ? $data['password'] : null,
+            remote_cluster: $data['remote_cluster'] ?? null,
+            invite: $data['invite'] ?? null,
+            password: $data['password'] ?? null,
         );
         return $object;
     }

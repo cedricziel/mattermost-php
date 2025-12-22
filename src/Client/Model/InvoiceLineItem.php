@@ -14,17 +14,23 @@ class InvoiceLineItem
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): InvoiceLineItem {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return InvoiceLineItem The hydrated instance
+     */
+    public static function hydrate(?array $data): InvoiceLineItem
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            price_id: isset($data['price_id']) ? $data['price_id'] : null,
-            total: isset($data['total']) ? $data['total'] : null,
-            quantity: isset($data['quantity']) ? $data['quantity'] : null,
-            price_per_unit: isset($data['price_per_unit']) ? $data['price_per_unit'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            metadata: isset($data['metadata']) ? $data['metadata'] : null,
+            price_id: $data['price_id'] ?? null,
+            total: $data['total'] ?? null,
+            quantity: $data['quantity'] ?? null,
+            price_per_unit: $data['price_per_unit'] ?? null,
+            description: $data['description'] ?? null,
+            metadata: $data['metadata'] ?? null,
         );
         return $object;
     }

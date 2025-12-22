@@ -14,13 +14,19 @@ class GetPostsForReportingResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GetPostsForReportingResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GetPostsForReportingResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): GetPostsForReportingResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            posts: isset($data['posts']) ? $data['posts'] : null,
-            next_cursor: isset($data['next_cursor']) ? $data['next_cursor'] : null,
+            posts: isset($data['posts']) ? (object) $data['posts'] : null,
+            next_cursor: isset($data['next_cursor']) ? (object) $data['next_cursor'] : null,
         );
         return $object;
     }

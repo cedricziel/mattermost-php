@@ -18,16 +18,22 @@ class QueryExpressionParams
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): QueryExpressionParams {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return QueryExpressionParams The hydrated instance
+     */
+    public static function hydrate(?array $data): QueryExpressionParams
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            expression: isset($data['expression']) ? $data['expression'] : null,
-            term: isset($data['term']) ? $data['term'] : null,
-            limit: isset($data['limit']) ? $data['limit'] : null,
-            after: isset($data['after']) ? $data['after'] : null,
-            channelId: isset($data['channelId']) ? $data['channelId'] : null,
+            expression: $data['expression'] ?? null,
+            term: $data['term'] ?? null,
+            limit: $data['limit'] ?? null,
+            after: $data['after'] ?? null,
+            channelId: $data['channelId'] ?? null,
         );
         return $object;
     }

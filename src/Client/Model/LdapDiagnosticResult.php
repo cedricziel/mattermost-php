@@ -20,17 +20,23 @@ class LdapDiagnosticResult
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): LdapDiagnosticResult {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return LdapDiagnosticResult The hydrated instance
+     */
+    public static function hydrate(?array $data): LdapDiagnosticResult
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            test_name: isset($data['test_name']) ? $data['test_name'] : null,
-            test_value: isset($data['test_value']) ? $data['test_value'] : null,
-            total_count: isset($data['total_count']) ? $data['total_count'] : null,
-            message: isset($data['message']) ? $data['message'] : null,
-            error: isset($data['error']) ? $data['error'] : null,
-            sample_results: isset($data['sample_results']) ? $data['sample_results'] : null,
+            test_name: $data['test_name'] ?? null,
+            test_value: $data['test_value'] ?? null,
+            total_count: $data['total_count'] ?? null,
+            message: $data['message'] ?? null,
+            error: $data['error'] ?? null,
+            sample_results: $data['sample_results'] ?? null,
         );
         return $object;
     }

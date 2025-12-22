@@ -12,14 +12,20 @@ class PostListWithSearchMatches
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PostListWithSearchMatches {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PostListWithSearchMatches The hydrated instance
+     */
+    public static function hydrate(?array $data): PostListWithSearchMatches
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            order: isset($data['order']) ? $data['order'] : null,
-            posts: isset($data['posts']) ? $data['posts'] : null,
-            matches: isset($data['matches']) ? $data['matches'] : null,
+            order: $data['order'] ?? null,
+            posts: isset($data['posts']) ? (object) $data['posts'] : null,
+            matches: isset($data['matches']) ? (object) $data['matches'] : null,
         );
         return $object;
     }

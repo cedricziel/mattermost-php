@@ -12,15 +12,21 @@ class AddOn
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AddOn {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AddOn The hydrated instance
+     */
+    public static function hydrate(?array $data): AddOn
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            price_per_seat: isset($data['price_per_seat']) ? $data['price_per_seat'] : null,
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            price_per_seat: $data['price_per_seat'] ?? null,
         );
         return $object;
     }

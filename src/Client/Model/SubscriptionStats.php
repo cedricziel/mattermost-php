@@ -10,13 +10,19 @@ class SubscriptionStats
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SubscriptionStats {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SubscriptionStats The hydrated instance
+     */
+    public static function hydrate(?array $data): SubscriptionStats
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            remaining_seats: isset($data['remaining_seats']) ? $data['remaining_seats'] : null,
-            is_paid_tier: isset($data['is_paid_tier']) ? $data['is_paid_tier'] : null,
+            remaining_seats: $data['remaining_seats'] ?? null,
+            is_paid_tier: $data['is_paid_tier'] ?? null,
         );
         return $object;
     }

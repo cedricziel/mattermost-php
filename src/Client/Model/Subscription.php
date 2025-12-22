@@ -17,20 +17,26 @@ class Subscription
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Subscription {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Subscription The hydrated instance
+     */
+    public static function hydrate(?array $data): Subscription
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            customer_id: isset($data['customer_id']) ? $data['customer_id'] : null,
-            product_id: isset($data['product_id']) ? $data['product_id'] : null,
-            add_ons: isset($data['add_ons']) ? $data['add_ons'] : null,
-            start_at: isset($data['start_at']) ? $data['start_at'] : null,
-            end_at: isset($data['end_at']) ? $data['end_at'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            seats: isset($data['seats']) ? $data['seats'] : null,
-            dns: isset($data['dns']) ? $data['dns'] : null,
+            id: $data['id'] ?? null,
+            customer_id: $data['customer_id'] ?? null,
+            product_id: $data['product_id'] ?? null,
+            add_ons: $data['add_ons'] ?? null,
+            start_at: $data['start_at'] ?? null,
+            end_at: $data['end_at'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            seats: $data['seats'] ?? null,
+            dns: $data['dns'] ?? null,
         );
         return $object;
     }

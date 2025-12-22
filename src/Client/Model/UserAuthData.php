@@ -12,13 +12,19 @@ class UserAuthData
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserAuthData {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserAuthData The hydrated instance
+     */
+    public static function hydrate(?array $data): UserAuthData
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            auth_data: isset($data['auth_data']) ? $data['auth_data'] : null,
-            auth_service: isset($data['auth_service']) ? $data['auth_service'] : null,
+            auth_data: $data['auth_data'] ?? null,
+            auth_service: $data['auth_service'] ?? null,
         );
         return $object;
     }

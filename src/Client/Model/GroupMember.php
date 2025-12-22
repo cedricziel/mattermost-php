@@ -12,15 +12,21 @@ class GroupMember
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GroupMember {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GroupMember The hydrated instance
+     */
+    public static function hydrate(?array $data): GroupMember
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            group_id: isset($data['group_id']) ? $data['group_id'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
+            group_id: $data['group_id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
         );
         return $object;
     }

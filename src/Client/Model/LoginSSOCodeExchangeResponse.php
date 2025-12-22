@@ -12,13 +12,19 @@ class LoginSSOCodeExchangeResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): LoginSSOCodeExchangeResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return LoginSSOCodeExchangeResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): LoginSSOCodeExchangeResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            token: isset($data['token']) ? $data['token'] : null,
-            csrf: isset($data['csrf']) ? $data['csrf'] : null,
+            token: $data['token'] ?? null,
+            csrf: $data['csrf'] ?? null,
         );
         return $object;
     }

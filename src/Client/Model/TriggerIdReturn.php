@@ -10,12 +10,18 @@ class TriggerIdReturn
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): TriggerIdReturn {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return TriggerIdReturn The hydrated instance
+     */
+    public static function hydrate(?array $data): TriggerIdReturn
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            trigger_id: isset($data['trigger_id']) ? $data['trigger_id'] : null,
+            trigger_id: $data['trigger_id'] ?? null,
         );
         return $object;
     }

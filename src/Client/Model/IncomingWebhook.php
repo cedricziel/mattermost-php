@@ -22,18 +22,24 @@ class IncomingWebhook
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): IncomingWebhook {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return IncomingWebhook The hydrated instance
+     */
+    public static function hydrate(?array $data): IncomingWebhook
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            channel_id: $data['channel_id'] ?? null,
+            description: $data['description'] ?? null,
+            display_name: $data['display_name'] ?? null,
         );
         return $object;
     }

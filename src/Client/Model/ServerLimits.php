@@ -12,13 +12,19 @@ class ServerLimits
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ServerLimits {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ServerLimits The hydrated instance
+     */
+    public static function hydrate(?array $data): ServerLimits
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            maxUsersLimit: isset($data['maxUsersLimit']) ? $data['maxUsersLimit'] : null,
-            activeUserCount: isset($data['activeUserCount']) ? $data['activeUserCount'] : null,
+            maxUsersLimit: $data['maxUsersLimit'] ?? null,
+            activeUserCount: $data['activeUserCount'] ?? null,
         );
         return $object;
     }

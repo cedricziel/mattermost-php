@@ -23,22 +23,28 @@ class ChannelMemberWithTeamData extends ChannelMember
         parent::__construct(channel_id: $channel_id, user_id: $user_id, roles: $roles, last_viewed_at: $last_viewed_at, msg_count: $msg_count, mention_count: $mention_count, notify_props: $notify_props, last_update_at: $last_update_at);
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelMemberWithTeamData {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelMemberWithTeamData The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelMemberWithTeamData
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            roles: isset($data['roles']) ? $data['roles'] : null,
-            last_viewed_at: isset($data['last_viewed_at']) ? $data['last_viewed_at'] : null,
-            msg_count: isset($data['msg_count']) ? $data['msg_count'] : null,
-            mention_count: isset($data['mention_count']) ? $data['mention_count'] : null,
-            notify_props: isset($data['notify_props']) ? $data['notify_props'] : null,
-            last_update_at: isset($data['last_update_at']) ? $data['last_update_at'] : null,
-            team_display_name: isset($data['team_display_name']) ? $data['team_display_name'] : null,
-            team_name: isset($data['team_name']) ? $data['team_name'] : null,
-            team_update_at: isset($data['team_update_at']) ? $data['team_update_at'] : null,
+            channel_id: $data['channel_id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            roles: $data['roles'] ?? null,
+            last_viewed_at: $data['last_viewed_at'] ?? null,
+            msg_count: $data['msg_count'] ?? null,
+            mention_count: $data['mention_count'] ?? null,
+            notify_props: $data['notify_props'] ?? null,
+            last_update_at: $data['last_update_at'] ?? null,
+            team_display_name: $data['team_display_name'] ?? null,
+            team_name: $data['team_name'] ?? null,
+            team_update_at: $data['team_update_at'] ?? null,
         );
         return $object;
     }

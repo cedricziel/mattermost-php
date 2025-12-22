@@ -9,12 +9,18 @@ class UsersStats
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UsersStats {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UsersStats The hydrated instance
+     */
+    public static function hydrate(?array $data): UsersStats
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            total_users_count: isset($data['total_users_count']) ? $data['total_users_count'] : null,
+            total_users_count: $data['total_users_count'] ?? null,
         );
         return $object;
     }

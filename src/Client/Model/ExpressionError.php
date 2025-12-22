@@ -16,15 +16,21 @@ class ExpressionError
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ExpressionError {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ExpressionError The hydrated instance
+     */
+    public static function hydrate(?array $data): ExpressionError
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            message: isset($data['message']) ? $data['message'] : null,
-            field: isset($data['field']) ? $data['field'] : null,
-            line: isset($data['line']) ? $data['line'] : null,
-            column: isset($data['column']) ? $data['column'] : null,
+            message: $data['message'] ?? null,
+            field: $data['field'] ?? null,
+            line: $data['line'] ?? null,
+            column: $data['column'] ?? null,
         );
         return $object;
     }

@@ -12,14 +12,20 @@ class SlackAttachmentField
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SlackAttachmentField {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SlackAttachmentField The hydrated instance
+     */
+    public static function hydrate(?array $data): SlackAttachmentField
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            Title: isset($data['Title']) ? $data['Title'] : null,
-            Value: isset($data['Value']) ? $data['Value'] : null,
-            Short: isset($data['Short']) ? $data['Short'] : null,
+            Title: $data['Title'] ?? null,
+            Value: $data['Value'] ?? null,
+            Short: $data['Short'] ?? null,
         );
         return $object;
     }

@@ -10,12 +10,18 @@ class MyIPResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): MyIPResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return MyIPResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): MyIPResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            ip: isset($data['ip']) ? $data['ip'] : null,
+            ip: $data['ip'] ?? null,
         );
         return $object;
     }

@@ -9,12 +9,18 @@ class CreatePlaybookResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): CreatePlaybookResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return CreatePlaybookResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): CreatePlaybookResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
+            id: $data['id'] ?? null,
         );
         return $object;
     }

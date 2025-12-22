@@ -32,23 +32,29 @@ class UserNotifyProps
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserNotifyProps {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserNotifyProps The hydrated instance
+     */
+    public static function hydrate(?array $data): UserNotifyProps
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            email: isset($data['email']) ? $data['email'] : null,
-            push: isset($data['push']) ? $data['push'] : null,
-            desktop: isset($data['desktop']) ? $data['desktop'] : null,
-            desktop_sound: isset($data['desktop_sound']) ? $data['desktop_sound'] : null,
-            mention_keys: isset($data['mention_keys']) ? $data['mention_keys'] : null,
-            channel: isset($data['channel']) ? $data['channel'] : null,
-            first_name: isset($data['first_name']) ? $data['first_name'] : null,
-            auto_responder_message: isset($data['auto_responder_message']) ? $data['auto_responder_message'] : null,
-            push_threads: isset($data['push_threads']) ? $data['push_threads'] : null,
-            comments: isset($data['comments']) ? $data['comments'] : null,
-            desktop_threads: isset($data['desktop_threads']) ? $data['desktop_threads'] : null,
-            email_threads: isset($data['email_threads']) ? $data['email_threads'] : null,
+            email: $data['email'] ?? null,
+            push: $data['push'] ?? null,
+            desktop: $data['desktop'] ?? null,
+            desktop_sound: $data['desktop_sound'] ?? null,
+            mention_keys: $data['mention_keys'] ?? null,
+            channel: $data['channel'] ?? null,
+            first_name: $data['first_name'] ?? null,
+            auto_responder_message: $data['auto_responder_message'] ?? null,
+            push_threads: $data['push_threads'] ?? null,
+            comments: $data['comments'] ?? null,
+            desktop_threads: $data['desktop_threads'] ?? null,
+            email_threads: $data['email_threads'] ?? null,
         );
         return $object;
     }

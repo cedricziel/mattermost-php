@@ -15,15 +15,21 @@ class LDAPGroup
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): LDAPGroup {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return LDAPGroup The hydrated instance
+     */
+    public static function hydrate(?array $data): LDAPGroup
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            has_syncables: isset($data['has_syncables']) ? $data['has_syncables'] : null,
-            mattermost_group_id: isset($data['mattermost_group_id']) ? $data['mattermost_group_id'] : null,
-            primary_key: isset($data['primary_key']) ? $data['primary_key'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
+            has_syncables: $data['has_syncables'] ?? null,
+            mattermost_group_id: $data['mattermost_group_id'] ?? null,
+            primary_key: $data['primary_key'] ?? null,
+            name: $data['name'] ?? null,
         );
         return $object;
     }

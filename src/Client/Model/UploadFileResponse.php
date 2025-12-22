@@ -12,13 +12,19 @@ class UploadFileResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UploadFileResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UploadFileResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): UploadFileResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            file_infos: isset($data['file_infos']) ? $data['file_infos'] : null,
-            client_ids: isset($data['client_ids']) ? $data['client_ids'] : null,
+            file_infos: $data['file_infos'] ?? null,
+            client_ids: $data['client_ids'] ?? null,
         );
         return $object;
     }

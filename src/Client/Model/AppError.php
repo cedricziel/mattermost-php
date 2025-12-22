@@ -12,15 +12,21 @@ class AppError
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AppError {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AppError The hydrated instance
+     */
+    public static function hydrate(?array $data): AppError
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            status_code: isset($data['status_code']) ? $data['status_code'] : null,
-            id: isset($data['id']) ? $data['id'] : null,
-            message: isset($data['message']) ? $data['message'] : null,
-            request_id: isset($data['request_id']) ? $data['request_id'] : null,
+            status_code: $data['status_code'] ?? null,
+            id: $data['id'] ?? null,
+            message: $data['message'] ?? null,
+            request_id: $data['request_id'] ?? null,
         );
         return $object;
     }

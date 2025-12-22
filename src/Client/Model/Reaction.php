@@ -16,15 +16,21 @@ class Reaction
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Reaction {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Reaction The hydrated instance
+     */
+    public static function hydrate(?array $data): Reaction
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            post_id: isset($data['post_id']) ? $data['post_id'] : null,
-            emoji_name: isset($data['emoji_name']) ? $data['emoji_name'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
+            user_id: $data['user_id'] ?? null,
+            post_id: $data['post_id'] ?? null,
+            emoji_name: $data['emoji_name'] ?? null,
+            create_at: $data['create_at'] ?? null,
         );
         return $object;
     }

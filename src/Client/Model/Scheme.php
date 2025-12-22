@@ -30,22 +30,28 @@ class Scheme
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Scheme {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Scheme The hydrated instance
+     */
+    public static function hydrate(?array $data): Scheme
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            scope: isset($data['scope']) ? $data['scope'] : null,
-            default_team_admin_role: isset($data['default_team_admin_role']) ? $data['default_team_admin_role'] : null,
-            default_team_user_role: isset($data['default_team_user_role']) ? $data['default_team_user_role'] : null,
-            default_channel_admin_role: isset($data['default_channel_admin_role']) ? $data['default_channel_admin_role'] : null,
-            default_channel_user_role: isset($data['default_channel_user_role']) ? $data['default_channel_user_role'] : null,
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            scope: $data['scope'] ?? null,
+            default_team_admin_role: $data['default_team_admin_role'] ?? null,
+            default_team_user_role: $data['default_team_user_role'] ?? null,
+            default_channel_admin_role: $data['default_channel_admin_role'] ?? null,
+            default_channel_user_role: $data['default_channel_user_role'] ?? null,
         );
         return $object;
     }

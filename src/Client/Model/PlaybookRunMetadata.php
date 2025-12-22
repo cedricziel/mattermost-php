@@ -18,16 +18,22 @@ class PlaybookRunMetadata
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PlaybookRunMetadata {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PlaybookRunMetadata The hydrated instance
+     */
+    public static function hydrate(?array $data): PlaybookRunMetadata
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            channel_name: isset($data['channel_name']) ? $data['channel_name'] : null,
-            channel_display_name: isset($data['channel_display_name']) ? $data['channel_display_name'] : null,
-            team_name: isset($data['team_name']) ? $data['team_name'] : null,
-            num_members: isset($data['num_members']) ? $data['num_members'] : null,
-            total_posts: isset($data['total_posts']) ? $data['total_posts'] : null,
+            channel_name: $data['channel_name'] ?? null,
+            channel_display_name: $data['channel_display_name'] ?? null,
+            team_name: $data['team_name'] ?? null,
+            num_members: $data['num_members'] ?? null,
+            total_posts: $data['total_posts'] ?? null,
         );
         return $object;
     }

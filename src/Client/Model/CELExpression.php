@@ -12,13 +12,19 @@ class CELExpression
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): CELExpression {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return CELExpression The hydrated instance
+     */
+    public static function hydrate(?array $data): CELExpression
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            expression: isset($data['expression']) ? $data['expression'] : null,
-            channelId: isset($data['channelId']) ? $data['channelId'] : null,
+            expression: $data['expression'] ?? null,
+            channelId: $data['channelId'] ?? null,
         );
         return $object;
     }

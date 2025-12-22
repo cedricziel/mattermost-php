@@ -14,17 +14,23 @@ class Address
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Address {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Address The hydrated instance
+     */
+    public static function hydrate(?array $data): Address
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            city: isset($data['city']) ? $data['city'] : null,
-            country: isset($data['country']) ? $data['country'] : null,
-            line1: isset($data['line1']) ? $data['line1'] : null,
-            line2: isset($data['line2']) ? $data['line2'] : null,
-            postal_code: isset($data['postal_code']) ? $data['postal_code'] : null,
-            state: isset($data['state']) ? $data['state'] : null,
+            city: $data['city'] ?? null,
+            country: $data['country'] ?? null,
+            line1: $data['line1'] ?? null,
+            line2: $data['line2'] ?? null,
+            postal_code: $data['postal_code'] ?? null,
+            state: $data['state'] ?? null,
         );
         return $object;
     }

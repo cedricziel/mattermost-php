@@ -14,15 +14,21 @@ class FileInfoList
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): FileInfoList {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return FileInfoList The hydrated instance
+     */
+    public static function hydrate(?array $data): FileInfoList
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            order: isset($data['order']) ? $data['order'] : null,
-            file_infos: isset($data['file_infos']) ? $data['file_infos'] : null,
-            next_file_id: isset($data['next_file_id']) ? $data['next_file_id'] : null,
-            prev_file_id: isset($data['prev_file_id']) ? $data['prev_file_id'] : null,
+            order: $data['order'] ?? null,
+            file_infos: isset($data['file_infos']) ? (object) $data['file_infos'] : null,
+            next_file_id: $data['next_file_id'] ?? null,
+            prev_file_id: $data['prev_file_id'] ?? null,
         );
         return $object;
     }

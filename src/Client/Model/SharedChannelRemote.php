@@ -33,24 +33,30 @@ class SharedChannelRemote
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): SharedChannelRemote {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return SharedChannelRemote The hydrated instance
+     */
+    public static function hydrate(?array $data): SharedChannelRemote
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            channel_id: isset($data['channel_id']) ? $data['channel_id'] : null,
-            creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            is_invite_accepted: isset($data['is_invite_accepted']) ? $data['is_invite_accepted'] : null,
-            is_invite_confirmed: isset($data['is_invite_confirmed']) ? $data['is_invite_confirmed'] : null,
-            remote_id: isset($data['remote_id']) ? $data['remote_id'] : null,
-            last_post_update_at: isset($data['last_post_update_at']) ? $data['last_post_update_at'] : null,
-            last_post_id: isset($data['last_post_id']) ? $data['last_post_id'] : null,
-            last_post_create_at: isset($data['last_post_create_at']) ? $data['last_post_create_at'] : null,
-            last_post_create_id: isset($data['last_post_create_id']) ? $data['last_post_create_id'] : null,
+            id: $data['id'] ?? null,
+            channel_id: $data['channel_id'] ?? null,
+            creator_id: $data['creator_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            is_invite_accepted: $data['is_invite_accepted'] ?? null,
+            is_invite_confirmed: $data['is_invite_confirmed'] ?? null,
+            remote_id: $data['remote_id'] ?? null,
+            last_post_update_at: $data['last_post_update_at'] ?? null,
+            last_post_id: $data['last_post_id'] ?? null,
+            last_post_create_at: $data['last_post_create_at'] ?? null,
+            last_post_create_id: $data['last_post_create_id'] ?? null,
         );
         return $object;
     }

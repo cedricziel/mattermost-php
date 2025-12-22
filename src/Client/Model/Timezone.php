@@ -14,14 +14,20 @@ class Timezone
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Timezone {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Timezone The hydrated instance
+     */
+    public static function hydrate(?array $data): Timezone
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            useAutomaticTimezone: isset($data['useAutomaticTimezone']) ? $data['useAutomaticTimezone'] : null,
-            manualTimezone: isset($data['manualTimezone']) ? $data['manualTimezone'] : null,
-            automaticTimezone: isset($data['automaticTimezone']) ? $data['automaticTimezone'] : null,
+            useAutomaticTimezone: $data['useAutomaticTimezone'] ?? null,
+            manualTimezone: $data['manualTimezone'] ?? null,
+            automaticTimezone: $data['automaticTimezone'] ?? null,
         );
         return $object;
     }

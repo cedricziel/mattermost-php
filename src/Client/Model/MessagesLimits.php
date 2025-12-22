@@ -9,12 +9,18 @@ class MessagesLimits
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): MessagesLimits {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return MessagesLimits The hydrated instance
+     */
+    public static function hydrate(?array $data): MessagesLimits
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            history: isset($data['history']) ? $data['history'] : null,
+            history: $data['history'] ?? null,
         );
         return $object;
     }

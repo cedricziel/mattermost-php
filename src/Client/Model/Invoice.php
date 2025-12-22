@@ -18,21 +18,27 @@ class Invoice
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Invoice {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Invoice The hydrated instance
+     */
+    public static function hydrate(?array $data): Invoice
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            number: isset($data['number']) ? $data['number'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            total: isset($data['total']) ? $data['total'] : null,
-            tax: isset($data['tax']) ? $data['tax'] : null,
-            status: isset($data['status']) ? $data['status'] : null,
-            period_start: isset($data['period_start']) ? $data['period_start'] : null,
-            period_end: isset($data['period_end']) ? $data['period_end'] : null,
-            subscription_id: isset($data['subscription_id']) ? $data['subscription_id'] : null,
-            item: isset($data['item']) ? $data['item'] : null,
+            id: $data['id'] ?? null,
+            number: $data['number'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            total: $data['total'] ?? null,
+            tax: $data['tax'] ?? null,
+            status: $data['status'] ?? null,
+            period_start: $data['period_start'] ?? null,
+            period_end: $data['period_end'] ?? null,
+            subscription_id: $data['subscription_id'] ?? null,
+            item: $data['item'] ?? null,
         );
         return $object;
     }

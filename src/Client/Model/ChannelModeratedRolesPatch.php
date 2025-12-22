@@ -10,13 +10,19 @@ class ChannelModeratedRolesPatch
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelModeratedRolesPatch {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelModeratedRolesPatch The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelModeratedRolesPatch
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            guests: isset($data['guests']) ? $data['guests'] : null,
-            members: isset($data['members']) ? $data['members'] : null,
+            guests: $data['guests'] ?? null,
+            members: $data['members'] ?? null,
         );
         return $object;
     }

@@ -15,17 +15,23 @@ class CommandResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): CommandResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return CommandResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): CommandResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            ResponseType: isset($data['ResponseType']) ? $data['ResponseType'] : null,
-            Text: isset($data['Text']) ? $data['Text'] : null,
-            Username: isset($data['Username']) ? $data['Username'] : null,
-            IconURL: isset($data['IconURL']) ? $data['IconURL'] : null,
-            GotoLocation: isset($data['GotoLocation']) ? $data['GotoLocation'] : null,
-            Attachments: isset($data['Attachments']) ? $data['Attachments'] : null,
+            ResponseType: $data['ResponseType'] ?? null,
+            Text: $data['Text'] ?? null,
+            Username: $data['Username'] ?? null,
+            IconURL: $data['IconURL'] ?? null,
+            GotoLocation: $data['GotoLocation'] ?? null,
+            Attachments: $data['Attachments'] ?? null,
         );
         return $object;
     }

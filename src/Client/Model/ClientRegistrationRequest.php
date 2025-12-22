@@ -17,14 +17,20 @@ class ClientRegistrationRequest
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ClientRegistrationRequest {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ClientRegistrationRequest The hydrated instance
+     */
+    public static function hydrate(?array $data): ClientRegistrationRequest
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            redirect_uris: isset($data['redirect_uris']) ? $data['redirect_uris'] : null,
-            client_name: isset($data['client_name']) ? $data['client_name'] : null,
-            client_uri: isset($data['client_uri']) ? $data['client_uri'] : null,
+            redirect_uris: $data['redirect_uris'] ?? null,
+            client_name: $data['client_name'] ?? null,
+            client_uri: $data['client_uri'] ?? null,
         );
         return $object;
     }

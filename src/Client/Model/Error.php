@@ -12,13 +12,19 @@ class Error
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Error {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Error The hydrated instance
+     */
+    public static function hydrate(?array $data): Error
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            error: isset($data['error']) ? $data['error'] : null,
-            details: isset($data['details']) ? $data['details'] : null,
+            error: $data['error'] ?? null,
+            details: $data['details'] ?? null,
         );
         return $object;
     }

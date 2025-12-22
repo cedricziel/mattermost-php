@@ -10,12 +10,18 @@ class ResetSamlAuthDataToEmailResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ResetSamlAuthDataToEmailResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ResetSamlAuthDataToEmailResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): ResetSamlAuthDataToEmailResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            num_affected: isset($data['num_affected']) ? $data['num_affected'] : null,
+            num_affected: $data['num_affected'] ?? null,
         );
         return $object;
     }

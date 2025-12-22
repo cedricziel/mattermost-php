@@ -10,12 +10,18 @@ class GetLoginTypeResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GetLoginTypeResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GetLoginTypeResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): GetLoginTypeResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            auth_service: isset($data['auth_service']) ? $data['auth_service'] : null,
+            auth_service: $data['auth_service'] ?? null,
         );
         return $object;
     }

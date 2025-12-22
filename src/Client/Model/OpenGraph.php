@@ -27,25 +27,31 @@ class OpenGraph
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): OpenGraph {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return OpenGraph The hydrated instance
+     */
+    public static function hydrate(?array $data): OpenGraph
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            type: isset($data['type']) ? $data['type'] : null,
-            url: isset($data['url']) ? $data['url'] : null,
-            title: isset($data['title']) ? $data['title'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            determiner: isset($data['determiner']) ? $data['determiner'] : null,
-            site_name: isset($data['site_name']) ? $data['site_name'] : null,
-            locale: isset($data['locale']) ? $data['locale'] : null,
-            locales_alternate: isset($data['locales_alternate']) ? $data['locales_alternate'] : null,
-            images: isset($data['images']) ? $data['images'] : null,
-            videos: isset($data['videos']) ? $data['videos'] : null,
-            audios: isset($data['audios']) ? $data['audios'] : null,
-            article: isset($data['article']) ? $data['article'] : null,
-            book: isset($data['book']) ? $data['book'] : null,
-            profile: isset($data['profile']) ? $data['profile'] : null,
+            type: $data['type'] ?? null,
+            url: $data['url'] ?? null,
+            title: $data['title'] ?? null,
+            description: $data['description'] ?? null,
+            determiner: $data['determiner'] ?? null,
+            site_name: $data['site_name'] ?? null,
+            locale: $data['locale'] ?? null,
+            locales_alternate: $data['locales_alternate'] ?? null,
+            images: $data['images'] ?? null,
+            videos: $data['videos'] ?? null,
+            audios: $data['audios'] ?? null,
+            article: isset($data['article']) ? (object) $data['article'] : null,
+            book: isset($data['book']) ? (object) $data['book'] : null,
+            profile: isset($data['profile']) ? (object) $data['profile'] : null,
         );
         return $object;
     }

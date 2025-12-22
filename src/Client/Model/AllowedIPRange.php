@@ -12,13 +12,19 @@ class AllowedIPRange
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AllowedIPRange {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AllowedIPRange The hydrated instance
+     */
+    public static function hydrate(?array $data): AllowedIPRange
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            CIDRBlock: isset($data['CIDRBlock']) ? $data['CIDRBlock'] : null,
-            Description: isset($data['Description']) ? $data['Description'] : null,
+            CIDRBlock: $data['CIDRBlock'] ?? null,
+            Description: $data['Description'] ?? null,
         );
         return $object;
     }

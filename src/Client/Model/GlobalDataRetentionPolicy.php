@@ -16,15 +16,21 @@ class GlobalDataRetentionPolicy
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): GlobalDataRetentionPolicy {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return GlobalDataRetentionPolicy The hydrated instance
+     */
+    public static function hydrate(?array $data): GlobalDataRetentionPolicy
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            message_deletion_enabled: isset($data['message_deletion_enabled']) ? $data['message_deletion_enabled'] : null,
-            file_deletion_enabled: isset($data['file_deletion_enabled']) ? $data['file_deletion_enabled'] : null,
-            message_retention_cutoff: isset($data['message_retention_cutoff']) ? $data['message_retention_cutoff'] : null,
-            file_retention_cutoff: isset($data['file_retention_cutoff']) ? $data['file_retention_cutoff'] : null,
+            message_deletion_enabled: $data['message_deletion_enabled'] ?? null,
+            file_deletion_enabled: $data['file_deletion_enabled'] ?? null,
+            message_retention_cutoff: $data['message_retention_cutoff'] ?? null,
+            file_retention_cutoff: $data['file_retention_cutoff'] ?? null,
         );
         return $object;
     }

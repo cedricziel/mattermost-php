@@ -23,19 +23,25 @@ class MarketplacePlugin
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): MarketplacePlugin {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return MarketplacePlugin The hydrated instance
+     */
+    public static function hydrate(?array $data): MarketplacePlugin
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            homepage_url: isset($data['homepage_url']) ? $data['homepage_url'] : null,
-            icon_data: isset($data['icon_data']) ? $data['icon_data'] : null,
-            download_url: isset($data['download_url']) ? $data['download_url'] : null,
-            release_notes_url: isset($data['release_notes_url']) ? $data['release_notes_url'] : null,
-            labels: isset($data['labels']) ? $data['labels'] : null,
-            signature: isset($data['signature']) ? $data['signature'] : null,
-            manifest: isset($data['manifest']) ? $data['manifest'] : null,
-            installed_version: isset($data['installed_version']) ? $data['installed_version'] : null,
+            homepage_url: $data['homepage_url'] ?? null,
+            icon_data: $data['icon_data'] ?? null,
+            download_url: $data['download_url'] ?? null,
+            release_notes_url: $data['release_notes_url'] ?? null,
+            labels: $data['labels'] ?? null,
+            signature: $data['signature'] ?? null,
+            manifest: $data['manifest'] ?? null,
+            installed_version: $data['installed_version'] ?? null,
         );
         return $object;
     }

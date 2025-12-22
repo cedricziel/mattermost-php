@@ -39,18 +39,24 @@ class PostMetadata
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PostMetadata {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PostMetadata The hydrated instance
+     */
+    public static function hydrate(?array $data): PostMetadata
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            embeds: isset($data['embeds']) ? $data['embeds'] : null,
-            emojis: isset($data['emojis']) ? $data['emojis'] : null,
-            files: isset($data['files']) ? $data['files'] : null,
-            images: isset($data['images']) ? $data['images'] : null,
-            reactions: isset($data['reactions']) ? $data['reactions'] : null,
-            priority: isset($data['priority']) ? $data['priority'] : null,
-            acknowledgements: isset($data['acknowledgements']) ? $data['acknowledgements'] : null,
+            embeds: $data['embeds'] ?? null,
+            emojis: $data['emojis'] ?? null,
+            files: $data['files'] ?? null,
+            images: isset($data['images']) ? (object) $data['images'] : null,
+            reactions: $data['reactions'] ?? null,
+            priority: isset($data['priority']) ? (object) $data['priority'] : null,
+            acknowledgements: $data['acknowledgements'] ?? null,
         );
         return $object;
     }

@@ -18,16 +18,22 @@ class AutocompleteSuggestion
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): AutocompleteSuggestion {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return AutocompleteSuggestion The hydrated instance
+     */
+    public static function hydrate(?array $data): AutocompleteSuggestion
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            Complete: isset($data['Complete']) ? $data['Complete'] : null,
-            Suggestion: isset($data['Suggestion']) ? $data['Suggestion'] : null,
-            Hint: isset($data['Hint']) ? $data['Hint'] : null,
-            Description: isset($data['Description']) ? $data['Description'] : null,
-            IconData: isset($data['IconData']) ? $data['IconData'] : null,
+            Complete: $data['Complete'] ?? null,
+            Suggestion: $data['Suggestion'] ?? null,
+            Hint: $data['Hint'] ?? null,
+            Description: $data['Description'] ?? null,
+            IconData: $data['IconData'] ?? null,
         );
         return $object;
     }

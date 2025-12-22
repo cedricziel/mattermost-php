@@ -19,22 +19,28 @@ class CloudCustomer
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): CloudCustomer {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return CloudCustomer The hydrated instance
+     */
+    public static function hydrate(?array $data): CloudCustomer
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            creator_id: isset($data['creator_id']) ? $data['creator_id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            email: isset($data['email']) ? $data['email'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            num_employees: isset($data['num_employees']) ? $data['num_employees'] : null,
-            contact_first_name: isset($data['contact_first_name']) ? $data['contact_first_name'] : null,
-            contact_last_name: isset($data['contact_last_name']) ? $data['contact_last_name'] : null,
-            billing_address: isset($data['billing_address']) ? $data['billing_address'] : null,
-            company_address: isset($data['company_address']) ? $data['company_address'] : null,
-            payment_method: isset($data['payment_method']) ? $data['payment_method'] : null,
+            id: $data['id'] ?? null,
+            creator_id: $data['creator_id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            email: $data['email'] ?? null,
+            name: $data['name'] ?? null,
+            num_employees: $data['num_employees'] ?? null,
+            contact_first_name: $data['contact_first_name'] ?? null,
+            contact_last_name: $data['contact_last_name'] ?? null,
+            billing_address: $data['billing_address'] ?? null,
+            company_address: $data['company_address'] ?? null,
+            payment_method: $data['payment_method'] ?? null,
         );
         return $object;
     }

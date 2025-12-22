@@ -13,15 +13,21 @@ class Preference
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Preference {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Preference The hydrated instance
+     */
+    public static function hydrate(?array $data): Preference
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            category: isset($data['category']) ? $data['category'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            value: isset($data['value']) ? $data['value'] : null,
+            user_id: $data['user_id'] ?? null,
+            category: $data['category'] ?? null,
+            name: $data['name'] ?? null,
+            value: $data['value'] ?? null,
         );
         return $object;
     }

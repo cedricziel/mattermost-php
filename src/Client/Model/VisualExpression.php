@@ -10,12 +10,18 @@ class VisualExpression
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): VisualExpression {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return VisualExpression The hydrated instance
+     */
+    public static function hydrate(?array $data): VisualExpression
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            conditions: isset($data['conditions']) ? $data['conditions'] : null,
+            conditions: $data['conditions'] ?? null,
         );
         return $object;
     }

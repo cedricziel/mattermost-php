@@ -9,12 +9,18 @@ class ImportTeamResponse
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ImportTeamResponse {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ImportTeamResponse The hydrated instance
+     */
+    public static function hydrate(?array $data): ImportTeamResponse
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            results: isset($data['results']) ? $data['results'] : null,
+            results: $data['results'] ?? null,
         );
         return $object;
     }

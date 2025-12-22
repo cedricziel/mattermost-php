@@ -37,32 +37,38 @@ class UserReport
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): UserReport {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return UserReport The hydrated instance
+     */
+    public static function hydrate(?array $data): UserReport
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            username: isset($data['username']) ? $data['username'] : null,
-            auth_data: isset($data['auth_data']) ? $data['auth_data'] : null,
-            auth_service: isset($data['auth_service']) ? $data['auth_service'] : null,
-            email: isset($data['email']) ? $data['email'] : null,
-            nickname: isset($data['nickname']) ? $data['nickname'] : null,
-            first_name: isset($data['first_name']) ? $data['first_name'] : null,
-            last_name: isset($data['last_name']) ? $data['last_name'] : null,
-            position: isset($data['position']) ? $data['position'] : null,
-            roles: isset($data['roles']) ? $data['roles'] : null,
-            locale: isset($data['locale']) ? $data['locale'] : null,
-            timezone: isset($data['timezone']) ? $data['timezone'] : null,
-            disable_welcome_email: isset($data['disable_welcome_email']) ? $data['disable_welcome_email'] : null,
-            last_login: isset($data['last_login']) ? $data['last_login'] : null,
-            last_status_at: isset($data['last_status_at']) ? $data['last_status_at'] : null,
-            last_post_date: isset($data['last_post_date']) ? $data['last_post_date'] : null,
-            days_active: isset($data['days_active']) ? $data['days_active'] : null,
-            total_posts: isset($data['total_posts']) ? $data['total_posts'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            username: $data['username'] ?? null,
+            auth_data: $data['auth_data'] ?? null,
+            auth_service: $data['auth_service'] ?? null,
+            email: $data['email'] ?? null,
+            nickname: $data['nickname'] ?? null,
+            first_name: $data['first_name'] ?? null,
+            last_name: $data['last_name'] ?? null,
+            position: $data['position'] ?? null,
+            roles: $data['roles'] ?? null,
+            locale: $data['locale'] ?? null,
+            timezone: $data['timezone'] ?? null,
+            disable_welcome_email: $data['disable_welcome_email'] ?? null,
+            last_login: $data['last_login'] ?? null,
+            last_status_at: $data['last_status_at'] ?? null,
+            last_post_date: $data['last_post_date'] ?? null,
+            days_active: $data['days_active'] ?? null,
+            total_posts: $data['total_posts'] ?? null,
         );
         return $object;
     }

@@ -16,15 +16,21 @@ class EventTargetMapping
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): EventTargetMapping {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return EventTargetMapping The hydrated instance
+     */
+    public static function hydrate(?array $data): EventTargetMapping
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            assigned: isset($data['assigned']) ? $data['assigned'] : null,
-            dismissed: isset($data['dismissed']) ? $data['dismissed'] : null,
-            flagged: isset($data['flagged']) ? $data['flagged'] : null,
-            removed: isset($data['removed']) ? $data['removed'] : null,
+            assigned: $data['assigned'] ?? null,
+            dismissed: $data['dismissed'] ?? null,
+            flagged: $data['flagged'] ?? null,
+            removed: $data['removed'] ?? null,
         );
         return $object;
     }

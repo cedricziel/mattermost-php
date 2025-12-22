@@ -17,14 +17,20 @@ class ChannelMemberCountByGroup
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): ChannelMemberCountByGroup {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return ChannelMemberCountByGroup The hydrated instance
+     */
+    public static function hydrate(?array $data): ChannelMemberCountByGroup
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            group_id: isset($data['group_id']) ? $data['group_id'] : null,
-            channel_member_count: isset($data['channel_member_count']) ? $data['channel_member_count'] : null,
-            channel_member_timezones_count: isset($data['channel_member_timezones_count']) ? $data['channel_member_timezones_count'] : null,
+            group_id: $data['group_id'] ?? null,
+            channel_member_count: $data['channel_member_count'] ?? null,
+            channel_member_timezones_count: $data['channel_member_timezones_count'] ?? null,
         );
         return $object;
     }

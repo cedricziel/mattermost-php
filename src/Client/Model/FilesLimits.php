@@ -9,12 +9,18 @@ class FilesLimits
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): FilesLimits {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return FilesLimits The hydrated instance
+     */
+    public static function hydrate(?array $data): FilesLimits
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            total_storage: isset($data['total_storage']) ? $data['total_storage'] : null,
+            total_storage: $data['total_storage'] ?? null,
         );
         return $object;
     }

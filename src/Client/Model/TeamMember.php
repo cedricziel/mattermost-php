@@ -22,18 +22,24 @@ class TeamMember
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): TeamMember {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return TeamMember The hydrated instance
+     */
+    public static function hydrate(?array $data): TeamMember
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            team_id: isset($data['team_id']) ? $data['team_id'] : null,
-            user_id: isset($data['user_id']) ? $data['user_id'] : null,
-            roles: isset($data['roles']) ? $data['roles'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            scheme_user: isset($data['scheme_user']) ? $data['scheme_user'] : null,
-            scheme_admin: isset($data['scheme_admin']) ? $data['scheme_admin'] : null,
-            explicit_roles: isset($data['explicit_roles']) ? $data['explicit_roles'] : null,
+            team_id: $data['team_id'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            roles: $data['roles'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            scheme_user: $data['scheme_user'] ?? null,
+            scheme_admin: $data['scheme_admin'] ?? null,
+            explicit_roles: $data['explicit_roles'] ?? null,
         );
         return $object;
     }

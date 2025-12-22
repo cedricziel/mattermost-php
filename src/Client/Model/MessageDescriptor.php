@@ -14,14 +14,20 @@ class MessageDescriptor
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): MessageDescriptor {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return MessageDescriptor The hydrated instance
+     */
+    public static function hydrate(?array $data): MessageDescriptor
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            defaultMessage: isset($data['defaultMessage']) ? $data['defaultMessage'] : null,
-            values: isset($data['values']) ? $data['values'] : null,
+            id: $data['id'] ?? null,
+            defaultMessage: $data['defaultMessage'] ?? null,
+            values: isset($data['values']) ? (object) $data['values'] : null,
         );
         return $object;
     }

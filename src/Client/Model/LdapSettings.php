@@ -43,46 +43,52 @@ class LdapSettings
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): LdapSettings {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return LdapSettings The hydrated instance
+     */
+    public static function hydrate(?array $data): LdapSettings
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            Enable: isset($data['Enable']) ? $data['Enable'] : null,
-            EnableSync: isset($data['EnableSync']) ? $data['EnableSync'] : null,
-            LdapServer: isset($data['LdapServer']) ? $data['LdapServer'] : null,
-            LdapPort: isset($data['LdapPort']) ? $data['LdapPort'] : null,
-            ConnectionSecurity: isset($data['ConnectionSecurity']) ? $data['ConnectionSecurity'] : null,
-            BaseDN: isset($data['BaseDN']) ? $data['BaseDN'] : null,
-            BindUsername: isset($data['BindUsername']) ? $data['BindUsername'] : null,
-            BindPassword: isset($data['BindPassword']) ? $data['BindPassword'] : null,
-            MaximumLoginAttempts: isset($data['MaximumLoginAttempts']) ? $data['MaximumLoginAttempts'] : null,
-            UserFilter: isset($data['UserFilter']) ? $data['UserFilter'] : null,
-            GroupFilter: isset($data['GroupFilter']) ? $data['GroupFilter'] : null,
-            GuestFilter: isset($data['GuestFilter']) ? $data['GuestFilter'] : null,
-            EnableAdminFilter: isset($data['EnableAdminFilter']) ? $data['EnableAdminFilter'] : null,
-            AdminFilter: isset($data['AdminFilter']) ? $data['AdminFilter'] : null,
-            GroupDisplayNameAttribute: isset($data['GroupDisplayNameAttribute']) ? $data['GroupDisplayNameAttribute'] : null,
-            GroupIdAttribute: isset($data['GroupIdAttribute']) ? $data['GroupIdAttribute'] : null,
-            FirstNameAttribute: isset($data['FirstNameAttribute']) ? $data['FirstNameAttribute'] : null,
-            LastNameAttribute: isset($data['LastNameAttribute']) ? $data['LastNameAttribute'] : null,
-            EmailAttribute: isset($data['EmailAttribute']) ? $data['EmailAttribute'] : null,
-            UsernameAttribute: isset($data['UsernameAttribute']) ? $data['UsernameAttribute'] : null,
-            NicknameAttribute: isset($data['NicknameAttribute']) ? $data['NicknameAttribute'] : null,
-            IdAttribute: isset($data['IdAttribute']) ? $data['IdAttribute'] : null,
-            PositionAttribute: isset($data['PositionAttribute']) ? $data['PositionAttribute'] : null,
-            LoginIdAttribute: isset($data['LoginIdAttribute']) ? $data['LoginIdAttribute'] : null,
-            PictureAttribute: isset($data['PictureAttribute']) ? $data['PictureAttribute'] : null,
-            SyncIntervalMinutes: isset($data['SyncIntervalMinutes']) ? $data['SyncIntervalMinutes'] : null,
-            SkipCertificateVerification: isset($data['SkipCertificateVerification']) ? $data['SkipCertificateVerification'] : null,
-            PublicCertificateFile: isset($data['PublicCertificateFile']) ? $data['PublicCertificateFile'] : null,
-            PrivateKeyFile: isset($data['PrivateKeyFile']) ? $data['PrivateKeyFile'] : null,
-            QueryTimeout: isset($data['QueryTimeout']) ? $data['QueryTimeout'] : null,
-            MaxPageSize: isset($data['MaxPageSize']) ? $data['MaxPageSize'] : null,
-            LoginFieldName: isset($data['LoginFieldName']) ? $data['LoginFieldName'] : null,
-            LoginButtonColor: isset($data['LoginButtonColor']) ? $data['LoginButtonColor'] : null,
-            LoginButtonBorderColor: isset($data['LoginButtonBorderColor']) ? $data['LoginButtonBorderColor'] : null,
-            LoginButtonTextColor: isset($data['LoginButtonTextColor']) ? $data['LoginButtonTextColor'] : null,
+            Enable: $data['Enable'] ?? null,
+            EnableSync: $data['EnableSync'] ?? null,
+            LdapServer: $data['LdapServer'] ?? null,
+            LdapPort: $data['LdapPort'] ?? null,
+            ConnectionSecurity: $data['ConnectionSecurity'] ?? null,
+            BaseDN: $data['BaseDN'] ?? null,
+            BindUsername: $data['BindUsername'] ?? null,
+            BindPassword: $data['BindPassword'] ?? null,
+            MaximumLoginAttempts: $data['MaximumLoginAttempts'] ?? null,
+            UserFilter: $data['UserFilter'] ?? null,
+            GroupFilter: $data['GroupFilter'] ?? null,
+            GuestFilter: $data['GuestFilter'] ?? null,
+            EnableAdminFilter: $data['EnableAdminFilter'] ?? null,
+            AdminFilter: $data['AdminFilter'] ?? null,
+            GroupDisplayNameAttribute: $data['GroupDisplayNameAttribute'] ?? null,
+            GroupIdAttribute: $data['GroupIdAttribute'] ?? null,
+            FirstNameAttribute: $data['FirstNameAttribute'] ?? null,
+            LastNameAttribute: $data['LastNameAttribute'] ?? null,
+            EmailAttribute: $data['EmailAttribute'] ?? null,
+            UsernameAttribute: $data['UsernameAttribute'] ?? null,
+            NicknameAttribute: $data['NicknameAttribute'] ?? null,
+            IdAttribute: $data['IdAttribute'] ?? null,
+            PositionAttribute: $data['PositionAttribute'] ?? null,
+            LoginIdAttribute: $data['LoginIdAttribute'] ?? null,
+            PictureAttribute: $data['PictureAttribute'] ?? null,
+            SyncIntervalMinutes: $data['SyncIntervalMinutes'] ?? null,
+            SkipCertificateVerification: $data['SkipCertificateVerification'] ?? null,
+            PublicCertificateFile: $data['PublicCertificateFile'] ?? null,
+            PrivateKeyFile: $data['PrivateKeyFile'] ?? null,
+            QueryTimeout: $data['QueryTimeout'] ?? null,
+            MaxPageSize: $data['MaxPageSize'] ?? null,
+            LoginFieldName: $data['LoginFieldName'] ?? null,
+            LoginButtonColor: $data['LoginButtonColor'] ?? null,
+            LoginButtonBorderColor: $data['LoginButtonBorderColor'] ?? null,
+            LoginButtonTextColor: $data['LoginButtonTextColor'] ?? null,
         );
         return $object;
     }

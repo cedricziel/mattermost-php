@@ -25,24 +25,30 @@ class Team
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): Team {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return Team The hydrated instance
+     */
+    public static function hydrate(?array $data): Team
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            display_name: isset($data['display_name']) ? $data['display_name'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            email: isset($data['email']) ? $data['email'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            allowed_domains: isset($data['allowed_domains']) ? $data['allowed_domains'] : null,
-            invite_id: isset($data['invite_id']) ? $data['invite_id'] : null,
-            allow_open_invite: isset($data['allow_open_invite']) ? $data['allow_open_invite'] : null,
-            policy_id: isset($data['policy_id']) ? $data['policy_id'] : null,
+            id: $data['id'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            display_name: $data['display_name'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            email: $data['email'] ?? null,
+            type: $data['type'] ?? null,
+            allowed_domains: $data['allowed_domains'] ?? null,
+            invite_id: $data['invite_id'] ?? null,
+            allow_open_invite: $data['allow_open_invite'] ?? null,
+            policy_id: $data['policy_id'] ?? null,
         );
         return $object;
     }

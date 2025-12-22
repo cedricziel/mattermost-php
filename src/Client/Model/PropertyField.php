@@ -24,19 +24,25 @@ class PropertyField
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): PropertyField {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return PropertyField The hydrated instance
+     */
+    public static function hydrate(?array $data): PropertyField
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            id: isset($data['id']) ? $data['id'] : null,
-            type: isset($data['type']) ? $data['type'] : null,
-            name: isset($data['name']) ? $data['name'] : null,
-            description: isset($data['description']) ? $data['description'] : null,
-            create_at: isset($data['create_at']) ? $data['create_at'] : null,
-            update_at: isset($data['update_at']) ? $data['update_at'] : null,
-            delete_at: isset($data['delete_at']) ? $data['delete_at'] : null,
-            attrs: isset($data['attrs']) ? $data['attrs'] : null,
+            id: $data['id'] ?? null,
+            type: $data['type'] ?? null,
+            name: $data['name'] ?? null,
+            description: $data['description'] ?? null,
+            create_at: $data['create_at'] ?? null,
+            update_at: $data['update_at'] ?? null,
+            delete_at: $data['delete_at'] ?? null,
+            attrs: isset($data['attrs']) ? (object) $data['attrs'] : null,
         );
         return $object;
     }

@@ -12,13 +12,19 @@ class DataRetentionPolicyForTeam
     ) {
     }
 
-    public static function hydrate(
-        /** @param array<string, mixed> $data */
-        ?array $data,
-    ): DataRetentionPolicyForTeam {
+    /**
+     * Hydrate a new instance from an array of data.
+     *
+     * @param array<string, mixed>|null $data The data to hydrate from
+     * @return DataRetentionPolicyForTeam The hydrated instance
+     */
+    public static function hydrate(?array $data): DataRetentionPolicyForTeam
+    {
+        $data = $data ?? [];
+
         $object = new self(
-            team_id: isset($data['team_id']) ? $data['team_id'] : null,
-            post_duration: isset($data['post_duration']) ? $data['post_duration'] : null,
+            team_id: $data['team_id'] ?? null,
+            post_duration: $data['post_duration'] ?? null,
         );
         return $object;
     }
