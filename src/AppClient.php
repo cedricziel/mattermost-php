@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class AppClient
 {
     protected Context $context;
-    protected ?string $userId;
+    protected ?string $userId = null;
 
     public function __construct(
         protected string $token,
@@ -65,7 +65,7 @@ class AppClient
             $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory(),
         );
 
-        if ($context->getActingUser() !== null) {
+        if ($context->getActingUser() instanceof \CedricZiel\MattermostPhp\User) {
             $client->setUserId($context->getActingUser()->getId());
         }
 
@@ -134,7 +134,7 @@ class AppClient
         ));
     }
 
-    public function DM(string $userId, string $message)
+    public function DM(string $userId, string $message): \CedricZiel\MattermostPhp\Client\Model\DefaultBadRequestResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultForbiddenResponse|\CedricZiel\MattermostPhp\Client\Model\DefaultUnauthorizedResponse|\CedricZiel\MattermostPhp\Client\Model\Post
     {
         return $this->createDMPost($userId, new \CedricZiel\MattermostPhp\Client\Model\Post(message: $message));
     }

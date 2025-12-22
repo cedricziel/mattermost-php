@@ -29,7 +29,7 @@ final class Attachment implements \JsonSerializable
 
     public static function create(string $fallback): static
     {
-        return new static($fallback);
+        return new self($fallback);
     }
 
     public function jsonSerialize(): mixed
@@ -37,9 +37,7 @@ final class Attachment implements \JsonSerializable
         $o = new \stdClass();
 
         if (is_array($this->actions) && count($this->actions) > 0) {
-            $o->actions = array_map(function (Action $action) {
-                return $action->jsonSerialize();
-            }, $this->actions);
+            $o->actions = array_map(fn(Action $action): \stdClass => $action->jsonSerialize(), $this->actions);
         }
         if ($this->fallback !== null) {
             $o->fallback = $this->fallback;
@@ -69,9 +67,7 @@ final class Attachment implements \JsonSerializable
             $o->title_link = $this->titleLink;
         }
         if (is_array($this->fields) && count($this->fields) > 0) {
-            $o->fields = array_map(function (Field $field) {
-                return $field->jsonSerialize();
-            }, $this->fields);
+            $o->fields = array_map(fn(Field $field): \stdClass => $field->jsonSerialize(), $this->fields);
         }
         if ($this->imageUrl !== null) {
             $o->image_url = $this->imageUrl;

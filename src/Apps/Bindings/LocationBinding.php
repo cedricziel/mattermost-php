@@ -99,10 +99,10 @@ final class LocationBinding implements \JsonSerializable
         $o->description = $this->description;
 
         if ($this->bindings !== null && count($this->bindings) > 0) {
-            $o->bindings = array_map(fn(LocationBinding $binding) => $binding->jsonSerialize(), $this->bindings);
+            $o->bindings = array_map(fn(LocationBinding $binding): \stdClass => $binding->jsonSerialize(), $this->bindings);
         }
 
-        if ($this->form !== null) {
+        if ($this->form instanceof \CedricZiel\MattermostPhp\Apps\Forms\Form) {
             $o->form = $this->form;
         }
 
@@ -110,7 +110,7 @@ final class LocationBinding implements \JsonSerializable
             $o->label = $this->label;
         }
 
-        if ($this->submit !== null) {
+        if ($this->submit instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->submit = $this->submit;
         }
 

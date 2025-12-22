@@ -62,9 +62,7 @@ trait HttpClientTrait
     }
 
     /**
-     * @param ResponseInterface $response
      * @param array<int, string> $map
-     * @return mixed
      */
     protected function mapResponse(ResponseInterface $response, array $map): mixed
     {
@@ -98,13 +96,13 @@ trait HttpClientTrait
             return $body; // Already an array from json_decode
         }
         if ($mapValue === 'int[]') {
-            return array_map('intval', $body);
+            return array_map(intval(...), $body);
         }
         if ($mapValue === 'float[]') {
-            return array_map('floatval', $body);
+            return array_map(floatval(...), $body);
         }
         if ($mapValue === 'bool[]') {
-            return array_map('boolval', $body);
+            return array_map(boolval(...), $body);
         }
 
         // Handle array of models
@@ -125,7 +123,7 @@ trait HttpClientTrait
     {
         $uri = $this->baseUrl . $path;
 
-        $uri = str_replace(array_map(function ($key) { return sprintf('{%s}', $key); }, array_keys($pathParameters)), array_values($pathParameters), $uri);
+        $uri = str_replace(array_map(fn(int|string $key): string => sprintf('{%s}', $key), array_keys($pathParameters)), array_values($pathParameters), $uri);
 
         return sprintf('%s?%s', $uri, http_build_query($queryParameters));
     }
@@ -182,9 +180,7 @@ trait HttpClientTrait
     /**
      * Map JSON response to model objects (extracted from original mapResponse).
      *
-     * @param ResponseInterface $response
      * @param array<int, string> $map
-     * @return object|array
      */
     protected function mapJsonResponse(ResponseInterface $response, array $map): object|array
     {
@@ -279,7 +275,6 @@ trait HttpClientTrait
      *
      * @param string $contentType The parsed content type
      * @param string[] $additionalTypes Additional types to treat as binary
-     * @return bool
      */
     protected function isBinaryContentType(string $contentType, array $additionalTypes = []): bool
     {
@@ -317,12 +312,9 @@ trait HttpClientTrait
      * Check if the content type indicates plain text content.
      *
      * @param string $contentType The parsed content type
-     * @return bool
      */
     protected function isTextContentType(string $contentType): bool
     {
-        return $contentType === 'text/plain'
-            || $contentType === 'text/html'
-            || $contentType === 'text/csv';
+        return in_array($contentType, ['text/plain', 'text/html', 'text/csv'], true);
     }
 }

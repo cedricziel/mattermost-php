@@ -27,9 +27,7 @@ class SelectAction extends Action
 
         $o->type = $this->type;
         if (is_array($this->options) && count($this->options) > 0) {
-            $o->options = array_map(function (SelectOption $option) {
-                return $option->jsonSerialize();
-            }, $this->options);
+            $o->options = array_map(fn(SelectOption $option): \stdClass => $option->jsonSerialize(), $this->options);
         }
 
         return $o;

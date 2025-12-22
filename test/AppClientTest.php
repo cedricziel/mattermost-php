@@ -76,12 +76,12 @@ class AppClientTest extends MattermostTestCase
         $httpFactory = new HttpFactory();
 
         $c = new MockClient();
-        $channelResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $channelResponse = $this->createMock(\Psr\Http\Message\ResponseInterface::class);
         $channelResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
         $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn($httpFactory->createStream('{"id": "foo"}'));
         $c->addResponse($channelResponse);
 
-        $psr18Client = new Psr18Client();
+        new Psr18Client();
 
         $appClient = AppClient::asBot(
             $this->createBotContext(),
@@ -100,12 +100,12 @@ class AppClientTest extends MattermostTestCase
         $httpFactory = new HttpFactory();
 
         $c = new MockClient();
-        $channelResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $channelResponse = $this->createMock(\Psr\Http\Message\ResponseInterface::class);
         $channelResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
         $channelResponse->expects(self::atLeast(1))->method('getBody')->willReturn($httpFactory->createStream('{"id": "foo"}'));
         $c->addResponse($channelResponse);
 
-        $postResponse = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $postResponse = $this->createMock(\Psr\Http\Message\ResponseInterface::class);
         $postResponse->expects(self::atLeast(1))->method('getStatusCode')->willReturn(201);
         $postResponse->expects(self::atLeast(1))->method('getBody')->willReturn($httpFactory->createStream('{"id": "foo"}'));
         $c->addResponse($postResponse);

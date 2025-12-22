@@ -47,7 +47,7 @@ class Call implements \JsonSerializable
         if (is_array($this->state) && count($this->state) > 0) {
             $o->state = $this->state;
         }
-        if ($this->expand !== null) {
+        if ($this->expand instanceof \CedricZiel\MattermostPhp\Expand) {
             $o->expand = $this->expand->jsonSerialize();
         }
 

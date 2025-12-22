@@ -46,18 +46,14 @@ class SlashCommandOutput implements \JsonSerializable
     public function jsonSerialize(): \stdClass
     {
         $o = new \stdClass();
-        if ($this->responseType !== null) {
-            $o->response_type = $this->responseType;
-        }
+        $o->response_type = $this->responseType;
 
         if ($this->text !== null) {
             $o->text = $this->text;
         }
 
         if (is_array($this->attachments) && count($this->attachments) > 0) {
-            $o->attachments = array_map(function (Attachment $attachment) {
-                return $attachment->jsonSerialize();
-            }, $this->attachments);
+            $o->attachments = array_map(fn(Attachment $attachment): mixed => $attachment->jsonSerialize(), $this->attachments);
         }
 
         if ($this->username !== null) {
@@ -76,18 +72,16 @@ class SlashCommandOutput implements \JsonSerializable
             $o->type = $this->type;
         }
         if ($this->extraResponses !== null) {
-            $o->extra_responses = array_map(function(SlashCommandOutput $response) {
-                return $response->jsonSerialize();
-            }, $this->extraResponses);
+            $o->extra_responses = array_map(fn(SlashCommandOutput $response): \stdClass => $response->jsonSerialize(), $this->extraResponses);
         }
         if ($this->skip_slack_parsing !== null) {
             $o->skip_slack_parsing = $this->skip_slack_parsing;
         }
-        if ($this->props !== null) {
+        if ($this->props instanceof \stdClass) {
             $o->props = $this->props;
         }
 
-        if ($this->update !== null) {
+        if ($this->update instanceof \CedricZiel\MattermostPhp\SlashCommands\SlashCommandOutput) {
             $o->update = $this->update->jsonSerialize();
         }
 
@@ -179,7 +173,7 @@ class SlashCommandOutput implements \JsonSerializable
 
     public function addProp(string $key, $value): static
     {
-        if ($this->props === null) {
+        if (!$this->props instanceof \stdClass) {
             $this->props = new \stdClass();
         }
 

@@ -113,27 +113,25 @@ class Manifest implements \JsonSerializable
         if ($this->version !== null) {
             $o->version = $this->version;
         }
-        if ($this->bindings !== null) {
+        if ($this->bindings instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->bindings = $this->bindings->jsonSerialize();
         }
-        if ($this->onInstall !== null) {
+        if ($this->onInstall instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->on_install = $this->onInstall->jsonSerialize();
         }
-        if ($this->onUnInstall !== null) {
+        if ($this->onUnInstall instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->on_uninstall = $this->onUnInstall->jsonSerialize();
         }
-        if ($this->onVersionChanged !== null) {
+        if ($this->onVersionChanged instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->on_version_changed = $this->onVersionChanged->jsonSerialize();
         }
         if ($this->requestedLocations !== null) {
-            $o->requested_locations = array_map(function(Location $location) {
-                return $location->value;
-            }, $this->requestedLocations);
+            $o->requested_locations = array_map(fn(Location $location) => $location->value, $this->requestedLocations);
         }
         if ($this->requestedPermissions !== null) {
             $o->requested_permissions = $this->requestedPermissions;
         }
-        if ($this->http !== null) {
+        if ($this->http instanceof \CedricZiel\MattermostPhp\Apps\HttpDeploymentDescriptor) {
             $o->http = $this->http->jsonSerialize();
         }
 

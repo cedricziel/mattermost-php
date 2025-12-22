@@ -94,7 +94,6 @@ class SlashCommandInput
                 userId: '',
                 userName: '',
                 request: $request,
-                context: null,
             );
         }
     }

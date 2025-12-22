@@ -17,7 +17,7 @@ trait FormEncodedTrait
     protected function createFormEncodedBody(array $fields): array
     {
         // Filter out null values
-        $fields = array_filter($fields, static fn ($value) => $value !== null);
+        $fields = array_filter($fields, static fn ($value): bool => $value !== null);
 
         // Build query string using RFC 3986 encoding
         $body = http_build_query($fields, '', '&', PHP_QUERY_RFC3986);

@@ -111,55 +111,55 @@ final class Expand implements \JsonSerializable
     {
         $o = new \stdClass();
 
-        if ($this->app !== null) {
+        if ($this->app instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->app = $this->app;
         }
 
-        if ($this->actingUser !== null) {
+        if ($this->actingUser instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->acting_user = $this->actingUser;
         }
 
-        if ($this->acting_user_access_token !== null) {
+        if ($this->acting_user_access_token instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->acting_user_access_token = $this->acting_user_access_token;
         }
 
-        if ($this->locale !== null) {
+        if ($this->locale instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->locale = $this->locale;
         }
 
-        if ($this->channel !== null) {
+        if ($this->channel instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->channel = $this->channel;
         }
 
-        if ($this->channel_member !== null) {
+        if ($this->channel_member instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->channel_member = $this->channel_member;
         }
 
-        if ($this->team !== null) {
+        if ($this->team instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->team = $this->team;
         }
 
-        if ($this->team_member !== null) {
+        if ($this->team_member instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->team_member = $this->team_member;
         }
 
-        if ($this->post !== null) {
+        if ($this->post instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->post = $this->post;
         }
 
-        if ($this->root_post !== null) {
+        if ($this->root_post instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->root_post = $this->root_post;
         }
 
-        if ($this->user !== null) {
+        if ($this->user instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->user = $this->user;
         }
 
-        if ($this->oauth2_app !== null) {
+        if ($this->oauth2_app instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->oauth2_app = $this->oauth2_app;
         }
 
-        if ($this->oauth2_user !== null) {
+        if ($this->oauth2_user instanceof \CedricZiel\MattermostPhp\Apps\ExpandLevel) {
             $o->oauth2_user = $this->oauth2_user;
         }
 

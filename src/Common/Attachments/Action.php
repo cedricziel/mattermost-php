@@ -27,9 +27,7 @@ class Action implements \JsonSerializable
         if ($this->name !== null) {
             $o->name = $this->name;
         }
-        if ($this->integration !== null) {
-            $o->integration = $this->integration;
-        }
+        $o->integration = $this->integration;
         return $o;
     }
 }

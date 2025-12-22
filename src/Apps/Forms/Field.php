@@ -103,12 +103,10 @@ class Field implements \JsonSerializable
         }
 
         if ($this->options !== null && count($this->options) > 0) {
-            $o->options = array_map(function (SelectOption $option) {
-                return $option->jsonSerialize();
-            }, $this->options);
+            $o->options = array_map(fn(SelectOption $option): \stdClass => $option->jsonSerialize(), $this->options);
         }
 
-        if ($this->lookup !== null) {
+        if ($this->lookup instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->lookup = $this->lookup->jsonSerialize();
         }
 

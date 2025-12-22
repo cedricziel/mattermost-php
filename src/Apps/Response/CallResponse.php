@@ -79,7 +79,7 @@ abstract class CallResponse implements \JsonSerializable
             $o->use_external_browser = $this->useExternalBrowser;
         }
 
-        if ($this->form !== null) {
+        if ($this->form instanceof \CedricZiel\MattermostPhp\Apps\Forms\Form) {
             $o->form = $this->form;
         }
 

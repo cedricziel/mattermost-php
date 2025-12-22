@@ -5,16 +5,16 @@ namespace CedricZiel\MattermostPhp\Apps\Bindings;
 use CedricZiel\MattermostPhp\Apps\Location;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-final class TopLevelBinding implements \JsonSerializable
+final readonly class TopLevelBinding implements \JsonSerializable
 {
     public function __construct(
         #[SerializedName('location')]
-        protected readonly Location $location,
+        protected Location $location,
         /**
          * @var LocationBinding[]
          */
         #[SerializedName('bindings')]
-        protected readonly array $bindings,
+        protected array $bindings,
     ) {
     }
 
@@ -36,7 +36,7 @@ final class TopLevelBinding implements \JsonSerializable
         $o = new \stdClass();
 
         $o->location = $this->location->value;
-        $o->bindings = array_map(fn(LocationBinding $binding) => $binding->jsonSerialize(), $this->bindings);
+        $o->bindings = array_map(fn(LocationBinding $binding): \stdClass => $binding->jsonSerialize(), $this->bindings);
 
         return $o;
     }

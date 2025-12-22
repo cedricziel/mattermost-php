@@ -46,12 +46,10 @@ class Form implements \JsonSerializable
         $o->submit = $this->submit->jsonSerialize();
 
         if (is_array($this->fields) && count($this->fields) > 0) {
-            $o->fields = array_map(function (Field $field) {
-                return $field->jsonSerialize();
-            }, $this->fields);
+            $o->fields = array_map(fn(Field $field): \stdClass => $field->jsonSerialize(), $this->fields);
         }
 
-        if ($this->source !== null) {
+        if ($this->source instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             $o->source = $this->source->jsonSerialize();
         }
 
@@ -72,11 +70,11 @@ class Form implements \JsonSerializable
 
     public function validate(): void
     {
-        if (empty($this->title)) {
+        if ($this->title === '' || $this->title === '0') {
             throw new \InvalidArgumentException('Form title must not be empty');
         }
 
-        if ($this->fields === null && $this->source === null) {
+        if ($this->fields === null && !$this->source instanceof \CedricZiel\MattermostPhp\Apps\Call) {
             throw new \InvalidArgumentException('At least one of fields or source must be defined.');
         }
     }

@@ -16,7 +16,7 @@ final class Field implements \JsonSerializable
 
     public static function create(string $title, string $value, bool $short = false): static
     {
-        return new static($title, $value, $short);
+        return new self($title, $value, $short);
     }
 
     public function jsonSerialize(): \stdClass

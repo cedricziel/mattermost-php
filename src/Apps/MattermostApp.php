@@ -42,7 +42,7 @@ final class MattermostApp implements RequestHandlerInterface
     ) {}
 
     public static function create(string $name, string $display_name, string $homepage_url): static {
-        return new static($name, $display_name, $homepage_url);
+        return new self($name, $display_name, $homepage_url);
     }
 
     public function getManifest(): Manifest
@@ -108,11 +108,7 @@ final class MattermostApp implements RequestHandlerInterface
             $this->locationBindings[$location->value] = [];
         }
 
-        if ($this->prefix !== '') {
-            $this->locationBindings[$location->value][] = $binding->withPrefix($this->prefix);
-        } else {
-            $this->locationBindings[$location->value][] = $binding;
-        }
+        $this->locationBindings[$location->value][] = $this->prefix !== '' ? $binding->withPrefix($this->prefix) : $binding;
 
         return $this;
     }

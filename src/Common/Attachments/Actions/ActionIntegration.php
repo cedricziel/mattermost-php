@@ -12,12 +12,12 @@ class ActionIntegration implements \JsonSerializable
 
     public static function create(string $url): self
     {
-        return new self($url, null);
+        return new self($url);
     }
 
     public function withContext(string $option, string $value): self
     {
-        if ($this->context === null) {
+        if (!$this->context instanceof \stdClass) {
             $this->context = new \stdClass();
         }
 
@@ -32,7 +32,7 @@ class ActionIntegration implements \JsonSerializable
         if ($this->url !== null) {
             $o->url = $this->url;
         }
-        if ($this->context !== null) {
+        if ($this->context instanceof \stdClass) {
             $o->context = $this->context;
         }
         return $o;

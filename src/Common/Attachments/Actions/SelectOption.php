@@ -12,7 +12,7 @@ final class SelectOption
 
     public function create(string $label, string $value): static
     {
-        return new static($label, $value);
+        return new self($label, $value);
     }
 
     public function jsonSerialize(): \stdClass
