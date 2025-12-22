@@ -87,7 +87,7 @@ class StatusEndpointTest extends ClientTestCase
     #[Test]
     public function updateUserCustomStatusBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\UpdateUserCustomStatusRequest(emoji: 'test-emoji', text: 'test-text');
@@ -98,12 +98,13 @@ class StatusEndpointTest extends ClientTestCase
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function unsetUserCustomStatusBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
 
@@ -113,12 +114,13 @@ class StatusEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function removeRecentCustomStatusBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RemoveRecentCustomStatusRequest(emoji: 'test-emoji', text: 'test-text', duration: 'test-duration', expires_at: 'test-expires_at');
@@ -129,12 +131,13 @@ class StatusEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom/recent');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function postUserRecentCustomStatusDeleteBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\PostUserRecentCustomStatusDeleteRequest(emoji: 'test-emoji', text: 'test-text', duration: 'test-duration', expires_at: 'test-expires_at');
@@ -145,5 +148,6 @@ class StatusEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/test-user_id/status/custom/recent/delete');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 }

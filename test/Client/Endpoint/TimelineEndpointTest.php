@@ -29,7 +29,7 @@ class TimelineEndpointTest extends ClientTestCase
     #[Test]
     public function removeTimelineEventBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(204, ['status' => 'ok']);
+        $this->mockEmptyResponse(204);
 
         $id = 'test-id';
         $event_id = 'test-event_id';
@@ -40,5 +40,6 @@ class TimelineEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/timeline/test-event_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 }

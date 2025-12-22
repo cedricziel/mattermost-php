@@ -90,6 +90,16 @@ abstract class ClientTestCase extends TestCase
     }
 
     /**
+     * Add a mock empty response for void/null returning methods.
+     */
+    protected function mockEmptyResponse(int $statusCode = 200): void
+    {
+        $this->mockClient->addResponse(
+            new Response($statusCode, [], '')
+        );
+    }
+
+    /**
      * Add a mock image response.
      */
     protected function mockImageResponse(

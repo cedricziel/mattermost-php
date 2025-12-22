@@ -89,7 +89,7 @@ class CloudEndpointTest extends ClientTestCase
     #[Test]
     public function confirmCustomerPaymentBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $stripe_setup_intent_id = 'test-stripe_setup_intent_id';
 
@@ -99,6 +99,7 @@ class CloudEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/cloud/payment/confirm');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]

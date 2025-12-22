@@ -56,7 +56,7 @@ class ThreadsEndpointTest extends ClientTestCase
     #[Test]
     public function updateThreadsReadForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -67,12 +67,13 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/read');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function updateThreadReadForUserBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -85,12 +86,13 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/read/test-timestamp');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function startFollowingThreadBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -102,12 +104,13 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('PUT');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/following');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function stopFollowingThreadBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -119,12 +122,13 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id/following');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function getUserThreadBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $team_id = 'test-team_id';
@@ -136,5 +140,6 @@ class ThreadsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('GET');
         $this->assertRequestPath('/api/v4/users/test-user_id/teams/test-team_id/threads/test-thread_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 }

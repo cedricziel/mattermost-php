@@ -881,7 +881,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function revokeSessionsFromAllUsersBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $result = $this->endpoint->revokeSessionsFromAllUsers();
 
@@ -889,12 +889,13 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/sessions/revoke/all');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
     public function publishUserTypingBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $user_id = 'test-user_id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\PublishUserTypingRequest(channel_id: 'test-channel_id');
@@ -905,6 +906,7 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/test-user_id/typing');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -949,7 +951,7 @@ class UsersEndpointTest extends ClientTestCase
     #[Test]
     public function migrateAuthToLdapBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\MigrateAuthToLdapRequest(from: 'test-from', match_field: 'test-match_field', force: true);
 
@@ -959,6 +961,7 @@ class UsersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/users/migrate_auth/ldap');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]

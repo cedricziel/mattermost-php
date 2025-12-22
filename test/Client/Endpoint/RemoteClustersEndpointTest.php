@@ -94,7 +94,7 @@ class RemoteClustersEndpointTest extends ClientTestCase
     #[Test]
     public function deleteRemoteClusterBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(204, ['status' => 'ok']);
+        $this->mockEmptyResponse(204);
 
         $remote_id = 'test-remote_id';
 
@@ -104,6 +104,7 @@ class RemoteClustersEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/remotecluster/test-remote_id');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]

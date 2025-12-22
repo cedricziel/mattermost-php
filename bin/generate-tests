@@ -58,11 +58,16 @@ $skipMethods = [
     'SystemEndpoint' => ['uploadLicenseFile', 'generateSupportPacket', 'getSupportedTimezone', 'getClientConfig', 'getClientLicense', 'getPrevTrialLicense', 'getLogs', 'getAnalyticsOld'],
     'UploadsEndpoint' => ['uploadData', 'getUpload'],
 
-    // Void responses - tests need to handle null returns properly
-    'ChannelsEndpoint' => ['getChannelMembersTimezones', 'channelMembersMinusGroupMembers', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser', 'updateSidebarCategoryOrderForTeamForUser'],
+    // Void responses but with special issues
+    'UsersEndpoint' => [
+        'resetPasswordFailedAttempts',  // Endpoint bug: missing user_id path parameter
+        'migrateAuthToSaml',  // Requires stdClass mock data handling
+    ],
+
+    // No success type defined in OpenAPI (only error responses)
+    'ChannelsEndpoint' => ['getChannelMembersTimezones', 'getChannelMemberCountsByGroup', 'getSidebarCategoryOrderForTeamForUser', 'updateSidebarCategoryOrderForTeamForUser'],
     'ExportsEndpoint' => ['listExports', 'downloadExport', 'deleteExport'],
     'ImportsEndpoint' => ['listImports', 'deleteImport'],
-    'UsersEndpoint' => ['resetPasswordFailedAttempts', 'migrateAuthToSaml'],
 
     // Complex array return types or missing models
     'CloudEndpoint' => ['getInvoiceForSubscriptionAsPdf', 'postEndpointForCwsWebhooks'],
@@ -292,44 +297,58 @@ function buildOperationLookup(array $openApi): array
  * Get the success return type from a method's union return type.
  * Filters out Default* error response types.
  *
- * @return array{type: ?string, isArray: bool}
+ * @return array{type: ?string, isArray: bool, isVoid: bool}
  */
 function getSuccessReturnType(ReflectionMethod $method): array
 {
     $returnType = $method->getReturnType();
     $isArray = false;
+    $hasNullType = false;
 
     if ($returnType === null) {
-        return ['type' => null, 'isArray' => false];
+        return ['type' => null, 'isArray' => false, 'isVoid' => false];
     }
 
     if ($returnType instanceof ReflectionUnionType) {
         foreach ($returnType->getTypes() as $type) {
             if ($type instanceof ReflectionNamedType) {
                 $typeName = $type->getName();
+
+                // Check for null in union type (indicates void response)
+                if ($typeName === 'null') {
+                    $hasNullType = true;
+                    continue;
+                }
+
                 // Check if this is an array return type
                 if ($typeName === 'array') {
                     $isArray = true;
                     continue;
                 }
+
                 // Skip error response types
                 if (!str_contains($typeName, 'Default') &&
                     !str_contains($typeName, 'AppError')) {
-                    return ['type' => $typeName, 'isArray' => $isArray];
+                    return ['type' => $typeName, 'isArray' => $isArray, 'isVoid' => false];
                 }
             }
+        }
+
+        // Only null/error types found - this is a void method
+        if ($hasNullType) {
+            return ['type' => null, 'isArray' => false, 'isVoid' => true];
         }
     } elseif ($returnType instanceof ReflectionNamedType) {
         $typeName = $returnType->getName();
         if ($typeName === 'array') {
-            return ['type' => null, 'isArray' => true];
+            return ['type' => null, 'isArray' => true, 'isVoid' => false];
         }
         if (!str_contains($typeName, 'Default') && !str_contains($typeName, 'AppError')) {
-            return ['type' => $typeName, 'isArray' => false];
+            return ['type' => $typeName, 'isArray' => false, 'isVoid' => false];
         }
     }
 
-    return ['type' => null, 'isArray' => $isArray];
+    return ['type' => null, 'isArray' => $isArray, 'isVoid' => false];
 }
 
 /**
@@ -797,6 +816,7 @@ function generateMethodTest(
 
     $successType = $returnTypeInfo['type'];
     $isArrayReturn = $returnTypeInfo['isArray'];
+    $isVoidResponse = $returnTypeInfo['isVoid'];
     $modelClass = null;
     $mockData = ['status' => 'ok'];
     $canAssertResponse = false;
@@ -833,6 +853,8 @@ function generateMethodTest(
     } elseif ($needsTextResponse) {
         $contentType = $curatedConfig['contentType'] ?? 'text/plain';
         $test->addBody(sprintf("\$this->mockTextResponse(%d, 'text content', '%s');", $successStatus, $contentType));
+    } elseif ($isVoidResponse) {
+        $test->addBody(sprintf('$this->mockEmptyResponse(%d);', $successStatus));
     } else {
         $mockDataCode = mockDataToCode($mockData, $isArrayReturn);
         $test->addBody(sprintf('$this->mockJsonResponse(%d, %s);', $successStatus, $mockDataCode));
@@ -893,7 +915,9 @@ function generateMethodTest(
     }
 
     // Add response type assertions
-    if (!$needsBinaryResponse && !$needsTextResponse && $canAssertResponse) {
+    if ($isVoidResponse) {
+        $test->addBody('$this->assertNull($result);');
+    } elseif (!$needsBinaryResponse && !$needsTextResponse && $canAssertResponse) {
         if ($isArrayReturn) {
             $test->addBody('$this->assertIsArray($result);');
             if ($modelClass !== null) {
@@ -905,5 +929,5 @@ function generateMethodTest(
         }
     }
 
-    return $modelClass ?? 'ok';
+    return $isVoidResponse ? 'void' : ($modelClass ?? 'ok');
 }

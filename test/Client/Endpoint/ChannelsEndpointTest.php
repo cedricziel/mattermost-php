@@ -706,6 +706,26 @@ class ChannelsEndpointTest extends ClientTestCase
     }
 
     #[Test]
+    public function channelMembersMinusGroupMembersBuildsCorrectRequest(): void
+    {
+        $this->mockEmptyResponse(200);
+
+        $channel_id = 'test-channel_id';
+        $group_ids = 'test-group_ids';
+        $page = 1;
+        $per_page = 1;
+
+        $result = $this->endpoint->channelMembersMinusGroupMembers($channel_id, $group_ids, $page, $per_page);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/channels/test-channel_id/members_minus_group_members');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['group_ids' => 'test-group_ids', 'page' => '1', 'per_page' => '1']);
+        $this->assertNull($result);
+    }
+
+    #[Test]
     public function getChannelModerationsBuildsCorrectRequest(): void
     {
         $this->mockJsonResponse(200, [['name' => 'test-name']]);

@@ -185,7 +185,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function statusBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $id = 'test-id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\StatusRequest(message: 'test-message');
@@ -196,6 +196,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/status');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -216,7 +217,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
     #[Test]
     public function changeOwnerBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $id = 'test-id';
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\ChangeOwnerRequest(owner_id: 'test-owner_id');
@@ -227,6 +228,7 @@ class PlaybookRunsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/plugins/playbooks/api/v0/runs/test-id/owner');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]

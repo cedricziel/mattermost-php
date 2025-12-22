@@ -204,7 +204,7 @@ class SystemEndpointTest extends ClientTestCase
     #[Test]
     public function removeLicenseFileBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $result = $this->endpoint->removeLicenseFile();
 
@@ -212,6 +212,7 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestMethod('DELETE');
         $this->assertRequestPath('/api/v4/license');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -245,7 +246,7 @@ class SystemEndpointTest extends ClientTestCase
     #[Test]
     public function requestTrialLicenseBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(200, ['status' => 'ok']);
+        $this->mockEmptyResponse(200);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest(users: 1234567890);
 
@@ -255,6 +256,7 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/trial-license');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]

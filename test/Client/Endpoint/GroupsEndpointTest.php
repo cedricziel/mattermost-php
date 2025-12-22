@@ -89,7 +89,7 @@ class GroupsEndpointTest extends ClientTestCase
     #[Test]
     public function createGroupBuildsCorrectRequest(): void
     {
-        $this->mockJsonResponse(201, ['status' => 'ok']);
+        $this->mockEmptyResponse(201);
 
         $requestBody = new \CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest(name: 'test-name', display_name: 'test-display_name', source: 'test-source', allow_reference: true, user_ids: []);
 
@@ -99,6 +99,7 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertRequestMethod('POST');
         $this->assertRequestPath('/api/v4/groups');
         $this->assertRequestHasAuthHeader();
+        $this->assertNull($result);
     }
 
     #[Test]
