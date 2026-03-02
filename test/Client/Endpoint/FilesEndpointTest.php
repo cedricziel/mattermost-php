@@ -44,7 +44,7 @@ class FilesEndpointTest extends ClientTestCase
         $client_ids = 'test-client_ids';
         $filename = 'test-filename';
 
-        $result = $this->endpoint->uploadFile($files, $channel_id, $client_ids, $filename);
+        $result = $this->endpoint->uploadFile($filename, $files, $channel_id, $client_ids);
 
         $this->assertNotNull($this->getLastRequest());
         $this->assertRequestMethod('POST');

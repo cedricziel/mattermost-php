@@ -27,7 +27,7 @@ trait MultipartTrait
             }
 
             if (is_array($value) && isset($value['contents'])) {
-                $elements[] = array_merge(['name' => $name], $value);
+                $elements[] = $value;
             } else {
                 $elements[] = [
                     'name' => $name,
