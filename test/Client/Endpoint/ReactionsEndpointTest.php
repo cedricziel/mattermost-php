@@ -6,6 +6,7 @@ namespace CedricZiel\MattermostPhp\Test\Client\Endpoint;
 
 use CedricZiel\MattermostPhp\Client\Endpoint\ReactionsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsRequest;
+use CedricZiel\MattermostPhp\Client\Model\PostIdToReactionsMap;
 use CedricZiel\MattermostPhp\Client\Model\Reaction;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Test\Client\ClientTestCase;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversClass(ReactionsEndpoint::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Reaction::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PostIdToReactionsMap::class)]
 class ReactionsEndpointTest extends ClientTestCase
 {
     public ReactionsEndpoint $endpoint;
@@ -65,5 +67,21 @@ class ReactionsEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/users/test-user_id/posts/test-post_id/reactions/test-emoji_name');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function getBulkReactionsBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\GetBulkReactionsRequest(items: []);
+
+        $result = $this->endpoint->getBulkReactions($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/posts/ids/reactions');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostIdToReactionsMap::class, $result);
     }
 }

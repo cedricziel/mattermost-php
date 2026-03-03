@@ -14,6 +14,7 @@ use CedricZiel\MattermostPhp\Client\Model\LicenseRenewalLink;
 use CedricZiel\MattermostPhp\Client\Model\MarkNoticesViewedRequest;
 use CedricZiel\MattermostPhp\Client\Model\Notice;
 use CedricZiel\MattermostPhp\Client\Model\PostLogRequest;
+use CedricZiel\MattermostPhp\Client\Model\PostLogResponse;
 use CedricZiel\MattermostPhp\Client\Model\PushNotification;
 use CedricZiel\MattermostPhp\Client\Model\RequestTrialLicenseRequest;
 use CedricZiel\MattermostPhp\Client\Model\Server_Busy;
@@ -34,6 +35,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(GetLicenseLoadMetricResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(LicenseRenewalLink::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Audit::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(PostLogResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(Server_Busy::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(PushNotification::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(UpgradeToEnterpriseStatusResponse::class)]
@@ -307,6 +309,22 @@ class SystemEndpointTest extends ClientTestCase
         $this->assertRequestPath('/api/v4/caches/invalidate');
         $this->assertRequestHasAuthHeader();
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\StatusOK::class, $result);
+    }
+
+    #[Test]
+    public function postLogBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $requestBody = new \CedricZiel\MattermostPhp\Client\Model\PostLogRequest(level: 'test-level', message: 'test-message');
+
+        $result = $this->endpoint->postLog($requestBody);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('POST');
+        $this->assertRequestPath('/api/v4/logs');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\PostLogResponse::class, $result);
     }
 
     #[Test]

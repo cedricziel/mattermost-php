@@ -8,6 +8,7 @@ use CedricZiel\MattermostPhp\Client\Endpoint\AccessControlEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\AccessControlFieldsAutocompleteResponse;
 use CedricZiel\MattermostPhp\Client\Model\AccessControlPolicy;
 use CedricZiel\MattermostPhp\Client\Model\ChannelsWithCount;
+use CedricZiel\MattermostPhp\Client\Model\GetChannelAccessControlAttributesResponse;
 use CedricZiel\MattermostPhp\Client\Model\StatusOK;
 use CedricZiel\MattermostPhp\Client\Model\ValidateExpressionAgainstRequesterRequest;
 use CedricZiel\MattermostPhp\Client\Model\ValidateExpressionAgainstRequesterResponse;
@@ -21,6 +22,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(AccessControlPolicy::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(StatusOK::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(ChannelsWithCount::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetChannelAccessControlAttributesResponse::class)]
 class AccessControlEndpointTest extends ClientTestCase
 {
     public AccessControlEndpoint $endpoint;
@@ -138,5 +140,21 @@ class AccessControlEndpointTest extends ClientTestCase
         $this->assertRequestHasAuthHeader();
         $this->assertRequestQueryParams(['after' => 'test-after', 'limit' => '1']);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\ChannelsWithCount::class, $result);
+    }
+
+    #[Test]
+    public function getChannelAccessControlAttributesBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $channel_id = 'test-channel_id';
+
+        $result = $this->endpoint->getChannelAccessControlAttributes($channel_id);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/channels/test-channel_id/access_control/attributes');
+        $this->assertRequestHasAuthHeader();
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetChannelAccessControlAttributesResponse::class, $result);
     }
 }

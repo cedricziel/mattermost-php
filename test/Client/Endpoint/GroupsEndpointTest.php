@@ -8,6 +8,7 @@ use CedricZiel\MattermostPhp\Client\Endpoint\GroupsEndpoint;
 use CedricZiel\MattermostPhp\Client\Model\CreateGroupRequest;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupStatsResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupUsersResponse;
+use CedricZiel\MattermostPhp\Client\Model\GetGroupsAssociatedToChannelsByTeamResponse;
 use CedricZiel\MattermostPhp\Client\Model\GetGroupsByNamesRequest;
 use CedricZiel\MattermostPhp\Client\Model\Group;
 use CedricZiel\MattermostPhp\Client\Model\GroupSyncableChannel;
@@ -28,6 +29,7 @@ use PHPUnit\Framework\Attributes\Test;
 #[\PHPUnit\Framework\Attributes\UsesClass(GroupSyncableChannels::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetGroupUsersResponse::class)]
 #[\PHPUnit\Framework\Attributes\UsesClass(GetGroupStatsResponse::class)]
+#[\PHPUnit\Framework\Attributes\UsesClass(GetGroupsAssociatedToChannelsByTeamResponse::class)]
 class GroupsEndpointTest extends ClientTestCase
 {
     public GroupsEndpoint $endpoint;
@@ -373,6 +375,27 @@ class GroupsEndpointTest extends ClientTestCase
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\Group::class, $result[0]);
+    }
+
+    #[Test]
+    public function getGroupsAssociatedToChannelsByTeamBuildsCorrectRequest(): void
+    {
+        $this->mockJsonResponse(200, ['status' => 'ok']);
+
+        $team_id = 'test-team_id';
+        $page = 1;
+        $per_page = 1;
+        $filter_allow_reference = true;
+        $paginate = true;
+
+        $result = $this->endpoint->getGroupsAssociatedToChannelsByTeam($team_id, $page, $per_page, $filter_allow_reference, $paginate);
+
+        $this->assertNotNull($this->getLastRequest());
+        $this->assertRequestMethod('GET');
+        $this->assertRequestPath('/api/v4/teams/test-team_id/groups_by_channels');
+        $this->assertRequestHasAuthHeader();
+        $this->assertRequestQueryParams(['page' => '1', 'per_page' => '1', 'filter_allow_reference' => '1', 'paginate' => '1']);
+        $this->assertInstanceOf(\CedricZiel\MattermostPhp\Client\Model\GetGroupsAssociatedToChannelsByTeamResponse::class, $result);
     }
 
     #[Test]
